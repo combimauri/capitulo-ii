@@ -11,6 +11,13 @@ INCLUDE acto2/j5.ink
 INCLUDE acto2/j6.ink
 INCLUDE acto2/j7.ink
 INCLUDE acto2/finales.ink
+INCLUDE acto3/comun.ink
+INCLUDE acto3/j8.ink
+INCLUDE acto3/j9.ink
+INCLUDE acto3/j10.ink
+INCLUDE acto3/j11.ink
+INCLUDE acto3/j12.ink
+INCLUDE acto3/arresto.ink
 INCLUDE objetos.ink
 
 -> prologo

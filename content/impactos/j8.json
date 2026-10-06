@@ -1,0 +1,21 @@
+{
+  "fecha": "03.5.84",
+  "anteriores": [
+    "j4",
+    "j5"
+  ],
+  "partes": [
+    {
+      "distrito": "BERMONDSEY",
+      "celda": "H-10",
+      "hora": "01:30",
+      "bajas": 3
+    },
+    {
+      "distrito": "POPLAR",
+      "celda": "K-7",
+      "hora": "03:50",
+      "bajas": 2
+    }
+  ]
+}

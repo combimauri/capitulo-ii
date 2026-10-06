@@ -1,0 +1,14 @@
+{
+  "papel": "blanco",
+  "cabecera": [
+    "MINIPAX · DEPARTAMENTO DE PARTES Y CARTOGRAFÍA"
+  ],
+  "lineas": [
+    "minipax.carto 03.5.84 malabar",
+    "ofensiva mayo · desplazar línea +20km",
+    "ref directiva rectif. 0305"
+  ],
+  "resaltar": [
+    2
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "dif": "media",
+  "fases": [
+    {
+      "expr": "entusiasmo",
+      "golpes": 14,
+      "coro": [
+        "¡Uno!",
+        "¡Dos!"
+      ],
+      "pensamientos": [
+        {
+          "texto": "Uno, dos. Folkestone.",
+          "si": "duda>=60"
+        },
+        {
+          "texto": "Uno, dos. Kent.",
+          "si": "duda>=60"
+        },
+        {
+          "texto": "Uno, dos. Índice de odio. Uno…",
+          "si": "duda>=60"
+        }
+      ]
+    }
+  ]
+}

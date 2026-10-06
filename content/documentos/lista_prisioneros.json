@@ -1,0 +1,16 @@
+{
+  "papel": "blanco",
+  "cabecera": [
+    "PRISIONEROS ESTASIÁTICOS · EJECUCIÓN PÚBLICA · PARQUE DE LA VICTORIA"
+  ],
+  "lineas": [
+    "1. CHEN, W.         (captur. frente Manchuria)",
+    "2. KOVAL, D.        (captur. frente Manchuria)",
+    "3. PIKE, L.         (captur. frente Manchuria)",
+    "4. HOGAN, T.        (captur. frente Indonesia)",
+    "..."
+  ],
+  "resaltar": [
+    2
+  ]
+}

@@ -22,6 +22,8 @@ python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/location
 | Mirar | `Q` · clic derecho | Botón MIRAR o mantener pulsado el objeto |
 | Objetos (mirar, o «usar con…» algo del escenario) | `I` · `Esc` suelta el objeto | Botón OBJ. |
 | Registro de diálogos | `L` | Botón REG. |
+| Esconderse (sábanas, portales, carritos) | `E` junto al escondite; moverse para salir | Botón USAR |
+| Abrir o cerrar la carpeta (sigilo social, Miniver) | `C` | Botón CARPETA |
 | Avanzar diálogo | Espacio / Enter / clic | Tocar |
 | Elegir opción | 1–9, flechas + Enter, clic | Tocar |
 | Depuración | `F1` | — |

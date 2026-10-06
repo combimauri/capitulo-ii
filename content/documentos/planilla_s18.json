@@ -1,0 +1,25 @@
+{
+  "papel": "azul",
+  "cabecera": [
+    "MINIPAX · DIRECCIÓN DE MORAL INTERIOR · ALTO SECRETO",
+    "PLANILLA DE IMPACTOS PROGRAMADOS · SEMANA 18/84"
+  ],
+  "lineas": [
+    "BATERÍA  ORIGEN             OBJETIVO             CUADR.  FECHA    HORA   CARGA",
+    "B-4      Folkestone (Kent)  Bermondsey           H-10    03.5.84  01:30  media",
+    "B-2      Dover (Kent)       Poplar               K-7     03.5.84  03:50  ligera",
+    "B-4      Folkestone (Kent)  Wapping              I-9     04.5.84  02:10  media",
+    "B-7      Hythe (Kent)       Southwark (Borough)  F-10    05.5.84  22:45  pesada",
+    "B-2      Dover (Kent)       Deptford             K-11    07.5.84  04:10  ligera"
+  ],
+  "pie": [
+    "Objetivo de la semana: sostener índice de odio > 82 previo a Semana del Odio.",
+    "Prioridad: distritos proletarios densos. Excluir radio 2 km de edificios ministeriales.",
+    "Autoriza: H.V. · Dir. Moral Interior"
+  ],
+  "resaltar": [
+    1,
+    2
+  ],
+  "sello": "ALTO SECRETO"
+}

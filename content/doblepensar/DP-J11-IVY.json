@@ -1,0 +1,16 @@
+{
+  "lineas": [
+    "j11_04_pens_*"
+  ],
+  "reescribir": {
+    "j11_04_pens_03": "La detuvieron antes de que pudiera hacerme daño.",
+    "j11_04_pens_04": "Y además me dieron una mártir.",
+    "j11_04_pens_06": "Eso soy yo: alguien a quien protegieron.",
+    "j11_04_pens_10": "Era el Partido. Cuidándome.",
+    "j11_04_pens_11": "«No les creas.» Hablaba de Eurasia."
+  },
+  "voz": "VOSS",
+  "telepantalla": "Su hermana era una traidora. Una espía. Iba a destruir todo lo que usted ama. El Partido la detuvo antes de que pudiera hacerle daño. El Partido le protegió a usted. Y además le dio una mártir. Le dio algo por lo que vivir. ¿No es eso amor?",
+  "aceptar": "Ivy era una traidora. El Partido me protegió.",
+  "recordar": "Ivy cantaba. Ivy me dijo: «No les creas»."
+}

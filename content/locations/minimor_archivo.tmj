@@ -1,0 +1,664 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 34,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Ministerio del Amor · Archivo B"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-minimor_archivo"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "minimor_archivo.entrar"
+  },
+  {
+   "name": "sigilo",
+   "type": "string",
+   "value": "minimor_archivo.visto"
+  },
+  {
+   "name": "ocultos",
+   "type": "string",
+   "value": "450,82;380,176;520,176|160,262;110,336;210,336|720,262;670,336;770,336|320,376;352,376;352,446;288,446;288,376|860,432;800,508;920,508"
+  },
+  {
+   "name": "checkpoint",
+   "type": "string",
+   "value": "servicio"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/minimor_archivo.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "pared",
+     "x": 0,
+     "y": 0,
+     "width": 32,
+     "height": 540,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "pared",
+     "x": 928,
+     "y": 0,
+     "width": 32,
+     "height": 540,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "pared",
+     "x": 0,
+     "y": 508,
+     "width": 960,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "pared",
+     "x": 96,
+     "y": 176,
+     "width": 192,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "pared",
+     "x": 352,
+     "y": 176,
+     "width": 256,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "pared",
+     "x": 672,
+     "y": 176,
+     "width": 192,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "pared",
+     "x": 32,
+     "y": 336,
+     "width": 256,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "pared",
+     "x": 352,
+     "y": 336,
+     "width": 192,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "pared",
+     "x": 608,
+     "y": 336,
+     "width": 256,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 11,
+     "name": "b4",
+     "x": 820,
+     "y": 48,
+     "width": 40,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta B-4"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.b4_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "minimor_archivo.b4"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "840,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "puerta_100_72",
+     "x": 100,
+     "y": 48,
+     "width": 40,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "120,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "puerta_360_72",
+     "x": 360,
+     "y": 48,
+     "width": 40,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "380,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "puerta_600_72",
+     "x": 600,
+     "y": 48,
+     "width": 40,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "620,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "puerta_200_248",
+     "x": 200,
+     "y": 248,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "220,288"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "puerta_400_248",
+     "x": 400,
+     "y": 248,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "420,288"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "puerta_540_248",
+     "x": 540,
+     "y": 248,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "560,288"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "puerta_760_248",
+     "x": 760,
+     "y": 248,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "780,288"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "puerta_80_408",
+     "x": 80,
+     "y": 408,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "100,448"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "puerta_210_408",
+     "x": 210,
+     "y": 408,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "230,448"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "puerta_430_408",
+     "x": 430,
+     "y": 408,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "450,448"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "puerta_690_408",
+     "x": 690,
+     "y": 408,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor_archivo.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "710,448"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "servicio",
+     "x": 48,
+     "y": 498,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta de servicio"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "minimor_archivo.servicio"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "64,494"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 24,
+     "name": "servicio",
+     "x": 64,
+     "y": 492,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 25
+}

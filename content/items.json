@@ -12,5 +12,18 @@
   "metralla_brillante": {"nombre": "Metralla brillante", "icono": "icono-metralla-brillante", "descripcion": "La que Sammy se agachó a recoger. «Parece plata.»"},
   "parte_alterado": {"nombre": "Parte alterado", "icono": "icono-parte", "descripcion": "Mysore. «Resistido con firmeza.» Cero kilómetros. Y mi firma."},
   "foto_ivy_restaurada": {"nombre": "Foto de Ivy", "icono": "icono-foto-restaurada", "descripcion": "Restaurada por Crane. Ivy sonríe. Tiene un diente mellado.", "mirar": "objetos.foto_restaurada_mirar"},
-  "llave_calderas": {"nombre": "Llave de calderas", "icono": "icono-llave", "descripcion": "Grande y oxidada. La sala de calderas comunica con el montacargas viejo.", "mirar": "objetos.llave_mirar"}
+  "llave_calderas": {"nombre": "Llave de calderas", "icono": "icono-llave", "descripcion": "Grande y oxidada. La sala de calderas comunica con el montacargas viejo.", "mirar": "objetos.llave_mirar"},
+  "directiva": {"nombre": "Directiva de cartografía", "icono": "icono-directiva", "descripcion": "minipax.carto 03.5.84 malabar · desplazar línea +20km · ref directiva rectif. 0305", "mirar": "objetos.directiva_mirar"},
+  "copia_planilla": {"nombre": "Copia de la Planilla", "icono": "icono-copia_planilla", "descripcion": "Líneas copiadas a lápiz, deprisa. Cualquiera podría haberlas inventado.", "mirar": "objetos.copia_mirar"},
+  "hoja_planilla": {"nombre": "Hoja azul", "icono": "icono-hoja_planilla", "descripcion": "Papel azul pálido. «Hora punta de mercado. Impacto de alta visibilidad.» Autoriza: H.V.", "mirar": "objetos.hoja_mirar"},
+  "libro": {"nombre": "Hojas del libro", "icono": "icono-libro", "descripcion": "Hojas mecanografiadas cosidas con hilo. Teoría y práctica del colectivismo oligárquico.", "mirar": "objetos.libro_mirar"},
+  "tubo": {"nombre": "Tubo sellado", "icono": "icono-tubo", "descripcion": "Las cartas corregidas de la ofensiva de mayo. Para el Departamento de Registro del Miniver. En mano."},
+  "times_falso": {"nombre": "Times de hoy", "icono": "icono-times_falso", "descripcion": "La fecha corregida de la muerte de Ivy. Hay que dejarlo a cambio de lo que haya bajo el lavabo."},
+  "sobre_miniver": {"nombre": "Sobre encerado", "icono": "icono-sobre_encerado", "descripcion": "Estaba bajo el último lavabo de la planta tres. Pesa poco."},
+  "times_original": {"nombre": "Times de 1979", "icono": "icono-times_original", "descripcion": "Amarillento. «Cae un cohete en el distrito este.» A las 21:40.", "mirar": "objetos.times_mirar"},
+  "chapa": {"nombre": "Chapa metálica", "icono": "icono-chapa", "descripcion": "Un número grabado. De Brooke. «Archivo B, pasillo cuatro.»"},
+  "foto_sotano": {"nombre": "Foto del sótano", "icono": "icono-foto_sotano", "descripcion": "Ivy, a la luz de una vela, con Nell y Barlow. Tomada desde un ángulo bajo.", "mirar": "objetos.foto_sotano_mirar"},
+  "dibujos_amory": {"nombre": "Dibujos de Amory", "icono": "icono-dibujos_amory", "descripcion": "No son mapas de Malabar. Son las líneas de metro cerradas. Los pájaros marcan salidas.", "mirar": "objetos.dibujos_mirar"},
+  "mapa_malabar": {"nombre": "Mapa sin corregir", "icono": "icono-mapa_malabar", "descripcion": "Malabar, con las banderitas negras de Eurasia. Ayer era la verdad."},
+  "parte_original": {"nombre": "Parte sin rectificar", "icono": "icono-parte_original", "descripcion": "«Las fuerzas euroasiáticas han sido rechazadas…» Con sello y fecha."}
 }

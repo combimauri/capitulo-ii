@@ -1,0 +1,34 @@
+{
+  "recuerdo": "THE TIMES · 1979 (ORIGINAL)",
+  "documento": "THE TIMES · VERSIÓN VIGENTE",
+  "boton": "GUARDAR EL PERIÓDICO",
+  "alto": 62,
+  "letra": 19,
+  "campos": [
+    {
+      "etiqueta": "Hora",
+      "recuerdo": "Día X, 21:40",
+      "documento": "Día X + 1, 23:15"
+    },
+    {
+      "etiqueta": "Titular",
+      "recuerdo": "Cae un cohete en el distrito este",
+      "documento": "Cobarde ataque euroasiático contra la juventud del Partido"
+    },
+    {
+      "etiqueta": "Víctima",
+      "recuerdo": "la camarada Ivy {apellido}",
+      "documento": "la heroica camarada Ivy {apellido}, mártir del Ingsoc"
+    },
+    {
+      "etiqueta": "Pol. Pens.",
+      "recuerdo": "requisaron diversos documentos",
+      "documento": ""
+    },
+    {
+      "etiqueta": "Añadido",
+      "recuerdo": "—",
+      "documento": "Mañana comienza la ofensiva de castigo en Malabar."
+    }
+  ]
+}

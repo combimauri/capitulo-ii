@@ -4,7 +4,7 @@
  * controles táctiles, inventario, ojo de la Sospecha y depuración.
  */
 import Phaser from 'phaser';
-import { narrativa, registro, mano, EV, ITEMS, tactil } from '../core/juego';
+import { narrativa, registro, mano, mision, hora, EV, ITEMS, tactil } from '../core/juego';
 import type { ChoiceOption, Line } from '../core/NarrativeBridge';
 import type { Tag } from '../core/tags';
 import type { ResultadoMinijuego } from './minijuegos/Minijuego';
@@ -17,6 +17,7 @@ const CAJA = { x: 40, y: 386, w: 880, h: 132 };
 /** Minijuegos por etiqueta: cf → Facecrime; minijuego:<tipo> → escena. */
 const MINIJUEGOS: Record<string, string> = {
   cf: 'Facecrime', dp: 'Registro', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta', impactos: 'Impactos', sammy: 'Sammy', diario: 'Diario', comparar: 'Comparar', esconder: 'Esconder',
+  documento: 'Documento', libro: 'Libro', copiar: 'Copiar', palanca: 'Palanca', llaves: 'Llaves', combinacion: 'Combinacion', rectificacion: 'Rectificacion', lista: 'Lista',
 };
 
 interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
@@ -58,13 +59,15 @@ export class UIScene extends Phaser.Scene {
   private avisosPendientes: string[] = [];
   private enMano!: Phaser.GameObjects.Container;
   private aviso!: Phaser.GameObjects.Container;
+  private reloj!: Phaser.GameObjects.Text;
+  private carpeta!: Phaser.GameObjects.Container;
 
   constructor() { super('UI'); }
 
   create() {
     this.activo = false; this.enAccion = false;
     this.esTactil = this.sys.game.device.input.touch;
-    this.velo = this.add.rectangle(0, 0, 960, 540, 0x000000, 1).setOrigin(0).setAlpha(0).setDepth(40);
+    this.velo = this.add.rectangle(0, 0, 960, 540, 0x000000, 1).setOrigin(0).setAlpha(0).setDepth(28);   // bajo el texto: se narra a oscuras
     this.crearCaja();
     this.crearPensamiento();
     this.crearCartel();
@@ -76,6 +79,7 @@ export class UIScene extends Phaser.Scene {
     this.ojo = this.add.graphics().setDepth(20);
     this.enMano = this.add.container(0, 0).setDepth(22).setVisible(false);
     this.aviso = this.add.container(0, 0).setDepth(45).setVisible(false);
+    this.crearMision();
     this.consultando = false;
     this.dibujarOjo(Number(narrativa.get('sospecha')) || 0);
     narrativa.observe('sospecha', (v) => this.dibujarOjo(Number(v)));
@@ -109,6 +113,7 @@ export class UIScene extends Phaser.Scene {
       else if (mano.item) this.soltarObjeto();
     });
     kb.on('keydown-L', () => this.abrirRegistro());
+    kb.on('keydown-C', () => { if (!this.activo) this.game.events.emit(EV.carpeta); });
     kb.on('keydown', (e: KeyboardEvent) => {
       audio.desbloquear();
       const n = Number(e.key);
@@ -129,6 +134,15 @@ export class UIScene extends Phaser.Scene {
   update() {
     this.botones.setVisible(this.esTactil && !this.activo && !this.inventario.visible && !this.consultando);
     this.enMano.setVisible(!!mano.item && !this.activo && !this.consultando);
+    const r = mision.reloj;
+    this.reloj.setVisible(!!r && !this.consultando);
+    if (r) {
+      const queda = r.limite - r.transcurrido;
+      this.reloj.setText(hora(r.inicio + r.transcurrido)).setColor(hex(queda < 30 ? COLOR.rojo4 : COLOR.papel4));
+    }
+    this.carpeta.setVisible(mision.social && !this.activo && !this.consultando);
+    (this.carpeta.getData('fondo') as Phaser.GameObjects.Rectangle).setFillStyle(mision.carpeta ? COLOR.ocre4 : COLOR.gris1, 0.85);
+    (this.carpeta.getData('texto') as Phaser.GameObjects.Text).setColor(hex(mision.carpeta ? COLOR.gris1 : COLOR.papel4));
     if (this.depurando) {
       this.depuracion.setText([
         'DEPURACIÓN (F1)',
@@ -196,6 +210,18 @@ export class UIScene extends Phaser.Scene {
     boton(900, 160, 30, 'REG.', () => this.abrirRegistro());
   }
 
+  /** El reloj de las misiones (arriba, en el centro) y el botón de la carpeta del sigilo social. */
+  private crearMision() {
+    this.reloj = this.add.text(480, 22, '', {
+      fontFamily: FUENTE.maquina, fontSize: '30px', color: hex(COLOR.papel4), backgroundColor: '#0b0c0fcc', padding: { x: 10, y: 2 },
+    }).setOrigin(0.5, 0).setDepth(21).setVisible(false);
+    const fondo = this.add.rectangle(0, 0, 190, 40, COLOR.gris1, 0.85).setStrokeStyle(2, COLOR.ocre4).setInteractive({ useHandCursor: true });
+    const texto = this.add.text(0, 0, this.esTactil ? 'CARPETA' : 'C · CARPETA', { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel4) }).setOrigin(0.5);
+    fondo.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); this.game.events.emit(EV.carpeta); });
+    this.carpeta = this.add.container(this.esTactil ? 760 : 840, this.esTactil ? 92 : 510, [fondo, texto]).setDepth(21).setVisible(false);
+    this.carpeta.setData('fondo', fondo).setData('texto', texto);
+  }
+
   // ------------------------------------------------------------------ flujo de diálogo
   private iniciar(ruta?: string) {
     if (ruta) narrativa.goTo(ruta);
@@ -259,8 +285,10 @@ export class UIScene extends Phaser.Scene {
         const escena = MINIJUEGOS[tipo];
         if (!escena) { console.warn(`[minijuego] desconocido: ${tipo}`); continue; }
         this.ocultarTodo();
-        const r = await this.lanzarMinijuego(escena, a.params);
-        this.aplicarResultado(tipo, a.params, r);
+        // # documento:planilla_s18 → { id: 'planilla_s18' }
+        const params = Object.keys(a.params).length || a.key === 'minijuego' ? a.params : { id: a.value };
+        const r = await this.lanzarMinijuego(escena, params);
+        this.aplicarResultado(tipo, params, r);
       }
     }
     this.enAccion = false;
@@ -298,10 +326,9 @@ export class UIScene extends Phaser.Scene {
         narrativa.set('diario_texto', `${narrativa.get('diario_texto') || ''}¶${r.resultado}`);
         narrativa.set('diario_entradas', (Number(narrativa.get('diario_entradas')) || 0) + 1);
       }
-    } else if (params.resultado) {
-      narrativa.set(params.resultado, r.resultado);   // p. ej. # minijuego:pancarta,resultado=pancarta_j2
-    } else if (params.vars && r.datos) {
-      for (const [k, v] of Object.entries(r.datos)) narrativa.set(`${params.vars}_${k}`, v);
+    } else {
+      if (params.resultado) narrativa.set(params.resultado, r.resultado);   // p. ej. # minijuego:pancarta,resultado=pancarta_j2
+      if (params.vars && r.datos) for (const [k, v] of Object.entries(r.datos)) narrativa.set(`${params.vars}_${k}`, v);
     }
   }
 

@@ -1,0 +1,495 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Ministerio de la Verdad · Departamento de Registro"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-miniver"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "miniver.entrar"
+  },
+  {
+   "name": "sigilo",
+   "type": "string",
+   "value": "miniver.visto"
+  },
+  {
+   "name": "social",
+   "type": "string",
+   "value": "true"
+  },
+  {
+   "name": "vigila",
+   "type": "string",
+   "value": "830,98;940,98;940,150;830,150"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/miniver.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 98,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_inf",
+     "x": 0,
+     "y": 246,
+     "width": 40,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_inf",
+     "x": 80,
+     "y": 246,
+     "width": 880,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "umbral",
+     "x": 40,
+     "y": 262,
+     "width": 40,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "fondo_izq",
+     "x": 0,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "fondo_der",
+     "x": 952,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "isla",
+     "x": 200,
+     "y": 140,
+     "width": 180,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "isla",
+     "x": 520,
+     "y": 140,
+     "width": 180,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "mostrador",
+     "x": 32,
+     "y": 104,
+     "width": 72,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 10,
+     "name": "mostrador",
+     "x": 32,
+     "y": 100,
+     "width": 72,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mostrador de entregas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "miniver.mostrador_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "miniver.mostrador"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "68,156"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "cubiculos",
+     "x": 120,
+     "y": 30,
+     "width": 720,
+     "height": 66,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cubículos"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "miniver.cubiculos_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "300,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "escalera",
+     "x": 900,
+     "y": 98,
+     "width": 40,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "miniver.ir_escalera"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 17,
+     "name": "entrada",
+     "x": 60,
+     "y": 236,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 13,
+     "name": "winston",
+     "x": 508,
+     "y": 108,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "winston"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Winston Smith"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "miniver.winston_mirar"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "508,124"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "julia",
+     "x": 620,
+     "y": 126,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "julia"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mujer de la faja escarlata"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "miniver.julia_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!julia_j9"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "600,130"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "sup1",
+     "x": 150,
+     "y": 120,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "supervisor"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Supervisor"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "miniver.supervisor_mirar"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "90,35"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "150,120;450,120;450,206;150,206"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1400"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "28"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "sup2",
+     "x": 480,
+     "y": 206,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "supervisor"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Supervisor"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "miniver.supervisor_mirar"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "90,35"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "480,206;860,206;860,124;480,124"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1400"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "28"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 18
+}

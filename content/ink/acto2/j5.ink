@@ -137,6 +137,9 @@ PENSAMIENTO: Silencio. Solo un pitido agudo. # minijuego:sammy,resultado=sammy_j
 { jornada == 6:
     -> j6_estudio
 }
+{ jornada == 12:
+    -> j12_estudio
+}
 { estudio_visto:
     -> DONE
 }
@@ -177,6 +180,9 @@ CRANE: Le invitaría a un té, pero llegará tarde a su ministerio. # id:j5_03_c
 - -> DONE
 
 = crane
+{ jornada == 12:
+    -> j12_crane
+}
 { jornada == 6:
     CRANE: Llévesela. Es suya. Las caras vuelven a quien las quiere. # id:j6_04_crane_despues
     -> DONE

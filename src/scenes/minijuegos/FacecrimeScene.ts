@@ -6,21 +6,26 @@
  *                   (fases con su ritmo, imágenes de la telepantalla, pensamientos y coro)
  * Vecino opcional:  alguien sentado al lado al que se puede mirar de reojo (tecla A o tocándolo).
  *                   En el último tramo de su fase clave hace algo que solo ve quien lo está mirando.
+ * Pensamientos:     ráfagas por fase («pensamientos», con condiciones y {variables}); con interferencia=si
+ *                   (Duda alta) se escriben encima de la pista y tapan las marcas.
+ * Giro:             una fase sin marcas («golpes: 0», «duracion», «rotulo»): el orador cambia de enemigo.
+ * Pancartas:        en una fase con «pancartas», hay que arrancar las de EURASIA sin tocar las del Gran Hermano.
  */
 import Phaser from 'phaser';
 import { Minijuego } from './Minijuego';
 import { audio } from '../../systems/AudioDirector';
 import { narrativa } from '../../core/juego';
 import { COLOR, FUENTE, hex } from '../../ui/estilo';
+import { lineas, type Linea } from '../../core/texto';
 
-export const EXPRESIONES = ['entusiasmo', 'odio', 'jubilo', 'desprecio', 'duelo'] as const;
+export const EXPRESIONES = ['entusiasmo', 'odio', 'jubilo', 'desprecio', 'duelo', 'neutral'] as const;
 type Expr = typeof EXPRESIONES[number];
 
 const NOMBRE: Record<Expr, string> = {
-  entusiasmo: 'ENTUSIASMO', odio: 'ODIO', jubilo: 'JÚBILO', desprecio: 'DESPRECIO', duelo: 'DUELO',
+  entusiasmo: 'ENTUSIASMO', odio: 'ODIO', jubilo: 'JÚBILO', desprecio: 'DESPRECIO', duelo: 'DUELO', neutral: 'NEUTRAL',
 };
 const COLOR_EXPR: Record<Expr, number> = {
-  entusiasmo: 0xe0bf68, odio: 0xc8382f, jubilo: 0x7fc496, desprecio: 0x828c97, duelo: 0x5470a0,
+  entusiasmo: 0xe0bf68, odio: 0xc8382f, jubilo: 0x7fc496, desprecio: 0x828c97, duelo: 0x5470a0, neutral: 0xb8b2a0,
 };
 const DIFICULTAD = {
   facil: { bpm: 72, ventana: 190, golpes: 12 },
@@ -31,6 +36,7 @@ const DIFICULTAD = {
 interface FaseConfig {
   expr: Expr; golpes: number; bpm?: number; pantalla?: string; pantalla_mitad?: string;
   pensamiento?: string; coro?: string[]; transicion?: boolean;
+  pensamientos?: Linea[]; duracion?: number; rotulo?: string; pancartas?: boolean;
 }
 interface VecinoConfig { retrato: string; nombre: string; fase: number }
 interface CfConfig { dif?: keyof typeof DIFICULTAD; fases: FaseConfig[]; vecino?: VecinoConfig }
@@ -63,6 +69,14 @@ export class FacecrimeScene extends Minijuego {
   private pantalla: Phaser.GameObjects.Image | null = null;
   private textoPensamiento!: Phaser.GameObjects.Text;
   private fallosTransicion = 0;
+  private pensamientos: string[] = [];
+  private proximoPensamiento = 0;
+  private interferencia = false;
+  private tapa!: Phaser.GameObjects.Rectangle;
+  private rotulo!: Phaser.GameObjects.Text;
+  private pancartas = 0;
+  private bh = 0;
+  private proximaPancarta = 0;
   private vecino: (VecinoConfig & { img: Phaser.GameObjects.Image; marco: Phaser.GameObjects.Rectangle;
     etiqueta: Phaser.GameObjects.Text; mirandoHasta: number; visto: boolean }) | null = null;
 
@@ -72,9 +86,11 @@ export class FacecrimeScene extends Minijuego {
     const { width, height } = this.scale;
     this.marcas = []; this.aciertos = 0; this.grietas = 0; this.empezado = false;
     this.faseActual = -1; this.fallosTransicion = 0; this.pantalla = null; this.vecino = null;
+    this.pensamientos = []; this.proximoPensamiento = 0; this.pancartas = 0; this.bh = 0; this.proximaPancarta = 0;
+    this.interferencia = this.params.interferencia === 'si';
     this.genero = narrativa.get('genero') === 'f' ? 'm' : 'h';
     const config = configDe(this.params.id);
-    const dif = DIFICULTAD[(config?.dif ?? this.params.dif as keyof typeof DIFICULTAD) ?? 'facil'] ?? DIFICULTAD.facil;
+    const dif = DIFICULTAD[(this.params.dif ?? config?.dif) as keyof typeof DIFICULTAD] ?? DIFICULTAD.facil;
     this.ventana = dif.ventana;
 
     const fases: FaseConfig[] = config?.fases ?? [{
@@ -82,7 +98,7 @@ export class FacecrimeScene extends Minijuego {
       golpes: Number(this.params.golpes) || dif.golpes,
       coro: (this.params.coro ?? '').split('/').filter(Boolean),
     }];
-    this.exprs = [...new Set(fases.map((f) => f.expr))];
+    this.exprs = [...new Set(fases.filter((f) => f.golpes > 0).map((f) => f.expr))];
     this.exprActual = fases[0].expr;
     this.coro = fases[0].coro ?? [];
 
@@ -109,6 +125,12 @@ export class FacecrimeScene extends Minijuego {
     this.textoCoro = this.add.text(width / 2, 382, '', {
       fontFamily: FUENTE.maquina, fontSize: '34px', color: hex(COLOR.papel4),
     }).setOrigin(0.5);
+    // con Duda alta, el monólogo se escribe encima de la pista y tapa parte de las marcas
+    this.tapa = this.add.rectangle(560, PISTA.y, 520, 50, 0x000000, 0.82).setDepth(5).setVisible(false);
+    this.rotulo = this.add.text(width / 2, 214, '', {
+      fontFamily: FUENTE.maquina, fontSize: '40px', color: hex(COLOR.papel4), backgroundColor: '#000000dd',
+      padding: { x: 18, y: 10 }, align: 'center', wordWrap: { width: 820 },
+    }).setOrigin(0.5).setDepth(8).setVisible(false);
 
     // pista de ritmo
     this.add.rectangle(width / 2, PISTA.y, width - 80, 54, 0x000000, 0.45).setStrokeStyle(1, COLOR.tele1);
@@ -117,7 +139,13 @@ export class FacecrimeScene extends Minijuego {
     // marcas programadas a partir de las fases (cada fase con su ritmo)
     let t = 1800;
     this.fases = fases.map((f, i) => {
-      const intervalo = 60000 / (f.bpm ?? dif.bpm);
+      if (f.golpes === 0) {
+        // el giro: nadie grita durante medio segundo eterno
+        const inicio = t;
+        t += f.duracion ?? 2200;
+        return { ...f, inicio, fin: t };
+      }
+      const intervalo = 60000 / (Number(this.params.bpm) || f.bpm || dif.bpm);
       const inicio = t - 900;
       for (let k = 0; k < f.golpes; k++, t += intervalo) {
         this.marcas.push({ t, expr: f.expr, obj: this.crearMarca(f.expr), resuelta: false, fase: i });
@@ -266,10 +294,25 @@ export class FacecrimeScene extends Minijuego {
     const i = this.fases.findIndex((f) => ahora >= f.inicio && ahora < f.fin);
     if (i < 0) return;
     const f = this.fases[i];
+    if (this.pensamientos.length && ahora >= this.proximoPensamiento) {
+      this.proximoPensamiento = ahora + 2700;
+      this.pensar(this.pensamientos[Math.floor(ahora / 2700) % this.pensamientos.length]);
+    }
+    if (f.pancartas && ahora >= this.proximaPancarta) {
+      this.proximaPancarta = ahora + 650;
+      this.pancarta();
+    }
     if (this.pantalla && f.pantalla_mitad && ahora > (f.inicio + f.fin) / 2) this.pantalla.setTexture(`cf-${f.pantalla_mitad}`);
     if (i === this.faseActual) return;
     this.faseActual = i;
     this.coro = f.coro ?? this.coro;
+    this.pensamientos = f.pensamientos ? lineas(f.pensamientos) : [];
+    this.proximoPensamiento = ahora + (f.pensamiento ? 2600 : 0);
+    if (f.rotulo) {
+      this.rotulo.setText(f.rotulo).setVisible(true).setAlpha(1);
+      this.cameras.main.flash(200, 255, 255, 255);
+      this.tweens.add({ targets: this.rotulo, alpha: 0, delay: (f.duracion ?? 2200) - 400, duration: 350, onComplete: () => this.rotulo.setVisible(false) });
+    }
     if (this.pantalla && f.pantalla) {
       this.pantalla.setTexture(`cf-${f.pantalla}`);
       this.cameras.main.flash(120, 255, 255, 255);
@@ -279,6 +322,46 @@ export class FacecrimeScene extends Minijuego {
       this.tweens.killTweensOf(this.textoPensamiento);
       this.tweens.add({ targets: this.textoPensamiento, alpha: 0, delay: 2200, duration: 500 });
     }
+  }
+
+  /** Una ráfaga del monólogo. Con interferencia, encima de la pista. */
+  private pensar(texto: string) {
+    const t = this.textoPensamiento;
+    this.tweens.killTweensOf([t, this.tapa]);
+    t.setText(texto).setAlpha(1);
+    if (this.interferencia) {
+      t.setPosition(560, PISTA.y).setFontSize(26);
+      this.tapa.setVisible(true).setAlpha(1).setSize(Math.min(860, t.width + 40), 50);
+      this.tweens.add({ targets: [t, this.tapa], alpha: 0, delay: 1800, duration: 400 });
+    } else {
+      this.tweens.add({ targets: t, alpha: 0, delay: 2000, duration: 400 });
+    }
+  }
+
+  /** Pancartas que pasan por encima de la multitud: arrancar las de Eurasia, no tocar las del Gran Hermano. */
+  private pancarta() {
+    const gh = Math.random() < 0.3;
+    const desdeIzq = Math.random() < 0.5;
+    const y = Phaser.Math.Between(70, 330);
+    const x0 = desdeIzq ? -80 : 1040;
+    const c = this.add.container(x0, y).setDepth(7);
+    c.add(this.add.rectangle(0, 18, 4, 40, 0x5a4a30));
+    c.add(this.add.rectangle(0, 0, 120, 44, gh ? COLOR.papel4 : COLOR.rojo3).setStrokeStyle(2, 0x000000));
+    c.add(this.add.text(0, 0, gh ? 'GRAN HERMANO' : 'EURASIA', { fontFamily: FUENTE.maquina, fontSize: '22px', color: gh ? '#000000' : hex(COLOR.papel4) }).setOrigin(0.5));
+    c.setSize(120, 44).setInteractive({ useHandCursor: true });
+    c.once('pointerdown', () => {
+      this.tweens.killTweensOf(c);
+      if (gh) {
+        this.bh++;
+        audio.play('fallo');
+        this.cameras.main.flash(180, 200, 40, 40);
+      } else {
+        this.pancartas++;
+        audio.play('papel');
+      }
+      this.tweens.add({ targets: c, angle: gh ? 0 : 50, y: y + 80, alpha: 0, duration: 350, onComplete: () => c.destroy() });
+    });
+    this.tweens.add({ targets: c, x: desdeIzq ? 1040 : -80, duration: Phaser.Math.Between(3600, 5200), onComplete: () => c.destroy() });
   }
 
   private pulsar(e: Expr) {
@@ -318,7 +401,7 @@ export class FacecrimeScene extends Minijuego {
       backgroundColor: '#000000', padding: { x: 16, y: 6 },
     }).setOrigin(0.5).setDepth(5);
     const transicion = this.fallosTransicion > 0 ? 'fallo' : 'ok';
-    const datos: Record<string, string | number> = { aciertos: this.aciertos, total, transicion };
+    const datos: Record<string, string | number> = { aciertos: this.aciertos, total, transicion, pancartas: this.pancartas, bh: this.bh };
     if (this.vecino) datos[this.vecino.retrato] = this.vecino.visto ? 'visto' : 'no';
     this.time.delayedCall(1300, () => this.terminar({ resultado, datos }));
   }

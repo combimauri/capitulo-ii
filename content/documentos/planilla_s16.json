@@ -1,0 +1,19 @@
+{
+  "papel": "azul",
+  "cabecera": [
+    "MINIPAX · DIRECCIÓN DE MORAL INTERIOR · ALTO SECRETO",
+    "PLANILLA DE IMPACTOS PROGRAMADOS · SEMANA 16/84"
+  ],
+  "lineas": [
+    "BATERÍA  ORIGEN        OBJETIVO                        CUADR.  FECHA    HORA   CARGA",
+    "B-7      Hythe (Kent)  Limehouse (mercado Watney St.)  J-8     19.4.84  08:12  pesada"
+  ],
+  "pie": [
+    "Nota: hora punta de mercado. Impacto de alta visibilidad.",
+    "Autoriza: H.V."
+  ],
+  "resaltar": [
+    1
+  ],
+  "sello": "ALTO SECRETO"
+}

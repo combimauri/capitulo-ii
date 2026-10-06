@@ -1,0 +1,991 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 90,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Limehouse · de noche"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-callejones"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "callejones.entrar"
+  },
+  {
+   "name": "sigilo",
+   "type": "string",
+   "value": "callejones.visto"
+  },
+  {
+   "name": "prota_tinte",
+   "type": "string",
+   "value": "#9aa4c4"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/callejones.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 1440,
+     "height": 92,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro",
+     "x": 0,
+     "y": 250,
+     "width": 1440,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "fin_izq",
+     "x": 0,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "fin_der",
+     "x": 1432,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "tapia",
+     "x": 220,
+     "y": 140,
+     "width": 160,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "tapia",
+     "x": 540,
+     "y": 140,
+     "width": 200,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "tapia",
+     "x": 920,
+     "y": 140,
+     "width": 180,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "tapia",
+     "x": 1200,
+     "y": 140,
+     "width": 120,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "cubo",
+     "x": 520,
+     "y": 96,
+     "width": 12,
+     "height": 12,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 10,
+     "name": "sabana0",
+     "x": 420,
+     "y": 96,
+     "width": 40,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Sábanas tendidas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.sabana_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "440,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "sabana1",
+     "x": 780,
+     "y": 96,
+     "width": 40,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Sábanas tendidas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.sabana_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "800,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "sabana2",
+     "x": 1130,
+     "y": 96,
+     "width": 40,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Sábanas tendidas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.sabana_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "1150,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "portal0",
+     "x": 270,
+     "y": 40,
+     "width": 30,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Portal"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.portal_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "285,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "portal1",
+     "x": 700,
+     "y": 40,
+     "width": 30,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Portal"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.portal_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "715,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "portal2",
+     "x": 1020,
+     "y": 40,
+     "width": 30,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Portal"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.portal_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "1035,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "charco0",
+     "x": 300,
+     "y": 214,
+     "width": 24,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Charco"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.charco_mirar"
+      },
+      {
+       "name": "ruido",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "312,232"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "charco1",
+     "x": 640,
+     "y": 108,
+     "width": 24,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Charco"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.charco_mirar"
+      },
+      {
+       "name": "ruido",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "652,126"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "charco2",
+     "x": 980,
+     "y": 220,
+     "width": 24,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Charco"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.charco_mirar"
+      },
+      {
+       "name": "ruido",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "992,238"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "charco3",
+     "x": 1250,
+     "y": 108,
+     "width": 24,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Charco"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.charco_mirar"
+      },
+      {
+       "name": "ruido",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "1262,126"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "cubo",
+     "x": 516,
+     "y": 92,
+     "width": 22,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cubo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "callejones.cubo_mirar"
+      },
+      {
+       "name": "ruido",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "526,122"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "atajo",
+     "x": 600,
+     "y": 44,
+     "width": 26,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "callejones.atajo"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "613,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "atajo2",
+     "x": 880,
+     "y": 44,
+     "width": 26,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "callejones.atajo_vuelta"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "893,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "verde",
+     "x": 1370,
+     "y": 92,
+     "width": 50,
+     "height": 18,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "callejones.puerta_verde"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "control_mitad",
+     "x": 700,
+     "y": 92,
+     "width": 20,
+     "height": 158,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "checkpoint",
+       "type": "string",
+       "value": "mitad"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "control_final",
+     "x": 1110,
+     "y": 92,
+     "width": 20,
+     "height": 158,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "checkpoint",
+       "type": "string",
+       "value": "final"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 30,
+     "name": "inicio",
+     "x": 30,
+     "y": 170,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "name": "mitad",
+     "x": 750,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 32,
+     "name": "final",
+     "x": 1140,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 33,
+     "name": "atajo",
+     "x": 893,
+     "y": 104,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 26,
+     "name": "agente1",
+     "x": 460,
+     "y": 118,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "agente"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Patrulla"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_decision!=fingir"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "100,32"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "460,118;820,118;820,220;460,220"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1200"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "30"
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "agente2",
+     "x": 1150,
+     "y": 220,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "agente"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Patrulla"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_decision==negar"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "100,32"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "1150,220;1380,220;1380,118;1150,118"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1200"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "30"
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "agente3",
+     "x": 990,
+     "y": 206,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "agente"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Patrulla"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_decision==negar"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "90,30"
+      },
+      {
+       "name": "gira",
+       "type": "string",
+       "value": "izquierda,derecha"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "2600"
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "crane",
+     "x": 200,
+     "y": 220,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "crane"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Crane"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_decision==fingir"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "120,25"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "200,220;900,220;900,118;1150,118;900,118;900,220"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1600"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "26"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 34
+}

@@ -54,6 +54,9 @@ PENSAMIENTO: No me ha mirado. # id:j7_02_pens_01
 === suministros ===
 
 = entrar
+{ jornada == 8:
+    -> j8_nell
+}
 { suministros_visto:
     -> DONE
 }
@@ -259,7 +262,9 @@ PENSAMIENTO: Muy lejos, un silbido. Un impacto, en algún barrio prole. # sfx:si
     PENSAMIENTO: Mañana. A las diez y media. # sfx:impacto # id:j7_05_dormir_04
 }
 ~ jornada = 8
+~ desayunado = false
 CARTEL: FIN DEL ACTO II # id:j7_05_fin_acto
 CARTEL: ACTO III¶LA HERMANDAD # id:j7_05_acto3
-CARTEL: Continuará. El Acto III está en preparación. # id:j7_05_continuara # final:demo
+CARTEL: JORNADA 8 # sfx:silbato # id:j7_05_jornada8
+CARTEL: La guerra es la paz. # id:j7_05_fin # escena:piso # pos:cama
 -> DONE

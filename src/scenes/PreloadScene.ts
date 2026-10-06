@@ -18,7 +18,7 @@ export class PreloadScene extends Phaser.Scene {
     this.load.on('progress', (p: number) => barra.setSize(300 * p, 6));
 
     // escenarios: un PNG por localización (o el indicado en la propiedad "fondo" del mapa)
-    const fondos = new Set(Object.values(LOCALIZACIONES).flatMap((l) => [l.fondo, ...(l.fondoAlt ? [l.fondoAlt.clave] : [])]));
+    const fondos = new Set(Object.values(LOCALIZACIONES).flatMap((l) => [l.fondo, ...l.fondosAlt.map((f) => f.clave)]));
     for (const clave of fondos) this.load.image(clave, `assets/locations/${clave.replace(/^loc-/, '')}.png`);
 
     // protagonista (H y M) y personajes de los mapas
@@ -40,8 +40,10 @@ export class PreloadScene extends Phaser.Scene {
     this.load.image('mapa-frente', 'assets/minijuegos/mapa-frente.png');
     this.load.image('londres', 'assets/minijuegos/londres.png');
     this.load.image('londres-zonas', 'assets/minijuegos/londres-zonas.png');
-    for (const v of ['plaza', 'plaza_gris', 'patibulo']) this.load.image(`vineta-${v}`, `assets/vinetas/${v}.png`);
-    for (const p of ['goldstein', 'oveja', 'soldado', 'diccionario', 'gran_hermano']) this.load.image(`cf-${p}`, `assets/minijuegos/cf-${p}.png`);
+    for (const v of ['plaza', 'plaza_gris', 'patibulo', 'patibulo5', 'foto_sotano', 'foto_iniciacion']) this.load.image(`vineta-${v}`, `assets/vinetas/${v}.png`);
+    for (const p of ['goldstein', 'oveja', 'soldado', 'diccionario', 'gran_hermano', 'amory', 'estasia']) this.load.image(`cf-${p}`, `assets/minijuegos/cf-${p}.png`);
+    this.load.image('mapa-estasia', 'assets/minijuegos/mapa-estasia.png');
+    this.load.spritesheet('fichas-presos', 'assets/minijuegos/fichas-presos.png', { frameWidth: 24, frameHeight: 28 });
     for (const i of [1, 2, 3]) this.load.image(`cascote-${i}`, `assets/minijuegos/cascote-${i}.png`);
     for (const item of Object.values(ITEMS)) this.load.image(item.icono, `assets/iconos/${item.icono}.png`);
     this.load.on('loaderror', (f: Phaser.Loader.File) => console.warn('[carga] falta', f.src));

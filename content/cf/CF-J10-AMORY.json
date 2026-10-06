@@ -1,0 +1,26 @@
+{
+  "dif": "dificil",
+  "fases": [
+    {
+      "expr": "desprecio",
+      "golpes": 18,
+      "pantalla": "amory",
+      "coro": [
+        "¡Traidor!",
+        "¡Fuera!"
+      ],
+      "pensamientos": [
+        "«Pájaros.» Eran pájaros. Solo eran pájaros.",
+        "Ojos de pájaro. Mordía los lápices.",
+        {
+          "texto": "Yo dije su nombre. Yo dije su nombre. Yo dije su nombre.",
+          "si": "amory_reaccion==denuncia"
+        },
+        {
+          "texto": "— · F. AMORY · — · No sé quién es. Sé quién es. No sé quién…",
+          "si": "dp_j3_amory==aceptar"
+        }
+      ]
+    }
+  ]
+}

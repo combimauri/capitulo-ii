@@ -19,6 +19,8 @@ interface DpConfig {
   /** Doblepensar sobre lo que se dijo: id de línea → texto nuevo (admite {variables} de ink). */
   reescribir?: Record<string, string>;
   telepantalla: string;
+  /** Quién habla en voz baja (por defecto, la telepantalla). */
+  voz?: string;
   aceptar: string;
   recordar: string;
 }
@@ -207,7 +209,7 @@ export class RegistroScene extends Minijuego {
     const tele = this.fuera(this.add.text(width / 2, 462, '', {
       fontFamily: FUENTE.maquina, fontSize: '24px', color: hex(COLOR.tele5), align: 'center', wordWrap: { width: 820 },
     }).setOrigin(0.5));
-    const susurro = interpolar(c.telepantalla);
+    const susurro = (c.voz ? `${c.voz}: ` : '') + interpolar(c.telepantalla);
     for (let i = 1; i <= susurro.length; i++) {
       tele.setText(susurro.slice(0, i));
       await espera(32);

@@ -1,0 +1,417 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Archivo Restringido"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-archivo_restringido"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "archivo_r.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/archivo_restringido.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "estanteria",
+     "x": 70,
+     "y": 112,
+     "width": 140,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "estanteria",
+     "x": 270,
+     "y": 112,
+     "width": 140,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "estanteria",
+     "x": 70,
+     "y": 156,
+     "width": 140,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "estanteria",
+     "x": 270,
+     "y": 156,
+     "width": 140,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 11,
+     "name": "mesa",
+     "x": 320,
+     "y": 196,
+     "width": 90,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 12,
+     "name": "silla",
+     "x": 360,
+     "y": 224,
+     "width": 16,
+     "height": 12,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 13,
+     "name": "semana",
+     "x": 70,
+     "y": 104,
+     "width": 140,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Semana 18/84"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo_r.semana_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo_r.semana"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "140,140"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "semana16",
+     "x": 270,
+     "y": 148,
+     "width": 140,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Semana 16/84"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo_r.mercado_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo_r.semana16"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "340,184"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "anios",
+     "x": 60,
+     "y": 32,
+     "width": 370,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Carpetas por años"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo_r.anios_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo_r.anios"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "mesa",
+     "x": 320,
+     "y": 190,
+     "width": 90,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mesa de lectura"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo_r.mesa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "304,212"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "salir",
+     "x": 224,
+     "y": 240,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo_r.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,236"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 18,
+     "name": "puerta",
+     "x": 240,
+     "y": 232,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 19
+}

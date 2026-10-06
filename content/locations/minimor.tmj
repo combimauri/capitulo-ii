@@ -1,0 +1,422 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Ministerio del Amor · recepción"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-minimor"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "minimor.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/minimor.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "banco",
+     "x": 60,
+     "y": 150,
+     "width": 136,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "mostrador",
+     "x": 296,
+     "y": 110,
+     "width": 128,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 10,
+     "name": "banco",
+     "x": 60,
+     "y": 140,
+     "width": 136,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Banco"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "minimor.banco"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "128,182"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "servicio",
+     "x": 56,
+     "y": 44,
+     "width": 24,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta de servicio"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "minimor.servicio"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "68,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "mostrador",
+     "x": 296,
+     "y": 100,
+     "width": 128,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mostrador"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor.mostrador_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "330,154"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "oficina",
+     "x": 380,
+     "y": 40,
+     "width": 30,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Oficina interior"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor.oficina_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "395,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "salir",
+     "x": 224,
+     "y": 240,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Salida"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "minimor.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,236"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "entrada",
+     "x": 240,
+     "y": 232,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "banco",
+     "x": 128,
+     "y": 184,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 9,
+     "name": "funcionaria",
+     "x": 360,
+     "y": 106,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionaria_minimor"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Funcionaria"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "minimor.funcionaria_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!funcionaria_fuera || expediente_visto"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "360,154"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 17
+}

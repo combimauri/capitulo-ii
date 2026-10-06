@@ -22,6 +22,21 @@
 { jornada == 7:
     -> j7_piso
 }
+{ jornada == 8:
+    -> j8_piso
+}
+{ jornada == 9:
+    -> j9_piso
+}
+{ jornada == 10:
+    -> j10_piso
+}
+{ jornada == 11:
+    -> j11_piso
+}
+{ jornada == 12:
+    -> j12_piso
+}
 { gimnasia_hecha or jornada != 1:
     -> DONE
 }
@@ -125,6 +140,13 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 { jornada == 6:
     -> j6_salir_piso
 }
+{ jornada == 10:
+    # escena:escalera # pos:piso
+    -> DONE
+}
+{ jornada == 12:
+    -> j12_parque
+}
 { jornada >= 3:
     -> j3_salir_piso
 }
@@ -140,6 +162,9 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 }
 { jornada == 6:
     -> j6_hilda
+}
+{ jornada == 10:
+    -> j10_escalera
 }
 { escalera_vista:
     -> DONE
@@ -237,6 +262,13 @@ PROTAGONISTA: Lo estoy. # id:j1_02_prot_03
 { jornada == 6:
     -> j6_bajar
 }
+{ jornada == 10:
+    { rectificacion_hecha:
+        PENSAMIENTO: A casa. # id:j10_06_bajar_no
+        -> DONE
+    }
+    -> j10_bajar
+}
 { not hilda_j1:
     HILDA: ¡{nombre}! ¡Espera, espera, que no se escapa nadie sin pasar por la lata! # id:j1_02_hilda_espera
     -> hilda
@@ -248,12 +280,21 @@ PROTAGONISTA: Lo estoy. # id:j1_02_prot_03
 === avenida ===
 
 = entrar
+{ jornada == 11:
+    -> j11_avenida
+}
 { avenida_vista:
     -> DONE
 }
 ~ avenida_vista = true
 PENSAMIENTO: La avenida de la Victoria. Al fondo, el Ministerio de la Paz. Mi Ministerio. # id:j1_03_pens_00
 -> DONE
+
+= portal
+{ jornada == 11:
+    -> j11_portal
+}
+-> portal_mirar
 
 = portal_mirar
 PENSAMIENTO: Las Mansiones Victoria. Ochocientas viviendas y un solo ascensor que funciona a veces. # id:j1_03_portal_mirar
@@ -355,6 +396,18 @@ PENSAMIENTO: El ascensor de la izquierda. Funciona. # id:j1_04_ascensor_mirar
 }
 { jornada == 7:
     -> j7_entrar
+}
+{ jornada == 8:
+    -> j8_entrar
+}
+{ jornada == 9:
+    -> j9_entrar
+}
+{ jornada == 11:
+    -> j11_entrar
+}
+{ jornada == 12:
+    -> j12_entrar
 }
 { depto_visto:
     -> DONE
@@ -502,6 +555,13 @@ PENSAMIENTO: Tengo trabajo. # id:j1_05_nell_hablar
 { jornada == 7:
     -> j7_salir
 }
+{ jornada == 8:
+    -> j8_salir
+}
+{ jornada >= 9:
+    PENSAMIENTO: Hoy no es día de quedarse en la mesa. # id:j9_salir_depto
+    -> DONE
+}
 { not parte_j1_enviado:
     PENSAMIENTO: Primero el parte. Malabar no espera. # id:j1_05_salir_no
     -> DONE
@@ -515,6 +575,9 @@ PENSAMIENTO: Tengo trabajo. # id:j1_05_nell_hablar
 = entrar
 { jornada == 4:
     -> j4_cantina
+}
+{ jornada == 10:
+    -> j10_cantina
 }
 { cantina_vista:
     -> DONE
@@ -562,6 +625,18 @@ AMORY: Come, come. El guiso se enfría y luego sabe a guiso frío. # id:j1_06_am
 { jornada == 7:
     -> j7_noche
 }
+{ jornada == 8:
+    -> j8_noche
+}
+{ jornada == 9:
+    -> j9_noche
+}
+{ jornada == 10:
+    -> j10_noche
+}
+{ jornada == 11:
+    -> j11_noche
+}
 { noche_vista:
     -> DONE
 }
@@ -578,6 +653,9 @@ PENSAMIENTO: Son mis palabras. Las está diciendo toda Oceanía. Ivy, ¿lo oyes?
 -> DONE
 
 = cartel_mirar
+{ jornada >= 8:
+    -> j8_cartel_noche
+}
 { jornada == 7 and (nell_respuesta == "aceptar" or nell_respuesta == "dudar"):
     -> j7_cartel_mirar
 }
@@ -587,6 +665,12 @@ PENSAMIENTO: Son mis palabras. Las está diciendo toda Oceanía. Ivy, ¿lo oyes?
 }
 PENSAMIENTO: Hoy hemos ganado {parte_j1_km} kilómetros. Mañana ganaremos más. # id:j1_07_cartel_mirar
 -> DONE
+
+= cartel_usar
+{ jornada == 11:
+    -> j11_cartel_usar
+}
+-> cartel_mirar
 
 = abrigo_mirar
 PENSAMIENTO: Mi abrigo. Gris, como todos los abrigos. # id:j1_07_abrigo_mirar
@@ -636,6 +720,18 @@ PENSAMIENTO: Mañana, a las siete y cuarto, el silbato. # id:j1_07_cama_mirar
 }
 { jornada == 7:
     -> j7_dormir
+}
+{ jornada == 8:
+    -> j8_dormir
+}
+{ jornada == 9:
+    -> j9_dormir
+}
+{ jornada == 10:
+    -> j10_dormir
+}
+{ jornada == 11:
+    -> j11_dormir
 }
 ~ jornada = 2
 ~ desayunado = false

@@ -4,13 +4,20 @@
  * puntos interactivos, personajes, transiciones pedidas desde ink y depuración.
  */
 import Phaser from 'phaser';
-import { narrativa, registro, mano, LOCALIZACIONES, RESOLUCION, EV, tactil } from '../core/juego';
+import { narrativa, registro, mano, mision, segundos, LOCALIZACIONES, RESOLUCION, EV, tactil } from '../core/juego';
 import { contains, cumple, overlaps, type Dir, type Hotspot, type LocationData, type Npc, type Point, type Rect } from '../core/Location';
 import { NavGrid } from '../systems/Pathfinding';
+import { Sigilo } from '../systems/Sigilo';
+import { audio } from '../systems/AudioDirector';
 import { SaveSystem } from '../core/SaveSystem';
 import type { Tag } from '../core/tags';
 
-export interface EntradaEscena { escena: string; spawn?: string; x?: number; y?: number; dir?: Dir; cargado?: boolean }
+export interface EntradaEscena {
+  escena: string; spawn?: string; x?: number; y?: number; dir?: Dir; cargado?: boolean; reloj?: typeof mision.reloj;
+}
+
+/** Velocidad con la carpeta abierta (sigilo social): se camina leyendo. */
+const VELOCIDAD_LEYENDO = 0.6;
 
 const VELOCIDAD = 72;            // px de mundo por segundo
 const PIES = { w: 10, h: 5 };    // caja de colisión en los pies
@@ -55,6 +62,12 @@ export class LocationScene extends Phaser.Scene {
   private finalPendiente = false;
   private colisionesActivas: Rect[] = [];
   private limpiar: (() => void)[] = [];
+  private sigilo: Sigilo | null = null;
+  /** Punto de aparición al que se vuelve si te ven (sigilo). */
+  private checkpoint = '';
+  private volverAlControl = false;
+  private moviendose = false;
+  private arrestando = false;
 
   constructor() { super('Location'); }
 
@@ -72,7 +85,8 @@ export class LocationScene extends Phaser.Scene {
     this.game.events.on(EV.mano, verCono);
     this.events.once('shutdown', () => this.game.events.off(EV.mano, verCono));
     this.dibujarCono();
-    if (this.loc.conosRotativos) this.vigilancia(this.loc.conosRotativos);
+    if (this.loc.conosRotativos && !this.loc.sigilo) this.vigilancia(this.loc.conosRotativos);
+    if (narrativa.story.variablesState.GlobalVariableExistsWithName('escena_actual')) narrativa.set('escena_actual', this.loc.id);
 
     const spawn = this.loc.spawns.find((s) => s.name === data.spawn) ?? this.loc.spawns[0];
     const x = data.x ?? spawn.x, y = data.y ?? spawn.y;
@@ -89,6 +103,19 @@ export class LocationScene extends Phaser.Scene {
       if (this.loc.tinteProta !== undefined) sprite.setTint(this.loc.tinteProta);   // la misma luz para todos
       this.npcs.set(npc.name, { npc, sprite, visible: true });
     }
+    this.sigilo = null; this.volverAlControl = false; this.arrestando = false;
+    mision.oculto = false;
+    if (this.loc.sigilo) {
+      this.checkpoint = this.loc.sigilo.checkpoint ?? spawn.name;
+      this.sigilo = new Sigilo(this, this.loc, this.npcs, {
+        prota: () => ({ x: this.prota.x, y: this.prota.y }),
+        bloquea: (p) => this.colisionesActivas.some((c) => contains(c, p)),
+        moviendose: () => this.moviendose,
+        visto: () => this.visto(),
+      });
+      this.events.once('shutdown', () => { this.sigilo?.destroy(); this.sigilo = null; });
+    }
+    if (data.cargado && data.reloj !== undefined) mision.reloj = data.reloj;
     this.actualizarVisibilidad();
 
     const cam = this.cameras.main;
@@ -182,7 +209,8 @@ export class LocationScene extends Phaser.Scene {
       }
       if (!pul || pul.consumida || this.ocupado || p.rightButtonReleased()) return;
       pul.timer?.remove();
-      if (pul.hotspot) this.irYActuar(pul.hotspot, 'principal');
+      if (mision.carpeta) this.caminarA({ x: p.worldX, y: p.worldY });
+      else if (pul.hotspot) this.irYActuar(pul.hotspot, 'principal');
       else this.caminarA({ x: p.worldX, y: p.worldY });
     };
     this.input.on('pointerup', soltar);
@@ -250,12 +278,33 @@ export class LocationScene extends Phaser.Scene {
       this.finDialogo = this.time.now;
       this.actualizarVisibilidad();
       this.enfocado = null;
+      if (this.volverAlControl && !this.cambioPendiente.escena) {
+        const s = this.loc.spawns.find((sp) => sp.name === this.checkpoint);
+        if (s) { this.colocar(s.x, s.y); this.dir = s.orientacion; this.parar(); }
+        this.sigilo?.reiniciar();
+        this.cameras.main.flash(250, 11, 12, 15);
+      }
+      this.volverAlControl = false;
+      // Sospecha 100: el arresto (Final C, o C0 en el Acto I)
+      if (!this.arrestando && !this.finalPendiente && Number(narrativa.get('sospecha')) >= 100 && narrativa.hasPath('arresto')) {
+        this.arrestando = true;
+        this.cambioPendiente = {};
+        this.time.delayedCall(300, () => this.game.events.emit(EV.dialogoIniciar, 'arresto'));
+        return;
+      }
       this.autoguardar();
     };
     const depurar = (activo: boolean) => { this.depurando = activo; };
     // paneles (registro) que detienen el mundo sin ser un diálogo
     const pausa = (activa: boolean) => { if (activa) inicio(); else { this.ocupado = false; this.finDialogo = this.time.now; } };
     const accion = (modo: 'principal' | 'mirar') => this.actuarEnfocado(modo);
+    const carpeta = () => {
+      if (!mision.social || this.ocupado) return;
+      mision.carpeta = !mision.carpeta;
+      audio.play('papel');
+      if (mision.carpeta) { this.game.events.emit(EV.foco, null); this.enfocado = null; }
+    };
+    ev.on(EV.carpeta, carpeta);
     ev.on(EV.dialogoIniciar, inicio);
     ev.on(EV.dialogoFin, fin);
     ev.on(EV.depurar, depurar);
@@ -264,6 +313,7 @@ export class LocationScene extends Phaser.Scene {
     const quitar = narrativa.on('command', (t: Tag) => this.comando(t));
     this.limpiar.push(() => {
       ev.off(EV.dialogoIniciar, inicio); ev.off(EV.dialogoFin, fin); ev.off(EV.depurar, depurar); ev.off(EV.accion, accion); ev.off(EV.pausa, pausa);
+      ev.off(EV.carpeta, carpeta);
       quitar();
     });
   }
@@ -286,6 +336,16 @@ export class LocationScene extends Phaser.Scene {
       // prota:izquierda → el protagonista se gira (sin moverse)
       this.dir = t.value as Dir;
       this.parar();
+    } else if (t.key === 'seguir') {
+      // seguir: al que han visto no se le devuelve al punto de control (alguien le ha cubierto)
+      this.volverAlControl = false;
+    } else if (t.key === 'reloj') {
+      // reloj:inicio=23:00:00,limite=240,agotar=knot · reloj:mas=90 · reloj:menos=10 · reloj:parar
+      const p = t.params;
+      if (t.value === 'parar') mision.reloj = null;
+      else if (p.inicio) mision.reloj = { inicio: segundos(p.inicio), transcurrido: 0, limite: Number(p.limite) || 240, agotar: p.agotar ?? '', agotado: false };
+      else if (mision.reloj && p.mas) { mision.reloj.limite = mision.reloj.transcurrido + Number(p.mas); mision.reloj.agotado = false; }
+      else if (mision.reloj && p.menos) mision.reloj.transcurrido += Number(p.menos);
     } else if (t.key === 'npc') {
       // npc:nombre=dir  → orienta a un personaje (p. ej. hacia el jugador)
       for (const [nombre, dir] of Object.entries(t.params)) {
@@ -298,27 +358,73 @@ export class LocationScene extends Phaser.Scene {
   // ------------------------------------------------------------------ bucle
   update(_t: number, dtMs: number) {
     const dt = dtMs / 1000;
+    this.moviendose = false;
     if (!this.ocupado) {
       const v = this.direccionEntrada();
+      if ((v.x || v.y) && mision.oculto) this.salirEscondite();
       if (v.x || v.y) {
         this.ruta = []; this.alLlegar = null;
-        const corre = this.teclas.SHIFT.isDown || (tactil.activo && Math.hypot(v.x, v.y) > 0.95);
-        const vel = VELOCIDAD * (corre ? 1.6 : 1);
+        const corre = !mision.carpeta && (this.teclas.SHIFT.isDown || (tactil.activo && Math.hypot(v.x, v.y) > 0.95));
+        const vel = VELOCIDAD * (corre ? 1.6 : mision.carpeta ? VELOCIDAD_LEYENDO : 1);
         this.prota.anims.timeScale = corre ? 1.6 : 1;   // al correr, las piernas van al mismo ritmo
-        this.mover(v.x * vel * dt, v.y * vel * dt);
+        this.moviendose = this.mover(v.x * vel * dt, v.y * vel * dt);
       } else if (this.ruta.length) {
-        this.prota.anims.timeScale = 1;
-        this.seguirRuta(dt);
-      } else {
+        this.prota.anims.timeScale = mision.carpeta ? VELOCIDAD_LEYENDO : 1;
+        this.seguirRuta(dt * (mision.carpeta ? VELOCIDAD_LEYENDO : 1));
+        this.moviendose = true;
+      } else if (!mision.oculto) {
         this.parar();
       }
-      this.actualizarFoco();
+      if (!mision.carpeta) this.actualizarFoco();
       this.comprobarZonas();
+      this.avanzarReloj(dt);
     }
+    this.sigilo?.update(dtMs, !this.ocupado);
     this.alejarPersonajes(dt);
     this.prota.setDepth(this.prota.y);
     this.sombra.setPosition(this.prota.x, this.prota.y - 1).setDepth(this.prota.y - 1);
     this.dibujarDepuracion();
+  }
+
+  /** Le han visto: la historia decide (¡Alto!, Sospecha) y después se vuelve al último punto de control. */
+  private visto() {
+    if (this.ocupado) return;
+    this.salirEscondite();
+    this.volverAlControl = true;
+    audio.play('alto');
+    const ruta = this.loc.sigilo?.alSerVisto;
+    if (ruta && narrativa.hasPath(ruta)) this.game.events.emit(EV.dialogoIniciar, ruta);
+  }
+
+  private esconderse(h: Hotspot) {
+    if (mision.oculto) return this.salirEscondite();
+    mision.oculto = true;
+    this.colocar(h.aprox.x, h.aprox.y);
+    if (h.orientacion) this.dir = h.orientacion;
+    this.parar();
+    this.prota.setAlpha(0.35);
+    this.sombra.setAlpha(0.1);
+    audio.play('papel');
+  }
+
+  private salirEscondite() {
+    if (!mision.oculto) return;
+    mision.oculto = false;
+    this.prota.setAlpha(1);
+    this.sombra.setAlpha(1);
+  }
+
+  /** La ventana de tiempo de una misión: corre solo mientras se explora. */
+  private avanzarReloj(dt: number) {
+    const r = mision.reloj;
+    if (!r || r.agotado) return;
+    const antes = Math.floor(r.transcurrido);
+    r.transcurrido += dt;
+    if (Math.floor(r.transcurrido) !== antes && r.limite - r.transcurrido < 15) audio.play('tic');
+    if (r.transcurrido >= r.limite) {
+      r.agotado = true;
+      if (r.agotar && narrativa.hasPath(r.agotar)) this.game.events.emit(EV.dialogoIniciar, r.agotar);
+    }
   }
 
   /** Personajes con "huye": retroceden hacia la derecha mientras el jugador se acerca. */
@@ -408,10 +514,10 @@ export class LocationScene extends Phaser.Scene {
   // ------------------------------------------------------------------ visibilidad según la historia
   private actualizarVisibilidad() {
     const leer = (v: string) => narrativa.get(v);
-    const alt = this.loc.fondoAlt;
-    this.fondo.setTexture(alt && cumple(alt.condicion, leer) ? alt.clave : this.loc.fondo);
+    const alt = this.loc.fondosAlt.find((f) => cumple(f.condicion, leer));
+    this.fondo.setTexture(alt ? alt.clave : this.loc.fondo);
     this.colisionesActivas = this.loc.colisiones.filter((c) => cumple(c.condicion, leer));
-    const conAccion = (h: Hotspot) => !!(h.mirar || h.usar || h.hablar);
+    const conAccion = (h: Hotspot) => !!(h.mirar || h.usar || h.hablar || h.escondite);
     this.hotspotsVisibles = this.loc.hotspots.filter((h) => conAccion(h) && cumple(h.condicion, leer));
     for (const n of this.npcs.values()) {
       n.visible = cumple(n.npc.hotspot.condicion, leer);
@@ -453,6 +559,18 @@ export class LocationScene extends Phaser.Scene {
   /** Zonas automáticas: se disparan una vez al entrar en ellas. */
   private comprobarZonas() {
     const p = { x: this.prota.x, y: this.prota.y - 2 };
+    const leer = (v: string) => narrativa.get(v);
+    for (const h of this.loc.hotspots) {
+      if (!(h.ruido || h.checkpoint) || !cumple(h.condicion, leer)) continue;
+      const clave = `@${h.name}`;
+      const dentro = contains(h, p);
+      if (dentro && !this.zonasPisadas.has(clave)) {
+        this.zonasPisadas.add(clave);
+        if (h.checkpoint) this.checkpoint = h.checkpoint;
+        if (h.ruido) this.sigilo?.ruido({ x: h.x + h.w / 2, y: h.y + h.h / 2 });
+      }
+      if (!dentro) this.zonasPisadas.delete(clave);
+    }
     for (const h of this.hotspotsVisibles) {
       if (!h.auto) continue;
       const dentro = contains(h, p);
@@ -466,7 +584,8 @@ export class LocationScene extends Phaser.Scene {
   }
 
   private actuarEnfocado(modo: 'principal' | 'mirar') {
-    if (this.ocupado || !this.enfocado || this.time.now - this.finDialogo < 250) return;
+    if (mision.oculto && modo === 'principal') { this.salirEscondite(); return; }
+    if (this.ocupado || mision.carpeta || !this.enfocado || this.time.now - this.finDialogo < 250) return;
     this.actuar(this.enfocado, modo);
   }
 
@@ -475,6 +594,7 @@ export class LocationScene extends Phaser.Scene {
   }
 
   private actuar(h: Hotspot, modo: 'principal' | 'mirar') {
+    if (h.escondite && modo === 'principal' && !mano.item) { this.esconderse(h); return; }
     let ruta = modo === 'mirar' ? h.mirar : (h.hablar ?? h.usar ?? h.mirar);
     // con un objeto en la mano, la acción principal es usarlo aquí
     if (mano.item && modo === 'principal') {
@@ -521,7 +641,7 @@ export class LocationScene extends Phaser.Scene {
     SaveSystem.guardar('auto', {
       ink: narrativa.saveState(),
       registro: registro.serializar(),
-      mundo: { escena: this.loc.id, x: Math.round(this.prota.x), y: Math.round(this.prota.y), dir: this.dir },
+      mundo: { escena: this.loc.id, x: Math.round(this.prota.x), y: Math.round(this.prota.y), dir: this.dir, reloj: mision.reloj ?? undefined },
       meta: { jornada: Number(narrativa.get('jornada')) || 1 },
     });
   }

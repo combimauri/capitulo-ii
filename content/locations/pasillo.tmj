@@ -285,11 +285,59 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada!=12"
       }
      ]
     },
     {
      "id": 11,
+     "name": "carrito12",
+     "x": 698,
+     "y": 106,
+     "width": 40,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Carrito de Nell"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j12_carrito_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j12_carrito_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "718,162"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==12"
+      }
+     ]
+    },
+    {
+     "id": 13,
      "name": "salir",
      "x": 886,
      "y": 38,
@@ -322,7 +370,7 @@
      ]
     },
     {
-     "id": 12,
+     "id": 14,
      "name": "encuentro",
      "x": 630,
      "y": 98,
@@ -361,7 +409,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 15,
+     "id": 17,
      "name": "depto",
      "x": 76,
      "y": 114,
@@ -380,9 +428,28 @@
      ]
     },
     {
-     "id": 16,
+     "id": 18,
      "name": "suministros",
      "x": 776,
+     "y": 114,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "escalera",
+     "x": 904,
      "y": 114,
      "width": 0,
      "height": 0,
@@ -410,7 +477,36 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 13,
+     "id": 12,
+     "name": "volcado",
+     "x": 676,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "carrito_volcado"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==12"
+      }
+     ]
+    },
+    {
+     "id": 15,
      "name": "nell",
      "x": 752,
      "y": 150,
@@ -454,7 +550,7 @@
      ]
     },
     {
-     "id": 14,
+     "id": 16,
      "name": "guardia",
      "x": 540,
      "y": 172,
@@ -495,5 +591,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 17
+ "nextobjectid": 20
 }

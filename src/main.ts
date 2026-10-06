@@ -19,7 +19,15 @@ import { SammyScene } from './scenes/minijuegos/SammyScene';
 import { DiarioScene } from './scenes/minijuegos/DiarioScene';
 import { ComparadorScene } from './scenes/minijuegos/ComparadorScene';
 import { EsconderScene } from './scenes/minijuegos/EsconderScene';
-import { RESOLUCION, narrativa, registro, EV } from './core/juego';
+import { DocumentoScene } from './scenes/minijuegos/DocumentoScene';
+import { LibroScene } from './scenes/minijuegos/LibroScene';
+import { CopiarScene } from './scenes/minijuegos/CopiarScene';
+import { PalancaScene } from './scenes/minijuegos/PalancaScene';
+import { LlavesScene } from './scenes/minijuegos/LlavesScene';
+import { CombinacionScene } from './scenes/minijuegos/CombinacionScene';
+import { RectificacionScene } from './scenes/minijuegos/RectificacionScene';
+import { ListaScene } from './scenes/minijuegos/ListaScene';
+import { RESOLUCION, narrativa, registro, mision, EV } from './core/juego';
 
 registerSW({ immediate: true });
 
@@ -34,7 +42,8 @@ const juego = new Phaser.Game({
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   input: { activePointers: 2 },
   dom: { createContainer: true },
-  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene, RegistroScene],
+  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene,
+    DocumentoScene, LibroScene, CopiarScene, PalancaScene, LlavesScene, CombinacionScene, RectificacionScene, ListaScene, RegistroScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):
@@ -44,6 +53,7 @@ if (import.meta.env.DEV) {
     juego,
     narrativa,
     registro,
+    mision,
     saltar(escena: string, knot?: string, vars: Record<string, unknown> = {}) {
       for (const [k, v] of Object.entries(vars)) narrativa.set(k, v);
       juego.scene.getScenes(true).forEach((s) => { if (!['UI', 'Location'].includes(s.scene.key)) s.scene.stop(); });

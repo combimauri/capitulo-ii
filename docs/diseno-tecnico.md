@@ -675,7 +675,7 @@ interface SaveData {
 | **M1 · Corte vertical** ✅ | **Prólogo + Jornada 1 completos:** escombros, ficha de afiliación, piso, escalera, calle, Minipax, cantina. Crimen facial (gimnasia y noticia). Minijuego de partes. Inventario. Arte provisional de calidad aceptable para 3 localizaciones. | Se juega de principio a fin en ~15 min, en escritorio y móvil, con audio. Sirve para validar tono, controles y legibilidad. |
 | **M2 · Acto I** ✅ | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
 | **M3 · Acto II + Final A** ✅ | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
-| **M4 · Sistema de sigilo + Acto III** | Sigilo completo. Las tres misiones. Gran Rectificación. Expediente de Ivy. Lista de Len. Crane. Persecución. Final B. | Jugable hasta J12. |
+| **M4 · Sistema de sigilo + Acto III** ✅ | Sigilo completo. Las tres misiones. Gran Rectificación. Expediente de Ivy. Lista de Len. Crane. Persecución. Final B. | Jugable hasta J12. |
 | **M5 · Acto IV + finales** | Túneles (mapa de tres capas y cohetes), cripta, conversación, composición del Capítulo II, finales C, C0, D y E, créditos y desbloqueos. | Los cinco finales y C0 se alcanzan. Bot y rutas dirigidas en verde. |
 | **M6 · Arte y audio finales** | Sustitución del arte provisional, música, ambientes y efectos. | — |
 | **M7 · Pulido** | Equilibrio de Duda y Sospecha, accesibilidad, rendimiento móvil, PWA y pruebas con jugadores. | Partida completa sin bloqueos en Chrome, Safari iOS y Android. |
@@ -761,6 +761,25 @@ interface SaveData {
 **Pendiente para M3:**
 - La música de taberna y el leitmotiv prole.
 - Una ilustración propia para la foto restaurada de Ivy.
+
+### Estado de M4 (Acto III completo, con el Final B «trato» y el arresto)
+
+- **Jornadas 8 a 12 jugables**, con todas las ramas del guion. La Jornada 12 termina en el Acto IV («Continuará»), en el Final B (aceptar el trato de Crane) o, con Sospecha 100, en el arresto.
+- **Sistema de sigilo** (`src/systems/Sigilo.ts`), declarado en los mapas:
+  - `sigilo=knot` (lo que pasa si te ven), `checkpoint` y zonas con `checkpoint=` para volver al último punto de control. `sigilo_si=var` hace que solo vigilen bajo una condición.
+  - Guardias: NPC con `vista="alcance,semiángulo"`, `ruta`, `pausa`, `velocidad` y `gira`. Su cono se recorta con las colisiones.
+  - Telepantallas fijas (`vigila`), que giran (`conos`, `cono_periodo`) y ocultas (`ocultos`, que solo se notan por el zumbido al acercarse).
+  - Medidor de alerta sobre la cabeza, escondites (`escondite=true`) y charcos o cubos que hacen ruido (`ruido=true`) y atraen a los guardias.
+  - Sigilo social (`social=true`): con la carpeta abierta y en movimiento nadie repara en ti; sin ella, los supervisores ven y quedarse quieto delata.
+  - Comandos de ink: `reloj:inicio=…,limite=…,agotar=…`, `reloj:mas=` / `menos=` / `parar` (ventanas de tiempo que solo corren explorando) y `seguir` (alguien te cubre: no se vuelve al punto de control).
+- **Minijuegos nuevos:** visor de documentos (`documento:`), lectura del libro de Goldstein con subrayados que dependen de lo vivido, copiar la Planilla a mano, la palanca del montacargas, el panel de llaves, el cerrojo de combinación, la Gran Rectificación (banderas, partes y Libro de Registro) y la lista de Len.
+- **Crimen facial ampliado:** pensamientos por fase con condiciones (con Duda alta tapan la pista), el giro del orador (fase sin marcas) y las pancartas que hay que arrancar sin tocar las del Gran Hermano. Expresión nueva: neutral.
+- **Sospecha 100:** el arresto se adapta al lugar (FC.01); en el Acto I, vaporización (Final C0). La celda, O'Brien y la Habitación 101 quedan para el Acto IV.
+- **Escenarios nuevos:** sala de calderas, planta once, Archivo Restringido, sótano de La Campana, Departamento de Registro del Miniver y su cantina, lavabos (con vaho), recepción y Archivo B del Minimor, callejones de Limehouse de noche y la casa de Dot. Variantes: escalera en la Semana del Odio, la Gran Rectificación, la furgoneta de Charrington y la trastienda abierta de Crane.
+- **Personajes nuevos:** Syme, Charrington, la Policía del Pensamiento, la funcionaria del Minimor, los supervisores del Miniver y Voss en mangas de camisa.
+- **157 pruebas**, con cada decisión del acto, las misiones y el Final B «trato» recorridos.
+
+**Pendiente para M5:** el Final C completo (celda, O'Brien, «¿Qué hora marca?», Habitación 101, el café), que ahora se corta tras el arresto.
 
 ---
 

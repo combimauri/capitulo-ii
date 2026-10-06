@@ -134,11 +134,170 @@ def icono_llave():
     return _rgba(cv)
 
 
+# ---------------------------------------------------------------- Acto III
+
+
+def _hoja(cv, x0=3, y0=1, x1=13, y1=15, tono=3, borde=0):
+    cv.rect(x0, y0, x1, y1, K("papel", tono)); cv.frame(x0, y0, x1, y1, K("papel", borde))
+
+
+def icono_directiva():
+    cv = Canvas(16, 16)
+    _hoja(cv, tono=4)
+    cv.poly([(5, 5), (8, 2), (11, 5)], K("gris", 2))                                 # membrete: la pirámide
+    cv.hline(4, 12, 6, K("rojo", 3))
+    for y in (8, 10, 12):
+        cv.hline(5, 11, y, K("gris", 3))
+    cv.hline(5, 9, 14, K("gris", 4))
+    return _rgba(cv)
+
+
+def icono_copia_planilla():
+    cv = Canvas(16, 16)
+    _hoja(cv, tono=3, borde=1)
+    for y in (3, 6, 9, 12):                                                           # letra a lápiz, temblorosa
+        for x in range(5, 12):
+            cv.px(x, y + (x % 3 == 0), K("gris", 5))
+    cv.d.line([12, 14, 15, 11], fill=K("ocre", 2)); cv.px(11, 15, K("gris", 2))      # el lápiz
+    return _rgba(cv)
+
+
+def icono_hoja_planilla():
+    cv = Canvas(16, 16)
+    _hoja(cv)
+    cv.rect(3, 1, 13, 15, K("cielo", 6)); cv.frame(3, 1, 13, 15, K("cielo", 4))     # papel azul pálido
+    cv.hline(5, 11, 3, K("azul", 1))
+    for y, x1 in ((6, 12), (8, 11), (10, 12), (12, 9)):                               # renglones a máquina
+        for x in range(5, x1):
+            if (x * 7 + y) % 5:
+                cv.px(x, y, K("azul", 2))
+    return _rgba(cv)
+
+
+def icono_libro():
+    cv = Canvas(16, 16)
+    for i, t in enumerate((1, 2, 3)):                                                 # fajo de hojas desalineadas
+        cv.rect(3 + i, 3 - i, 13 + i, 14 - i, K("papel", t)); cv.frame(3 + i, 3 - i, 13 + i, 14 - i, K("papel", 0))
+    for y in (4, 6, 8, 10):
+        cv.hline(7, 14, y, K("gris", 4))
+    for y in (2, 6, 10):                                                              # cosido con hilo
+        cv.px(5, y, K("granate", 2)); cv.px(6, y + 1, K("granate", 3)); cv.px(5, y + 2, K("granate", 2))
+    return _rgba(cv)
+
+
+def _periodico(cv, a, b, c):
+    cv.poly([(1, 3), (13, 2), (14, 13), (2, 14)], a)
+    cv.d.line([(1, 3), (13, 2)], fill=c); cv.d.line([(7, 2), (8, 14)], fill=b)       # pliegue
+    cv.d.line([(2, 4), (12, 4)], fill=K("gris", 2)); cv.d.line([(2, 5), (12, 5)], fill=K("gris", 3))  # cabecera del Times
+    for y in (7, 9, 11):
+        cv.hline(3, 7, y, K("gris", 4))
+    cv.hline(9, 13, 11, K("gris", 4))
+    cv.rect(9, 7, 13, 9, K("gris", 5))                                                # foto
+
+
+def icono_times_falso():
+    cv = Canvas(16, 16)
+    _periodico(cv, K("papel", 4), K("papel", 2), K("gris", 10))
+    return _rgba(cv)
+
+
+def icono_times_original():
+    cv = Canvas(16, 16)
+    _periodico(cv, K("ocre", 4), K("ocre", 2), K("ocre", 3))
+    cv.px(2, 13, K("ocre", 2)); cv.px(12, 3, K("ocre", 2)); cv.px(13, 12, K("madera", 4))   # manchas del tiempo
+    return _rgba(cv)
+
+
+def icono_sobre_encerado():
+    cv = Canvas(16, 16)
+    cv.rect(1, 4, 15, 13, K("ocre", 3)); cv.frame(1, 4, 15, 13, K("ocre", 1))
+    cv.d.line([(1, 4), (8, 9), (14, 4)], fill=K("ocre", 1))                          # solapa
+    cv.px(4, 10, K("ocre", 4)); cv.px(5, 11, K("ocre", 4)); cv.px(11, 6, K("papel", 4))   # brillo de la cera
+    return _rgba(cv)
+
+
+def icono_chapa():
+    cv = Canvas(16, 16)
+    cv.ellipse(6, 1, 10, 5, None, outline=K("gris", 5))                               # anilla
+    cv.ellipse(2, 3, 14, 15, K("gris", 6), outline=K("gris", 3))
+    cv.ellipse(4, 5, 12, 13, K("gris", 7))
+    cv.text(4, 7, "41", K("gris", 2))
+    cv.px(5, 5, K("gris", 9)); cv.px(4, 6, K("gris", 9))
+    return _rgba(cv)
+
+
+def icono_foto_sotano():
+    cv = Canvas(16, 16)
+    cv.rect(2, 2, 14, 14, K("papel", 4)); cv.rect(3, 3, 13, 12, K("madera", 2))      # sepia
+    cv.ellipse(4, 3, 13, 12, K("madera", 4)); cv.ellipse(6, 5, 11, 10, K("madera", 5))   # halo de la vela
+    cv.vline(8, 8, 11, K("papel", 4)); cv.px(8, 7, K("ocre", 4)); cv.px(8, 6, K("ocre", 3))   # la vela
+    for x in (4, 11):                                                                 # dos figuras a contraluz
+        cv.rect(x, 7, x + 2, 12, K("madera", 1)); cv.px(x + (1 if x < 8 else 0), 6, K("madera", 1))
+    return _rgba(cv)
+
+
+def icono_dibujos_amory():
+    cv = Canvas(16, 16)
+    cv.poly([(1, 5), (10, 2), (12, 11), (3, 13)], K("papel", 2))
+    cv.poly([(4, 4), (14, 4), (14, 14), (4, 14)], K("papel", 4)); cv.frame(4, 4, 14, 14, K("papel", 1))
+    for (x, y) in ((5, 6), (8, 10)):                                                  # pájaros en vuelo
+        for dx, dy in ((0, 0), (1, 1), (2, 2), (3, 1), (4, 0)):
+            cv.px(x + dx, y + dy, K("gris", 2))
+    cv.px(11, 6, K("gris", 4)); cv.px(12, 7, K("gris", 4)); cv.px(13, 6, K("gris", 4))
+    return _rgba(cv)
+
+
+def icono_carpeta():
+    cv = Canvas(16, 16)
+    cv.rect(1, 3, 7, 5, K("madera", 4))                                               # pestaña
+    cv.rect(1, 4, 15, 14, K("madera", 5)); cv.frame(1, 4, 15, 14, K("madera", 3))
+    cv.rect(3, 2, 13, 4, K("papel", 4))                                               # hojas asomando
+    cv.rect(4, 8, 12, 11, K("papel", 3)); cv.hline(5, 11, 9, K("gris", 4))           # etiqueta
+    return _rgba(cv)
+
+
+def icono_tubo():
+    cv = Canvas(16, 16)
+    cv.d.line([(2, 11), (11, 2)], fill=K("madera", 4), width=4)
+    cv.d.line([(1, 10), (10, 1)], fill=K("madera", 5))
+    cv.ellipse(9, 0, 14, 5, K("rojo", 2)); cv.ellipse(10, 1, 13, 4, K("rojo", 3)); cv.px(11, 2, K("rojo", 5))  # tapa lacrada
+    cv.d.line([(5, 9), (8, 12)], fill=K("madera", 2)); cv.d.line([(1, 12), (3, 14)], fill=K("madera", 2))
+    return _rgba(cv)
+
+
+def icono_mapa_malabar():
+    cv = Canvas(16, 16)
+    for i, x in enumerate(range(1, 15, 5)):                                           # pliegues en acordeón
+        cv.rect(x, 3, min(x + 5, 15), 14, K("papel", 4 if i % 2 == 0 else 3))
+    cv.d.line([(1, 12), (6, 9), (10, 10), (14, 6)], fill=K("cielo", 3))              # el río
+    for (x, y) in ((4, 9), (9, 8), (12, 5)):                                          # banderitas negras
+        cv.vline(x, y - 4, y, K("gris", 2)); cv.rect(x + 1, y - 4, x + 3, y - 2, K("gris", 1))
+    return _rgba(cv)
+
+
+def icono_parte_original():
+    cv = Canvas(16, 16)
+    _hoja(cv, tono=3)
+    cv.hline(4, 12, 3, K("gris", 2))
+    for y in (5, 7, 9):
+        cv.hline(5, 11, y, K("gris", 3))
+    cv.ellipse(6, 9, 13, 15, K("rojo", 3)); cv.ellipse(7, 10, 12, 14, K("papel", 3))  # sello
+    cv.hline(8, 11, 12, K("rojo", 3)); cv.px(9, 11, K("rojo", 3))
+    return _rgba(cv)
+
+
 ICONOS = {"icono-reloj": icono_reloj, "icono-ficha": icono_ficha, "icono-lapiz": icono_lapiz,
           "icono-foto": icono_foto, "icono-diario": icono_diario, "icono-compas": icono_compas,
           "icono-zonificacion": icono_zonificacion, "icono-nota": icono_nota, "icono-metralla": icono_metralla,
           "icono-tarjeta": icono_tarjeta, "icono-metralla-brillante": icono_metralla_brillante,
-          "icono-parte": icono_parte, "icono-foto-restaurada": icono_foto_restaurada, "icono-llave": icono_llave}
+          "icono-parte": icono_parte, "icono-foto-restaurada": icono_foto_restaurada, "icono-llave": icono_llave,
+          "icono-directiva": icono_directiva, "icono-copia_planilla": icono_copia_planilla,
+          "icono-hoja_planilla": icono_hoja_planilla, "icono-libro": icono_libro,
+          "icono-times_falso": icono_times_falso, "icono-times_original": icono_times_original,
+          "icono-sobre_encerado": icono_sobre_encerado, "icono-chapa": icono_chapa,
+          "icono-foto_sotano": icono_foto_sotano, "icono-dibujos_amory": icono_dibujos_amory,
+          "icono-carpeta": icono_carpeta, "icono-tubo": icono_tubo, "icono-mapa_malabar": icono_mapa_malabar,
+          "icono-parte_original": icono_parte_original}
 
 
 def cascotes_fondo():

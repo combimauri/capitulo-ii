@@ -8,7 +8,7 @@ export interface SaveData {
   version: number;
   fecha: string;
   ink: string;
-  mundo: { escena: string; x: number; y: number; dir: Dir };
+  mundo: { escena: string; x: number; y: number; dir: Dir; reloj?: typeof import('./juego').mision.reloj };
   meta: { jornada: number };
   /** Registro de diálogos (con lo que el doblepensar haya reescrito). */
   registro?: ReturnType<import('./Registro').Registro['serializar']>;

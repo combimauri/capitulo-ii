@@ -27,6 +27,9 @@ TELEPANTALLA: El Partido lamenta las víctimas y promete una respuesta implacabl
 -> DONE
 
 === j4_cartel_mirar ===
+{ jornada >= 8:
+    -> j8_cartel_manana
+}
 { jornada >= 6 and diario_escondite == "cartel":
     PENSAMIENTO: Sigue un poco torcido. Lo enderezo. Ya está. # id:j6_01_cartel
     -> DONE
@@ -96,6 +99,9 @@ PENSAMIENTO: El Libro de Registro. Tapas de tela gris. # id:j4_03_libro_mirar
 === j4_libro ===
 { jornada == 5:
     -> j5_libro
+}
+{ jornada == 8:
+    -> j8_libro
 }
 { registro_j4_hecho:
     PENSAMIENTO: El libro está al día. # id:j4_03_libro_hecho

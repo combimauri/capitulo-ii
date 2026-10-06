@@ -76,6 +76,12 @@ CABEZAS = {
         "......ffff", ".....fFFFF", "....fFFFFF", "...fFFFFFF", "...fxxxxxx", "..ffffffff", "...ohhssss",
     ] + CARA,
     "nino": None,  # los niños usan su propia plantilla
+    "cofia": [  # enfermera del Minimor: cofia almidonada sobre el pelo recogido
+        ".......fff", ".....fFFFF", "....fFFFFF", "...fFFFFFF", "...fxxxxxx", "...ohhhhhh", "...ohhssss",
+    ] + CARA,
+    "canoso": [  # anciano: pelo blanco, corto y ralo, entradas en las sienes
+        "..........", "......oooo", "....oohhhh", "...ohhhHHh", "...ohhHhhh", "...ohhhhhh", "...Ohhssss",
+    ] + ["...Osssss s".replace(" ", "")] + CARA[1:],
 }
 
 # ------------------------------------------------------------------ cuerpos (22 filas)
@@ -105,6 +111,14 @@ CUERPOS = {
         "...nnnnnn.",
     ],
 }
+# variantes de cuerpo derivadas de las existentes
+CUERPOS["mono_bajo"] = CUERPOS["mono"][:13] + CUERPOS["mono"][15:]   # dos filas menos de pierna (20 filas)
+CUERPOS["uniforme"] = [  # Policía del Pensamiento: guerrera de hombros rectos, cinturón y botas altas
+    "..nnnnnddL", ".nbBbbbbdL", ".ndbbbbbbL", ".ndbbbbbbd", ".ndbBbbbbL", ".ndbbbbbbd", ".ndbnbbbbL",
+    ".ndbnbbbbd", ".ndbnbbbbL", ".ndbnbbbbd", ".nssnzzzzz", ".nssnzzzzZ", "..nndbbbbb", "...ndbbbbn",
+    "...ndbbbbn", "...ndbbbbn", "...nwWwwwn", "...nwWwwwn", "...nwWwwwn", "...nwWwwwn", "...nwwwwwn",
+    "...nnnnnn.",
+]
 
 NINO = espejo([
     "....cccc", "...cCCCC", "..cCCCCC", "..cCCCCC", ".ccccccc", "..ohssss", "..Osssss", "..Ossess",
@@ -151,6 +165,15 @@ GAFAS = ([(r, c, "g") for r in (8, 11) for c in (4, 5, 6, 7, 8, 11, 12, 13, 14, 
 PERILLA = [(r, c, "y") for r in (14, 15, 16) for c in (8, 9, 10, 11)] + [(17, 9, "y"), (17, 10, "y")]
 BRAZALETE = [(21, c, "r") for c in (1, 2, 3)] + [(22, c, "r") for c in (1, 2, 3)]
 SONRISA = [(14, 7, "m"), (14, 12, "m"), (13, 8, "s"), (13, 11, "s")]
+# gafas de culo de botella con ojos saltones (Syme): el blanco del ojo asoma alrededor de la pupila
+GAFAS_GRANDES = ([(r, c, "g") for r in (8, 12) for c in (4, 5, 6, 7, 8, 11, 12, 13, 14, 15)]
+                 + [(r, c, "g") for r in (9, 10, 11) for c in (4, 8, 11, 15)]
+                 + [(9, 9, "g"), (9, 10, "g")]
+                 + [(r, c, "q") for r in (9, 10, 11) for c in (5, 6, 7, 12, 13, 14)]
+                 + [(r, c, "e") for r in (10, 11) for c in (6, 13)]
+                 + [(9, 5, "G"), (9, 12, "G")])
+CEJAS_NEGRAS = [(8, c, "y") for c in (4, 5, 6, 7, 12, 13, 14, 15)]          # pobladas y aún negras
+GUANTES = [(r, c, "g") for r in (28, 29) for c in (2, 3, 16, 17)]              # guantes sobre las manos del cuerpo
 
 ELENCO = [
     # nombre, filas, paleta

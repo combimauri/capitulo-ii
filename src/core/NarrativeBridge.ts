@@ -25,7 +25,7 @@ export type Step =
 type Listener = (...args: any[]) => void;
 
 /** Etiquetas que son comandos inmediatos para el motor (no detienen el diálogo). */
-const COMANDOS = new Set(['escena', 'pos', 'jornada', 'musica', 'ambiente', 'final', 'npc', 'refrescar', 'objeto', 'prota']);
+const COMANDOS = new Set(['escena', 'pos', 'jornada', 'musica', 'ambiente', 'final', 'npc', 'refrescar', 'objeto', 'prota', 'reloj', 'seguir']);
 
 /** Etiquetas que detienen el diálogo hasta que el motor termina (minijuegos, pausas, efectos). */
 const ACCIONES = new Set(['cf', 'dp', 'minijuego', 'sigilo', 'documento', 'comparar', 'fx', 'esperar', 'bloquear_input', 'sfx', 'recuerdo', 'vineta']);

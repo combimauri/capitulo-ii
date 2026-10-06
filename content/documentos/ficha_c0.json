@@ -1,0 +1,18 @@
+{
+  "papel": "gris",
+  "cabecera": [
+    "PARTIDO DEL INGSOC · FICHA DE AFILIACIÓN"
+  ],
+  "lineas": [
+    "NOMBRE:      ████████████",
+    "APELLIDO:    ████████████",
+    "NÚMERO:      ████████",
+    "FIRMA:       ████████████",
+    "",
+    "IVY {apellido} — MÁRTIR. CALLE STEPNEY, 1979.",
+    "FAMILIARES:  NINGUNO"
+  ],
+  "resaltar": [
+    6
+  ]
+}

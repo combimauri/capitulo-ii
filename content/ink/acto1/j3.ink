@@ -191,6 +191,9 @@ CARTEL: Fin de la jornada. # fx:negro # id:j3_05_cartel # escena:pasillo # pos:d
 === pasillo ===
 
 = entrar
+{ jornada == 12:
+    -> j12_pasillo
+}
 { jornada == 7 and not suministros_visto:
     PENSAMIENTO: El cuarto de suministros, al fondo del pasillo. # id:j7_02_pasillo
     -> DONE
@@ -270,6 +273,10 @@ PENSAMIENTO: Partes y Cartografía. Mañana, otra vez. # id:j3_05_depto_mirar
 -> DONE
 
 = puerta_depto
+{ jornada == 12:
+    # escena:departamento # pos:puerta
+    -> DONE
+}
 PENSAMIENTO: La jornada ha terminado. # id:j3_05_depto_usar
 -> DONE
 

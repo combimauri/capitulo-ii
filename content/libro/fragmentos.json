@@ -1,0 +1,59 @@
+{
+  "1": {
+    "cabecera": ["TEORÍA Y PRÁCTICA DEL", "COLECTIVISMO OLIGÁRQUICO", "por Emmanuel Goldstein"],
+    "capitulo": "Capítulo III — La guerra es la paz",
+    "parrafos": [
+      { "texto": "Las tres potencias que se reparten el mundo no pueden vencerse entre sí, y lo saben. Cada una es demasiado grande, demasiado autosuficiente y está demasiado bien defendida por la geografía. La guerra entre ellas no es una lucha por la victoria. Es una institución." },
+      { "texto": "Una guerra que nunca termina sirve para gastar lo que una sociedad produce de más. Un pueblo que tiene más de lo que necesita empieza a pensar. Un pueblo que racionaba el chocolate y ahora lo racionará aún más, en nombre del frente, no tiene tiempo de pensar.",
+        "subrayado": [{ "frase": "Un pueblo que racionaba el chocolate y ahora lo racionará aún más, en nombre del frente, no tiene tiempo de pensar.", "si": "chocolate_visto",
+          "recuerdo": "El recorte del estudio de Crane: «30 gramos semanales». Y unos días después, la telepantalla celebrando que «aumentaba» a veinte." }] },
+      { "texto": "Por eso los frentes apenas se mueven. Los mapas se corrigen, los partes se reescriben, pero el frente real es casi una abstracción. A veces ni siquiera eso: unas banderas sobre un corcho.",
+        "subrayado": [{ "frase": "Por eso los frentes apenas se mueven.",
+          "recuerdo": "El corcho de Malabar, acribillado de agujeros de alfiler. Las banderitas siempre vuelven al mismo río." }] },
+      { "texto": "Y cuando la guerra lejana no basta para sostener el miedo, el Partido la trae a casa. Un cohete que cae sobre un mercado es más útil que cien victorias en Malabar. El enemigo no necesita lanzarlo. Basta con que el pueblo crea que lo hizo.",
+        "subrayado": [{ "frase": "Un cohete que cae sobre un mercado es más útil que cien victorias en Malabar. El enemigo no necesita lanzarlo. Basta con que el pueblo crea que lo hizo.", "si": "planilla_vista",
+          "recuerdo": "La Planilla Azul. «Batería cuatro. Folkestone. Kent.» Mis dos impactos de esta mañana, escritos a máquina antes de caer." }] },
+      { "texto": "La guerra ya no la hace un Estado contra otro. La hace cada grupo dirigente contra sus propios súbditos. Su objetivo no es conquistar territorio, sino mantener intacta la estructura de la sociedad." }
+    ]
+  },
+  "2": {
+    "cabecera": ["TEORÍA Y PRÁCTICA DEL", "COLECTIVISMO OLIGÁRQUICO", "por Emmanuel Goldstein"],
+    "capitulo": "Capítulo I — La ignorancia es la fuerza",
+    "parrafos": [
+      { "texto": "Desde que existe la historia escrita ha habido tres clases de personas: los de Arriba, los del Medio y los de Abajo. Sus nombres han cambiado mil veces. Su relación, ninguna." },
+      { "texto": "Los de Arriba quieren quedarse donde están. Los del Medio quieren ocupar el lugar de los de Arriba. Los de Abajo, cuando tienen fuerzas para querer algo, quieren un mundo sin Arriba ni Abajo. Y los del Medio, para subir, siempre prometen ese mundo a los de Abajo. Lo prometen, los usan, suben… y los de Abajo vuelven a su sitio." },
+      { "texto": "El Partido ha estudiado esta rueda mejor que nadie. Y ha hecho algo que ningún grupo dirigente había conseguido: detenerla. Arriba, el Partido Interior. En medio, el Partido Exterior: vigilado, cansado, demasiado ocupado en odiar para mirar hacia arriba. Abajo, los proles: tan despreciados que el Partido no se molesta en vigilarlos.",
+        "subrayado": [
+          { "frase": "En medio, el Partido Exterior: vigilado, cansado, demasiado ocupado en odiar para mirar hacia arriba.",
+            "recuerdo": "Voss, con sus guantes grises. «El Partido no olvida a los suyos.» Y yo, dándole las gracias." },
+          { "frase": "Abajo, los proles: tan despreciados que el Partido no se molesta en vigilarlos.", "si": "limehouse_visto",
+            "recuerdo": "Limehouse. Un altavoz en una farola, ropa tendida, un pub con dardos. Ni una sola telepantalla." }] },
+      { "texto": "Si los proles llegaran a ser conscientes de su fuerza, no necesitarían conspirar. Les bastaría con sacudirse, como un caballo se sacude las moscas. Pero para eso tendrían que saber. Y el Partido se asegura de que no sepan." }
+    ]
+  },
+  "3": {
+    "cabecera": ["TEORÍA Y PRÁCTICA DEL", "COLECTIVISMO OLIGÁRQUICO", "por Emmanuel Goldstein"],
+    "capitulo": "Capítulo III — La guerra es la paz (continuación)",
+    "parrafos": [
+      { "texto": "Las alianzas entre las tres potencias cambian de vez en cuando, y cada vez que cambian, el pasado cambia con ellas. Oceanía nunca ha estado aliada con el enemigo de hoy. Nunca ha estado en guerra con el aliado de hoy. Los documentos que digan otra cosa se corrigen en una noche." },
+      { "texto": "Esto sería imposible si quienes corrigen los documentos lo supieran y lo recordaran. Y lo saben, y lo recuerdan. Y lo olvidan. Y olvidan que lo han olvidado. A esta gimnasia mental el Partido la llama doblepensar: sostener a la vez dos ideas contrarias y creer en las dos." },
+      { "texto": "El funcionario que esta noche arranca banderas negras y clava banderas amarillas sabe que está mintiendo. Y sin embargo, mañana por la mañana, si alguien le pregunta, dirá sin mentir que Oceanía siempre ha estado en guerra con Estasia. El doblepensar no es un engaño. Es una disciplina.",
+        "subrayado": [{ "frase": "El funcionario que esta noche arranca banderas negras y clava banderas amarillas sabe que está mintiendo.",
+          "recuerdo": "Esta misma noche. Banderas negras fuera, banderas amarillas dentro. Las manos, manchadas de tinta hasta la muñeca." }] },
+      { "texto": "Por eso el enemigo es intercambiable. No importa contra quién se luche. Importa que la lucha no termine." }
+    ]
+  },
+  "4": {
+    "cabecera": ["TEORÍA Y PRÁCTICA DEL", "COLECTIVISMO OLIGÁRQUICO", "por Emmanuel Goldstein"],
+    "capitulo": "Capítulo I — La ignorancia es la fuerza (continuación)",
+    "parrafos": [
+      { "texto": "El Partido no se hereda. Un hijo del Partido Interior puede caer al Exterior, y un prole especialmente dotado puede ser elevado al Partido Exterior, separado de su familia, reeducado, y convertido en el más leal de los funcionarios. Lo que perpetúa al Partido no es la sangre. Es la mentalidad.",
+        "subrayado": [{ "frase": "un prole especialmente dotado puede ser elevado al Partido Exterior, separado de su familia, reeducado, y convertido en el más leal de los funcionarios.", "si": "brooke_revelada",
+          "recuerdo": "Brooke, en el pasillo, sin mirarme: «Mi hermano está en esa lista.»" }] },
+      { "texto": "Y esa mentalidad depende de una sola cosa: que el pasado sea maleable. Si el pasado existe solo en los documentos y en la memoria, quien controla los documentos y la memoria controla el pasado. Los documentos se queman. La memoria se disciplina.",
+        "subrayado": [{ "frase": "Los documentos se queman. La memoria se disciplina.", "si": "times_original_visto",
+          "recuerdo": "El Times de 1979, amarillento: «a las 21:40». El reloj de Ivy, al lado. Las dos cosas decían lo mismo." }] },
+      { "texto": "No hay crimen más grave en Oceanía que recordar con exactitud. Un reloj parado es un acto de rebeldía." }
+    ]
+  }
+}

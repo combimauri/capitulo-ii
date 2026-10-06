@@ -29,6 +29,24 @@ export const mano = { item: null as string | null };
 /** Vector del joystick táctil (lo escribe LocationScene, lo dibuja UIScene). */
 export const tactil = { activo: false, x: 0, y: 0, origen: { x: 0, y: 0 } };
 
+/**
+ * Estado de las misiones de sigilo, compartido entre LocationScene (lo actualiza) y UIScene (lo dibuja).
+ * reloj: ventana de tiempo de una misión; el reloj solo corre mientras se explora (no durante los diálogos).
+ */
+export const mision = {
+  reloj: null as null | { inicio: number; transcurrido: number; limite: number; agotar: string; agotado: boolean },
+  /** Medidor de detección (0..1) mientras algún cono ve al protagonista. */
+  alerta: 0,
+  /** Sigilo social: el mapa lo permite y la carpeta está abierta. */
+  social: false,
+  carpeta: false,
+  oculto: false,
+};
+
+/** "23:00:00" → segundos del día; y al revés. */
+export const segundos = (h: string) => h.split(':').map(Number).reduce((a, n) => a * 60 + (n || 0), 0);
+export const hora = (s: number) => [Math.floor(s / 3600) % 24, Math.floor(s / 60) % 60, Math.floor(s) % 60].map((n) => String(n).padStart(2, '0')).join(':');
+
 export const RESOLUCION = { ancho: 960, alto: 540, mundoAncho: 480, mundoAlto: 270, zoom: 2 };
 
 /** Eventos entre escenas (se emiten por game.events). */
@@ -41,4 +59,5 @@ export const EV = {
   joystick: 'joystick',                 // ()  redibujar el joystick
   pausa: 'pausa',                       // (activa: boolean)  paneles que detienen el movimiento
   mano: 'mano',                         // ()  cambió el objeto en la mano
+  carpeta: 'carpeta',                   // ()  abrir o cerrar la carpeta (sigilo social)
 } as const;

@@ -1,0 +1,15 @@
+{
+  "papel": "blanco",
+  "manuscrito": true,
+  "letra": 26,
+  "lineas": [
+    "Una imagen vale más que mil palabras.",
+    "Aunque tengo también las palabras.",
+    "Calle Cable, 7. Esta noche, a las diez. Venga sol{o}.",
+    "Su amigo,",
+    "A. C."
+  ],
+  "foto": {
+    "clave": "vineta-foto_iniciacion"
+  }
+}

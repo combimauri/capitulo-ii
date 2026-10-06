@@ -4,7 +4,8 @@
  */
 
 type Sfx = 'silbido' | 'impacto' | 'pitido' | 'silbato' | 'sello' | 'tubo' | 'tecla' | 'plumilla'
-  | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos' | 'naranjas' | 'chirrido';
+  | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos' | 'naranjas' | 'chirrido'
+  | 'chapoteo' | 'zumbido' | 'tic' | 'papel' | 'alto' | 'golpes' | 'trampilla';
 
 class Audio {
   private ctx: AudioContext | null = null;
@@ -51,6 +52,19 @@ class Audio {
       case 'chirrido':
         this.tono(ctx, out, t, 1900, 1.4, 0.08, 'sawtooth');
         return this.tono(ctx, out, t, 2350, 1.4, 0.06, 'square');
+      case 'chapoteo': return this.ruido(ctx, out, t, 0.35, 900, 0.35, true);
+      case 'zumbido': return this.tono(ctx, out, t, 58, 0.7, 0.18, 'sawtooth', true);
+      case 'tic': return this.golpe(ctx, out, t, 2400, 0.02, 0.18);
+      case 'papel': return this.ruido(ctx, out, t, 0.25, 6000, 0.12, true);
+      case 'alto':
+        this.tono(ctx, out, t, 3000, 0.5, 0.14, 'square');
+        return this.ruido(ctx, out, t, 0.5, 2500, 0.08);
+      case 'golpes':
+        [0, 0.32, 0.64].forEach((d) => this.golpe(ctx, out, t + d, 70, 0.25, 0.9));
+        return;
+      case 'trampilla':
+        this.golpe(ctx, out, t, 55, 0.4, 0.8);
+        return this.ruido(ctx, out, t, 0.3, 500, 0.3);
       case 'fanfarria':
         [523, 659, 784, 1046].forEach((f, i) => this.tono(ctx, out, t + i * 0.16, f, 0.22, 0.1, 'square'));
         return;

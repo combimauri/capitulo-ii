@@ -25,6 +25,11 @@
    "value": "estudio.entrar"
   },
   {
+   "name": "fondos_alt",
+   "type": "string",
+   "value": "loc-estudio_j12:jornada==12"
+  },
+  {
    "name": "fondo_alt",
    "type": "string",
    "value": "loc-estudio_j6"
@@ -230,11 +235,54 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada!=12"
       }
      ]
     },
     {
      "id": 12,
+     "name": "grabadora",
+     "x": 330,
+     "y": 44,
+     "width": 30,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cuarto oscuro, abierto"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j12_grabadora_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "345,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==12"
+      }
+     ]
+    },
+    {
+     "id": 13,
      "name": "fondos",
      "x": 240,
      "y": 26,
@@ -267,7 +315,7 @@
      ]
     },
     {
-     "id": 13,
+     "id": 14,
      "name": "salir",
      "x": 224,
      "y": 240,
@@ -300,7 +348,7 @@
      ]
     },
     {
-     "id": 14,
+     "id": 15,
      "name": "recorte",
      "x": 178,
      "y": 76,
@@ -354,7 +402,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 17,
+     "id": 18,
      "name": "puerta",
      "x": 240,
      "y": 232,
@@ -384,7 +432,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 15,
+     "id": 16,
      "name": "crane",
      "x": 200,
      "y": 176,
@@ -418,7 +466,7 @@
      ]
     },
     {
-     "id": 16,
+     "id": 17,
      "name": "camara",
      "x": 320,
      "y": 186,
@@ -469,5 +517,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 18
+ "nextobjectid": 19
 }

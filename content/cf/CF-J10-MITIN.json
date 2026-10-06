@@ -1,0 +1,42 @@
+{
+  "dif": "dificil",
+  "fases": [
+    {
+      "expr": "odio",
+      "golpes": 12,
+      "bpm": 100,
+      "pantalla": "soldado",
+      "coro": [
+        "¡Muerte!",
+        "¡A Eurasia!"
+      ],
+      "pensamientos": [
+        "«Bombardean a nuestros niños en los mercados.»",
+        "Batería siete. Hythe. Kent."
+      ]
+    },
+    {
+      "expr": "odio",
+      "golpes": 0,
+      "duracion": 3400,
+      "rotulo": "ORADOR: …¡y Estasia, con su barbarie, que desde siempre…! ¡Estasia, nuestro enemigo eterno…!"
+    },
+    {
+      "expr": "odio",
+      "golpes": 16,
+      "bpm": 112,
+      "pantalla": "estasia",
+      "pancartas": true,
+      "coro": [
+        "¡Muerte!",
+        "¡A Estasia!"
+      ],
+      "pensamientos": [
+        "Estasia. Estasia. Siempre fue Estasia.",
+        "Doce kilómetros en Malabar. Contra Eurasia.",
+        "Sammy. Contra… ¿contra quién?",
+        "Ivy murió por Eurasia. Ahora Ivy murió por Estasia. Ivy murió por quien haga falta."
+      ]
+    }
+  ]
+}

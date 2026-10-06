@@ -1,0 +1,669 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Minipax · planta once"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-planta11"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "planta11.entrar"
+  },
+  {
+   "name": "parpadeo",
+   "type": "string",
+   "value": "true"
+  },
+  {
+   "name": "sigilo",
+   "type": "string",
+   "value": "planta11.visto"
+  },
+  {
+   "name": "conos",
+   "type": "string",
+   "value": "485,44;448,98;448,134;380,134;380,98;262,98;262,196;478,196|485,44;700,98;700,196;664,196;664,150;628,150;628,196;492,196"
+  },
+  {
+   "name": "cono_periodo",
+   "type": "string",
+   "value": "6000"
+  },
+  {
+   "name": "vigila",
+   "type": "string",
+   "value": "700,150;812,150;812,196;700,196"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/planta11.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 98,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_inf",
+     "x": 0,
+     "y": 196,
+     "width": 960,
+     "height": 74,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "fondo_izq",
+     "x": 0,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "fondo_der",
+     "x": 952,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "columna",
+     "x": 420,
+     "y": 98,
+     "width": 28,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "carrito",
+     "x": 588,
+     "y": 150,
+     "width": 40,
+     "height": 18,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "garita",
+     "x": 700,
+     "y": 98,
+     "width": 90,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "atril",
+     "x": 880,
+     "y": 100,
+     "width": 16,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 9,
+     "name": "montacargas",
+     "x": 24,
+     "y": 34,
+     "width": 48,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Montacargas"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "planta11.montacargas"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "48,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "extintor",
+     "x": 236,
+     "y": 60,
+     "width": 12,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Extintor"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.extintor_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "242,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "columna",
+     "x": 420,
+     "y": 40,
+     "width": 28,
+     "height": 90,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Columna"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.columna_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "400,120"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "carrito",
+     "x": 588,
+     "y": 130,
+     "width": 40,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Carrito de correo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.carrito_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "646,180"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "tele",
+     "x": 470,
+     "y": 24,
+     "width": 30,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.tele_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "485,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "tele_garita",
+     "x": 744,
+     "y": 22,
+     "width": 30,
+     "height": 18,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla fija"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.tele_garita_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "780,140"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "panel",
+     "x": 706,
+     "y": 46,
+     "width": 40,
+     "height": 28,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Panel de llaves"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "planta11.panel"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "726,138"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "puerta",
+     "x": 812,
+     "y": 34,
+     "width": 56,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Archivo Restringido"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.placa_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "planta11.puerta"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "836,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "firmas",
+     "x": 880,
+     "y": 82,
+     "width": 16,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Libro de firmas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "planta11.firmas_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "888,126"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "escalera",
+     "x": 900,
+     "y": 30,
+     "width": 44,
+     "height": 66,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Escalera"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "planta11.ir_escalera"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "922,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "control_columna",
+     "x": 370,
+     "y": 98,
+     "width": 50,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "checkpoint",
+       "type": "string",
+       "value": "columna"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 21,
+     "name": "montacargas",
+     "x": 48,
+     "y": 114,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "columna",
+     "x": 400,
+     "y": 120,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "archivo",
+     "x": 836,
+     "y": 114,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 20,
+     "name": "guardia",
+     "x": 930,
+     "y": 140,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "guardia"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Guardia"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "guardia_entrante"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "100,30"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "930,140;470,140;470,184;930,184"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1500"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "32"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 24
+}

@@ -379,8 +379,16 @@ PENSAMIENTO: El hueco entre el armario y la pared. Aquí no llega. # id:j6_05_hu
     { jornada:
     - 6:
         PENSAMIENTO: Cierro el cuaderno. # minijuego:diario,fecha=20 de abril # id:j6_05_cerrar
-    - else:
+    - 7:
         PENSAMIENTO: Cierro el cuaderno. # minijuego:diario,fecha=21 de abril # id:j7_cerrar
+    - 8:
+        PENSAMIENTO: Cierro el cuaderno. # minijuego:diario,fecha=4 de mayo # id:j8_cerrar
+    - 9:
+        PENSAMIENTO: Cierro el cuaderno. # minijuego:diario,fecha=4 de mayo # id:j9_cerrar
+    - 10:
+        PENSAMIENTO: Cierro el cuaderno. # minijuego:diario,fecha=6 de mayo # id:j10_cerrar
+    - else:
+        PENSAMIENTO: Cierro el cuaderno. # minijuego:diario,fecha=7 de mayo # id:j11_cerrar
     }
     { diario_entradas > antes:
         ~ diario_iniciado = true
@@ -390,7 +398,11 @@ PENSAMIENTO: El hueco entre el armario y la pared. Aquí no llega. # id:j6_05_hu
 * [Ahora no.]
     PENSAMIENTO: Ahora no. # id:j6_05_ahora_no
 -
-{ diario_escondite == "hornillo":
+{ jornada == 11 and not fragmento_4:
+    -> j11_fragmento ->
+}
+{ diario_escondite == "hornillo" or cartel_arrancado:
+    ~ diario_escondite = "hornillo"
     PENSAMIENTO: Lo vuelvo a meter en el hornillo. Huele a hollín. # id:j6_05_esconder_hornillo
 - else:
     ~ diario_escondite = "cartel"

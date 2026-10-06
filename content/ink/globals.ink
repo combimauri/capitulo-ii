@@ -4,6 +4,9 @@ VAR duda = 0
 VAR sospecha = 0
 VAR jornada = 0
 
+// Dónde está el protagonista (lo escribe el motor; el arresto se adapta al lugar)
+VAR escena_actual = ""
+
 // Identidad del protagonista (se fija en la Ficha de Afiliación, P.03).
 VAR nombre = ""
 VAR apellido = ""
@@ -19,7 +22,7 @@ VAR un = "un"
 VAR del_ = "del"
 VAR lo_ = "lo"
 
-LIST inventario = reloj_ivy, ficha, lapiz_amory, foto_ivy, diario, compas, zonificacion, nota_amory, metralla_sammy, tarjeta_crane, metralla_brillante, parte_alterado, foto_ivy_restaurada, llave_calderas
+LIST inventario = reloj_ivy, ficha, lapiz_amory, foto_ivy, diario, compas, zonificacion, nota_amory, metralla_sammy, tarjeta_crane, metralla_brillante, parte_alterado, foto_ivy_restaurada, llave_calderas, directiva, copia_planilla, hoja_planilla, libro, tubo, times_falso, sobre_miniver, times_original, chapa, foto_sotano, dibujos_amory, mapa_malabar, parte_original
 
 // Prólogo
 VAR ivy_vista = false
@@ -198,3 +201,147 @@ VAR diario_nell = false
 VAR diario_nell_escrita = false
 VAR noche_j7_vista = false
 VAR cf_fb_ejecucion = ""
+
+// ==================================================================== ACTO III
+// Jornada 8
+VAR gimnasia_j8 = false
+VAR cf_j8_gimnasia = ""
+VAR depto_j8_visto = false
+VAR registro_j8_hecho = false
+VAR registro_j8_lamina = "no"
+VAR registro_j8_compas = "no"
+VAR registro_j8_fallos = 0
+VAR registro_j8_lamina_puesta = "no"
+VAR directiva_leida = false
+VAR pista_combinacion = false
+VAR nell_j8 = false                    // J8.00: Nell espera en el cuarto de suministros (aceptar_tarde)
+VAR calderas_vistas = false
+VAR montacargas_j8 = ""                // "limpio" | "chirrido"
+VAR planta11_vista = false
+VAR planta11_vuelta = false
+VAR guardia_entrante = false
+VAR llave_ar = false
+VAR llave_devuelta = false
+VAR llaves_j8_fallos = 0
+VAR cerrojo_llave = false
+VAR cerrojo_j8 = ""                    // "abierta" | "fallo" | "tiempo"
+VAR cerrojo_intentos = 0
+VAR archivo_r_visto = false
+VAR planilla_vista = false
+VAR mercado_planilla = false
+VAR estante_1979 = false
+VAR prueba_sacada = ""                 // "copia" | "hoja"
+VAR hoja_robada = false
+VAR copia_lineas = 0
+VAR copia_firma = false
+VAR j8_salida = false
+VAR nell_calderas = false
+VAR nell_confianza = 0
+VAR iniciacion_vida = ""               // "Sí" | "No" (O'Brien las reproduce desde la grabación de Crane)
+VAR iniciacion_matar = ""
+VAR iniciacion_mentir = ""
+VAR iniciacion_callar = ""
+VAR iniciacion_ivy = ""
+VAR iniciacion_traicion = ""
+VAR libro_fragmentos = 0
+VAR diario_planilla = false
+VAR diario_planilla_escrita = false
+VAR diario_libro_guerra = false
+VAR diario_libro_guerra_escrita = false
+VAR noche_j8_vista = false
+
+// Jornada 9
+VAR gimnasia_j9 = false
+VAR cf_j9_gimnasia = ""
+VAR depto_j9_visto = false
+VAR cf_j9_voss = ""
+VAR nota_j9 = false
+VAR tubo_entregado = false
+VAR miniver_visto = false
+VAR winston_j9 = false
+VAR julia_j9 = false
+VAR syme_hablado = false
+VAR lavabos_vistos = false
+VAR vaho = false
+VAR abrigo_colgado = false
+VAR cf_j9_lavabo = ""
+VAR panel_abierto = false
+VAR times_original_visto = false
+VAR diario_times = false
+VAR diario_times_escrita = false
+VAR diario_libro_ignorancia = false
+VAR diario_libro_ignorancia_escrita = false
+VAR noche_j9_vista = false
+
+// Jornada 10
+VAR hilda_j10 = false
+VAR cantina_j10 = false
+VAR cf_j10_amory = ""
+VAR cf_j10_mitin = ""
+VAR cf_j10_mitin_bh = 0
+VAR cf_j10_mitin_pancartas = 0
+VAR pell_j10 = ""                      // "negacion" | "verdad"
+VAR diario_amory_confesion = false
+VAR diario_amory_confesion_escrita = false
+VAR diario_estasia = false
+VAR diario_estasia_escrita = false
+VAR rectificacion_1 = ""
+VAR rectificacion_2 = ""
+VAR nota_nell_j10 = false
+VAR cargando_prueba = false             // lleva encima el mapa o el parte (Voss solo importa entonces)
+VAR mision_j10 = ""                    // "" | "hecha" | "fallida" | "tarde"
+VAR brooke_distrae = false
+VAR prueba_rectificacion = false
+VAR rectificacion_hecha = false
+VAR diario_libro_doblepensar = false
+VAR diario_libro_doblepensar_escrita = false
+VAR parsons_detenido = false
+VAR noche_j10_vista = false
+
+// Jornada 11
+VAR depto_j11_visto = false
+VAR cf_j11_voss = ""
+VAR brooke_revelada = false
+VAR minimor_visto = false
+VAR lista_proles_vista = false
+VAR funcionaria_fuera = false
+VAR archivo_b_visto = false
+VAR ivy_revelada = false
+VAR dp_j11_ivy = ""                    // "aceptar" | "recordar"
+VAR expediente_visto = false
+VAR foto_sotano_cogida = false
+VAR len_decision = ""                  // "cambio" | "nada" | "tachado" | "rabia"
+VAR len_salvado = false
+VAR len_sustituto = ""
+VAR len_chico = false
+VAR crane_sospechado = false
+VAR charrington_visto = false
+VAR cartel_arrancado = false
+VAR fragmento_4 = false
+VAR diario_ivy_verdad = false
+VAR diario_ivy_verdad_escrita = false
+VAR diario_len = false
+VAR diario_len_escrita = false
+VAR diario_libro_pasado = false
+VAR diario_libro_pasado_escrita = false
+VAR noche_j11_vista = false
+
+// Jornada 12
+VAR ejecucion_vista = false
+VAR cf_j12_ejecucion = ""
+VAR nell_aviso = false
+VAR brooke_j12 = false
+VAR crane_revelado = false
+VAR crane_decision = ""                // "aceptar" | "fingir" | "negar" | "huir"
+VAR crane_sigue = false
+VAR estudio_j12_visto = false
+VAR persecucion_vista = false
+VAR atajo_usado = false
+VAR casa_dot_vista = false
+VAR mensaje_nell = false
+VAR reloj_en_marcha = false
+VAR diario_dot = false
+VAR diario_dot_escrita = false
+
+// Finales
+VAR fb_variante = "temprano"           // "temprano" | "trato"

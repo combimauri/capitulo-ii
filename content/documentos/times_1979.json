@@ -1,0 +1,22 @@
+{
+  "papel": "amarillo",
+  "cabecera": [
+    "THE TIMES · 1979"
+  ],
+  "lineas": [
+    "CALLE STEPNEY: CAE UN COHETE EN EL DISTRITO ESTE",
+    "",
+    "Un proyectil alcanzó anoche, a las 21:40, el número 14",
+    "de la calle Stepney. Una víctima mortal: la camarada",
+    "Ivy {apellido}, del Partido Exterior.",
+    "Agentes de la Policía del Pensamiento se presentaron en",
+    "el lugar minutos después del impacto y requisaron",
+    "diversos documentos de la vivienda."
+  ],
+  "resaltar": [
+    2,
+    5,
+    6,
+    7
+  ]
+}

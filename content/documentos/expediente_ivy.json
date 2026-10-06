@@ -1,0 +1,40 @@
+{
+  "papel": "blanco",
+  "letra": 17,
+  "cabecera": [
+    "MINISTERIO DEL AMOR · EXPEDIENTE 79/0412",
+    "SUJETO: {apellido}, IVY · PARTIDO EXTERIOR · MININDANCIA, SECC. RACIONES"
+  ],
+  "lineas": [
+    "ACTIVIDAD: miembro de la organización conocida como «la Hermandad»",
+    "           desde 1977. Correo entre células del distrito Este.",
+    "           Contacto conocido: HASK, N. (prole, sin filiación).",
+    "           Distribución de fragmentos del libro «T. y P. del C. O.»",
+    "RESOLUCIÓN: eliminación sin proceso.",
+    "           Motivo: evitar martirio de signo subversivo.",
+    "           Método: impacto programado. PLANILLA AZUL 28/79.",
+    "           Objetivo: calle Stepney 14 · 21:40 · carga ligera.",
+    "           Uso posterior: martirio de signo patriótico.",
+    "           Campaña «Mártires de Stepney». Rectificación de fecha",
+    "           para coincidir con ofensiva de castigo.",
+    "FAMILIAR DIRECTO: {apellido}, {nombre} · sin implicación.",
+    "           Perfil: alta lealtad, alta capacidad de odio canalizable.",
+    "           Potencial de aprovechamiento: ALTO.",
+    "           Recomendación: destino Minipax, Partes y Cartografía.",
+    "           Seguimiento personal."
+  ],
+  "pie": [
+    "AUTORIZA: H. VOSS · Dir. Moral Interior · Minipax"
+  ],
+  "foto": {
+    "clave": "vineta-foto_sotano",
+    "tachada_si": "dp_j11_ivy==aceptar"
+  },
+  "resaltar": [
+    5,
+    6,
+    7,
+    12,
+    14
+  ]
+}

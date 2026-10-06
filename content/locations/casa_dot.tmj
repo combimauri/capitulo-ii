@@ -1,0 +1,360 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Casa de Dot"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-casa_dot"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "casa_dot.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/casa_dot.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 124,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 356,
+     "y": 0,
+     "width": 124,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 234,
+     "width": 224,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 234,
+     "width": 224,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 244,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "estufa",
+     "x": 300,
+     "y": 92,
+     "width": 44,
+     "height": 28,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "mesa",
+     "x": 196,
+     "y": 146,
+     "width": 74,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "silla",
+     "x": 226,
+     "y": 124,
+     "width": 14,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "silla",
+     "x": 180,
+     "y": 148,
+     "width": 14,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 11,
+     "name": "barreno",
+     "x": 128,
+     "y": 200,
+     "width": 32,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 12,
+     "name": "despensa",
+     "x": 132,
+     "y": 40,
+     "width": 30,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Despensa"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "casa_dot.despensa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "147,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "metralla",
+     "x": 172,
+     "y": 40,
+     "width": 64,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "La colección de Sammy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "casa_dot.metralla_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "204,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "estufa",
+     "x": 300,
+     "y": 60,
+     "width": 44,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Estufa"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "casa_dot.estufa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "322,134"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 16,
+     "name": "puerta",
+     "x": 240,
+     "y": 226,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "dot",
+     "x": 286,
+     "y": 196,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "dot"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Dot"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "casa_dot.dot_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "286,216"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 17
+}

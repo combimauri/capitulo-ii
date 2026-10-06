@@ -53,7 +53,8 @@ CARTEL: Amaba al Gran Hermano. # id:fa_05_cartel_02
 CARTEL: FINAL A · DOBLEMÁSBUENO # id:fa_05_fin # final:A
 -> DONE
 
-// ==================================================================== FINAL B — «El fotógrafo» (temprano)
+// ==================================================================== FINAL B — «El fotógrafo»
+// Variantes de entrada (05-finales.md): B-temprano (J7, denunciar a Nell ante Voss) y B-trato (J12, aceptar a Crane).
 // J7.04-DENUNCIAR: el despacho de Voss (voss_despacho.entrar desvía aquí en la Jornada 7)
 === final_b ===
 PROTAGONISTA: Subdirector. La limpiadora. La del carrito. Me ha… me ha hablado de una Planilla Azul. Me ha pedido que entre en el Archivo Restringido. # id:fb_00_prot_01
@@ -67,26 +68,45 @@ PENSAMIENTO: Lo cuento todo. Durante horas. El cuarto de suministros. La canció
 PENSAMIENTO: Voss escucha sin interrumpir, tomando notas con su pluma. # id:fb_01_pens_01
 VOSS: Su hermana estaría orgullosa. # fx:aclarar # id:fb_01_voss_01
 VOSS: De verdad lo creo. # id:fb_01_voss_02
+-> caida
 
 // FB.02 — La caída
+= caida
 PENSAMIENTO: La Campana: la puerta reventada. La campana de «S. Clem…», arrancada de la barra y tirada en el suelo. # vineta:loc-pub,gris=si # id:fb_02_01
 PENSAMIENTO: En el Minipax, el carrito de la limpieza lo empuja ahora otra limpiadora, más joven, con la cabeza gacha. # vineta:loc-pasillo # id:fb_02_02
-PENSAMIENTO: Parque de la Victoria. El patíbulo. En las cuerdas, la limpiadora, con su pañuelo. A su lado, un hombre al que no conozco. # vineta:vineta-patibulo # id:fb_02_03
+{ fb_variante == "trato":
+    PENSAMIENTO: La casa de Dot: la puerta verde, abierta. La colección de metralla de Sammy, desparramada por el suelo de la cocina. Unas botas la pisan. # vineta:loc-casa_dot,gris=si # id:fb_02_dot
+    PENSAMIENTO: Parque de la Victoria. El patíbulo. En las cuerdas: Nell, con su pañuelo. Barlow.{len_salvado: Len.} Dot. # vineta:vineta-patibulo5 # id:fb_02_03_trato
+- else:
+    PENSAMIENTO: Parque de la Victoria. El patíbulo. En las cuerdas, la limpiadora, con su pañuelo. A su lado, un hombre al que no conozco. # vineta:vineta-patibulo # id:fb_02_03
+}
 PENSAMIENTO: Abajo, la multitud. Los hijos de Parsons, con Hilda, en primera fila. Yo estoy en la tribuna, junto a Voss. # id:fb_02_04
 PENSAMIENTO: Es fácil. Muy fácil. # cf:id=CF-FB-EJECUCION,expr=jubilo,dif=facil,golpes=8,coro=¡Muerte!/¡Traidores! # id:fb_02_05
 PENSAMIENTO: Ya no cuesta. # id:fb_02_06
+-> reclutamiento
 
 // FB.03 — El reclutamiento
+= reclutamiento
 PENSAMIENTO: El despacho de Voss. Por primera vez se quita los dos guantes delante de mí. Tiene las manos muy blancas. # vineta:loc-despacho_voss # id:fb_03_pens_00
 VOSS: Su expediente. Puede leerlo. Se lo ha ganado. # id:fb_03_voss_01
 CARTEL: FAMILIAR DIRECTO: {apellido}, {nombre}¶Potencial de aprovechamiento: ALTO · CONFIRMADO.¶Reasignación: Policía del Pensamiento. Distrito Sur.¶Bajo supervisión de A. Crane. # id:fb_03_expediente
-PENSAMIENTO: «Familiar directo.» ¿Familiar de qué? # id:fb_03_pens_01
-PENSAMIENTO: Hojeo hacia atrás. «Sujeto: {apellido}, Ivy. Actividad: miembro de la organización conocida como la Hermandad.» # id:fb_03_pens_02
-PENSAMIENTO: Cierro la carpeta. No. No lo he leído. No lo he leído. # id:fb_03_pens_03
+{ ivy_revelada:
+    PENSAMIENTO: «Confirmado.» # esperar:1 # id:fb_03_confirmado_01
+    PENSAMIENTO: Lo decidieron hace cinco años. Yo solo he llegado tarde a mi propio destino. # id:fb_03_confirmado_02
+- else:
+    PENSAMIENTO: «Familiar directo.» ¿Familiar de qué? # id:fb_03_pens_01
+    PENSAMIENTO: Hojeo hacia atrás. «Sujeto: {apellido}, Ivy. Actividad: miembro de la organización conocida como la Hermandad.» # id:fb_03_pens_02
+    PENSAMIENTO: Cierro la carpeta. No. No lo he leído. No lo he leído. # id:fb_03_pens_03
+}
 VOSS: Crane le enseñará el oficio. Es el mejor. # id:fb_03_voss_02
+{ fb_variante == "trato":
+    VOSS: Tiene usted buen ojo, {apellido}. Su hermana también lo tenía. Lo usó mal. # id:fb_03_voss_03
+}
 CRANE: El Subdirector me ha hablado mucho de usted. Tiene buen ojo. Igual que yo. # vineta:loc-estudio_j6 # id:fb_03_crane_01
+-> en_el_estudio
 
 // FB.04 — El estudio
+= en_el_estudio
 CARTEL: Unos meses después. # vineta:fin # id:fb_04_cartel
 PENSAMIENTO: Un estudio de fotografía pequeño y cálido, en Southwark. Suena la campanilla de la puerta. # vineta:loc-estudio_j6 # id:fb_04_pens_00
 PENSAMIENTO: Entra una mujer prole joven con un pañuelo en la cabeza. Trae una foto estropeada por el agua: un niño pequeño, sonriendo. # id:fb_04_pens_01
@@ -102,3 +122,14 @@ CARTEL: Restauro fotografías antiguas. # vineta:fin # id:fb_04_cartel_01
 CARTEL: Recuerdos que el tiempo borra. # id:fb_04_cartel_02
 CARTEL: FINAL B · EL FOTÓGRAFO # id:fb_04_fin # final:B
 -> DONE
+
+// J12.04 — Aceptar el trato de Crane (B-trato)
+=== final_b_trato ===
+PROTAGONISTA: …¿Qué quiere saber? # id:fbt_00_prot_01
+PENSAMIENTO: Crane sonríe. Pone una bobina nueva en la grabadora. # id:fbt_00_pens_00
+CRANE: Despacio. Que se oiga bien. # id:fbt_00_crane_01
+PENSAMIENTO: Hablo mientras la grabadora gira. Dot. {len_salvado:Len, vivo. }San Clemente. Las campanas. # fx:negro # id:fbt_01_pens_00
+PENSAMIENTO: Al terminar, Crane me sirve más té. # fx:aclarar # id:fbt_01_pens_01
+CRANE: ¿Ve? No duele. # esperar:0.8 # id:fbt_01_crane_01
+CRANE: Lo que duele es callar. # id:fbt_01_crane_02
+-> final_b.caida

@@ -622,8 +622,9 @@ describe('jornada 7 y los finales del Acto II', () => {
     expect(b.list('inventario')).toEqual(expect.arrayContaining(['diario', 'llave_calderas']));
     expect(b.get('diario_confiscado')).toBe(false);
     expect(b.get('nell_respuesta')).toBe('aceptar');
-    const { comandos: fin } = jugar(b, 'piso_noche.dormir');
-    expect(fin).toContain('final:demo');
+    const { comandos: fin, texto: textoFin } = jugar(b, 'piso_noche.dormir');
+    expect(textoFin).toContain('LA HERMANDAD');
+    expect(fin).toContain('escena:piso');
     expect(b.get('jornada')).toBe(8);
   });
 
@@ -712,5 +713,242 @@ describe('estado', () => {
     const b = new NarrativeBridge(resultado.json!);
     b.call('fijar_genero', 'f');
     expect([b.get('o'), b.get('el'), b.get('un')]).toEqual(['a', 'la', 'una']);
+  });
+});
+
+describe('Acto III', () => {
+  const nueva = (jornada: number, vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', jornada);
+    b.set('amory_borrado', true);
+    b.set('nell_respuesta', 'aceptar');
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+  const inv = (b: NarrativeBridge) => b.list('inventario');
+
+  it('J8: el Registro trae la directiva (0305); Brooke da la pista en el ascensor; quien dudó una noche pasa antes por Nell', () => {
+    const b = nueva(8);
+    expect(jugar(b, 'depto.salir').texto).toContain('Primero el Registro');
+    const { texto } = jugar(b, 'j8_libro', { minijuegos: { registro_j8_fallos: 0 } });
+    expect(texto).toContain('Cero tres, cero cinco');
+    expect(inv(b)).toContain('directiva');
+    expect(jugar(b, 'depto.salir').comandos).toContain('escena:calderas');
+    expect(b.get('pista_combinacion')).toBe(true);
+    const c = nueva(8, { nell_respuesta: 'aceptar_tarde', registro_j8_hecho: true });
+    expect(jugar(c, 'depto.salir').comandos).toContain('escena:suministros');
+    expect(jugar(c, 'suministros.entrar').comandos).toContain('escena:calderas');
+    expect(inv(c)).toContain('llave_calderas');
+  });
+
+  it('J8: el montacargas chirría si se baja deprisa (Sospecha +5) y la planta once arranca el reloj de cuatro minutos', () => {
+    const b = nueva(8);
+    const { comandos } = jugar(b, 'calderas.montacargas', { minijuegos: { montacargas_j8: 'chirrido' } });
+    expect(b.get('sospecha')).toBe(5);
+    expect(comandos).toContain('escena:planta11');
+    expect(jugar(b, 'planta11.entrar').comandos).toContain('reloj:inicio=23:00:00,limite=240,agotar=planta11.agotado');
+    jugar(b, 'planta11.agotado');
+    expect(b.get('guardia_entrante')).toBe(true);
+    expect(b.get('sospecha')).toBe(10);
+  });
+
+  it('J8: sin llave no se abre; la combinación falla con pista y, acertada, se entra al Archivo Restringido', () => {
+    const b = nueva(8);
+    expect(jugar(b, 'planta11.puerta').texto).toContain('Acero');
+    jugar(b, 'planta11.panel', { minijuegos: { cerrojo_j8: 'ok' } });
+    expect(b.get('llave_ar')).toBe(true);
+    jugar(b, 'planta11.puerta', { minijuegos: { cerrojo_j8: 'fallo' } });
+    expect(b.get('cerrojo_intentos')).toBe(1);
+    const { texto, comandos } = jugar(b, 'planta11.puerta', { minijuegos: { cerrojo_j8: 'abierta' } });
+    expect(texto).toContain('Lo he tenido en la mano esta misma mañana');
+    expect(comandos).toEqual(expect.arrayContaining(['reloj:parar', 'escena:archivo_restringido']));
+  });
+
+  it('J8: la Planilla Azul sube la Duda 20; la hoja del mercado solo se puede llevar si se ha leído', () => {
+    const b = nueva(8, { duda: 30, patron_conclusion: 'cobardes' });
+    expect(jugar(b, 'archivo_r.salir').texto).toContain('sin mirar');
+    expect(jugar(b, 'archivo_r.semana').texto).toContain('Nos bombardeamos');
+    expect(b.get('duda')).toBe(50);
+    const { comandos } = jugar(b, 'archivo_r.salir', { elecciones: [1], minijuegos: { copia_lineas: 3 } });
+    expect(b.get('prueba_sacada')).toBe('copia');
+    expect(inv(b)).toContain('copia_planilla');
+    expect(comandos).toContain('escena:planta11');
+    const c = nueva(8);
+    jugar(c, 'archivo_r.semana');
+    jugar(c, 'archivo_r.semana16');
+    jugar(c, 'archivo_r.salir', { elecciones: [1] });
+    expect(c.get('hoja_robada')).toBe(true);
+    expect(inv(c)).toContain('hoja_planilla');
+  });
+
+  it('J8: la iniciación guarda cada respuesta; el parte alterado da confianza y cada «no» la quita', () => {
+    const c = nueva(8, { prueba_sacada: 'hoja' });
+    const { texto, comandos } = jugar(c, 'sotano.entrar', { elecciones: [0, 1, 0, 0, 1, 0] });
+    expect(c.get('iniciacion_vida')).toBe('Sí');
+    expect(c.get('iniciacion_matar')).toBe('No');
+    expect(c.get('iniciacion_ivy')).toBe('No');
+    expect(c.get('iniciacion_traicion')).toBe('No');
+    expect(c.get('nell_confianza')).toBe(-2);
+    expect(texto).toContain('Mientes. Todos traicionan');
+    expect(texto).toContain('Folkestone');
+    expect(c.get('libro_fragmentos')).toBe(1);
+    expect(comandos).toContain('escena:piso_noche');
+  });
+
+  it('J9: Voss sospecha de la hoja robada y de la llave; la nota trae el Times falso; el panel solo con vaho o abrigo', () => {
+    const b = nueva(9, { hoja_robada: true, llave_ar: true });
+    const { texto, comandos } = jugar(b, 'depto.entrar', { minijuegos: { cf_j9_voss: 'fallo' } });
+    expect(texto).toContain('Anoche alguien entró en la planta once');
+    expect(b.get('sospecha')).toBe(30);
+    expect(inv(b)).toEqual(expect.arrayContaining(['tubo', 'times_falso']));
+    expect(comandos).toContain('escena:miniver');
+    expect(jugar(b, 'lavabos.panel').texto).toContain('Así no');
+    jugar(b, 'lavabos.grifos', { minijuegos: { cf_j9_lavabo: 'perfecto' } });
+    expect(b.get('vaho')).toBe(true);
+    jugar(b, 'lavabos.panel');
+    expect(inv(b)).toContain('sobre_miniver');
+    expect(inv(b)).not.toContain('times_falso');
+    const fin = jugar(b, 'lavabos.puerta');
+    expect(fin.texto).toContain('Movieron la fecha un día');
+    expect(b.get('times_original_visto')).toBe(true);
+    expect(inv(b)).toEqual(expect.arrayContaining(['times_original', 'libro']));
+  });
+
+  it('J9: decirle a Syme el nombre de Amory cuesta Sospecha y Duda', () => {
+    const b = nueva(9);
+    expect(jugar(b, 'j9_syme').texto).toContain('No conozco a ningún Amory');
+    expect([b.get('sospecha'), b.get('duda')]).toEqual([3, 3]);
+  });
+
+  it('J10: el mitin cambia de enemigo; tocar la pancarta del Gran Hermano cuesta 10', () => {
+    const b = nueva(10);
+    const { texto, comandos } = jugar(b, 'cantina.entrar', { elecciones: [1], minijuegos: { cf_j10_mitin_bh: 1 } });
+    expect(texto).toContain('Pájaros. Dibujé pájaros');
+    expect(texto).toContain('Mi silla siempre ha sido mía');
+    expect(b.get('pell_j10')).toBe('verdad');
+    expect(b.get('sospecha')).toBe(15);
+    expect(comandos).toContain('escena:departamento_noche');
+  });
+
+  it('J10: la misión de Nell: Brooke cubre una vez; la segunda, Voss lo ve (Sospecha +20) y la misión falla', () => {
+    const b = nueva(10, { nota_nell_j10: true, rectificacion_1: 'completa' });
+    jugar(b, 'j10_depto.mesa');
+    expect(b.get('cargando_prueba')).toBe(true);
+    expect(jugar(b, 'j10_depto.carrito').texto).toContain('Falta el parte');
+    const { comandos } = jugar(b, 'j10_depto.visto');
+    expect(comandos).toContain('seguir:');
+    expect(b.get('sospecha')).toBe(0);
+    const fallo = jugar(b, 'j10_depto.visto');
+    expect(fallo.texto).toContain('El agujero está aquí');
+    expect(b.get('mision_j10')).toBe('fallida');
+    expect(b.get('sospecha')).toBe(20);
+    expect(fallo.comandos).toContain('escena:escalera');
+    const c = nueva(10, { nota_nell_j10: true });
+    jugar(c, 'j10_depto.mesa');
+    jugar(c, 'j10_depto.archivador');
+    jugar(c, 'j10_depto.carrito');
+    expect(c.get('prueba_rectificacion')).toBe(true);
+    expect(c.get('libro_fragmentos')).toBe(3);
+  });
+
+  it('J10: de vuelta a casa detienen a Parsons; la hija dice que ahora dice dos nombres', () => {
+    const b = nueva(10, { rectificacion_hecha: true });
+    const { texto, comandos } = jugar(b, 'escalera.entrar');
+    expect(texto).toContain('Ahora dice dos');
+    expect(b.get('sospecha')).toBe(5);
+    expect(comandos).toContain('escena:piso_noche');
+  });
+
+  it('J11: el expediente de Ivy; aceptar el doblepensar baja la Duda; cambiar el nombre de Len lo salva', () => {
+    const b = nueva(11, { duda: 50, sospecha: 30 });
+    const { texto } = jugar(b, 'j11_expediente', { minijuegos: { dp_j11_ivy: 'aceptar' } });
+    expect(texto).toContain('Era él');
+    expect(b.get('ivy_revelada')).toBe(true);
+    expect(b.get('duda')).toBe(55);
+    expect(b.get('sospecha')).toBe(25);
+    const c = nueva(11, { expediente_visto: true });
+    jugar(c, 'minimor.entrar', { minijuegos: { len_decision: 'cambio', len_sustituto: 'ASH, T.', len_chico: true } });
+    expect(c.get('len_salvado')).toBe(true);
+    expect(c.get('sospecha')).toBe(10);
+    const d = nueva(11, { expediente_visto: true });
+    expect(jugar(d, 'minimor.entrar', { minijuegos: { len_decision: 'rabia' } }).texto).toContain('Siempre tenemos copias');
+    expect(d.get('sospecha')).toBe(30);
+  });
+
+  it('J11: con Crane bajo sospecha, Charrington le recuerda a él; arrancar el cartel cuesta 15 y el diario va al hornillo', () => {
+    const b = nueva(11, { crane_info: 2 });
+    jugar(b, 'j11_charrington_mirar');
+    expect(b.get('crane_sospechado')).toBe(true);
+    const c = nueva(11, { dp_j11_ivy: 'recordar', diario_escondite: 'cartel' });
+    expect(jugar(c, 'piso_noche.cartel_usar').texto).toContain('Los símbolos del Partido no se destruyen');
+    expect(c.get('cartel_arrancado')).toBe(true);
+    expect(c.get('diario_escondite')).toBe('hornillo');
+    expect(c.get('sospecha')).toBe(15);
+  });
+
+  it('J12: si salvó a Len, Dot lo sabe; el sobre de Crane; aceptar el trato lleva al Final B', () => {
+    const b = nueva(12, { len_salvado: true, len_sustituto: 'ASH, T.', dot_confianza: 1, desayunado: true });
+    expect(jugar(b, 'piso.puerta_usar', { minijuegos: { cf_j12_ejecucion: 'aceptable' } }).texto).toContain('en el lugar de Pike, ASH, T.');
+    expect(b.get('dot_confianza')).toBe(3);
+    const c = nueva(12, { iniciacion_vida: 'Sí', crane_info: 1, ivy_revelada: true });
+    expect(jugar(c, 'depto.entrar').comandos).toContain('escena:estudio');
+    expect(c.get('crane_revelado')).toBe(true);
+    const { texto, comandos } = jugar(c, 'estudio.crane');
+    expect(texto).toContain('«Sí.»');
+    expect(texto).toContain('yo la fotografié cantándola');
+    expect(texto).toContain('Lo que duele es callar');
+    expect(texto).toContain('Lo decidieron hace cinco años');
+    expect(comandos).toContain('final:B');
+  });
+
+  it('J12: fingir o negarse lleva a la persecución; en casa de Dot llega el mensaje de Nell y el reloj echa a andar', () => {
+    const b = nueva(12);
+    expect(jugar(b, 'estudio.crane', { elecciones: [1] }).comandos).toContain('escena:callejones');
+    expect(b.get('crane_sigue')).toBe(true);
+    const c = nueva(12, { crane_decision: 'fingir', dot_confianza: 3, dp_j11_ivy: 'recordar' });
+    const { texto, comandos } = jugar(c, 'casa_dot.entrar');
+    expect(texto).toContain('Bonita colección');
+    expect(texto).toContain('Tú corriste hacia mi niño');
+    expect(texto).toContain('El reloj anda');
+    expect(c.get('reloj_en_marcha')).toBe(true);
+    expect(c.get('mensaje_nell')).toBe(true);
+    expect(inv(c)).toEqual(expect.arrayContaining(['dibujos_amory', 'metralla_brillante']));
+    expect(comandos).toContain('final:demo');
+  });
+
+  it('J12: el atajo prole solo se abre a quien trató a los proles como personas', () => {
+    expect(jugar(nueva(12, { dot_confianza: 1 }), 'callejones.atajo').comandos).not.toContain('pos:atajo');
+    expect(jugar(nueva(12, { dot_confianza: 2 }), 'callejones.atajo').comandos).toContain('pos:atajo');
+  });
+
+  it('Sospecha 100: en el Acto I, vaporización (C0); después, el arresto donde esté (Final C)', () => {
+    const b = nueva(2);
+    expect(jugar(b, 'arresto').comandos).toContain('final:C0');
+    const c = nueva(8, { escena_actual: 'planta11' });
+    expect(jugar(c, 'arresto').texto).toContain('Un golpe de porra en la nuca');
+    const d = nueva(9, { escena_actual: 'departamento' });
+    expect(jugar(d, 'arresto').texto).toContain('Acompáñeles');
+  });
+
+  it('cada entrada nueva del diario está declarada en ink', () => {
+    const entradas = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/diario/entradas.json'), 'utf8')).entradas as { id: string }[];
+    const b = new NarrativeBridge(resultado.json!);
+    for (const e of entradas) {
+      expect(b.story.variablesState.GlobalVariableExistsWithName(e.id), e.id).toBe(true);
+      expect(b.story.variablesState.GlobalVariableExistsWithName(`${e.id}_escrita`), `${e.id}_escrita`).toBe(true);
+    }
+  });
+
+  it('los mapas de sigilo declaran sus vigilantes', () => {
+    const porId = new Map(localizaciones.map((l) => [l.id, l]));
+    const p11 = porId.get('planta11')!;
+    expect(p11.sigilo?.alSerVisto).toBe('planta11.visto');
+    expect(p11.conosRotativos?.periodo).toBe(6000);
+    expect(p11.npcs.find((n) => n.name === 'guardia')?.vigia?.ruta.length).toBe(4);
+    expect(porId.get('minimor_archivo')!.sigilo?.ocultos.length).toBe(5);
+    expect(porId.get('miniver')!.sigilo?.social).toBe(true);
+    expect(porId.get('departamento_noche')!.sigilo?.condicion).toBe('cargando_prueba');
+    expect(porId.get('callejones')!.hotspots.filter((h) => h.ruido).length).toBe(5);
+    expect(porId.get('callejones')!.hotspots.filter((h) => h.escondite).length).toBe(6);
   });
 });

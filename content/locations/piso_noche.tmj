@@ -179,6 +179,11 @@
        "value": "piso_noche.cartel_mirar"
       },
       {
+       "name": "usar",
+       "type": "string",
+       "value": "piso_noche.cartel_usar"
+      },
+      {
        "name": "aprox",
        "type": "string",
        "value": "212,98"

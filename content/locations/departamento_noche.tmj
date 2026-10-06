@@ -1,0 +1,691 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Partes y Cartografía · la Gran Rectificación"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-departamento_noche"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "j10_depto.entrar"
+  },
+  {
+   "name": "sigilo",
+   "type": "string",
+   "value": "j10_depto.visto"
+  },
+  {
+   "name": "sigilo_si",
+   "type": "string",
+   "value": "cargando_prueba"
+  },
+  {
+   "name": "checkpoint",
+   "type": "string",
+   "value": "mesa"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/departamento_noche.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 380,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 412,
+     "y": 244,
+     "width": 68,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 380,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "mesa",
+     "x": 88,
+     "y": 112,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "silla",
+     "x": 102,
+     "y": 142,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "mesa",
+     "x": 168,
+     "y": 112,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "silla",
+     "x": 182,
+     "y": 142,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 11,
+     "name": "mesa",
+     "x": 248,
+     "y": 112,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 12,
+     "name": "silla",
+     "x": 262,
+     "y": 142,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 13,
+     "name": "mesa",
+     "x": 88,
+     "y": 168,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 14,
+     "name": "silla",
+     "x": 102,
+     "y": 198,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 15,
+     "name": "mesa",
+     "x": 168,
+     "y": 168,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 16,
+     "name": "silla",
+     "x": 182,
+     "y": 198,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 17,
+     "name": "mesa",
+     "x": 248,
+     "y": 168,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 18,
+     "name": "silla",
+     "x": 262,
+     "y": 198,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 19,
+     "name": "registro",
+     "x": 350,
+     "y": 116,
+     "width": 78,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 20,
+     "name": "archivador",
+     "x": 414,
+     "y": 204,
+     "width": 24,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 21,
+     "name": "mi_mesa",
+     "x": 170,
+     "y": 166,
+     "width": 44,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mi mesa"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j10_depto.mesa"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "172,216"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "mapa",
+     "x": 148,
+     "y": 28,
+     "width": 154,
+     "height": 58,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mapa del frente"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j10_depto.mapa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "226,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "memoria",
+     "x": 328,
+     "y": 44,
+     "width": 34,
+     "height": 28,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Agujero de la memoria"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j10_depto.memoria_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "345,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "personal",
+     "x": 414,
+     "y": 196,
+     "width": 24,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Archivador del personal"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j10_depto.archivador"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "402,222"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "salir",
+     "x": 380,
+     "y": 238,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j10_depto.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "396,234"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 30,
+     "name": "puerta",
+     "x": 396,
+     "y": 230,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "name": "mesa",
+     "x": 172,
+     "y": 216,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 26,
+     "name": "carrito",
+     "x": 322,
+     "y": 112,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "carrito"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Carrito de la limpieza"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j10_depto.carrito_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j10_depto.carrito"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "nota_nell_j10"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "322,128"
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "pell",
+     "x": 304,
+     "y": 206,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "pell"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarada Pell"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j10_depto.companeros_mirar"
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "brooke",
+     "x": 274,
+     "y": 160,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "brooke"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarada Brooke"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j10_depto.companeros_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "236,160"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "voss",
+     "x": 330,
+     "y": 104,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "voss_camisa"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Subdirector Voss"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j10_depto.voss_mirar"
+      },
+      {
+       "name": "vista",
+       "type": "string",
+       "value": "95,38"
+      },
+      {
+       "name": "ruta",
+       "type": "string",
+       "value": "330,104;330,234;60,234;60,104"
+      },
+      {
+       "name": "pausa",
+       "type": "string",
+       "value": "1200"
+      },
+      {
+       "name": "velocidad",
+       "type": "string",
+       "value": "30"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 32
+}

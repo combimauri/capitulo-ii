@@ -20,7 +20,9 @@ def exportar(destino):
         subprocess.run([sys.executable, str(ART / "pruebas" / "piso_hd.py"), "--sin-protagonista", *flags,
                         f"--salida={destino / (nombre + '.png')}"], check=True, capture_output=True)
         hechos.append(nombre)
-    for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina", "salon_odio", "despacho_voss", "centro", "sueno", "pasillo", "limehouse", "pub", "mercado", "estudio", "archivo", "suministros"):
+    for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina", "salon_odio", "despacho_voss", "centro", "sueno", "pasillo", "limehouse", "pub", "mercado", "estudio", "archivo", "suministros",
+                   "calderas", "planta11", "archivo_restringido", "sotano_pub", "lavabos", "casa_dot",
+                   "miniver", "minimor", "minimor_archivo", "callejones"):
         try:
             m = __import__(modulo)
         except ModuleNotFoundError:
@@ -31,6 +33,11 @@ def exportar(destino):
             m.dibujar("j3").img.save(destino / "departamento_j3.png"); hechos.append("departamento_j3")
         if modulo == "estudio":
             m.dibujar("j6").img.save(destino / "estudio_j6.png"); hechos.append("estudio_j6")
+            m.dibujar("j12").img.save(destino / "estudio_j12.png"); hechos.append("estudio_j12")
+        for (base, variante) in (("cantina", "miniver"), ("escalera", "odio"), ("departamento", "noche"),
+                                 ("avenida", "furgoneta"), ("lavabos", "vaho")):
+            if modulo == base:
+                m.dibujar(variante).img.save(destino / f"{base}_{variante}.png"); hechos.append(f"{base}_{variante}")
         if modulo == "mercado":
             m.dibujar("ruinas").img.save(destino / "mercado_ruinas.png"); hechos.append("mercado_ruinas")
     return hechos
