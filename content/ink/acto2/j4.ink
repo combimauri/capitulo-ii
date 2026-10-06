@@ -475,7 +475,7 @@ PENSAMIENTO: Mi piso. La telepantalla, en voz baja. # id:j4_10_pens_02
 -> DONE
 
 === j4_dormir ===
-~ jornada = 5
+~ nueva_jornada(5)
 ~ desayunado = false
 CARTEL: JORNADA 5 # fx:negro # sfx:silbato # id:j4_10_jornada5
 CARTEL: Jornada 5. Antes del silbato. # id:j4_10_fin # escena:piso # pos:cama

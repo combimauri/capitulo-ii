@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
 import { audio } from './systems/AudioDirector';
+import './ui/destellos';
 import '@fontsource/pixelify-sans/400.css';
 import '@fontsource/vt323/400.css';
-import { registerSW } from 'virtual:pwa-register';
+import { registrarPwa } from './core/pwa';
 import { BootScene } from './scenes/BootScene';
 import { PreloadScene } from './scenes/PreloadScene';
 import { MenuScene } from './scenes/MenuScene';
@@ -12,6 +13,8 @@ import { CascotesScene } from './scenes/minijuegos/CascotesScene';
 import { FichaScene } from './scenes/minijuegos/FichaScene';
 import { FacecrimeScene } from './scenes/minijuegos/FacecrimeScene';
 import { RegistroScene } from './scenes/RegistroScene';
+import { PausaScene } from './scenes/PausaScene';
+import { OpcionesScene } from './scenes/OpcionesScene';
 import { ParteScene } from './scenes/minijuegos/ParteScene';
 import { FrenteScene } from './scenes/minijuegos/FrenteScene';
 import { PancartaScene } from './scenes/minijuegos/PancartaScene';
@@ -38,7 +41,7 @@ import { ResistenciaScene } from './scenes/minijuegos/ResistenciaScene';
 import { EpilogoScene, CreditosScene } from './scenes/minijuegos/EpilogoScene';
 import { RESOLUCION, narrativa, registro, mision, EV } from './core/juego';
 
-registerSW({ immediate: true });
+registrarPwa();
 
 const juego = new Phaser.Game({
   type: Phaser.AUTO,
@@ -53,7 +56,7 @@ const juego = new Phaser.Game({
   dom: { createContainer: true },
   scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene,
     DocumentoScene, LibroScene, CopiarScene, PalancaScene, LlavesScene, CombinacionScene, RectificacionScene, ListaScene,
-    TunelesScene, CapituloScene, DialScene, Habitacion101Scene, DeclaracionScene, ResistenciaScene, EpilogoScene, CreditosScene, CFAutomaticoScene, RegistroScene],
+    TunelesScene, CapituloScene, DialScene, Habitacion101Scene, DeclaracionScene, ResistenciaScene, EpilogoScene, CreditosScene, CFAutomaticoScene, RegistroScene, PausaScene, OpcionesScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):

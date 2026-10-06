@@ -229,6 +229,10 @@ PENSAMIENTO: Un jardín pintado. Una playa pintada. Para hacerse fotos en sitios
     CARTEL: Esa tarde. # fx:negro # id:j6_04_cartel # escena:piso_noche # pos:puerta
     -> DONE
 }
+{ jornada == 12:
+    PENSAMIENTO: He venido a saber. No me voy sin saberlo. # id:j12_04_salir_no
+    -> DONE
+}
 # escena:mercado # pos:estudio
 -> DONE
 
@@ -467,7 +471,7 @@ PENSAMIENTO: Perdóname, Ivy. Eres el único sitio donde no miran. # id:j5_08_es
 -> DONE
 
 === j5_dormir ===
-~ jornada = 6
+~ nueva_jornada(6)
 ~ desayunado = false
 CARTEL: JORNADA 6 # fx:negro # sfx:silbato # id:j5_08_jornada6
 CARTEL: Jornada 6. # id:j5_08_fin # escena:piso # pos:cama

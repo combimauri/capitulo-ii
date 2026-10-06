@@ -586,7 +586,8 @@ TELEPANTALLA: …el balance del cobarde ataque de ayer sobre Limehouse asciende 
 
 PENSAMIENTO (durante el microjuego, en ráfagas que intentan distraer al jugador):
 - `[D1]` Siete. Un paréntesis.
-- `[D2]` Siete. "Retiren eso."
+
+*(La variante `[D2]` se quitó en M7: al empezar la J6 la Duda no pasa de unos 38.)*
 
 **Si `duda >= 20`:** la paleta del piso muestra el primer cambio visible: el cartel de Ivy tiene ahora un rojo **ligeramente más cálido** y la luz de la ventana es menos gris.
 

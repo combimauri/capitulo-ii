@@ -206,7 +206,7 @@ PENSAMIENTO: El pasillo otra vez. El guardia nuevo hace su ronda. # id:j8_07_pas
     TELEPANTALLA: ¡Usted! ¡Quédese donde está! # id:j8_04_visto_tele
 }
 PENSAMIENTO: Corro. Me pego a la pared de la escalera de servicio. Espero. Nadie baja. # id:j8_04_visto_01
-~ sube_sospecha(10)
+~ sube_sospecha_sigilo(10)
 PENSAMIENTO: Vuelvo. Más despacio. # id:j8_04_visto_02
 -> DONE
 
@@ -596,7 +596,7 @@ PENSAMIENTO: Entro sin encender la luz. La telepantalla emite el himno a volumen
 -> DONE
 
 === j8_dormir ===
-~ jornada = 9
+~ nueva_jornada(9)
 ~ desayunado = false
 CARTEL: JORNADA 9 # fx:negro # sfx:silbato # id:j8_10_jornada9
 CARTEL: La ignorancia es la fuerza. # id:j8_10_fin # escena:piso # pos:cama

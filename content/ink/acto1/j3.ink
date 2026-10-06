@@ -137,6 +137,18 @@ VOSS: No hay ningún Amory en esta sección, camarada {apellido}. # id:j3_02v_vo
     ~ sube_sospecha(10)
     PENSAMIENTO: Un silencio largo. Escribe algo en una ficha. # esperar:1.2 # id:j3_02v_pens_01
     VOSS: Puede retirarse. # id:j3_02v_voss_07
+* [«Amory existía. Y usted lo sabe.»]
+    ~ voss_j3_insistir = true
+    ~ sube_sospecha(30)
+    PENSAMIENTO: Deja la pluma. Por primera vez, me mira de verdad. # esperar:1 # id:j3_02v_temerario_00
+    VOSS: Repítalo, camarada {apellido}. Despacio. Para la telepantalla. # id:j3_02v_temerario_01
+    ** [Repetirlo, más alto.]
+        ~ sube_sospecha(100)
+        PROTAGONISTA: Felix Amory. Mesa catorce. Dibujaba pájaros en los márgenes de los mapas. # id:j3_02v_temerario_02
+        VOSS: Gracias. Eso es todo. # esperar:1 # id:j3_02v_temerario_03
+    ** [Callarse.]
+        PENSAMIENTO: No digo nada. Él tampoco. Escribe algo en una ficha, muy despacio. # esperar:1.2 # id:j3_02v_temerario_04
+        VOSS: Puede retirarse. # id:j3_02v_temerario_05
 - PENSAMIENTO: Vuelvo a mi mesa. # fx:negro # id:j3_02v_pens_02 # escena:departamento # pos:mesa
 -> DONE
 
@@ -281,6 +293,10 @@ PENSAMIENTO: La jornada ha terminado. # id:j3_05_depto_usar
 -> DONE
 
 = salir
+{ jornada == 12:
+    PENSAMIENTO: Primero, mi mesa. Que nadie note nada. # id:j12_02_salir_no
+    -> DONE
+}
 { jornada == 7:
     { nell_respuesta == "":
         PENSAMIENTO: Primero, la cinta. # id:j7_02_salir_cinta
@@ -309,13 +325,8 @@ PENSAMIENTO: Música marcial en la telepantalla. Por la ventana, el Ministerio d
     PENSAMIENTO: No. El Partido sabe lo que hace. Amory era un traidor. Lo de Pekín… era una señal. El Partido lo vio antes que yo. # esperar:0.6 # id:j3_06_recordar_03
     PENSAMIENTO: Eso es todo. # id:j3_06_recordar_04
 - else:
-    { duda < 10:
-        PENSAMIENTO: Un día largo. Un día raro. Mañana todo estará en su sitio. Siempre lo está. # id:j3_06_aceptar_01
-        PENSAMIENTO: Buenas noches, Ivy. Mañana ganaremos más kilómetros. # id:j3_06_aceptar_02
-    - else:
-        PENSAMIENTO: Un día largo. Mañana todo estará en su sitio. # id:j3_06_aceptar_03
-        PENSAMIENTO: ¿Por qué no recuerdo con quién comía los martes? # id:j3_06_aceptar_04
-    }
+    PENSAMIENTO: Un día largo. Un día raro. Mañana todo estará en su sitio. Siempre lo está. # id:j3_06_aceptar_01
+    PENSAMIENTO: Buenas noches, Ivy. Mañana ganaremos más kilómetros. # id:j3_06_aceptar_02
 }
 { amory_reaccion == "denuncia":
     PENSAMIENTO: Yo fui a ese despacho. Yo dije su nombre. # id:j3_06_denuncia_01
@@ -334,7 +345,7 @@ PENSAMIENTO: Muy lejos, el silbido de un cohete. # sfx:silbido # esperar:2.6 # i
 PENSAMIENTO: Un impacto amortiguado, en otro barrio. No me muevo. # sfx:impacto # id:j3_06_dormir_02
 CARTEL: FIN DEL ACTO I # id:j3_06_fin_acto
 CARTEL: ACTO II¶LA GRIETA # id:j3_06_acto2
-~ jornada = 4
+~ nueva_jornada(4)
 ~ desayunado = false
 CARTEL: JORNADA 4 # sfx:silbato # id:j3_06_jornada4 # escena:piso # pos:cama
 -> DONE

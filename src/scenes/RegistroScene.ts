@@ -11,6 +11,7 @@ import { narrativa, registro } from '../core/juego';
 import { BORRADO, type Alias, type EntradaRegistro } from '../core/Registro';
 import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
+import { suave } from '../ui/destellos';
 
 interface DpConfig {
   lineas: string[];
@@ -258,9 +259,9 @@ export class RegistroScene extends Minijuego {
         const y = Math.random() * height;
         const lejos = Math.min(x, width - x, y, height - y);
         if (lejos > 70 + borde * 60) continue;
-        g.fillStyle(Math.random() < 0.5 ? 0xffffff : 0x000000, 0.12 + Math.random() * 0.25).fillRect(x, y, 2 + Math.random() * 6, 2);
+        g.fillStyle(Math.random() < 0.5 ? 0xffffff : 0x000000, (suave() ? 0.06 : 0.12) + Math.random() * (suave() ? 0.1 : 0.25)).fillRect(x, y, 2 + Math.random() * 6, 2);
       }
-      this.time.delayedCall(70, dibujar);
+      this.time.delayedCall(suave() ? 450 : 70, dibujar);   // con destellos reducidos, la estática no parpadea
     };
     dibujar();
   }

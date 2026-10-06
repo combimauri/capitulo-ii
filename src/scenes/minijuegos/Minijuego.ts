@@ -21,10 +21,28 @@ export abstract class Minijuego extends Phaser.Scene {
   private alTerminar: ((r: ResultadoMinijuego) => void) | null = null;
   private terminado = false;
 
+  /** Tiempo que la app ha pasado en segundo plano durante el minijuego (móvil): no cuenta como jugado. */
+  private tiempoOculto = 0;
+
   init(d: EntradaMinijuego) {
     this.params = d.params ?? {};
     this.alTerminar = d.alTerminar;
     this.terminado = false;
+    this.tiempoOculto = 0;
+    let ocultoEn = 0;
+    const oculto = () => { ocultoEn = performance.now(); };
+    const visible = () => { if (ocultoEn) this.tiempoOculto += performance.now() - ocultoEn; ocultoEn = 0; };
+    this.game.events.on(Phaser.Core.Events.HIDDEN, oculto);
+    this.game.events.on(Phaser.Core.Events.VISIBLE, visible);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.game.events.off(Phaser.Core.Events.HIDDEN, oculto);
+      this.game.events.off(Phaser.Core.Events.VISIBLE, visible);
+    });
+  }
+
+  /** El reloj del minijuego: el de la escena, sin el rato en que la app estuvo en segundo plano. */
+  protected ahora() {
+    return this.time.now - this.tiempoOculto;
   }
 
   protected terminar(r: ResultadoMinijuego, fundido = 300) {

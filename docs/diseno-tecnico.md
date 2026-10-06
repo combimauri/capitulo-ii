@@ -523,6 +523,14 @@ El doblepensar (`# dp:id=DP-J3-AMORY,lineas=j2_04_amory_*|j1_06_amory_*`):
 | Mano dominante (móvil) | Derecha / izquierda (para los botones de CF y del diario) |
 | Aviso de contenido | Se muestra siempre al iniciar una partida nueva. |
 
+> **Implementación (M7):** `src/core/Opciones.ts` guarda las opciones en `capitulo2.opciones.juego`, aparte de la partida. El panel `OpcionesScene` (pestañas *Sonido*, *Juego* y *Partida*) se abre desde el menú principal y desde la pausa, y los cambios se aplican al momento.
+> - **Texto:** 28, 55 o 120 caracteres por segundo, o instantáneo.
+> - **Crimen facial:** *asistida* multiplica la ventana por 1,6 y baja el ritmo un 15 %; *automática* acierta cada marca sola y da `perfecto`, mientras las pancartas y el vecino siguen en manos del jugador.
+> - **Sigilo:** el motor escribe la variable de ink `opc_sigilo_reducido` y los knots `*.visto` llaman a `sube_sospecha_sigilo(n)`, que suma la mitad.
+> - **Destellos:** `src/ui/destellos.ts` envuelve `shake` y `flash` de todas las cámaras (temblor al 15 %, sin destellos claros). Los efectos hechos a mano (dial, resistencia, recuerdos, estática del doblepensar, neones) preguntan a `suave()`.
+> - **Tamaño de la UI:** caja de diálogo, pensamientos, carteles, elecciones y foco.
+> - **Mano dominante:** los botones táctiles de exploración y los del crimen facial.
+
 ---
 
 ## 10. Guardado
@@ -554,8 +562,8 @@ interface SaveData {
 ### 10.2 Robustez
 
 - `localStorage` envuelto en `try/catch`: en modo privado o con el almacenamiento lleno, el juego avisa y sigue funcionando sin guardar.
-- **Exportar partida:** descarga un `.json`. **Importar:** carga un `.json`. Sirve de copia de seguridad y para pasar la partida del ordenador al móvil.
-- **Migraciones:** si cambia la `version`, se aplica una función de migración. Si el estado de ink no es compatible (por cambios en el guion), se ofrece reanudar desde el inicio de la última jornada guardada.
+- **Exportar partida:** descarga un `.json`. **Importar:** carga un `.json`. Sirve de copia de seguridad y para pasar la partida del ordenador al móvil. *(Hecho en M7: Opciones → Partida; importar solo desde el menú.)*
+- **Migraciones:** si cambia la `version`, se aplica una función de migración. Si el estado de ink no es compatible (por cambios en el guion), se ofrece reanudar desde el inicio de la última jornada guardada. *(M7: si el estado no carga, el menú lo dice y no arranca una partida rota; las migraciones llegarán con el primer cambio de esquema.)*
 
 ---
 
@@ -573,7 +581,7 @@ interface SaveData {
 
 | Prueba | Qué comprueba |
 |---|---|
-| **Bot de recorrido de ink** (Node + inkjs) | Recorre la historia miles de veces con elecciones aleatorias y resultados de minijuegos aleatorios. Verifica que **se alcanzan los cinco finales más C0**, que no hay knots sin salida, que Duda y Sospecha se mantienen en 0–100 y que no hay errores de ink en tiempo de ejecución. |
+| **Bot de recorrido de ink** (Node + inkjs; `tools/bot.ts`, hecho en M7) | Recorre la historia miles de veces con elecciones aleatorias y resultados de minijuegos aleatorios. Verifica que **se alcanzan los cinco finales más C0**, que no hay knots sin salida, que Duda y Sospecha se mantienen en 0–100 y que no hay errores de ink en tiempo de ejecución. |
 | **Rutas dirigidas** | Perfiles fijos ("acepta todo", "recuerda todo", "denuncia a Amory", "salva a Len"…) que deben terminar en el final esperado. |
 | **Linter de contenido** | Toda línea hablada tiene `# id:` único. No hay `{x\|y}` literal. Cada hotspot de Tiled apunta a un knot existente. Cada `# documento:`, `# minijuego:` o `# escena:` referencia algo que existe. Cada objeto del inventario tiene icono y descripción. |
 | **Pruebas unitarias** (Vitest) | Puente narrativo, sistema de guardado, migraciones, validadores de minijuegos (compás, rutas). |
@@ -842,9 +850,47 @@ Todo el audio se **sintetiza en tiempo real** con Web Audio: no hay archivos de 
   - De papel: la Ficha, el parte, el diario, el libro, la Planilla, el comparador, la declaración y el Capítulo II en el rodillo de la máquina de Goldstein, cada uno sobre su mesa.
 - **191 pruebas.**
 
-**Pendiente (M7):**
+**Pendiente (M7):** *(hecho en M7, salvo las pruebas en móviles reales)*
 - Probar el audio y el joystick en móviles reales (iOS y Android).
-- El resto de opciones de §9 (velocidad del texto, dificultad del crimen facial, sigilo, destellos, tamaño de la UI, mano dominante) y las opciones dentro de la partida.
+- ~~El resto de opciones de §9 (velocidad del texto, dificultad del crimen facial, sigilo, destellos, tamaño de la UI, mano dominante) y las opciones dentro de la partida.~~
+
+### Estado de M7 (pulido)
+
+- **Opciones completas (§9)** en el menú y en la pausa: sonido, juego y accesibilidad, y la partida (exportar e importar un `.json`, §10.2).
+- **Pausa** (`Esc` o el botón MENÚ en táctil): continuar, opciones o salir al menú. Al pausar se guarda si no hay un diálogo abierto, y la pausa se abre sola cuando la app pasa a segundo plano.
+- **Robustez:**
+  - Empezar de nuevo encima de una partida guardada pide confirmación.
+  - Una partida que no carga lo dice en vez de arrancar rota.
+  - Los minijuegos con tiempo (`Minijuego.ahora()`) no cuentan el rato en segundo plano.
+  - Un resultado de minijuego que no encaja nunca deja el diálogo colgado: `UIScene.fijar` solo escribe variables declaradas y con su tipo.
+- **Móvil y PWA:**
+  - Pantalla completa y horizontal al primer toque.
+  - En iOS, aviso de cómo instalar la app.
+  - Las versiones nuevas se ofrecen en el menú (`registerType: 'prompt'`) en lugar de recargar a mitad de partida.
+  - Funciona sin conexión: 252 archivos, 4,2 MB.
+- **Rendimiento:** unos 0,6 ms de CPU por fotograma en escritorio (el peor caso, 1,2 ms) en los mapas más cargados. Se descartó limitar a 60 fps porque el limitador de Phaser da tirones.
+- **Bot de recorrido** (`tools/bot.ts`, `tests/bot.test.ts`, §11.2): juega la partida entera imitando al motor, con seis perfiles (azar, fiel, curioso, superviviente, temerario y torpe). La prueba exige que ninguna partida se atasque, que no haya errores de ink, que la Duda y la Sospecha no salgan de 0–100 y que se alcancen los finales A, B, C, D y E. `BOT_PARTIDAS=300 npx vitest run tests/bot.test.ts` saca el informe de equilibrio.
+- **Fallos que encontró el bot**, ya corregidos:
+  - J4: el registro de impactos colgaba el diálogo.
+  - J10: el mitin fallaba en ink (dato numérico escrito como texto).
+  - El arresto se repetía dentro del Final C, y el reloj de misión seguía corriendo en la celda.
+  - Callejones sin salida: la avenida en la J11, el pasillo en la J12 (que devolvía a la Jornada 2), el estudio en la J12 y la puerta del piso en el Final D.
+  - Opciones de un solo uso que agotaban el contenido: el hueco del diario y Amory.
+- **Equilibrio:** la Sospecha casi nunca bajaba y hasta el jugador prudente acababa arrestado en el Acto III, el 30 % de las veces en la J11. Ahora, desde la Jornada 5, cada jornada empieza con la Sospecha 5 puntos más baja (`nueva_jornada(n)`, `ALIVIO_JORNADA`).
+
+  | Perfil | Arresto en la J11 (antes → después) | Finales D o E |
+  |---|---|---|
+  | Fiel | 29 % → 8 % | — |
+  | Superviviente | 31 % → 8 % | 45 % → 80 % |
+  | Al azar | — | Sigue arrestado en el Acto III en el 40–66 % de las jornadas |
+
+**Decisiones de diseño** (señaladas por el bot y resueltas):
+- **Final C0:** toda la Sospecha posible del Acto I sumaba 44, así que era inalcanzable. Ahora hay una elección temeraria en el despacho de Voss (J3): acusarle (+30) y, si se repite para la telepantalla, vaporización.
+- **J13 «arrepentimiento»:** el umbral pasa de `duda < 30` a `duda < 92`. Quien aceptó el doblepensar de la J11 llega con 78–99 (casi un tercio se arrepiente); quien lo recordó llega con 100 (nunca).
+- **Líneas que nunca salían, quitadas:** J6 con `duda >= 50` y la variante de «aceptar» con `duda >= 10` en la noche de la J3.
+- La prueba del bot exige ahora los seis finales y el arrepentimiento.
+
+**Pendiente:** probar en un iPhone y un Android reales (audio, joystick, pantalla completa, rendimiento) y pruebas con jugadores.
 
 ---
 

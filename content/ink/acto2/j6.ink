@@ -16,10 +16,7 @@ TELEPANTALLA: …el balance del cobarde ataque de ayer sobre Limehouse asciende 
 { cf_j6_noticia == "fallo":
     ~ sube_sospecha(3)
 }
-{
-- duda >= 50:
-    PENSAMIENTO: Siete. «Retiren eso.» # id:j6_01_pens_d2
-- duda >= 20:
+{ duda >= 20:
     PENSAMIENTO: Siete. Un paréntesis. # id:j6_01_pens_d1
 - else:
     PENSAMIENTO: Siete. Siete camaradas. Eurasia pagará. # id:j6_01_pens_d0
@@ -378,7 +375,7 @@ PENSAMIENTO: Se va. Me quedo apoyad{o} en la puerta. # id:j6_05_pens_06
     -> DONE
 }
 PENSAMIENTO: El hueco entre el armario y la pared. Aquí no llega. # id:j6_05_hueco_01
-* [Escribir.]
++ [Escribir.]
     ~ temp antes = diario_entradas
     { jornada:
     - 6:
@@ -399,7 +396,7 @@ PENSAMIENTO: El hueco entre el armario y la pared. Aquí no llega. # id:j6_05_hu
         ~ diario_escrito_hoy = jornada
         PENSAMIENTO: 1984. Creo. # id:j6_05_anio
     }
-* [Ahora no.]
++ [Ahora no.]
     PENSAMIENTO: Ahora no. # id:j6_05_ahora_no
 -
 { jornada == 11 and not fragmento_4:
@@ -415,7 +412,7 @@ PENSAMIENTO: El hueco entre el armario y la pared. Aquí no llega. # id:j6_05_hu
 -> DONE
 
 === j6_dormir ===
-~ jornada = 7
+~ nueva_jornada(7)
 ~ desayunado = false
 CARTEL: JORNADA 7 # fx:negro # sfx:silbato # id:j6_05_jornada7
 CARTEL: Jornada 7. # id:j6_05_fin # escena:piso # pos:cama

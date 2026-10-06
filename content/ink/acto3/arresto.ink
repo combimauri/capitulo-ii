@@ -41,7 +41,7 @@ PENSAMIENTO: Un golpe de porra en la nuca. # fx:destello # id:fc_01_calle_01
 -> furgoneta
 
 = furgoneta
-PENSAMIENTO: Negro. # fx:negro # id:fc_01_negro
+PENSAMIENTO: Negro. # fx:negro # reloj:parar # id:fc_01_negro
 -> final_c.llegada
 
 // ==================================================================== FINAL C0 — Vaporización (Sospecha 100 en el Acto I)

@@ -208,7 +208,7 @@ PENSAMIENTO: Lo tiro al agujero delante de él. Una corriente de aire caliente s
 ~ inventario -= parte_original
 ~ cargando_prueba = false
 ~ mision_j10 = "fallida"
-~ sube_sospecha(20)
+~ sube_sospecha_sigilo(20)
 PENSAMIENTO: Voss sigue su ronda. No ha anotado nada. No le hace falta. # id:j10_04_visto_06
 -> fase2
 
@@ -306,7 +306,7 @@ PENSAMIENTO: «Ahora dice dos.» # id:j10_06_noche_00
 -> DONE
 
 === j10_dormir ===
-~ jornada = 11
+~ nueva_jornada(11)
 ~ desayunado = false
 CARTEL: JORNADA 11 # fx:negro # sfx:silbato # id:j10_06_jornada11
 CARTEL: El Ministerio del Amor. # id:j10_06_fin # escena:piso # pos:cama

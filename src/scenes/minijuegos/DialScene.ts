@@ -10,6 +10,7 @@ import Phaser from 'phaser';
 import { Minijuego } from './Minijuego';
 import { audio } from '../../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../../ui/estilo';
+import { destello, suave } from '../../ui/destellos';
 
 const NIVELES = [40, 60, 80, 95];
 const SILENCIO = 7000;
@@ -66,7 +67,7 @@ export class DialScene extends Minijuego {
     this.add.rectangle(width / 2 - 300, 470, 600, 6, 0xc8c8c4).setOrigin(0, 0.5);
     this.barra = this.add.rectangle(width / 2 - 300, 470, 600, 6, 0x3a3c40).setOrigin(0, 0.5);
     this.add.text(width / 2, 490, '(o no decir nada)', { fontFamily: FUENTE.texto, fontSize: '16px', color: '#6a6c70' }).setOrigin(0.5, 0);
-    this.limite = this.time.now + SILENCIO;
+    this.limite = this.ahora() + SILENCIO;
     const kb = this.input.keyboard!;
     kb.on('keydown-ONE', () => this.responder('nueve', ronda));
     kb.on('keydown-TWO', () => this.responder('once', ronda));
@@ -107,7 +108,7 @@ export class DialScene extends Minijuego {
     audio.play('descarga', 0.4 + k * 1.4);
     this.cameras.main.shake(400 + k * 1200, 0.004 + k * 0.02);
     const velo = this.add.rectangle(0, 0, 960, 540, 0xffffff, 0).setOrigin(0).setDepth(20);
-    this.tweens.add({ targets: velo, alpha: 0.65 + k * 0.3, duration: 120, yoyo: true, repeat: Math.round(2 + k * 4), onComplete: () => { velo.destroy(); despues(); } });
+    this.tweens.add({ targets: velo, alpha: destello(0.65 + k * 0.3), duration: suave() ? 400 : 120, yoyo: true, repeat: suave() ? 0 : Math.round(2 + k * 4), onComplete: () => { velo.destroy(); despues(); } });
   }
 
   /** Quinta vez: sin opciones. Las agujas tiemblan con la estática del doblepensar y van solas hasta las 23:15. */
@@ -129,7 +130,7 @@ export class DialScene extends Minijuego {
 
   update() {
     if (this.elegido || !this.barra || !this.limite) return;
-    const queda = Math.max(0, this.limite - this.time.now);
+    const queda = Math.max(0, this.limite - this.ahora());
     this.barra.setScale(queda / SILENCIO, 1);
     if (queda === 0) this.responder('silencio', Number(this.params.ronda) || 1);
   }

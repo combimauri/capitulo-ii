@@ -12,7 +12,7 @@
 
 ### J13.00 — Comprobación de entrada
 
-**Si `duda < 30`** (posible si el jugador aceptó el doblepensar de J11 y casi todos los demás):
+**Si `duda < 92`** (posible si el jugador aceptó el doblepensar de J11; quien lo recordó llega con 100. Umbral ajustado en M7: el Acto III sube mucho la Duda):
 
 (Amanecer. El protagonista sale de la despensa sin hacer ruido. Dot duerme en una silla junto a la estufa. El protagonista mira los dibujos de Amory, el mensaje de Nell y la colección de metralla de Sammy. Luego deja el paquete sobre la mesa, abre la puerta y camina hacia la calle Cable.)
 
@@ -20,7 +20,7 @@ PENSAMIENTO: Un día, dijo Crane. (Pausa.) Quiero que me devuelvan mi cansancio.
 
 → **FINAL B — versión "arrepentimiento"** (ver [05-finales.md](05-finales.md#final-b--el-fotógrafo))
 
-**Si `duda >= 30`:** → J13.01
+**Si `duda >= 92`:** → J13.01
 
 ### J13.01 — Estación de Shadwell · Amanecer
 

@@ -53,13 +53,13 @@ export class DeclaracionScene extends Minijuego {
     this.tweens.add({ targets: ayuda, alpha: 0.4, duration: 700, yoyo: true, repeat: -1 });
   }
 
-  private empezar() { if (!this.firmado && this.firmando === null) this.firmando = this.time.now; }
+  private empezar() { if (!this.firmado && this.firmando === null) this.firmando = this.ahora(); }
 
   private soltar() { if (!this.firmado && this.firmando !== null) { this.firmando = null; this.firma.clear(); } }
 
   update() {
     if (this.firmando === null || this.firmado) return;
-    const t = Math.min(1, (this.time.now - this.firmando) / TIEMPO_FIRMA);
+    const t = Math.min(1, (this.ahora() - this.firmando) / TIEMPO_FIRMA);
     // el trazo de la firma, una onda que avanza
     const g = this.firma.clear().lineStyle(2, 0x1d2a44, 1);
     g.beginPath();

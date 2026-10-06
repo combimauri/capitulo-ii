@@ -17,6 +17,7 @@ import { audio } from '../../systems/AudioDirector';
 import { narrativa } from '../../core/juego';
 import { COLOR, FUENTE, hex } from '../../ui/estilo';
 import { lineas, type Linea } from '../../core/texto';
+import { opciones } from '../../core/Opciones';
 
 export const EXPRESIONES = ['entusiasmo', 'odio', 'jubilo', 'desprecio', 'duelo', 'neutral'] as const;
 type Expr = typeof EXPRESIONES[number];
@@ -72,6 +73,7 @@ export class FacecrimeScene extends Minijuego {
   private pensamientos: string[] = [];
   private proximoPensamiento = 0;
   private interferencia = false;
+  private automatico = false;
   private tapa!: Phaser.GameObjects.Rectangle;
   private rotulo!: Phaser.GameObjects.Text;
   private pancartas = 0;
@@ -91,7 +93,11 @@ export class FacecrimeScene extends Minijuego {
     this.genero = narrativa.get('genero') === 'f' ? 'm' : 'h';
     const config = configDe(this.params.id);
     const dif = DIFICULTAD[(this.params.dif ?? config?.dif) as keyof typeof DIFICULTAD] ?? DIFICULTAD.facil;
-    this.ventana = dif.ventana;
+    // opciones (diseño técnico §9): asistida = ventanas más amplias y algo más lento; automática = la cara se compone sola
+    this.automatico = opciones.cf === 'automatica';
+    const asistida = opciones.cf === 'asistida';
+    this.ventana = asistida ? Math.round(dif.ventana * 1.6) : dif.ventana;
+    const lento = asistida ? 0.85 : 1;
 
     const fases: FaseConfig[] = config?.fases ?? [{
       expr: (this.params.expr ?? 'entusiasmo') as Expr,
@@ -145,7 +151,7 @@ export class FacecrimeScene extends Minijuego {
         t += f.duracion ?? 2200;
         return { ...f, inicio, fin: t };
       }
-      const intervalo = 60000 / (Number(this.params.bpm) || f.bpm || dif.bpm);
+      const intervalo = 60000 / ((Number(this.params.bpm) || f.bpm || dif.bpm) * lento);
       const inicio = t - 900;
       for (let k = 0; k < f.golpes; k++, t += intervalo) {
         this.marcas.push({ t, expr: f.expr, obj: this.crearMarca(f.expr), resuelta: false, fase: i });
@@ -186,7 +192,7 @@ export class FacecrimeScene extends Minijuego {
   private mirarVecino() {
     const v = this.vecino;
     if (!v || !this.empezado || this.inicio < 0) return;
-    const ahora = this.time.now - this.inicio;
+    const ahora = this.ahora() - this.inicio;
     const clave = this.fases[v.fase];
     // si lo mira durante su fase clave, sigue mirándolo hasta el final de ese tramo
     const hasta = ahora >= clave.inicio && ahora < clave.fin ? clave.fin : ahora + VECINO.mirada;
@@ -223,7 +229,8 @@ export class FacecrimeScene extends Minijuego {
     const { width } = this.scale;
     const unica = this.exprs.length === 1;
     this.exprs.forEach((e, i) => {
-      const w = unica ? 300 : 150, x = unica ? width - 190 : width - 100 - (this.exprs.length - 1 - i) * 160;
+      const w = unica ? 300 : 150, x0 = unica ? width - 190 : width - 100 - (this.exprs.length - 1 - i) * 160;
+      const x = opciones.mano === 'izquierda' ? width - x0 : x0;   // del lado de la mano dominante
       const boton = this.add.rectangle(x, 400, w, 44, COLOR_EXPR[e], 0.9).setStrokeStyle(2, 0x000000)
         .setInteractive({ useHandCursor: true });
       this.add.text(x, 400, `${unica ? 'ESPACIO · ' : `${i + 1} · `}${NOMBRE[e]}`, {
@@ -248,7 +255,8 @@ export class FacecrimeScene extends Minijuego {
       'La telepantalla te ve. Tu cara también habla.',
       'Mantén la expresión correcta.',
       '',
-      this.exprs.length === 1 ? 'Pulsa ESPACIO o toca la pantalla cuando cada marca llegue al círculo.'
+      this.automatico ? 'Crimen facial automático (opciones): tu cara se compone sola.'
+        : this.exprs.length === 1 ? 'Pulsa ESPACIO o toca la pantalla cuando cada marca llegue al círculo.'
         : 'Pulsa la tecla o el botón de la expresión cuando su marca llegue al círculo.',
     ].join('\n'), { fontFamily: FUENTE.texto, fontSize: '22px', color: hex(COLOR.papel4), align: 'center', lineSpacing: 6 }).setOrigin(0.5));
     capa.add(this.add.text(width / 2, height / 2 + 90, '[ toca para empezar ]', {
@@ -271,8 +279,8 @@ export class FacecrimeScene extends Minijuego {
 
   update() {
     if (!this.empezado) return;
-    if (this.inicio < 0) this.inicio = this.time.now;
-    const ahora = this.time.now - this.inicio;
+    if (this.inicio < 0) this.inicio = this.ahora();
+    const ahora = this.ahora() - this.inicio;
     this.actualizarFase(ahora);
     this.actualizarVecino(ahora);
     const proxima = this.marcas.find((m) => !m.resuelta);
@@ -283,7 +291,8 @@ export class FacecrimeScene extends Minijuego {
       if (!m.resuelta) {
         m.obj.x = PISTA.xGolpe + (falta / ANTICIPACION) * (PISTA.xInicio - PISTA.xGolpe);
         m.obj.setVisible(falta < ANTICIPACION);
-        if (falta < -this.ventana) this.fallo(m);
+        if (this.automatico && falta <= 0) this.acertar(m);
+        else if (falta < -this.ventana) this.fallo(m);
       }
     }
     if (ahora > this.fin && this.marcas.every((m) => m.resuelta)) this.acabar();
@@ -366,10 +375,14 @@ export class FacecrimeScene extends Minijuego {
 
   private pulsar(e: Expr) {
     if (!this.empezado || this.inicio < 0) return;
-    const ahora = this.time.now - this.inicio;
+    const ahora = this.ahora() - this.inicio;
     const m = this.marcas.find((x) => !x.resuelta && Math.abs(x.t - ahora) <= this.ventana);
-    if (!m) return;   // pulsar fuera de tiempo no penaliza: la cara se mantiene
+    if (!m || this.automatico) return;   // pulsar fuera de tiempo no penaliza: la cara se mantiene
     if (m.expr !== e) return this.fallo(m);
+    this.acertar(m);
+  }
+
+  private acertar(m: Marca) {
     m.resuelta = true;
     this.aciertos++;
     audio.play('acierto');

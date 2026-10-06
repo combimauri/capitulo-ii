@@ -4,8 +4,17 @@ import { NarrativeBridge } from './NarrativeBridge';
 import { parseTiled, type LocationData } from './Location';
 import items from '../../content/items.json';
 import { Registro } from './Registro';
+import { opciones, alCambiarOpcion } from './Opciones';
 
 export const narrativa = new NarrativeBridge(historia);
+
+/** Las opciones que cambian reglas viven también en ink; se reescriben al cargar o empezar partida. */
+function sincronizarOpciones() {
+  if (narrativa.story.variablesState.GlobalVariableExistsWithName('opc_sigilo_reducido')) narrativa.set('opc_sigilo_reducido', opciones.sigilo === 'reducida');
+}
+sincronizarOpciones();
+narrativa.on('estado', sincronizarOpciones);
+alCambiarOpcion(sincronizarOpciones);
 
 /** Historial de lo leído; el doblepensar lo reescribe (diseño técnico §7.1). */
 export const registro = new Registro();
@@ -75,4 +84,5 @@ export const EV = {
   mano: 'mano',                         // ()  cambió el objeto en la mano
   carpeta: 'carpeta',                   // ()  abrir o cerrar la carpeta (sigilo social)
   dinamo: 'dinamo',                     // ()  dar vueltas a la manivela de la linterna
+  guardar: 'guardar',                   // ()  autoguardado ahora, si se puede (pausa, exportar, salir al menú)
 } as const;

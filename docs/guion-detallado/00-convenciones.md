@@ -107,3 +107,4 @@ En el Acto I casi todo está en `[D0]`.
 | Jornada 7, negarse a Nell | `duda < 30` | Final A |
 | Jornada 7, negarse a Nell | `duda >= 30` | Nell insiste una vez; si el jugador vuelve a negarse, Final A. |
 | Cualquier momento | `sospecha >= 100` | Arresto |
+| Cada jornada nueva, desde la 5 | — | SOSPECHA −5 (equilibrio, M7; respeta el suelo de 40 si el Comité leyó el diario) |

@@ -125,9 +125,11 @@ export class NarrativeBridge {
 
   loadState(json: string) {
     this.story.state.LoadJson(json);
+    this.emit('estado');
   }
 
   reset() {
     this.story.ResetState();
+    this.emit('estado');   // el motor vuelve a escribir lo que no es de la partida (opciones)
   }
 }

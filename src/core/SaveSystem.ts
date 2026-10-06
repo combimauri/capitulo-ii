@@ -3,6 +3,7 @@ import type { Dir } from './Location';
 
 export const SAVE_VERSION = 1;
 const PREFIJO = 'capitulo2.partida.';
+const FORMATO_EXPORTADO = 'capitulo2-partida';
 
 export interface SaveData {
   version: number;
@@ -89,6 +90,27 @@ export const SaveSystem = {
 
   guardarCierreD(texto: string) {
     try { storage()?.setItem(PREFIJO + 'cierre_d', texto); } catch { /* nada */ }
+  },
+
+  /** Copia de seguridad (diseño técnico §10.2): la partida como texto JSON, para descargarla. */
+  exportar(ranura = 'auto'): string | null {
+    const d = this.cargar(ranura);
+    return d ? JSON.stringify({ formato: FORMATO_EXPORTADO, ...d }, null, 1) : null;
+  },
+
+  /** Lee una partida exportada. No la guarda: devuelve la partida o por qué no vale. */
+  leerExportada(texto: string): SaveData | string {
+    let d: Partial<SaveData> & { formato?: string };
+    try { d = JSON.parse(texto); } catch { return 'El archivo no es una partida de Capítulo II.'; }
+    if (!d || d.formato !== FORMATO_EXPORTADO || typeof d.ink !== 'string' || !d.mundo?.escena) return 'El archivo no es una partida de Capítulo II.';
+    if (d.version !== SAVE_VERSION) return 'La partida es de otra versión del juego.';
+    delete d.formato;
+    return d as SaveData;
+  },
+
+  /** Guarda tal cual una partida leída de un archivo (conserva su fecha). */
+  importar(ranura: string, d: SaveData): boolean {
+    try { storage()?.setItem(PREFIJO + ranura, JSON.stringify(d)); return true; } catch { return false; }
   },
 
   borrar(ranura: string) {

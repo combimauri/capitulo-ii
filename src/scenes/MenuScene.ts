@@ -1,8 +1,9 @@
 import Phaser from 'phaser';
-import { narrativa, registro, mano, mision } from '../core/juego';
+import { narrativa, registro, mano, mision, LOCALIZACIONES } from '../core/juego';
 import { SaveSystem } from '../core/SaveSystem';
-import { audio, type Canal } from '../systems/AudioDirector';
+import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
+import { pwa } from '../core/pwa';
 
 let avisoVisto = false;
 
@@ -27,13 +28,32 @@ export class MenuScene extends Phaser.Scene {
       'Basado libremente en 1984, de George Orwell.',
       '',
       '[ toca o pulsa una tecla para continuar ]',
+      ...(this.iosSinInstalar() ? ['', 'En iPhone o iPad: Compartir → «Añadir a pantalla de inicio» para jugar a pantalla completa.'] : []),
     ].join('\n'), {
-      fontFamily: FUENTE.texto, fontSize: '18px', color: hex(COLOR.papel3), align: 'center', lineSpacing: 6,
+      fontFamily: FUENTE.texto, fontSize: '18px', color: hex(COLOR.papel3), align: 'center', lineSpacing: 6, wordWrap: { width: 860 },
     }).setOrigin(0.5).setAlpha(0);
     this.tweens.add({ targets: t, alpha: 1, duration: 600 });
     const seguir = () => { audio.desbloquear(); avisoVisto = true; this.scene.restart(); };
-    this.input.once('pointerdown', seguir);
+    // en móvil, el primer toque pone la pantalla completa (en iOS no se puede: se instala como app).
+    // Al soltar el dedo: es el gesto que los navegadores aceptan para pedirla.
+    this.input.once('pointerup', (p: Phaser.Input.Pointer) => { if (p.wasTouch) this.pantallaCompleta(); seguir(); });
     this.input.keyboard?.once('keydown', seguir);
+  }
+
+  /** Safari de iOS fuera de la app instalada: allí no hay pantalla completa (diseño técnico §8.1). */
+  private iosSinInstalar() {
+    const nav = navigator as Navigator & { standalone?: boolean };
+    const ios = /iP(hone|ad|od)/.test(nav.userAgent) || (nav.platform === 'MacIntel' && nav.maxTouchPoints > 1);
+    return ios && !nav.standalone;
+  }
+
+  private pantallaCompleta() {
+    const standalone = window.matchMedia?.('(display-mode: fullscreen), (display-mode: standalone)').matches;
+    if (standalone || this.scale.isFullscreen || !this.scale.fullscreen.available) return;
+    try {
+      this.scale.startFullscreen();
+      void (screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> }).lock?.('landscape').catch(() => {});
+    } catch { /* el navegador no lo permite */ }
   }
 
   private menu() {
@@ -50,7 +70,9 @@ export class MenuScene extends Phaser.Scene {
     const partida = SaveSystem.cargar('auto');
     const opciones: [string, () => void][] = [];
     if (partida) opciones.push(['Continuar', () => this.continuar()]);
-    opciones.push(['Nueva partida', () => this.nueva()]);
+    opciones.push(['Nueva partida', () => (partida
+      ? this.confirmar('Empezar de nuevo borra la partida guardada.\n¿Seguir?', () => this.nueva(), 'Empezar', 'Volver')
+      : this.nueva())]);
     if (SaveSystem.capitulos().length) opciones.push(['Capítulos II', () => this.galeria()]);
     opciones.push(['Opciones', () => this.opciones()]);
 
@@ -85,48 +107,47 @@ export class MenuScene extends Phaser.Scene {
         fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.gris3), align: 'center', wordWrap: { width: 760 },
       }).setOrigin(0.5);
     });
-    this.add.text(width - 12, height - 10, 'v0.3', {
+    this.add.text(width - 12, height - 10, 'v0.4', {
       fontFamily: FUENTE.maquina, fontSize: '16px', color: hex(COLOR.gris3),
     }).setOrigin(1, 1);
+    // una versión nueva de la app: se instala solo si el jugador quiere, desde aquí
+    const version = () => {
+      if (!pwa.actualizar || !this.scene.isActive()) return;
+      const t = this.add.text(12, height - 10, 'Hay una versión nueva · toca para actualizar', {
+        fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.ocre4), backgroundColor: '#0b0c0fcc', padding: { x: 6, y: 4 },
+      }).setOrigin(0, 1).setInteractive({ useHandCursor: true });
+      t.on('pointerup', () => { t.setText('Actualizando…'); pwa.actualizar?.(); });
+    };
+    pwa.alHaberVersion = version;
+    this.events.once('shutdown', () => { pwa.alHaberVersion = null; });
+    version();
   }
 
-  /** Opciones de sonido: los cuatro volúmenes (diseño técnico §9). Mientras está abierto suena algo para oírlos. */
+  /** Opciones (diseño técnico §9): sonido, juego y accesibilidad, y la partida (exportar e importar). */
   private opciones() {
+    this.scene.pause();
+    this.scene.launch('Opciones', { desde: 'menu', alCerrar: () => this.scene.restart() });
+    this.scene.bringToTop('Opciones');
+  }
+
+  /** Un aviso con «Sí» y «No» (empezar de nuevo encima de una partida guardada, una partida que no carga). */
+  private confirmar(pregunta: string, si: (() => void) | null, textoSi = 'Sí', textoNo = 'No') {
     const { width, height } = this.scale;
-    const capa = this.add.container(0, 0).setDepth(10);
-    capa.add(this.add.rectangle(0, 0, width, height, 0x0b0c0f, 1).setOrigin(0).setInteractive());
-    capa.add(this.add.text(width / 2, 70, 'OPCIONES · SONIDO', { fontFamily: FUENTE.maquina, fontSize: '36px', color: hex(COLOR.papel4) }).setOrigin(0.5));
-    audio.musica.poner('prole');
-    audio.ambiente.poner(['calle']);
-    const CANALES: [Canal, string][] = [['general', 'General'], ['musica', 'Música'], ['efectos', 'Efectos'], ['ambiente', 'Ambiente']];
-    const ANCHO = 320, X0 = width / 2 - 60;
-    CANALES.forEach(([canal, nombre], i) => {
-      const y = 160 + i * 74;
-      capa.add(this.add.text(X0 - 40, y, nombre, { fontFamily: FUENTE.texto, fontSize: '22px', color: hex(COLOR.papel3) }).setOrigin(1, 0.5));
-      const pista = this.add.rectangle(X0, y, ANCHO, 8, COLOR.gris2).setOrigin(0, 0.5);
-      const lleno = this.add.rectangle(X0, y, ANCHO * audio.volumenes[canal], 8, COLOR.rojo3).setOrigin(0, 0.5);
-      const asa = this.add.rectangle(X0 + ANCHO * audio.volumenes[canal], y, 16, 30, COLOR.papel4).setStrokeStyle(2, COLOR.gris1);
-      const valor = this.add.text(X0 + ANCHO + 24, y, '', { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel3) }).setOrigin(0, 0.5);
-      // zona de toque generosa: toda la fila (44 px de alto como mínimo)
-      const zona = this.add.rectangle(X0 - 10, y, ANCHO + 20, 48, 0, 0).setOrigin(0, 0.5).setInteractive({ useHandCursor: true });
-      capa.add([pista, lleno, asa, valor, zona]);
-      const pintar = () => {
-        const v = audio.volumenes[canal];
-        lleno.setSize(ANCHO * v, 8); asa.setX(X0 + ANCHO * v); valor.setText(`${Math.round(v * 100)} %`);
-      };
-      const fijar = (px: number) => { audio.ajustarVolumen(canal, Math.round(((px - X0) / ANCHO) * 20) / 20); pintar(); };
-      let arrastrando = false;
-      zona.on('pointerdown', (p: Phaser.Input.Pointer) => { audio.desbloquear(); arrastrando = true; fijar(p.x); });
-      this.input.on('pointermove', (p: Phaser.Input.Pointer) => { if (arrastrando && p.isDown) fijar(p.x); });
-      this.input.on('pointerup', () => {
-        if (arrastrando && (canal === 'efectos' || canal === 'general')) audio.play('sello');
-        arrastrando = false;
-      });
-      pintar();
-    });
-    const cerrar = this.add.rectangle(width / 2, height - 60, 180, 40, COLOR.gris2).setStrokeStyle(1, COLOR.gris3).setInteractive({ useHandCursor: true });
-    capa.add([cerrar, this.add.text(width / 2, height - 60, 'cerrar', { fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel3) }).setOrigin(0.5)]);
-    cerrar.on('pointerup', () => { audio.musica.poner(null); audio.ambiente.poner([]); this.scene.restart(); });
+    const capa = this.add.container(0, 0).setDepth(20);
+    capa.add(this.add.rectangle(0, 0, width, height, 0x000000, 0.75).setOrigin(0).setInteractive());
+    capa.add(this.add.rectangle(width / 2, height / 2, 560, 200, COLOR.gris1).setStrokeStyle(2, COLOR.rojo3));
+    capa.add(this.add.text(width / 2, height / 2 - 40, pregunta, {
+      fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel4), align: 'center', wordWrap: { width: 500 }, lineSpacing: 4,
+    }).setOrigin(0.5));
+    const botones: [string, number, () => void][] = si ? [[textoSi, -100, () => { capa.destroy(); si(); }], [textoNo, 100, () => capa.destroy()]]
+      : [[textoNo, 0, () => capa.destroy()]];
+    for (const [t, dx, f] of botones) {
+      const b = this.add.rectangle(width / 2 + dx, height / 2 + 50, 170, 40, COLOR.gris2).setStrokeStyle(1, COLOR.gris3).setInteractive({ useHandCursor: true });
+      b.on('pointerover', () => b.setFillStyle(COLOR.rojo3));
+      b.on('pointerout', () => b.setFillStyle(COLOR.gris2));
+      b.on('pointerup', f);
+      capa.add([b, this.add.text(width / 2 + dx, height / 2 + 50, t, { fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel4) }).setOrigin(0.5)]);
+    }
   }
 
   /** Galería de los Capítulos II escritos en distintas partidas, de uno en uno. */
@@ -171,8 +192,17 @@ export class MenuScene extends Phaser.Scene {
   private continuar() {
     const p = SaveSystem.cargar('auto');
     if (!p) return this.nueva();
-    narrativa.loadState(p.ink);
-    registro.cargar(p.registro);
+    try {
+      narrativa.loadState(p.ink);
+      registro.cargar(p.registro);
+      if (!LOCALIZACIONES[p.mundo.escena]) throw new Error(`escena ${p.mundo.escena}`);
+    } catch (e) {
+      // el guion cambió y el estado guardado ya no encaja (diseño técnico §10.2)
+      console.error('[guardado]', e);
+      narrativa.reset();
+      this.confirmar('Esta partida guardada no es compatible con esta versión del juego.', null, '', 'Entendido');
+      return;
+    }
     mano.item = null;
     mision.reloj = null;
     this.scene.start('Location', { escena: p.mundo.escena, x: p.mundo.x, y: p.mundo.y, dir: p.mundo.dir, cargado: true, reloj: p.mundo.reloj ?? null });

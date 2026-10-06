@@ -136,6 +136,10 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 -> DONE
 
 = puerta_usar
+{ final_en_curso == "D":
+    PENSAMIENTO: No hay adónde ir. Veinticuatro horas. Aquí. # id:fd_03_puerta_no
+    -> DONE
+}
 { not desayunado:
     PENSAMIENTO: Primero el desayuno. Un estómago vacío es un estómago desleal. # id:piso_puerta_usar_01
     -> DONE
@@ -334,6 +338,10 @@ PENSAMIENTO: Se va silbando. # refrescar # id:j1_03_nino_03
 -> DONE
 
 = minipax
+{ jornada >= 9:
+    PENSAMIENTO: Hoy no tengo nada que hacer en el Ministerio. # id:j9_avenida_minipax_no
+    -> DONE
+}
 # escena:vestibulo # pos:entrada
 -> DONE
 
@@ -457,10 +465,9 @@ AMORY: ¿Qué? ¿Te gusta? # id:j1_05_amory_04
 * [¿Eso está autorizado?]
     AMORY: Todo lo que hace más grande a Oceanía está autorizado. Es casi una ley natural. # id:j1_05_amory_06
     -> amory_preguntas
-* [Tengo que trabajar.]
++ [Tengo que trabajar.]
     AMORY: ¡El deber! Ve, ve. Malabar no se va a conquistar sola. # id:j1_05_amory_07
     -> DONE
-* -> DONE
 
 = mesa_mirar
 PENSAMIENTO: Mi mesa. Máquina de escribir, tubo neumático, telepantalla. Todo lo que hace falta para ganar una guerra. # id:j1_05_mesa_mirar
@@ -742,7 +749,11 @@ PENSAMIENTO: Mañana, a las siete y cuarto, el silbato. # id:j1_07_cama_mirar
 { jornada == 11:
     -> j11_dormir
 }
-~ jornada = 2
+{ jornada != 1:
+    PENSAMIENTO: Todavía no. # id:piso_noche_dormir_no
+    -> DONE
+}
+~ nueva_jornada(2)
 ~ desayunado = false
 CARTEL: JORNADA 2 # fx:negro # id:j1_07_jornada2 # escena:piso # pos:cama
 -> DONE

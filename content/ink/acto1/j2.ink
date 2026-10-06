@@ -288,7 +288,7 @@ PENSAMIENTO: Ivy. Salta a la comba. Cada vez que me acerco, la calle se alarga. 
 IVY (NIÑA): ¿Qué hora es? # sfx:silbido # id:j2_06_ivy_02
 PENSAMIENTO: Miro mi muñeca. Llevo su reloj. Las nueve y cuarenta. # id:j2_06_pens_01
 CARTEL: 21:40 # sfx:impacto # fx:destello # id:j2_06_cartel
-~ jornada = 3
+~ nueva_jornada(3)
 ~ desayunado = false
 ~ amory_borrado = true
 CARTEL: JORNADA 3 # fx:negro # sfx:silbato # id:j2_06_jornada3 # escena:piso # pos:cama

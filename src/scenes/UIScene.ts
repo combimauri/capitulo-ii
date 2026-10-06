@@ -11,9 +11,13 @@ import type { ResultadoMinijuego } from './minijuegos/Minijuego';
 import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
 import { SaveSystem } from '../core/SaveSystem';
+import { destello, suave } from '../ui/destellos';
+import { opciones as opc, CPS, alCambiarOpcion } from '../core/Opciones';
 
-const VELOCIDAD_TEXTO = 55;          // caracteres por segundo
-const CAJA = { x: 40, y: 386, w: 880, h: 132 };
+/** La caja de diálogo; con la interfaz al 125 % crece hacia arriba (diseño técnico §9). */
+const caja = () => { const h = Math.round(132 * escala()); return { x: 40, y: 518 - h, w: 880, h }; };
+const escala = () => opc.ui / 100;
+const px = (n: number) => `${Math.round(n * escala())}px`;
 
 /** Minijuegos por etiqueta: cf → Facecrime; minijuego:<tipo> → escena. */
 const MINIJUEGOS: Record<string, string> = {
@@ -87,6 +91,7 @@ export class UIScene extends Phaser.Scene {
     this.enMano = this.add.container(0, 0).setDepth(22).setVisible(false);
     this.aviso = this.add.container(0, 0).setDepth(45).setVisible(false);
     this.crearMision();
+    this.ajustarTamano();
     this.consultando = false;
     this.dibujarOjo(Number(narrativa.get('sospecha')) || 0);
     narrativa.observe('sospecha', (v) => this.dibujarOjo(Number(v)));
@@ -104,8 +109,17 @@ export class UIScene extends Phaser.Scene {
     ev.on(EV.joystick, joy);
     ev.on(EV.mano, manoCambia);
     const quitar = narrativa.on('command', (t: Tag) => { if (t.key === 'objeto') this.avisarObjeto(t.value); });
+    // opciones cambiadas desde la pausa: el tamaño y la mano dominante se aplican al momento
+    const quitarOpciones = alCambiarOpcion((k) => {
+      if (k === 'ui') this.ajustarTamano();
+      if (k === 'mano') this.crearBotonesTactiles();
+    });
+    // la app pasa a segundo plano (móvil): al volver, el juego espera en pausa
+    const oculto = () => this.pausar();
+    ev.on(Phaser.Core.Events.HIDDEN, oculto);
     this.events.once('shutdown', () => {
       ev.off(EV.dialogoIniciar, iniciar); ev.off(EV.foco, foco); ev.off(EV.joystick, joy); ev.off(EV.mano, manoCambia); quitar();
+      ev.off(Phaser.Core.Events.HIDDEN, oculto); quitarOpciones();
     });
 
     const kb = this.input.keyboard!;
@@ -118,6 +132,7 @@ export class UIScene extends Phaser.Scene {
     kb.on('keydown-ESC', () => {
       if (this.inventario.visible) this.alternarInventario();
       else if (mano.item) this.soltarObjeto();
+      else this.pausar();
     });
     kb.on('keydown-L', () => this.abrirRegistro());
     kb.on('keydown-C', () => { if (!this.activo) this.game.events.emit(EV.carpeta); });
@@ -172,6 +187,7 @@ export class UIScene extends Phaser.Scene {
 
   // ------------------------------------------------------------------ construcción
   private crearCaja() {
+    const CAJA = caja();
     this.cajaFondo = this.add.rectangle(0, 0, CAJA.w, CAJA.h, COLOR.papel3).setOrigin(0).setStrokeStyle(2, COLOR.gris2);
     this.cajaFranja = this.add.rectangle(0, 0, 8, CAJA.h, COLOR.rojo3).setOrigin(0);
     this.texto = this.add.text(28, 22, '', {
@@ -184,6 +200,21 @@ export class UIScene extends Phaser.Scene {
     this.tweens.add({ targets: this.indicador, alpha: 0.2, duration: 450, yoyo: true, repeat: -1 });
     this.caja = this.add.container(CAJA.x, CAJA.y,
       [this.cajaFondo, this.cajaFranja, this.texto, this.nombreFondo, this.nombre, this.indicador]).setVisible(false).setDepth(30);
+  }
+
+  /** Tamaño de la interfaz (100 % o 125 %): la caja, el pensamiento, el cartel y el foco. */
+  private ajustarTamano() {
+    const CAJA = caja();
+    this.cajaFondo.setSize(CAJA.w, CAJA.h);
+    this.cajaFranja.setSize(8, CAJA.h);
+    this.caja.setPosition(CAJA.x, CAJA.y);
+    this.indicador.setPosition(CAJA.w - 26, CAJA.h - 26);
+    this.nombre.setFontSize(px(22));
+    this.nombreFondo.setPosition(20, -10 - Math.round(4 * escala())).setSize(this.nombre.width + 24, Math.round(28 * escala()));
+    this.nombre.setY(-6 - Math.round(4 * escala()));
+    this.pensamientoTexto.setFontSize(px(22));
+    this.cartelTexto.setFontSize(px(30));
+    this.focoTexto.setFontSize(px(16));
   }
 
   private crearPensamiento() {
@@ -212,10 +243,13 @@ export class UIScene extends Phaser.Scene {
     this.foco.setData('fondo', fondo);
   }
 
-  /** Botones táctiles: solo en dispositivos con pantalla táctil (diseño técnico §8). */
+  /** Botones táctiles: solo en dispositivos con pantalla táctil (diseño técnico §8), del lado de la mano dominante. */
   private crearBotonesTactiles() {
+    this.botones?.destroy();
     this.botones = this.add.container(0, 0).setDepth(20).setVisible(false);
-    const boton = (x: number, y: number, r: number, etiqueta: string, alPulsar: () => void) => {
+    const zurdo = opc.mano === 'izquierda';
+    const boton = (x0: number, y: number, r: number, etiqueta: string, alPulsar: () => void) => {
+      const x = zurdo ? 960 - x0 : x0;
       const c = this.add.circle(x, y, r, COLOR.gris1, 0.55).setStrokeStyle(2, COLOR.papel3, 0.7).setInteractive();
       const t = this.add.text(x, y, etiqueta, { fontFamily: FUENTE.maquina, fontSize: '20px', color: hex(COLOR.papel4) }).setOrigin(0.5);
       c.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); alPulsar(); });
@@ -225,6 +259,15 @@ export class UIScene extends Phaser.Scene {
     boton(790, 488, 34, 'MIRAR', () => this.game.events.emit(EV.accion, 'mirar'));
     boton(900, 92, 30, 'OBJ.', () => this.alternarInventario());
     boton(900, 160, 30, 'REG.', () => this.abrirRegistro());
+    boton(900, 228, 30, 'MENÚ', () => this.pausar());
+  }
+
+  /** Abre la pausa (Esc, botón MENÚ o la app en segundo plano). No en mitad de un minijuego. */
+  private pausar() {
+    if (this.enAccion || this.consultando || this.scene.isActive('Pausa') || !this.scene.isActive()) return;
+    if (this.inventario.visible) this.alternarInventario();
+    this.scene.launch('Pausa');
+    this.scene.bringToTop('Pausa');
   }
 
   /** El reloj de las misiones (arriba, en el centro) y el botón de la carpeta del sigilo social. */
@@ -318,7 +361,8 @@ export class UIScene extends Phaser.Scene {
         // # documento:planilla_s18 → { id: 'planilla_s18' }
         const params = Object.keys(a.params).length || a.key === 'minijuego' ? a.params : { id: a.value };
         const r = await this.lanzarMinijuego(escena, params);
-        this.aplicarResultado(tipo, params, r);
+        // un resultado que no encaja nunca debe dejar el diálogo colgado (enAccion)
+        try { this.aplicarResultado(tipo, params, r); } catch (e) { console.error(`[minijuego] ${tipo}`, e); }
       }
     }
     this.enAccion = false;
@@ -339,9 +383,7 @@ export class UIScene extends Phaser.Scene {
       const id = (params.id ?? '').toLowerCase().replace(/^cf-/, '').replace(/-/g, '_');
       narrativa.set(`cf_${id}`, r.resultado);
       // datos extra que la historia quiera conocer: cf_<id>_transicion, cf_<id>_amory…
-      for (const [k, v] of Object.entries(r.datos ?? {})) {
-        if (narrativa.story.variablesState.GlobalVariableExistsWithName(`cf_${id}_${k}`)) narrativa.set(`cf_${id}_${k}`, String(v));
-      }
+      for (const [k, v] of Object.entries(r.datos ?? {})) this.fijar(`cf_${id}_${k}`, v);
     } else if (tipo === 'dp') {
       // # dp:id=DP-J3-AMORY → dp_j3_amory = "aceptar" | "recordar"
       narrativa.set((params.id ?? '').toLowerCase().replace(/-/g, '_'), r.resultado);
@@ -363,8 +405,20 @@ export class UIScene extends Phaser.Scene {
         SaveSystem.guardarCapitulo({ autor: `${narrativa.get('nombre')} ${narrativa.get('apellido')}`, texto: String(r.datos.texto), cierre: String(r.datos.cierre) });
       }
       if (params.resultado) narrativa.set(params.resultado, r.resultado);   // p. ej. # minijuego:pancarta,resultado=pancarta_j2
-      if (params.vars && r.datos) for (const [k, v] of Object.entries(r.datos)) narrativa.set(`${params.vars}_${k}`, v);
+      if (params.vars && r.datos) for (const [k, v] of Object.entries(r.datos)) this.fijar(`${params.vars}_${k}`, v);
     }
+  }
+
+  /**
+   * Escribe un dato de minijuego en ink solo si la historia lo declara, y con el tipo de la variable
+   * (un número de pancartas no puede llegar como texto: ink no compara texto con números).
+   */
+  private fijar(nombre: string, v: unknown) {
+    if (!narrativa.story.variablesState.GlobalVariableExistsWithName(nombre)) return;
+    const actual = narrativa.get(nombre);
+    if (typeof actual === 'number') narrativa.set(nombre, Number(v) || 0);
+    else if (typeof actual === 'boolean') narrativa.set(nombre, v === true || v === 'si' || v === 'true');
+    else narrativa.set(nombre, String(v));
   }
 
   /** Un recuerdo que asalta (≈2 s): la imagen en sepia, a golpes de luz.  # recuerdo:loc-stepney_ivy */
@@ -373,7 +427,9 @@ export class UIScene extends Phaser.Scene {
       if (!this.textures.exists(clave)) return ok();
       const img = this.add.image(480, 270, clave).setScale(2).setTint(0xc8a878).setDepth(45).setAlpha(0);
       audio.play('grieta');
-      this.tweens.add({ targets: img, alpha: { from: 0, to: 0.95 }, duration: 90, yoyo: true, repeat: 4, hold: 260,
+      // con destellos reducidos, la imagen aparece y se va una sola vez, sin golpes de luz
+      if (suave()) this.tweens.add({ targets: img, alpha: { from: 0, to: 0.9 }, duration: 500, yoyo: true, hold: 900, onComplete: () => { img.destroy(); ok(); } });
+      else this.tweens.add({ targets: img, alpha: { from: 0, to: 0.95 }, duration: 90, yoyo: true, repeat: 4, hold: 260,
         onComplete: () => { img.destroy(); ok(); } });
     });
   }
@@ -416,7 +472,7 @@ export class UIScene extends Phaser.Scene {
           this.tweens.add({ targets: this.velo, alpha: 1, duration: 1400, onComplete: () => ok() });
           break;
         case 'destello':
-          this.velo.setFillStyle(0xffffff).setAlpha(1);
+          this.velo.setFillStyle(0xffffff).setAlpha(destello(1));
           this.tweens.add({ targets: this.velo, alpha: 0, duration: 900, onComplete: () => ok() });
           break;
         case 'temblor':
@@ -454,11 +510,11 @@ export class UIScene extends Phaser.Scene {
     if (tele) audio.agachar(1.5 + l.text.length * 0.045);   // cuando habla la telepantalla, lo demás baja
     this.cajaFondo.setFillStyle(tele ? COLOR.tele1 : COLOR.papel3).setStrokeStyle(2, tele ? COLOR.tele4 : COLOR.gris2);
     this.cajaFranja.setFillStyle(tele ? COLOR.tele4 : COLOR.rojo3);
-    this.texto.setStyle({ fontFamily: tele ? FUENTE.maquina : FUENTE.texto, fontSize: tele ? '28px' : '22px',
+    this.texto.setStyle({ fontFamily: tele ? FUENTE.maquina : FUENTE.texto, fontSize: px(tele ? 28 : 22),
       color: hex(tele ? COLOR.tele5 : COLOR.gris2) });
     const quien = tele ? 'TELEPANTALLA' : l.speaker === 'PROTAGONISTA' ? String(narrativa.get('nombre')).toUpperCase() : (l.speaker ?? '');
     this.nombre.setText(quien).setColor(hex(tele ? COLOR.tele5 : COLOR.papel4));
-    this.nombreFondo.setVisible(!!quien).setSize(this.nombre.width + 24, 28).setFillStyle(tele ? COLOR.tele0 : COLOR.gris2);
+    this.nombreFondo.setVisible(!!quien).setSize(this.nombre.width + 24, Math.round(28 * escala())).setFillStyle(tele ? COLOR.tele0 : COLOR.gris2);
     this.caja.setVisible(true);
     this.escribir(this.texto, l.text);
   }
@@ -474,8 +530,10 @@ export class UIScene extends Phaser.Scene {
     this.indicador.setVisible(false);
     let n = 0;
     destino.setText('');
+    const cps = CPS[opc.texto];
+    if (!Number.isFinite(cps)) { this.completarTexto(); return; }
     this.escribiendo = this.time.addEvent({
-      delay: 1000 / VELOCIDAD_TEXTO,
+      delay: 1000 / cps,
       repeat: texto.length - 1,
       callback: () => {
         n++;
@@ -497,14 +555,14 @@ export class UIScene extends Phaser.Scene {
     this.caja.setVisible(false);
     this.opciones.removeAll(true);
     this.opcionesLista = [];
-    const alto = 46, sep = 10, ancho = 700;
+    const alto = Math.round(46 * escala()), sep = 10, ancho = Math.round(700 * escala());
     const y0 = 290 - (choices.length * (alto + sep)) / 2;
     choices.forEach((c, i) => {
       const y = y0 + i * (alto + sep);
       const fondo = this.add.rectangle(480, y, ancho, alto, COLOR.gris2, 0.95).setStrokeStyle(2, COLOR.gris3)
         .setInteractive({ useHandCursor: true });
       const t = this.add.text(480, y, `${i + 1}. ${c.text}`, {
-        fontFamily: FUENTE.texto, fontSize: '21px', color: hex(COLOR.papel4),
+        fontFamily: FUENTE.texto, fontSize: px(21), color: hex(COLOR.papel4), align: 'center', wordWrap: { width: ancho - 24, useAdvancedWrap: true },
       }).setOrigin(0.5);
       fondo.on('pointerover', () => this.seleccionar(i));
       fondo.on('pointerup', () => this.elegir(i));
@@ -542,7 +600,7 @@ export class UIScene extends Phaser.Scene {
     const acciones = this.esTactil ? '' : [info.usar ? (info.hablar ? 'E hablar' : 'E usar') : '', info.mirar ? 'Q mirar' : ''].filter(Boolean).join(' · ');
     this.focoTexto.setText(`${info.nombre}${acciones ? '   ' + acciones : ''}`);
     const fondo = this.foco.getData('fondo') as Phaser.GameObjects.Rectangle;
-    fondo.setSize(this.focoTexto.width + 20, 24);
+    fondo.setSize(this.focoTexto.width + 20, Math.round(24 * escala()));
     const x = Phaser.Math.Clamp(info.x, fondo.width / 2 + 4, 960 - fondo.width / 2 - 4);
     this.foco.setPosition(x, Phaser.Math.Clamp(info.y - 4, 30, 520)).setVisible(true);
   }

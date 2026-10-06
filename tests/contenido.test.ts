@@ -277,6 +277,17 @@ describe('jornada 3', () => {
     expect(b2.get('sospecha')).toBe(0);
   });
 
+  it('con Voss, la temeridad: acusarle sube la Sospecha 30; repetirlo para la telepantalla es la vaporización (C0)', () => {
+    const b = nueva({ amory_reaccion: 'risa', sospecha: 12 });
+    const callarse = jugar(b, 'voss_despacho.entrar', { elecciones: [2, 1] });
+    expect(callarse.texto).toContain('Para la telepantalla');
+    expect(b.get('sospecha')).toBe(42);
+    const c = nueva({ amory_reaccion: 'risa' });
+    jugar(c, 'voss_despacho.entrar', { elecciones: [2, 0] });
+    expect(c.get('sospecha')).toBe(100);
+    expect(jugar(c, 'arresto').comandos).toContain('final:C0');
+  });
+
   it('al volver del despacho llega el doblepensar; aceptar baja Duda y Sospecha, recordar sube la Duda', () => {
     const a = nueva({ voss_j3_visto: true, duda: 10, sospecha: 10 });
     const ra = jugar(a, 'depto.entrar', { minijuegos: { dp_j3_amory: 'aceptar' } });
@@ -324,7 +335,6 @@ describe('jornada 3', () => {
 
   for (const [dp, duda, reaccion, esperado] of [
     ['aceptar', 0, 'risa', 'Mañana ganaremos más kilómetros'],
-    ['aceptar', 15, 'risa', '¿Por qué no recuerdo con quién comía los martes?'],
     ['recordar', 30, 'reprimenda', 'Felix Amory existía. Felix Amory existía.'],
     ['aceptar', 0, 'denuncia', 'Yo dije su nombre'],
   ] as const) {
@@ -735,6 +745,19 @@ describe('estado', () => {
     expect(b.get('sospecha')).toBe(0);
   });
 
+  it('cada jornada nueva, desde la 5, la Sospecha baja 5 (sin pasar del suelo del Comité)', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('sospecha', 30);
+    b.call('nueva_jornada', 4);
+    expect(b.get('sospecha')).toBe(30);
+    b.call('nueva_jornada', 5);
+    expect([b.get('jornada'), b.get('sospecha')]).toEqual([5, 25]);
+    b.set('comite_leyo', true);
+    b.set('sospecha', 42);
+    b.call('nueva_jornada', 6);
+    expect(b.get('sospecha')).toBe(40);
+  });
+
   it('fijar_genero cambia la concordancia', () => {
     const b = new NarrativeBridge(resultado.json!);
     b.call('fijar_genero', 'f');
@@ -877,6 +900,20 @@ describe('Acto III', () => {
     expect(c.get('libro_fragmentos')).toBe(3);
   });
 
+  it('opciones: con la penalización de sigilo reducida, ser visto sube la Sospecha la mitad', () => {
+    for (const [ruta, n] of [['planta11.visto', 10], ['miniver.visto', 5], ['minimor_archivo.visto', 10], ['callejones.visto', 25]] as const) {
+      const normal = nueva(9);
+      jugar(normal, ruta);
+      expect(normal.get('sospecha'), ruta).toBe(n);
+      const reducida = nueva(9, { opc_sigilo_reducido: true });
+      jugar(reducida, ruta);
+      expect(reducida.get('sospecha'), ruta).toBe(Math.floor(n / 2));
+    }
+    const voss = nueva(10, { nota_nell_j10: true, brooke_distrae: true, cargando_prueba: true, opc_sigilo_reducido: true });
+    jugar(voss, 'j10_depto.visto');
+    expect(voss.get('sospecha')).toBe(10);
+  });
+
   it('J10: de vuelta a casa detienen a Parsons; la hija dice que ahora dice dos nombres', () => {
     const b = nueva(10, { rectificacion_hecha: true });
     const { texto, comandos } = jugar(b, 'escalera.entrar');
@@ -931,7 +968,7 @@ describe('Acto III', () => {
     const b = nueva(12);
     expect(jugar(b, 'estudio.crane', { elecciones: [1] }).comandos).toContain('escena:callejones');
     expect(b.get('crane_sigue')).toBe(true);
-    const c = nueva(12, { crane_decision: 'fingir', dot_confianza: 3, dp_j11_ivy: 'recordar', duda: 60 });
+    const c = nueva(12, { crane_decision: 'fingir', dot_confianza: 3, dp_j11_ivy: 'recordar', duda: 100 });
     const { texto, comandos } = jugar(c, 'casa_dot.entrar');
     expect(texto).toContain('Bonita colección');
     expect(texto).toContain('Tú corriste hacia mi niño');
@@ -996,8 +1033,9 @@ describe('Acto IV y los finales C, D y E', () => {
     expect(texto).toContain('Sabía que vendría');
     expect(texto).toContain('La casa de Dot');
     expect(comandos).toContain('final:B');
-    const c = nueva({ duda: 50 });
+    const c = nueva({ duda: 95 });
     expect(jugar(c, 'j13_entrada').comandos).toContain('escena:shadwell');
+    expect(jugar(nueva({ duda: 91 }), 'j13_entrada').comandos).toContain('final:B');
   });
 
   it('Shadwell: el tablón suelto y el mapa de los pájaros llevan a los túneles', () => {

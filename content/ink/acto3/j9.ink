@@ -81,7 +81,7 @@ PENSAMIENTO: El que se para, en cambio, busca algo. # id:j9_03_pens_03
 SUPERVISOR: ¿Busca algo, camarada? # id:j9_03_visto_01
 PROTAGONISTA: El… el Departamento de Registro. # id:j9_03_visto_02
 SUPERVISOR: Está usted en él. Circule. # id:j9_03_visto_03
-~ sube_sospecha(5)
+~ sube_sospecha_sigilo(5)
 PENSAMIENTO: Vuelvo sobre mis pasos. Carpeta abierta. Paso firme. # id:j9_03_visto_04
 -> DONE
 
@@ -352,7 +352,7 @@ PENSAMIENTO: El Times de 1979 y el reloj de Ivy. Dos cosas que dicen lo mismo. #
 -> DONE
 
 === j9_dormir ===
-~ jornada = 10
+~ nueva_jornada(10)
 ~ desayunado = false
 CARTEL: JORNADA 10 # fx:negro # sfx:silbato # id:j9_08_jornada10
 CARTEL: Semana del Odio. # id:j9_08_fin # escena:piso # pos:cama

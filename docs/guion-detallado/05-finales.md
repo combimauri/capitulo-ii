@@ -18,9 +18,9 @@ CARTEL: *Basado libremente en* 1984 *de George Orwell.*
 | Final | Nombre | Cómo se llega | Duración del desenlace |
 |---|---|---|---|
 | **A** | Doblemásbueno | Negarse a Nell en J7 (Duda < 30, o tras dudar una noche) | ~5 min |
-| **B** | El fotógrafo | Denunciar a Nell (J7) · aceptar el trato de Crane (J12) · volver con Crane por arrepentimiento (J13.00) · entregar a Goldstein (J13.08) | ~6 min |
+| **B** | El fotógrafo | Denunciar a Nell (J7) · aceptar el trato de Crane (J12) · volver con Crane por arrepentimiento (J13.00, `duda < 92`) · entregar a Goldstein (J13.08) | ~6 min |
 | **C** | Habitación 101 | Sospecha 100 (desde J4) · variantes de J13.08 con Crane en la cripta | ~12 min |
-| **C0** | Vaporización | Sospecha 100 en J1–J3 | ~1 min |
+| **C0** | Vaporización | Sospecha 100 en J1–J3 (en la práctica, repetir la acusación ante Voss en J3.02-V) | ~1 min |
 | **D** | Capítulo II | Sacar el libro de la cripta (J13.08) | ~12 min |
 | **E** | El nuevo Goldstein | Quedarse en la cripta (J13.08) | ~6 min |
 

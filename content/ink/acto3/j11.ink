@@ -132,7 +132,7 @@ PENSAMIENTO: Las del Minimor están empotradas en la pared. Dicen que se las oye
 = visto
 PENSAMIENTO: Una voz, desde ninguna parte. # id:j11_03_visto_00
 TELEPANTALLA: Camarada. Vuelva a la sala de espera. # id:j11_03_visto_01
-~ sube_sospecha(10)
+~ sube_sospecha_sigilo(10)
 PENSAMIENTO: Vuelvo. Espero. Nadie viene. Lo intento otra vez. # id:j11_03_visto_02
 -> DONE
 
@@ -350,7 +350,7 @@ PENSAMIENTO: «Un reloj parado es un acto de rebeldía.» # minijuego:libro,frag
 ->->
 
 === j11_dormir ===
-~ jornada = 12
+~ nueva_jornada(12)
 ~ desayunado = false
 CARTEL: JORNADA 12 # fx:negro # sfx:silbato # id:j11_08_jornada12
 CARTEL: La oferta. # id:j11_08_fin # escena:piso # pos:cama

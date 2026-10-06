@@ -6,7 +6,7 @@ export default defineConfig({
   plugins: [
     ink(),
     VitePWA({
-      registerType: 'autoUpdate',
+      registerType: 'prompt',   // la versión nueva se instala desde el menú, nunca a mitad de partida
       includeAssets: ['icons/*.png'],
       manifest: {
         name: 'Capítulo II',

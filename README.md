@@ -8,6 +8,7 @@ Aventura narrativa en pixel art, basada libremente en *1984* de George Orwell. J
 npm install        # dependencias
 npm run dev        # servidor de desarrollo (http://localhost:5173)
 npm test           # pruebas: compilación de ink, linter de contenido, estado
+BOT_PARTIDAS=300 npx vitest run tests/bot.test.ts   # bot de recorrido: informe de equilibrio de Duda y Sospecha
 npm run build      # comprobación de tipos + compilación de producción (dist/)
 npm run art        # regenera el arte (Python + Pillow) y lo exporta a public/assets
 python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/locations)
@@ -27,11 +28,16 @@ python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/location
 | Dar a la manivela de la linterna (túneles) | `F` | Botón DINAMO |
 | Avanzar diálogo | Espacio / Enter / clic | Tocar |
 | Elegir opción | 1–9, flechas + Enter, clic | Tocar |
+| Pausa (continuar, opciones, salir al menú) | `Esc` | Botón MENÚ |
 | Depuración | `F1` | — |
 
 En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.entrar')` para ir directamente a cualquier escena, y `audio` para probar música (`audio.musica.poner('himno')`), ambientes (`audio.ambiente.poner(['tunel'])`) y efectos (`audio.play('sirena')`).
 
-Los volúmenes (general, música, efectos y ambiente) están en *Opciones*, en el menú principal.
+*Opciones* (en el menú principal y en la pausa) tiene tres pestañas:
+
+- **Sonido:** los volúmenes general, de música, de efectos y de ambiente.
+- **Juego:** velocidad del texto, dificultad del crimen facial (normal, asistida o automática), penalización de sigilo, reducir destellos, tamaño del texto (100 % o 125 %) y mano dominante.
+- **Partida:** exportar la partida a un archivo `.json` e importarla (solo desde el menú).
 
 ## Estructura
 

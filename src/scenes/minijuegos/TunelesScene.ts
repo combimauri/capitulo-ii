@@ -44,7 +44,7 @@ export class TunelesScene extends Minijuego {
     const { width, height } = this.scale;
     this.capas = {}; this.fase = 'deducir'; this.fallos = 0; this.derrumbes = 0; this.deducido = true;
     this.actual = RED.inicio;
-    this.inicio = this.time.now;
+    this.inicio = this.ahora();
     this.cameras.main.fadeIn(400, 11, 12, 15);
     this.add.rectangle(0, 0, width, height, 0x0d0b09).setOrigin(0);
     this.add.text(24, 18, 'EL MAPA DE LOS PÁJAROS', { fontFamily: FUENTE.maquina, fontSize: '28px', color: hex(COLOR.ocre4) });
@@ -164,6 +164,6 @@ export class TunelesScene extends Minijuego {
   }
 
   update() {
-    if (this.fase === 'deducir' && this.time.now - this.inicio > PACIENCIA) { this.fallos = INTENTOS - 1; this.deducir(-100, -100); }
+    if (this.fase === 'deducir' && this.ahora() - this.inicio > PACIENCIA) { this.fallos = INTENTOS - 1; this.deducir(-100, -100); }
   }
 }

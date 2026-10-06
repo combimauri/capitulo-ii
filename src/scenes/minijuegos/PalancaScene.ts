@@ -52,12 +52,12 @@ export class PalancaScene extends Minijuego {
     this.aviso = this.add.text(width / 2, 90, '', { fontFamily: FUENTE.maquina, fontSize: '40px', color: hex(COLOR.rojo4) }).setOrigin(0.5);
 
     let ultimo = { y: 0, t: 0 };
-    this.mango.on('dragstart', (p: Phaser.Input.Pointer) => { this.agarrada = true; ultimo = { y: p.y, t: this.time.now }; });
+    this.mango.on('dragstart', (p: Phaser.Input.Pointer) => { this.agarrada = true; ultimo = { y: p.y, t: this.ahora() }; });
     this.mango.on('drag', (p: Phaser.Input.Pointer, _x: number, dy: number) => {
       const nuevo = Phaser.Math.Clamp(dy, RIEL.arriba, RIEL.abajo);
-      const dt = Math.max(16, this.time.now - ultimo.t);
+      const dt = Math.max(16, this.ahora() - ultimo.t);
       const vel = ((nuevo - this.y) / dt) * 1000;
-      ultimo = { y: p.y, t: this.time.now };
+      ultimo = { y: p.y, t: this.ahora() };
       this.mover(nuevo, vel);
     });
     this.mango.on('dragend', () => { this.agarrada = false; });
@@ -74,8 +74,8 @@ export class PalancaScene extends Minijuego {
   }
 
   private chirriar() {
-    if (this.time.now < this.enfriar) return;
-    this.enfriar = this.time.now + 1200;
+    if (this.ahora() < this.enfriar) return;
+    this.enfriar = this.ahora() + 1200;
     this.chirridos++;
     audio.play('chirrido');
     this.cameras.main.shake(300, 0.006);
@@ -87,9 +87,9 @@ export class PalancaScene extends Minijuego {
     if (this.hecho) return;
     const tecla = this.teclas.some((k) => k.isDown);
     if (tecla) {
-      if (!this.pulsadaDesde) this.pulsadaDesde = this.time.now;
+      if (!this.pulsadaDesde) this.pulsadaDesde = this.ahora();
       // cuanto más rato se mantiene, más deprisa baja: hay que soltar y volver a coger
-      const vel = 90 + (this.time.now - this.pulsadaDesde) * 0.32;
+      const vel = 90 + (this.ahora() - this.pulsadaDesde) * 0.32;
       this.mover(Math.min(RIEL.abajo, this.y + (vel * dt) / 1000), vel);
     } else {
       this.pulsadaDesde = 0;

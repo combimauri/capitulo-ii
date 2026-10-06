@@ -4,7 +4,8 @@
 
 // ==================================================================== J13.00 — Comprobación de entrada
 === j13_entrada ===
-{ duda < 30:
+// Equilibrio (M7): el Acto III sube mucho la Duda; quien aceptó el doblepensar de la J11 llega con 78–99, quien lo recordó, con 100
+{ duda < 92:
     -> j13_arrepentimiento
 }
 CARTEL: Amanecer. # fx:negro # id:j13_00_cartel # escena:shadwell # pos:inicio

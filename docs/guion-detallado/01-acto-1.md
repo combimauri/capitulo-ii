@@ -609,6 +609,14 @@ VOSS: (le mira con paciencia, como a un niño) No hay ningún Amory en esta secc
 |---|---|
 | "Tiene razón, Subdirector. Estoy cansad{o\|a}." | VOSS: "Eso pensaba." · Sin efecto. |
 | "Le vi ayer. Le vi con mis propios ojos." | VOSS: (silencio largo, luego escribe algo en la ficha) "Puede retirarse." ⟶ SOSPECHA +10 |
+| "Amory existía. Y usted lo sabe." *(la temeridad, M7)* | (Voss deja la pluma y le mira de verdad.) VOSS: "Repítalo, camarada {apellido}. Despacio. Para la telepantalla." ⟶ SOSPECHA +30 y una segunda elección: |
+
+| Opción | Efecto |
+|---|---|
+| Repetirlo, más alto. | PROTAGONISTA: "Felix Amory. Mesa catorce. Dibujaba pájaros en los márgenes de los mapas." VOSS: "Gracias. Eso es todo." ⟶ SOSPECHA 100 → **Final C0** |
+| Callarse. | (No dice nada. Voss tampoco. Escribe algo en una ficha, muy despacio.) VOSS: "Puede retirarse." |
+
+> Es la única puerta al Final C0: el resto de la Sospecha del Acto I suma como mucho 44.
 
 → salida a J3.03
 
@@ -696,10 +704,8 @@ PENSAMIENTO: ¿Dónde…?
 
 **Monólogo final del acto (según el estado):**
 
-- **Si `dp_j3_amory = "aceptar"` y `duda < 10`:**
+- **Si `dp_j3_amory = "aceptar"`:** *(la variante con `duda >= 10` se quitó en M7: aceptar deja siempre la Duda por debajo)*
   PENSAMIENTO: Un día largo. Un día raro. Mañana todo estará en su sitio. Siempre lo está. (Mira el cartel de Ivy.) Buenas noches, Ivy. Mañana ganaremos más kilómetros.
-- **Si `dp_j3_amory = "aceptar"` y `duda >= 10`:**
-  PENSAMIENTO: Un día largo. Mañana todo estará en su sitio. (Pausa.) ¿Por qué no recuerdo con quién comía los martes?
 - **Si `dp_j3_amory = "recordar"`:**
   PENSAMIENTO: Felix Amory existía. Felix Amory existía. (Pausa.) Si alguien puede dejar de haber existido de un día para otro… (Se corta.) No. El Partido sabe lo que hace. Amory era un traidor. Lo de Pekín… era una señal. El Partido lo vio antes que yo. Eso es todo. (Mira el cartel de Ivy, mucho rato.) Eso es todo.
 - **Añadido si `amory_reaccion = "denuncia"` (se suma a cualquiera de los anteriores):**

@@ -10,6 +10,7 @@ import { NavGrid } from '../systems/Pathfinding';
 import { Sigilo } from '../systems/Sigilo';
 import { audio } from '../systems/AudioDirector';
 import { SaveSystem } from '../core/SaveSystem';
+import { suave } from '../ui/destellos';
 import type { Tag } from '../core/tags';
 
 export interface EntradaEscena {
@@ -268,8 +269,10 @@ export class LocationScene extends Phaser.Scene {
     const velo = this.add.rectangle(0, 0, this.loc.width, this.loc.height, 0x000000, 0).setOrigin(0).setDepth(9000);
     const fallo = () => {
       if (!this.scene.isActive()) return;
-      const veces = Phaser.Math.Between(1, 3);
+      // con destellos reducidos: un solo bajón de luz, suave
+      const veces = suave() ? 1 : Phaser.Math.Between(1, 3);
       for (let i = 0; i < veces; i++) {
+        if (suave()) { this.tweens.add({ targets: velo, alpha: 0.12, duration: 250, yoyo: true }); continue; }
         this.time.delayedCall(i * 110, () => velo.setAlpha(0.35));
         this.time.delayedCall(i * 110 + 55, () => velo.setAlpha(0));
       }
@@ -302,8 +305,8 @@ export class LocationScene extends Phaser.Scene {
         this.cameras.main.flash(250, 11, 12, 15);
       }
       this.volverAlControl = false;
-      // Sospecha 100: el arresto (Final C, o C0 en el Acto I)
-      if (!this.arrestando && !this.finalPendiente && Number(narrativa.get('sospecha')) >= 100 && narrativa.hasPath('arresto')) {
+      // Sospecha 100: el arresto (Final C, o C0 en el Acto I). Una sola vez: dentro de un final ya no se arresta a nadie.
+      if (!this.arrestando && !this.finalPendiente && Number(narrativa.get('sospecha')) >= 100 && !narrativa.get('final_en_curso') && narrativa.hasPath('arresto')) {
         this.arrestando = true;
         this.cambioPendiente = {};
         this.time.delayedCall(300, () => this.game.events.emit(EV.dialogoIniciar, 'arresto'));
@@ -328,6 +331,8 @@ export class LocationScene extends Phaser.Scene {
       audio.play('dinamo');
     };
     ev.on(EV.dinamo, dinamo);
+    const guardar = () => this.guardarPartida();
+    ev.on(EV.guardar, guardar);
     ev.on(EV.dialogoIniciar, inicio);
     ev.on(EV.dialogoFin, fin);
     ev.on(EV.depurar, depurar);
@@ -336,7 +341,7 @@ export class LocationScene extends Phaser.Scene {
     const quitar = narrativa.on('command', (t: Tag) => this.comando(t));
     this.limpiar.push(() => {
       ev.off(EV.dialogoIniciar, inicio); ev.off(EV.dialogoFin, fin); ev.off(EV.depurar, depurar); ev.off(EV.accion, accion); ev.off(EV.pausa, pausa);
-      ev.off(EV.carpeta, carpeta); ev.off(EV.dinamo, dinamo);
+      ev.off(EV.carpeta, carpeta); ev.off(EV.dinamo, dinamo); ev.off(EV.guardar, guardar);
       quitar();
     });
   }
@@ -788,6 +793,12 @@ export class LocationScene extends Phaser.Scene {
       this.cameras.main.once('camerafadeoutcomplete', () => this.scene.restart({ escena, spawn }));
       return;
     }
+    this.guardarPartida();
+  }
+
+  /** Guarda dónde está el protagonista. Nunca en mitad de un diálogo (se guarda el inicio del knot). */
+  private guardarPartida() {
+    if (this.ocupado || this.finalPendiente || this.cambioPendiente.escena || this.arrestando) return;
     SaveSystem.guardar('auto', {
       ink: narrativa.saveState(),
       registro: registro.serializar(),

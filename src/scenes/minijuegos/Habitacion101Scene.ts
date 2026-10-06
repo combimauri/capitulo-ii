@@ -108,8 +108,8 @@ export class Habitacion101Scene extends Minijuego {
 
   update(_t: number, dt: number) {
     if (this.hecho) return;
-    if (this.inicio < 0) this.inicio = this.time.now;
-    const t = Math.min(1, (this.time.now - this.inicio) / DURACION);
+    if (this.inicio < 0) this.inicio = this.ahora();
+    const t = Math.min(1, (this.ahora() - this.inicio) / DURACION);
     const s = dt / 1000;
     this.aire = Math.max(0, this.aire - s * 0.14);
     this.medidor.setSize(196 * this.aire, 10).setFillStyle(this.aire < 0.3 ? COLOR.rojo4 : COLOR.papel3);

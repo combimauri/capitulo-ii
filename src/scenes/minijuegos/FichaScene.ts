@@ -132,7 +132,7 @@ export class FichaScene extends Minijuego {
   private empezarFirma() {
     if (this.firmado) return;
     if (!this.listo()) { this.cameras.main.shake(120, 0.004); audio.play('fallo'); return; }
-    this.firmando = { inicio: this.time.now };
+    this.firmando = { inicio: this.ahora() };
   }
 
   private soltarFirma() {
@@ -141,7 +141,7 @@ export class FichaScene extends Minijuego {
 
   update() {
     if (!this.firmando || this.firmado) return;
-    const t = Math.min(1, (this.time.now - this.firmando.inicio) / TIEMPO_FIRMA);
+    const t = Math.min(1, (this.ahora() - this.firmando.inicio) / TIEMPO_FIRMA);
     this.dibujarFirma(t);
     if (Math.random() < 0.3) audio.play('plumilla');
     if (t >= 1) this.firmar();

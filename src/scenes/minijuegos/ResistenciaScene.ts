@@ -8,6 +8,7 @@ import Phaser from 'phaser';
 import { Minijuego } from './Minijuego';
 import { audio } from '../../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../../ui/estilo';
+import { destello, suave } from '../../ui/destellos';
 
 const PREGUNTAS = ['¿Dónde está?', '¿Quién la tiene?', '¿La mujer del mercado?', '¿En Limehouse?', '¿En una cocina?',
   '¿Quién sabe leer allí?', '¿Dónde está la copia?', '¿La mujer del mercado?', '¿Quién la tiene?', '¿Dónde está?',
@@ -73,7 +74,7 @@ export class ResistenciaScene extends Minijuego {
       f.on('pointerup', () => this.responder(true));
       this.botones.push(f, t);
     });
-    this.limite = this.time.now + SILENCIO;
+    this.limite = this.ahora() + SILENCIO;
     this.esperando = true;
   }
 
@@ -88,7 +89,7 @@ export class ResistenciaScene extends Minijuego {
     this.cameras.main.shake(500 + k * 600, 0.006 + k * 0.012);
     const velo = this.add.rectangle(0, 0, 960, 540, 0xffffff, 0).setOrigin(0).setDepth(20);
     this.tweens.add({
-      targets: velo, alpha: 0.8, duration: 110, yoyo: true, repeat: 3, onComplete: () => {
+      targets: velo, alpha: destello(0.8), duration: suave() ? 400 : 110, yoyo: true, repeat: suave() ? 0 : 3, onComplete: () => {
         velo.destroy();
         if (!mentira) this.voluntad = Math.min(1, this.voluntad + 0.05);
         this.barra.setScale(Math.max(0, this.voluntad), 1);
@@ -114,7 +115,7 @@ export class ResistenciaScene extends Minijuego {
 
   update() {
     if (!this.esperando || this.hecho) return;
-    const queda = Math.max(0, this.limite - this.time.now);
+    const queda = Math.max(0, this.limite - this.ahora());
     this.espera.setScale(queda / SILENCIO, 1);
     if (queda === 0) this.responder(false);
   }

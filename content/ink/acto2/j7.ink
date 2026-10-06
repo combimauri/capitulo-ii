@@ -261,7 +261,7 @@ PENSAMIENTO: Muy lejos, un silbido. Un impacto, en algún barrio prole. # sfx:si
 - else:
     PENSAMIENTO: Mañana. A las diez y media. # sfx:impacto # id:j7_05_dormir_04
 }
-~ jornada = 8
+~ nueva_jornada(8)
 ~ desayunado = false
 CARTEL: FIN DEL ACTO II # id:j7_05_fin_acto
 CARTEL: ACTO III¶LA HERMANDAD # id:j7_05_acto3

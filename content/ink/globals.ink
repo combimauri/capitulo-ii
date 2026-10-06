@@ -7,6 +7,9 @@ VAR jornada = 0
 // Dónde está el protagonista (lo escribe el motor; el arresto se adapta al lugar)
 VAR escena_actual = ""
 
+// Opciones del jugador que cambian reglas (las escribe el motor, diseño técnico §9)
+VAR opc_sigilo_reducido = false
+
 // Identidad del protagonista (se fija en la Ficha de Afiliación, P.03).
 VAR nombre = ""
 VAR apellido = ""

@@ -209,7 +209,7 @@ PENSAMIENTO: Sábanas tendidas, portales hondos. Los charcos suenan. Al final de
     AGENTE: ¡Alto! # id:j12_06_visto_agente
 }
 PENSAMIENTO: Corro. Doblo dos esquinas. Me escondo hasta que pasan. # id:j12_06_visto_01
-~ sube_sospecha(25)
+~ sube_sospecha_sigilo(25)
 PENSAMIENTO: Vuelvo atrás. Otra vez. # id:j12_06_visto_02
 -> DONE
 
@@ -376,7 +376,7 @@ PENSAMIENTO: El cuaderno, en las rodillas. # fx:aclarar # id:j12_08_diario_00
     PENSAMIENTO: El reloj anda. # sfx:tic # id:j12_08_recordar_06
 }
 CARTEL: FIN DEL ACTO III # fx:negro # id:j12_08_fin_acto
-~ jornada = 13
+~ nueva_jornada(13)
 CARTEL: ACTO IV¶CAPÍTULO II # id:j12_08_acto4
 CARTEL: JORNADA 13 # id:j12_08_jornada13
 CARTEL: Bajo las campanas. # id:j12_08_bajo
