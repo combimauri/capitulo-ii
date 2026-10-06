@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#0b0c0f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+    <link rel="icon" type="image/png" href="/icons/icono-192.png" />
+    <link rel="apple-touch-icon" href="/icons/icono-192.png" />
+    <title>Capítulo II</title>
+    <style>
+      html, body { margin: 0; height: 100%; background: #0b0c0f; overflow: hidden; touch-action: none;
+        -webkit-user-select: none; user-select: none; overscroll-behavior: none; }
+      #juego { position: fixed; inset: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left); }
+      canvas { image-rendering: pixelated; image-rendering: crisp-edges; }
+      #girar { display: none; position: fixed; inset: 0; z-index: 10; background: #0b0c0f; color: #7fc496;
+        font: 20px "VT323", monospace; align-items: center; justify-content: center; text-align: center; padding: 24px; }
+      @media (orientation: portrait) and (max-width: 900px) { #girar { display: flex; } }
+    </style>
+  </head>
+  <body>
+    <div id="juego"></div>
+    <div id="girar">EL GRAN HERMANO PREFIERE LA PANTALLA EN HORIZONTAL.<br />Gira el dispositivo.</div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

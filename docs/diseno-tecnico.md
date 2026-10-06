@@ -669,7 +669,7 @@ interface SaveData {
 
 | Hito | Contenido | Criterio de "hecho" |
 |---|---|---|
-| **M0 · Esqueleto** | Proyecto Vite + Phaser + inkjs. Escalado de píxeles. Puente narrativo con un `.ink` de prueba. Caja de diálogo, elecciones y guardado básico. Panel de depuración mínimo. | Se puede jugar una conversación ramificada de prueba en escritorio y en móvil, guardar y cargar. |
+| **M0 · Esqueleto** ✅ | Proyecto Vite + Phaser + inkjs. Escalado de píxeles. Puente narrativo con un `.ink` de prueba. Caja de diálogo, elecciones y guardado básico. Panel de depuración mínimo. | Se puede jugar una conversación ramificada de prueba en escritorio y en móvil, guardar y cargar. |
 | **M1 · Corte vertical** | **Prólogo + Jornada 1 completos:** escombros, ficha de afiliación, piso, escalera, calle, Minipax, cantina. Crimen facial (gimnasia y noticia). Minijuego de partes. Inventario. Arte provisional de calidad aceptable para 3 localizaciones. | Se juega de principio a fin en ~15 min, en escritorio y móvil, con audio. Sirve para validar tono, controles y legibilidad. |
 | **M2 · Acto I** | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
 | **M3 · Acto II + Final A** | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
@@ -681,6 +681,18 @@ interface SaveData {
 > **Sobre el arte:** el desarrollo puede avanzar con arte provisional (bloques de color con la paleta definitiva y siluetas). Por eso conviene hacer la **biblia visual** en paralelo a M0–M1.
 
 ---
+
+### Estado de M0 (hecho)
+
+- Vite 8 + Phaser 4.2 + inkjs 2.4 + TypeScript 7, con PWA (vite-plugin-pwa).
+- Plugin de Vite que compila ink con `INCLUDE` y recarga en caliente.
+- Puente narrativo (`src/core/NarrativeBridge.ts`), lector de etiquetas y de líneas, lector de mapas de Tiled y guardado automático.
+- Escena de exploración cenital: movimiento directo y por toque o clic (A*), colisiones por los pies, foco de objetos, mirar/usar y *y-sort*.
+- Interfaz: diálogo con máquina de escribir, pensamientos, telepantalla, carteles, elecciones, ojo de la Sospecha y depuración (F1).
+- Piso de la Jornada 1 jugable con sus puntos interactivos en ink.
+- 17 pruebas: compilación de ink, regla `{x|y}`, ids de línea únicos, rutas de los hotspots, colisiones y estado.
+
+**Pendiente para M1:** joystick virtual y botones táctiles, Ficha de Afiliación, crimen facial, minijuego de partes, escalera, calle y Minipax.
 
 ## 16. Riesgos y mitigaciones
 

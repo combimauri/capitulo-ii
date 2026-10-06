@@ -371,7 +371,8 @@ cv.grid(CX - 2, 180, COAT, {"g": K("tela", 0), "G": K("tela", 2), "H": K("tela",
 # ---------------------------------------------------------------- protagonista (16x32)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "personajes"))
 import protagonista  # noqa: E402
-protagonista.dibujar(cv, 230, 148, "abajo", sombra=K("granate", 1))
+if "--sin-protagonista" not in sys.argv:
+    protagonista.dibujar(cv, 230, 148, "abajo", sombra=K("granate", 1))
 
 # ---------------------------------------------------------------- iluminación
 def beam(x, y):
@@ -395,5 +396,10 @@ for y in range(H):
             cv.glow[y][x] = 0.0
 
 cv.bake_lighting()
+salida = next((a.split("=", 1)[1] for a in sys.argv if a.startswith("--salida=")), None)
+if salida:
+    cv.img.save(salida)
+    print("ok", salida)
+    sys.exit(0)
 prev = cv.save(Path(__file__).parent / "piso_hd.png", preview_scale=3)
 print("ok", prev)

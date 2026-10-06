@@ -145,6 +145,54 @@ for nombre, filas in VISTAS.items():
         assert len(f) == W, (nombre, i, len(f), f)
 
 
+# Piernas por vista: (fila donde empiezan, columnas de la pierna A, columnas de la pierna B)
+PIERNAS = {
+    "abajo": (31, range(3, 10), range(10, 17)),
+    "arriba": (31, range(3, 10), range(10, 17)),
+    "derecha": (30, range(6, 11), range(10, 16)),
+    "izquierda": (30, range(9, 14), range(4, 10)),
+}
+
+
+def levantar(filas, desde, columnas):
+    """Sube 1 px las columnas de una pierna (paso) y vacía la última fila."""
+    f = [list(r) for r in filas]
+    for r in range(desde, H - 1):
+        for c in columnas:
+            f[r][c] = f[r + 1][c]
+    for c in columnas:
+        f[H - 1][c] = "."
+    return ["".join(r) for r in f]
+
+
+def fotogramas(vista):
+    """[quieto, paso A, pasando, paso B, pasando]"""
+    base = VISTAS[vista]
+    desde, a, b = PIERNAS[vista]
+    return [base, levantar(base, desde, a), base, levantar(base, desde, b), base]
+
+
+ORDEN_HOJA = ["abajo", "izquierda", "derecha", "arriba"]
+
+
+def hoja_sprites(ruta):
+    """Hoja de 5 columnas (quieto + 4 de caminar) x 4 filas (direcciones), fotogramas de 20x40."""
+    from pixel import Canvas
+    cv = Canvas(W * 5, H * len(ORDEN_HOJA), bg=("gris", 0))
+    cv.img = cv.img.convert("RGBA")
+    cv.img.paste((0, 0, 0, 0), (0, 0, cv.w, cv.h))
+    from PIL import ImageDraw
+    cv.d = ImageDraw.Draw(cv.img)
+    for fila, vista in enumerate(ORDEN_HOJA):
+        for col, frame in enumerate(fotogramas(vista)):
+            for r, row in enumerate(frame):
+                for c, ch in enumerate(row):
+                    if ch in PALETA:
+                        cv.img.putpixel((col * W + c, fila * H + r), PALETA[ch] + (255,))
+    cv.img.save(ruta)
+    return ruta
+
+
 def dibujar(cv, x, y, vista="abajo", sombra=None):
     if sombra:
         cv.ellipse(x + 2, y + 35, x + 18, y + 43, sombra)
