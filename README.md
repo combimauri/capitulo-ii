@@ -29,7 +29,9 @@ python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/location
 | Elegir opción | 1–9, flechas + Enter, clic | Tocar |
 | Depuración | `F1` | — |
 
-En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.entrar')` para ir directamente a cualquier escena.
+En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.entrar')` para ir directamente a cualquier escena, y `audio` para probar música (`audio.musica.poner('himno')`), ambientes (`audio.ambiente.poner(['tunel'])`) y efectos (`audio.play('sirena')`).
+
+Los volúmenes (general, música, efectos y ambiente) están en *Opciones*, en el menú principal.
 
 ## Estructura
 

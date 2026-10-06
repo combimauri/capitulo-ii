@@ -38,6 +38,11 @@
    "name": "fondo_alt_si",
    "type": "string",
    "value": "bombilla_encendida"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "crane"
   }
  ],
  "tilesets": [],

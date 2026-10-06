@@ -18,7 +18,7 @@ PENSAMIENTO: Negro. # fx:negro # id:fcc_00_negro
     ~ final_en_curso = "C"
 }
 ~ prota_aspecto = "preso"
-PENSAMIENTO: El sonido de una furgoneta. Una puerta metálica. # sfx:sello # esperar:1.5 # id:fc_01_puerta
+PENSAMIENTO: El sonido de una furgoneta. Una puerta metálica. # sfx:furgoneta # esperar:2 # sfx:puerta # esperar:1.2 # id:fc_01_puerta
 CARTEL: ? # id:fc_02_cartel # escena:celda # pos:banco
 -> DONE
 
@@ -97,7 +97,7 @@ PENSAMIENTO: Un cubo. # id:fc_02_cubo
 { celda_evento:
 - 1:
     PENSAMIENTO: Me siento en el banco de acero. No sé cuánto tiempo pasa. # id:fc_02_e1_00
-    PENSAMIENTO: Entra un guardia y se lleva a Parsons. # sfx:sello # refrescar # id:fc_02_e1_01
+    PENSAMIENTO: Entra un guardia y se lleva a Parsons. # sfx:puerta # refrescar # id:fc_02_e1_01
     PARSONS: ¡Gracias! ¡Gracias! # id:fc_02_e1_parsons
 - 2:
     -> paliza
@@ -146,11 +146,11 @@ PENSAMIENTO: El hombre de la cara de calavera lo mira. # id:fc_02_pan_01
 ~ palizas += 1
 { palizas:
 - 1:
-    PENSAMIENTO: Dos guardias me sacan al pasillo. # sfx:sello # id:fc_02_paliza_00
+    PENSAMIENTO: Dos guardias me sacan al pasillo. # sfx:puerta # id:fc_02_paliza_00
 - 2:
-    PENSAMIENTO: Otra vez la puerta. Otra vez los dos guardias. # sfx:sello # id:fc_02_paliza2_00
+    PENSAMIENTO: Otra vez la puerta. Otra vez los dos guardias. # sfx:puerta # id:fc_02_paliza2_00
 - else:
-    PENSAMIENTO: La puerta. Ya no me levanto sol{o}. Me levantan. # sfx:sello # id:fc_02_paliza3_00
+    PENSAMIENTO: La puerta. Ya no me levanto sol{o}. Me levantan. # sfx:puerta # id:fc_02_paliza3_00
 }
 PENSAMIENTO: El linóleo blanco. Las botas. # vineta:vineta-pasillo_suelo # id:fc_02_paliza_01
 PENSAMIENTO: Un golpe. # sfx:golpes # fx:temblor # id:fc_02_paliza_02

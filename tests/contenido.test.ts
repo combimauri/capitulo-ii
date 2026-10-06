@@ -6,6 +6,7 @@ import { compileInk } from '../tools/vite-plugin-ink';
 import { NarrativeBridge } from '../src/core/NarrativeBridge';
 import { parseTiled } from '../src/core/Location';
 import { PISTAS } from '../src/systems/Musica';
+import { CAPAS } from '../src/systems/Ambiente';
 
 const RAIZ = path.resolve(__dirname, '..');
 const MAIN = path.join(RAIZ, 'content/ink/main.ink');
@@ -60,6 +61,17 @@ describe('localizaciones', () => {
     const ink = fs.readdirSync('content/ink', { recursive: true }).filter((f) => String(f).endsWith('.ink'))
       .map((f) => fs.readFileSync(path.join('content/ink', String(f)), 'utf8')).join('\n');
     for (const [, id] of ink.matchAll(/# musica:([a-z_]+)/g)) if (id !== 'silencio') expect(PISTAS[id], id).toBeTruthy();
+  });
+
+  it('cada sonido que pide el ink (# sfx:) existe en el director de audio, y cada ambiente es una capa', () => {
+    const director = fs.readFileSync('src/systems/AudioDirector.ts', 'utf8');
+    const union = director.slice(director.indexOf('type Sfx ='), director.indexOf(';', director.indexOf('type Sfx =')));
+    const sfx = new Set([...union.matchAll(/'([a-z_]+)'/g)].map((m) => m[1]));
+    const ink = fs.readdirSync('content/ink', { recursive: true }).filter((f) => String(f).endsWith('.ink'))
+      .map((f) => fs.readFileSync(path.join('content/ink', String(f)), 'utf8')).join('\n');
+    for (const [, id] of ink.matchAll(/# sfx:([a-z_]+)/g)) expect(sfx.has(id), id).toBe(true);
+    for (const loc of localizaciones) for (const c of loc.ambiente) expect(CAPAS[c], `${loc.id}: ${c}`).toBeTruthy();
+    for (const [, v] of ink.matchAll(/# ambiente:([a-z_,]+)/g)) for (const c of v.split(',')) if (c !== 'silencio') expect(CAPAS[c], c).toBeTruthy();
   });
 
   it('las pistas de música cuadran: cada nota cae dentro del bucle', () => {

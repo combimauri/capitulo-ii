@@ -97,7 +97,7 @@ PENSAMIENTO: Se lleva la carpeta a una oficina interior. Tres minutos, dijo Broo
     PENSAMIENTO: Cerrada. # id:j11_03_servicio_cerrada
     -> DONE
 }
-PENSAMIENTO: La chapa de Brooke encaja en la ranura. Un acceso de servicio, el de los proles de la limpieza. # sfx:sello # reloj:inicio=10:20:00,limite=180,agotar=minimor_archivo.agotado # id:j11_03_servicio_01
+PENSAMIENTO: La chapa de Brooke encaja en la ranura. Un acceso de servicio, el de los proles de la limpieza. # sfx:cerrojo # reloj:inicio=10:20:00,limite=180,agotar=minimor_archivo.agotado # id:j11_03_servicio_01
 PENSAMIENTO: Archivo B, pasillo cuatro. # fx:negro # id:j11_03_servicio_02 # escena:minimor_archivo # pos:servicio
 -> DONE
 
@@ -137,7 +137,7 @@ PENSAMIENTO: Vuelvo. Espero. Nadie viene. Lo intento otra vez. # id:j11_03_visto
 -> DONE
 
 = agotado
-PENSAMIENTO: Pasos en algún pasillo. Tengo que darme prisa. # sfx:golpes # id:j11_03_agotado_01
+PENSAMIENTO: Pasos en algún pasillo. Tengo que darme prisa. # sfx:botas # id:j11_03_agotado_01
 ~ sube_sospecha(5)
 PENSAMIENTO: Un minuto. Quizá menos. # reloj:mas=60 # id:j11_03_agotado_02
 -> DONE
@@ -204,7 +204,7 @@ PENSAMIENTO: Al fondo de la carpeta, la foto. Ivy, con Nell y el tabernero, en u
     PENSAMIENTO: Dentro del mono. Mañana notarán que falta. # objeto:foto_sotano # id:j11_04_foto_coger
 * [Dejarlo todo como estaba.]
     PENSAMIENTO: Cierro la carpeta. Cierro el cajón. # id:j11_04_foto_dejar
-- PENSAMIENTO: Pasos en el pasillo. # sfx:golpes # id:j11_04_pasos
+- PENSAMIENTO: Pasos en el pasillo. # sfx:botas # id:j11_04_pasos
 PENSAMIENTO: Vuelvo al banco justo a tiempo. # fx:negro # reloj:parar # id:j11_04_volver # escena:minimor # pos:banco
 -> DONE
 
@@ -273,7 +273,7 @@ HILDA: ¡Tercera ausencia del mes! ¡Yo lo apunté! # id:j11_06_hilda_otra
 
 === j11_portal ===
 PENSAMIENTO: El anciano pasa a mi lado al subir a la furgoneta. Me mira un instante, sin ningún interés. # id:j11_06_pens_02
-PENSAMIENTO: Sube. La furgoneta arranca. # sfx:golpes # id:j11_06_pens_03
+PENSAMIENTO: Sube. La furgoneta arranca. # sfx:furgoneta # id:j11_06_pens_03
 HILDA: Dicen que la chica era de la Liga Anti-Sex. ¡Anti-Sex! # id:j11_06_hilda_04
 HILDA: Ya no se puede fiar una de nadie. # id:j11_06_hilda_05
 CARTEL: Esa noche. # fx:negro # id:j11_07_cartel # escena:piso_noche # pos:puerta

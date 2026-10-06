@@ -105,6 +105,8 @@ export interface LocationData {
   oscuro: boolean;
   /** Knot que se lanza cada vez que el protagonista choca con algo a oscuras, con la linterna apagada. */
   alChocar?: string;
+  /** Capas de ambiente del lugar (src/systems/Ambiente.ts): ambiente="tele,oficina". */
+  ambiente: string[];
   /** La música del lugar (src/systems/Musica.ts), con condición opcional. */
   musica?: { id: string; condicion?: string };
   /** Un medidor en pantalla que lee una variable de ink de 0 a 100 (el hambre de la celda). */
@@ -182,6 +184,7 @@ export function parseTiled(id: string, raw: string): LocationData {
     oscuro: mp.oscuro === 'true',
     alChocar: mp.al_chocar,
     musica: mp.musica ? { id: mp.musica, condicion: mp.musica_si } : undefined,
+    ambiente: mp.ambiente ? mp.ambiente.split(',').map((x) => x.trim()).filter(Boolean) : [],
     // medidor="hambre,Hambre" (+ medidor_si="cond")
     medidor: mp.medidor ? { variable: mp.medidor.split(',')[0], etiqueta: mp.medidor.split(',')[1] ?? mp.medidor, condicion: mp.medidor_si } : undefined,
     sigueCamara: map.width * map.tilewidth > 480 || map.height * map.tileheight > 288,   // 270 px = 17 tiles (272)

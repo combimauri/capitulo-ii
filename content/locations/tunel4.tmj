@@ -28,6 +28,11 @@
    "name": "oscuro",
    "type": "string",
    "value": "true"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tunel"
   }
  ],
  "tilesets": [],

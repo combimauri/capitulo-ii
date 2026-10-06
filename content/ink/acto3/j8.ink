@@ -94,7 +94,7 @@ CARTEL: Las once menos diez. # fx:negro # id:j8_00_cartel_2 # escena:calderas # 
     -> DONE
 }
 ~ calderas_vistas = true
-PENSAMIENTO: La llave abre la puerta de servicio. Abajo hace un calor de horno. # sfx:sello # id:j8_03_pens_00
+PENSAMIENTO: La llave abre la puerta de servicio. Abajo hace un calor de horno. # sfx:cerrojo # id:j8_03_pens_00
 PENSAMIENTO: Calderas enormes que resoplan. Tuberías por todas partes. Al fondo, el montacargas viejo. # id:j8_03_pens_01
 -> DONE
 
@@ -298,7 +298,7 @@ PENSAMIENTO: «A.R. – 1». Fría. # id:j8_04_panel_03
 { not cerrojo_llave:
     { llave_ar:
         ~ cerrojo_llave = true
-        PENSAMIENTO: La llave gira. Un cerrojo menos. # sfx:sello # id:j8_04_puerta_llave
+        PENSAMIENTO: La llave gira. Un cerrojo menos. # sfx:cerrojo # id:j8_04_puerta_llave
     - else:
         PENSAMIENTO: Acero. Un cerrojo de llave y otro de cuatro ruedas numeradas. # id:j8_04_puerta_cerrada
         -> DONE
@@ -325,7 +325,7 @@ PENSAMIENTO: No. Me aparto. Pensar. # id:j8_04_ruedas_fallo
 -> DONE
 
 = dentro
-PENSAMIENTO: Clic. La puerta cede. # sfx:sello # reloj:parar # id:j8_04_dentro_01
+PENSAMIENTO: Clic. La puerta cede. # sfx:cerrojo # reloj:parar # id:j8_04_dentro_01
 PENSAMIENTO: Entro. Se cierra sola detrás de mí. # fx:negro # id:j8_04_dentro_02 # escena:archivo_restringido # pos:puerta
 -> DONE
 
@@ -413,7 +413,7 @@ PENSAMIENTO: Lo escribieron dos días antes. Alguien escribió a máquina «alta
 }
 ~ estante_1979 = true
 PENSAMIENTO: 1979. Alargo la mano. # id:j8_05_1979_01
-PENSAMIENTO: Pasos en el pasillo. # sfx:golpes # id:j8_05_1979_02
+PENSAMIENTO: Pasos en el pasillo. # sfx:botas # id:j8_05_1979_02
 PENSAMIENTO: Alguien prueba el picaporte. # esperar:2 # id:j8_05_1979_03
 PENSAMIENTO: Un segundo eterno. # esperar:1.5 # id:j8_05_1979_04
 PENSAMIENTO: Los pasos se alejan. # id:j8_05_1979_05

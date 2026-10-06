@@ -260,7 +260,7 @@ PENSAMIENTO: Si abro el agua caliente, el vaho tardará en subir. Mientras, hay 
 }
 ~ abrigo_colgado = true
 PENSAMIENTO: Cuelgo el abrigo en la percha. Tapa media pantalla. # id:j9_05_percha_01
-PENSAMIENTO: Se abre la puerta. # sfx:sello # id:j9_05_percha_02
+PENSAMIENTO: Se abre la puerta. # sfx:puerta # id:j9_05_percha_02
 FUNCIONARIO: Ahí no se cuelga, camarada. # id:j9_05_func_01
 ~ sube_sospecha(3)
 PENSAMIENTO: Se lava las manos y se va sin secárselas. El abrigo se queda. # id:j9_05_percha_03

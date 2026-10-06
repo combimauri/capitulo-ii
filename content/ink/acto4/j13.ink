@@ -472,7 +472,7 @@ PENSAMIENTO: «Nunca buscan aquí.» # id:j13_06_pens_01
 // ==================================================================== J13.07 — Crane en la cripta
 === j13_crane ===
 ~ crane_en_cripta = true
-PENSAMIENTO: Pasos en la escalera de caracol. Lentos. # sfx:golpes # id:j13_07_pens_00
+PENSAMIENTO: Pasos en la escalera de caracol. Lentos. # sfx:botas # id:j13_07_pens_00
 PENSAMIENTO: Crane. Empapado hasta las rodillas, con el sombrero en una mano y una pistola en la otra. Sonríe. # refrescar # id:j13_07_pens_01
 CRANE: Qué sitio tan… acogedor. Cuánto papel. # id:j13_07_crane_01
 CRANE: Y usted debe de ser el viejo. Le hacía más alto. En las pantallas parece más alto. # id:j13_07_crane_02

@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "sueno.entrar"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "caja_musica"
   }
  ],
  "tilesets": [],

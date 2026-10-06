@@ -33,6 +33,11 @@
    "name": "musica_si",
    "type": "string",
    "value": "!cohete_caido"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "mercado"
   }
  ],
  "tilesets": [],

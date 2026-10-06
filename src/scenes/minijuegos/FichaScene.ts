@@ -25,22 +25,24 @@ export class FichaScene extends Minijuego {
 
   constructor() { super('Ficha'); }
 
+  preload() {
+    this.load.image('ficha-fondo', 'assets/minijuegos/ficha-fondo.png');
+  }
+
   create() {
     this.nombre = ''; this.apellido = ''; this.genero = null; this.firmado = false; this.firmando = null;
     this.botonesSexo = [];
     const { width, height } = this.scale;
     this.cameras.main.fadeIn(500, 11, 12, 15);
+    // la mesa de acero, la ficha impresa (membrete, marco, renglones, foto, sello) y el tubo: arte en ficha-fondo
     this.add.rectangle(width / 2, height / 2, width, height, COLOR.negro);
-    this.add.rectangle(P.x + 6, P.y + 6, P.w, P.h, 0x000000, 0.5).setOrigin(0);
-    this.add.rectangle(P.x, P.y, P.w, P.h, 0xb5af9c).setOrigin(0).setStrokeStyle(2, 0x6f6a5c);
-    this.add.rectangle(P.x + 10, P.y + 10, P.w - 20, P.h - 20).setOrigin(0).setStrokeStyle(1, 0x8f8a7a);
+    this.add.image(0, 0, 'ficha-fondo').setOrigin(0).setScale(2);
 
     const txt = (x: number, y: number, s: string, size = 22, color = TINTA) =>
       this.add.text(P.x + x, P.y + y, s, { fontFamily: FUENTE.maquina, fontSize: `${size}px`, color });
 
     txt(P.w / 2, 26, 'FICHA DE AFILIACIÓN', 34).setOrigin(0.5, 0);
     txt(P.w / 2, 60, 'PARTIDO EXTERIOR — INGSOC', 20, ROJO).setOrigin(0.5, 0);
-    this.add.rectangle(P.x + 30, P.y + 88, P.w - 60, 2, COLOR.rojo3).setOrigin(0);
 
     const fila = (y: number, etiqueta: string) => txt(36, y, etiqueta.toUpperCase(), 20);
     fila(108, 'Nombre');
@@ -75,7 +77,6 @@ export class FichaScene extends Minijuego {
 
     // línea de firma: mantener pulsado
     this.zonaFirma = this.add.rectangle(P.x + P.w / 2, P.y + 478, 380, 44, 0x000000, 0.001).setInteractive({ useHandCursor: true });
-    this.add.rectangle(P.x + P.w / 2, P.y + 492, 340, 2, COLOR.gris2);
     this.firma = this.add.graphics();
     this.avisoFirma = txt(P.w / 2, 494, 'MANTÉN PULSADO PARA FIRMAR', 16, ROJO).setOrigin(0.5, 0);
     this.zonaFirma.on('pointerdown', () => this.empezarFirma());

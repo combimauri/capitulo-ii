@@ -24,22 +24,30 @@ export class ResistenciaScene extends Minijuego {
   private hecho = false;
   private textoPregunta!: Phaser.GameObjects.Text;
   private reloj!: Phaser.GameObjects.Text;
+  private esfera!: Phaser.GameObjects.Image;
   private barra!: Phaser.GameObjects.Rectangle;
   private espera!: Phaser.GameObjects.Rectangle;
   private botones: Phaser.GameObjects.GameObject[] = [];
 
   constructor() { super('Resistencia'); }
 
+  preload() {
+    for (const k of ['resistencia-fondo', 'resistencia-consola', 'resistencia-obrien']) this.load.image(k, `assets/minijuegos/${k}.png`);
+    this.load.spritesheet('resistencia-reloj', 'assets/minijuegos/resistencia-reloj.png', { frameWidth: 72, frameHeight: 72 });
+  }
+
   create() {
     const { width, height } = this.scale;
     this.horas = 0; this.voluntad = 1; this.pregunta = 0; this.hecho = false; this.botones = [];
     this.cameras.main.fadeIn(400, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0xf2f2ee).setOrigin(0);
-    if (this.textures.exists('retrato-obrien_neutral')) this.add.image(150, 210, 'retrato-obrien_neutral').setScale(2.2);
-    // el reloj de pared
-    this.add.circle(800, 130, 70, 0xeeead9).setStrokeStyle(4, 0x3a3c40);
-    this.reloj = this.add.text(800, 130, '', { fontFamily: FUENTE.maquina, fontSize: '30px', color: '#22252a' }).setOrigin(0.5);
-    this.add.text(800, 214, 'Aguanta veinticuatro horas.', { fontFamily: FUENTE.texto, fontSize: '17px', color: '#5a5c60' }).setOrigin(0.5);
+    // la sala blanca: azulejo, fluorescentes, O'Brien detrás de su consola
+    this.add.image(0, 0, 'resistencia-fondo').setOrigin(0).setScale(2);
+    this.add.image(150, 210, 'resistencia-obrien').setScale(2);
+    this.add.image(16, 272, 'resistencia-consola').setOrigin(0).setScale(2);
+    // el reloj de pared (la aguja de las horas salta con cada respuesta) y las horas en cifras debajo
+    this.esfera = this.add.image(800, 120, 'resistencia-reloj', 0).setScale(2);
+    this.reloj = this.add.text(800, 212, '', { fontFamily: FUENTE.maquina, fontSize: '30px', color: '#22252a' }).setOrigin(0.5);
+    this.add.text(800, 244, 'Aguanta veinticuatro horas.', { fontFamily: FUENTE.texto, fontSize: '17px', color: '#5a5c60' }).setOrigin(0.5);
     // la voluntad
     this.add.text(300, 300, 'VOLUNTAD', { fontFamily: FUENTE.maquina, fontSize: '20px', color: '#3a3c40' });
     this.add.rectangle(300, 330, 360, 16, 0xc8c8c4).setOrigin(0, 0.5);
@@ -54,7 +62,7 @@ export class ResistenciaScene extends Minijuego {
   private siguiente() {
     this.botones.forEach((b) => b.destroy());
     this.botones = [];
-    this.reloj.setText(`${String(this.horas).padStart(2, '0')}:00`);
+    this.marcarHora(this.horas);
     if (this.horas >= 24) return this.acabar('aguanto');
     this.textoPregunta.setText(`O'BRIEN: ${PREGUNTAS[this.pregunta % PREGUNTAS.length]}`);
     this.pregunta++;
@@ -95,8 +103,13 @@ export class ResistenciaScene extends Minijuego {
     this.hecho = true;
     this.botones.forEach((b) => b.destroy());
     this.textoPregunta.setText(r === 'aguanto' ? '' : '«Dot.»');
-    this.reloj.setText(r === 'aguanto' ? '24:00' : `${String(this.horas).padStart(2, '0')}:00`);
+    this.marcarHora(r === 'aguanto' ? 24 : this.horas);
     this.time.delayedCall(1800, () => this.terminar({ resultado: r }, 800));
+  }
+
+  private marcarHora(h: number) {
+    this.reloj.setText(`${String(h).padStart(2, '0')}:00`);
+    this.esfera.setFrame(h % 12);
   }
 
   update() {

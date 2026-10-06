@@ -10,7 +10,10 @@
  *   prole_piano    La canción de Dot al piano, con acompañamiento de vals.
  */
 
-type Voz = 'piano' | 'tarareo' | 'bajo' | 'acorde';
+type Voz = 'piano' | 'tarareo' | 'bajo' | 'acorde'
+  | 'trompeta' | 'metal' | 'tuba' | 'redoble' | 'bombo'      // la banda del Partido
+  | 'caja' | 'cuerdas' | 'pizzicato'                          // caja de música, orquesta
+  | 'tecla' | 'timbre' | 'carro';                             // la máquina de escribir como ritmo
 
 export interface Nota { b: number; d: number; n: string; voz: Voz }
 
@@ -24,6 +27,10 @@ export interface Pista {
   corte?: number;
   /** Murmullo de gente y algún vaso: el pub. */
   murmullo?: number;
+  /** Altavoz viejo: saturado y sin graves ni agudos (la calle, la telepantalla). */
+  altavoz?: boolean;
+  /** Desafinación de cada nota (0 = perfectamente afinado). */
+  desafino?: number;
 }
 
 /** "A4:2 G4:1 | F4:2 A4:1" → notas seguidas desde el pulso `desde` ("-" es silencio). */
@@ -95,7 +102,110 @@ const VF: [string, string[]] = ['F2', ['A3', 'C4']];
 const VBb: [string, string[]] = ['Bb2', ['Bb3', 'D4']];
 const VC7: [string, string[]] = ['C3', ['Bb3', 'E4']];
 
+/** Sube o baja de octava todas las notas de una melodía escrita. */
+const octava = (texto: string, n: number) => texto.replace(/([A-G][#b]?)(\d)/g, (_, nota, o) => `${nota}${Number(o) + n}`);
+
+/** Un acorde sostenido por compás (cuerdas, colchón). */
+function colchon(acordes: string[][], porCompas: number, voz: Voz = 'cuerdas'): Nota[] {
+  return acordes.flatMap((notas, i) => notas.map((n) => ({ b: i * porCompas, d: porCompas, n, voz })));
+}
+
+/** Marcha: bombo en 1 y 3, caja en 2 y 4, y un redoble al final de cada frase de cuatro compases. */
+function marcha(compases: number): Nota[] {
+  const notas: Nota[] = [];
+  for (let c = 0; c < compases; c++) {
+    const b0 = c * 4;
+    notas.push({ b: b0, d: 1, n: 'C2', voz: 'bombo' }, { b: b0 + 2, d: 1, n: 'C2', voz: 'bombo' });
+    notas.push({ b: b0 + 1, d: 1, n: 'C4', voz: 'redoble' }, { b: b0 + 3, d: 1, n: 'C4', voz: 'redoble' });
+    if (c % 4 === 3) for (const x of [3.25, 3.5, 3.75]) notas.push({ b: b0 + x, d: 0.25, n: 'C4', voz: 'redoble' });
+  }
+  return notas;
+}
+
+// ---------------------------------------------------------------- el himno del Partido (do mayor, 4/4, marcha). Original.
+const HIMNO = [
+  'G4:1.5 G4:.5 C5:1 E5:1 | G5:2 E5:1 C5:1 | D5:1.5 D5:.5 E5:1 F5:1 | E5:3 -:1',
+  'G5:1.5 F5:.5 E5:1 D5:1 | C5:1 D5:1 E5:1 C5:1 | B4:1 A4:1 G4:1 B4:1 | D5:3 -:1',
+  'G4:1.5 G4:.5 C5:1 E5:1 | G5:2 A5:1 G5:1 | F5:1 E5:1 D5:1 F5:1 | E5:3 -:1',
+  'C6:1.5 B5:.5 A5:1 G5:1 | F5:1 E5:1 D5:1 E5:1 | D5:1.5 C5:.5 B4:1 D5:1 | C5:3 -:1',
+].join(' | ');
+const HC: [string, string[]] = ['C3', ['E4', 'G4']];
+const HF: [string, string[]] = ['F2', ['A3', 'C4']];
+const HG7: [string, string[]] = ['G2', ['B3', 'F4']];
+const ACORDES_HIMNO = [HC, HC, HG7, HC, HC, HC, HG7, HG7, HC, HC, HG7, HC, HF, HC, HG7, HC];
+
+function banda(): Nota[] {
+  const notas: Nota[] = [...melodia(HIMNO, 'trompeta'), ...marcha(16)];
+  ACORDES_HIMNO.forEach(([raiz, acorde], i) => {
+    const b0 = i * 4;
+    notas.push({ b: b0, d: 1, n: transponer(raiz, -12), voz: 'tuba' }, { b: b0 + 2, d: 1, n: transponer(raiz, -5), voz: 'tuba' });
+    for (const n of acorde) notas.push({ b: b0 + 1, d: 0.6, n, voz: 'metal' }, { b: b0 + 3, d: 0.6, n, voz: 'metal' });
+  });
+  return notas;
+}
+
+// ---------------------------------------------------------------- Crane (fa mayor, lento): la música se vuelve cálida cuando habla. Original.
+const CRANE = [
+  'C5:2 A4:1 Bb4:1 | C5:3 F5:1 | E5:2 D5:1 C5:1 | D5:4',
+  'Bb4:2 G4:1 A4:1 | Bb4:3 E5:1 | D5:2 C5:1 Bb4:1 | A4:4',
+  'C5:2 A4:1 Bb4:1 | C5:3 A5:1 | G5:2 F5:1 E5:1 | F5:2 D5:2',
+  'C5:2 Bb4:1 A4:1 | G4:2 C5:2 | A4:1 G4:1 F4:1 E4:1 | F4:4',
+].join(' | ');
+const ACORDES_CRANE = [
+  ['F3', 'A3', 'C4'], ['F3', 'A3', 'C4'], ['C3', 'G3', 'E4'], ['Bb2', 'F3', 'D4'],
+  ['G2', 'D3', 'Bb3'], ['C3', 'G3', 'E4'], ['C3', 'Bb3', 'E4'], ['F3', 'A3', 'C4'],
+  ['F3', 'A3', 'C4'], ['F3', 'A3', 'C4'], ['C3', 'G3', 'E4'], ['D3', 'A3', 'F4'],
+  ['F3', 'A3', 'C4'], ['C3', 'G3', 'E4'], ['C3', 'Bb3', 'E4'], ['F3', 'A3', 'C4'],
+];
+
+// ---------------------------------------------------------------- «Naranjas y limones» (tradicional, dominio público)
+const NARANJAS = [
+  'G5:1 E5:1 G5:1 E5:1 C5:1 D5:.5 E5:.5 F5:1 D5:1 G5:1 E5:1 C5:2',
+  'G5:.5 G5:.5 E5:1 G5:1 E5:1 C5:1 D5:.5 E5:.5 F5:1 D5:1 G5:1 E5:1 C5:2',
+].join(' ');
+const IZQUIERDA_NARANJAS = melodia('C3:3 C3:3 G2:3 C3:3 C3:3 C3:3 G2:3 C3:3', 'bajo');
+
+// ---------------------------------------------------------------- la máquina de escribir convertida en ritmo (Final E)
+function maquina(): Nota[] {
+  const patrones = ['x x - x x x - x', 'x x x - x - x x', 'x - x x x x - x', 'x x - x - x x -'];
+  const notas: Nota[] = [];
+  for (let c = 0; c < 8; c++) {
+    patrones[c % 4].split(' ').forEach((p, i) => { if (p === 'x') notas.push({ b: c * 4 + i * 0.5, d: 0.5, n: 'C5', voz: 'tecla' }); });
+    if (c % 4 === 3) {
+      notas.push({ b: c * 4 + 3.5, d: 0.5, n: 'C7', voz: 'timbre' });
+      notas.push({ b: c * 4 + 3.75, d: 0.25, n: 'C4', voz: 'carro' });
+    }
+  }
+  return notas;
+}
+
 export const PISTAS: Record<string, Pista> = {
+  /** El himno del Partido, perfectamente afinado (créditos de los finales A y B). */
+  himno: { bpm: 104, pulsos: 64, volumen: 0.45, notas: banda() },
+  /** Desde los altavoces de la calle: metálico, saturado, un poco desafinado. */
+  himno_altavoz: { bpm: 104, pulsos: 64, volumen: 0.26, altavoz: true, desafino: 0.012, notas: banda() },
+  /** La telepantalla del piso, de noche: el himno en volumen nocturno. */
+  himno_tele: { bpm: 104, pulsos: 64, volumen: 0.14, altavoz: true, corte: 1800, desafino: 0.008, notas: banda() },
+  crane: {
+    bpm: 72, pulsos: 64, volumen: 0.52,
+    notas: [...melodia(CRANE, 'piano'), ...colchon(ACORDES_CRANE, 4)],
+  },
+  /** El sueño: «Naranjas y limones» en una caja de música. */
+  caja_musica: { bpm: 112, pulsos: 28, volumen: 0.9, notas: melodia(octava(NARANJAS, 1), 'caja') },
+  /** El epílogo del Final D: piano solo, muy lento. */
+  naranjas_lento: { bpm: 56, pulsos: 30, volumen: 0.9, notas: [...melodia(NARANJAS, 'piano'), ...IZQUIERDA_NARANJAS] },
+  /** Créditos del Final D: ahora con orquesta. */
+  naranjas_orquesta: {
+    bpm: 84, pulsos: 26, volumen: 0.6,
+    notas: [
+      ...melodia(octava(NARANJAS, -1), 'cuerdas'),
+      ...colchon([['C3', 'G3', 'E4'], ['C3', 'G3', 'E4'], ['G2', 'D3', 'B3'], ['C3', 'G3', 'E4'],
+        ['C3', 'G3', 'E4'], ['C3', 'G3', 'E4'], ['G2', 'D3', 'B3'], ['C3', 'G3', 'E4']], 3),
+      ...melodia('C2:3 C2:3 G1:3 C2:3 C2:3 C2:3 G1:3 C2:3', 'pizzicato'),
+    ],
+  },
+  /** Los años en la cripta: la máquina de escribir convertida en ritmo. */
+  maquina: { bpm: 100, pulsos: 32, volumen: 1, notas: maquina() },
   prole: {
     bpm: 96, pulsos: 54, volumen: 0.26, corte: 2400,
     notas: melodia(DOT, 'tarareo'),
@@ -151,7 +261,18 @@ class Reproduccion {
     this.filtro = ctx.createBiquadFilter();
     this.filtro.type = 'lowpass';
     this.filtro.frequency.value = p.corte ?? 9000;
-    this.bus.connect(this.filtro).connect(out);
+    if (p.altavoz) {
+      // el altavoz: satura y recorta graves y agudos
+      const sat = ctx.createWaveShaper();
+      const curva = new Float32Array(1024);
+      for (let i = 0; i < curva.length; i++) { const x = (i / (curva.length - 1)) * 2 - 1; curva[i] = Math.tanh(x * 3.2); }
+      sat.curve = curva;
+      const banda = ctx.createBiquadFilter();
+      banda.type = 'bandpass'; banda.frequency.value = 1300; banda.Q.value = 0.9;
+      this.bus.connect(this.filtro).connect(sat).connect(banda).connect(out);
+    } else {
+      this.bus.connect(this.filtro).connect(out);
+    }
     this.p.notas.sort((a, b) => a.b - b.b);
     this.inicio = ctx.currentTime + 0.15;
     if (p.murmullo) this.empezarMurmullo(p.murmullo);
@@ -179,12 +300,99 @@ class Reproduccion {
   }
 
   private tocar(nota: Nota, t: number) {
-    const f = frecuencia(nota.n), d = nota.d * this.pulso;
+    const des = this.p.desafino ?? 0;
+    const f = frecuencia(nota.n) * (1 + (Math.random() - 0.5) * des), d = nota.d * this.pulso;
     switch (nota.voz) {
       case 'tarareo': return this.tararear(f, t, d);
       case 'bajo': return this.piano(f, t, d + 0.25, 0.09, 0.02);
       case 'acorde': return this.piano(f, t, d, 0.035, 0.02);
+      case 'trompeta': return this.metal(f, t, d * 0.92, 0.085, 2600);
+      case 'metal': return this.metal(f, t, d * 0.7, 0.03, 1500);
+      case 'tuba': return this.metal(f, t, d * 0.8, 0.09, 500);
+      case 'redoble': return this.golpeRuido(t, 0.09, 1800, 0.12, 'highpass');
+      case 'bombo': return this.bombo(t);
+      case 'caja': return this.caja(f, t);
+      case 'cuerdas': return this.cuerdas(f, t, d, 0.03);
+      case 'pizzicato': return this.piano(f, t, 0.35, 0.06, 0.004);
+      case 'tecla': return this.golpeRuido(t + Math.random() * 0.02, 0.035, 2600, 0.3 + Math.random() * 0.15, 'bandpass');
+      case 'timbre': return this.caja(3150, t);
+      case 'carro': return this.golpeRuido(t, 0.35, 1400, 0.18, 'bandpass', true);
       default: return this.piano(f, t, d + 0.3, 0.1, 0.016);
+    }
+  }
+
+  /** Metales: diente de sierra con un filtro que se abre en el ataque, como una boquilla. */
+  private metal(f: number, t: number, dur: number, vol: number, brillo: number) {
+    const ctx = this.ctx;
+    const osc = ctx.createOscillator(), osc2 = ctx.createOscillator();
+    const fl = ctx.createBiquadFilter(), g = ctx.createGain();
+    osc.type = 'sawtooth'; osc2.type = 'square';
+    osc.frequency.value = f; osc2.frequency.value = f * 1.003;
+    fl.type = 'lowpass'; fl.Q.value = 2;
+    fl.frequency.setValueAtTime(brillo * 0.25, t);
+    fl.frequency.exponentialRampToValueAtTime(brillo, t + 0.05);
+    fl.frequency.exponentialRampToValueAtTime(brillo * 0.6, t + Math.max(0.1, dur));
+    const o2 = ctx.createGain(); o2.gain.value = 0.35;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.03);
+    g.gain.setValueAtTime(vol * 0.8, t + Math.max(0.05, dur - 0.06));
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur + 0.04);
+    osc.connect(fl); osc2.connect(o2).connect(fl); fl.connect(g).connect(this.bus);
+    for (const o of [osc, osc2]) { o.start(t); o.stop(t + dur + 0.08); }
+  }
+
+  private golpeRuido(t: number, dur: number, f: number, vol: number, tipo: BiquadFilterType, barrido = false) {
+    const ctx = this.ctx;
+    const n = Math.ceil(ctx.sampleRate * dur);
+    const buf = ctx.createBuffer(1, n, ctx.sampleRate);
+    const d = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) d[i] = Math.random() * 2 - 1;
+    const src = ctx.createBufferSource(), fl = ctx.createBiquadFilter(), g = ctx.createGain();
+    src.buffer = buf;
+    fl.type = tipo; fl.frequency.setValueAtTime(f, t);
+    if (barrido) fl.frequency.exponentialRampToValueAtTime(f * 3, t + dur);
+    g.gain.setValueAtTime(vol, t); g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    src.connect(fl).connect(g).connect(this.bus);
+    src.start(t);
+  }
+
+  private bombo(t: number) {
+    const ctx = this.ctx;
+    const osc = ctx.createOscillator(), g = ctx.createGain();
+    osc.type = 'sine';
+    osc.frequency.setValueAtTime(120, t); osc.frequency.exponentialRampToValueAtTime(48, t + 0.18);
+    g.gain.setValueAtTime(0.22, t); g.gain.exponentialRampToValueAtTime(0.0001, t + 0.3);
+    osc.connect(g).connect(this.bus);
+    osc.start(t); osc.stop(t + 0.32);
+  }
+
+  /** Caja de música: púa metálica, mucho armónico inarmónico y una cola larga. */
+  private caja(f: number, t: number) {
+    const ctx = this.ctx;
+    for (const [mult, peso, cola] of [[1, 1, 1.4], [2.76, 0.25, 0.5], [5.4, 0.08, 0.25]] as const) {
+      const osc = ctx.createOscillator(), g = ctx.createGain();
+      osc.type = 'sine'; osc.frequency.value = f * mult;
+      g.gain.setValueAtTime(0.06 * peso, t); g.gain.exponentialRampToValueAtTime(0.0001, t + cola);
+      osc.connect(g).connect(this.bus);
+      osc.start(t); osc.stop(t + cola + 0.05);
+    }
+  }
+
+  /** Cuerdas: tres sierras desafinadas entre sí, ataque y caída lentos, sin agudos. */
+  private cuerdas(f: number, t: number, dur: number, vol: number) {
+    const ctx = this.ctx;
+    const fl = ctx.createBiquadFilter(), g = ctx.createGain();
+    fl.type = 'lowpass'; fl.frequency.value = Math.min(3200, f * 4);
+    const fin = t + dur + 0.25;
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + Math.min(0.35, dur * 0.4));
+    g.gain.setValueAtTime(vol, Math.max(t + 0.36, fin - 0.4));
+    g.gain.exponentialRampToValueAtTime(0.0001, fin);
+    fl.connect(g).connect(this.bus);
+    for (const det of [-0.004, 0, 0.005]) {
+      const osc = ctx.createOscillator();
+      osc.type = 'sawtooth'; osc.frequency.value = f * (1 + det);
+      osc.connect(fl); osc.start(t); osc.stop(fin + 0.05);
     }
   }
 

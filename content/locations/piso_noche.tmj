@@ -28,6 +28,16 @@
    "name": "cono",
    "type": "string",
    "value": "386,70;328,88;286,116;234,116;230,90;40,90;40,246;440,246;440,90"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,edificio"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "himno_tele"
   }
  ],
  "tilesets": [],

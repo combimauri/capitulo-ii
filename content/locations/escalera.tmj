@@ -28,6 +28,11 @@
    "name": "fondos_alt",
    "type": "string",
    "value": "loc-escalera_odio:jornada>=10"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "edificio"
   }
  ],
  "tilesets": [],

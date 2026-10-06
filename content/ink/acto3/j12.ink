@@ -38,7 +38,7 @@ PENSAMIENTO: La multitud ruge. # cf:id=CF-J12-EJECUCION # id:j12_01_pens_01
     ~ sube_sospecha(10)
 }
 PENSAMIENTO: Las trampillas se abren. # fx:negro # id:j12_01_pens_02
-PENSAMIENTO: La madera. La multitud que ruge. # sfx:golpes # esperar:1.5 # id:j12_01_pens_03
+PENSAMIENTO: La madera. La multitud que ruge. # sfx:trampilla # sfx:multitud # esperar:1.5 # id:j12_01_pens_03
 PENSAMIENTO: Y, después, un niño que aplaude. # vineta:fin # id:j12_01_pens_04
 CARTEL: Ministerio de la Paz. # id:j12_02_cartel # escena:pasillo # pos:escalera
 -> DONE
@@ -266,7 +266,7 @@ PENSAMIENTO: Se abre antes de que llame. # fx:negro # id:j12_06_verde_02 # escen
 ~ casa_dot_vista = true
 PENSAMIENTO: Una cocina pequeña y abarrotada. La estufa encendida, ropa secándose. Huele a té y a carbón. # fx:aclarar # id:j12_07_pens_00
 PENSAMIENTO: En una repisa, la colección de metralla de Sammy. Intacta. # id:j12_07_pens_01
-PENSAMIENTO: Dot cierra la puerta y echa el cerrojo. Me empuja hacia la despensa. # sfx:sello # id:j12_07_pens_02
+PENSAMIENTO: Dot cierra la puerta y echa el cerrojo. Me empuja hacia la despensa. # sfx:cerrojo # id:j12_07_pens_02
 {
 - dot_confianza >= 3:
     DOT: Dentro. Ni un ruido. # id:j12_07_dot_3_01

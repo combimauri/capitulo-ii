@@ -368,7 +368,7 @@ PENSAMIENTO: Unos cincuenta años, bien afeitado, chaleco de lana y sombrero. Un
     -> DONE
 }
 ~ crane_visto = true
-CRANE: No se mueva, camarada. Usted, con el mono azul delante de la casa rota… Es una imagen. # sfx:sello # id:j4_07b_crane_01
+CRANE: No se mueva, camarada. Usted, con el mono azul delante de la casa rota… Es una imagen. # sfx:obturador # id:j4_07b_crane_01
 CRANE: Perdone. Deformación profesional. Abel Crane. Tengo el estudio en la calle Cable, junto al mercado. # id:j4_07b_crane_02
 PROTAGONISTA: ¿Para qué fotografía esto? # id:j4_07b_prot_01
 CRANE: Para el recuerdo. Aquí nadie tiene fotos de nada. Si no las hago yo, dentro de un año nadie sabrá que aquí vivían los Hennessy. # id:j4_07b_crane_03

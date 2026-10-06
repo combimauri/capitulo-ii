@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "cafe.entrar"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele"
   }
  ],
  "tilesets": [],

@@ -25,6 +25,11 @@
    "value": "archivo.entrar"
   },
   {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,oficina"
+  },
+  {
    "name": "conos",
    "type": "string",
    "value": "60,50;300,130;300,200;170,200|60,50;150,214;40,236;40,90"

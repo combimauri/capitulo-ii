@@ -12,9 +12,12 @@ const RIEL = { x: 480, arriba: 140, abajo: 420 };
 const LIMITE = 300;          // px/s: por encima, chirría
 const MUELLE = 50;           // px/s que sube sola si se suelta
 const PLANTAS = 11;
+const HUECO = { x: 120, y: 76, w: 720, h: 396 };   // la abertura de la reja, en píxeles del juego
+const PLANTA_ARTE = 120;                            // alto de una planta en palanca-hueco.png
 
 export class PalancaScene extends Minijuego {
   private mango!: Phaser.GameObjects.Container;
+  private hueco!: Phaser.GameObjects.TileSprite;
   private y = RIEL.arriba;
   private agarrada = false;
   private pulsadaDesde = 0;
@@ -27,22 +30,21 @@ export class PalancaScene extends Minijuego {
 
   constructor() { super('Palanca'); }
 
+  preload() {
+    for (const k of ['palanca-fondo', 'palanca-reja', 'palanca-hueco', 'palanca-mango']) this.load.image(k, `assets/minijuegos/${k}.png`);
+  }
+
   create() {
     const { width, height } = this.scale;
     this.y = RIEL.arriba; this.agarrada = false; this.chirridos = 0; this.enfriar = 0; this.hecho = false; this.pulsadaDesde = 0;
     this.cameras.main.fadeIn(300, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0x14100c).setOrigin(0);
-    // la reja de tijera, detrás
-    const g = this.add.graphics().lineStyle(3, 0x3a3226, 1);
-    for (let x = 120; x < 840; x += 40) { g.lineBetween(x, 80, x + 40, 470); g.lineBetween(x + 40, 80, x, 470); }
-    this.add.rectangle(width / 2, 280, 220, 400, 0x2a2219).setStrokeStyle(3, 0x5a4a30);
-    // el riel y la placa de latón
-    this.add.rectangle(RIEL.x, (RIEL.arriba + RIEL.abajo) / 2, 14, RIEL.abajo - RIEL.arriba + 30, 0x0b0c0f).setStrokeStyle(2, 0x8a6a2a);
-    this.add.text(RIEL.x + 40, RIEL.arriba - 10, 'S', { fontFamily: FUENTE.maquina, fontSize: '24px', color: '#c8a050' });
-    this.add.text(RIEL.x + 40, RIEL.abajo - 10, String(PLANTAS), { fontFamily: FUENTE.maquina, fontSize: '24px', color: '#c8a050' });
-    const brazo = this.add.rectangle(0, 0, 70, 12, 0x8a6a2a).setStrokeStyle(2, 0x5a4a1a);
-    const pomo = this.add.circle(40, 0, 20, 0xc8a050).setStrokeStyle(3, 0x5a4a1a);
-    this.mango = this.add.container(RIEL.x, this.y, [brazo, pomo]).setSize(110, 50).setInteractive({ useHandCursor: true, draggable: true });
+    // el hueco del montacargas (se desplaza al subir), la reja de tijera y la cabina con la placa de latón
+    // graduada de S a 11 (arte a la mitad de resolución, mostrado a 2x)
+    this.hueco = this.add.tileSprite(HUECO.x, HUECO.y, HUECO.w / 2, HUECO.h / 2, 'palanca-hueco').setOrigin(0).setScale(2);
+    this.add.image(HUECO.x, HUECO.y, 'palanca-reja').setOrigin(0).setScale(2);
+    this.add.image(0, 0, 'palanca-fondo').setOrigin(0).setScale(2);
+    const mango = this.add.image(0, 0, 'palanca-mango').setScale(2);
+    this.mango = this.add.container(RIEL.x, this.y, [mango]).setSize(110, 50).setInteractive({ useHandCursor: true, draggable: true });
     this.planta = this.add.text(width / 2, 40, '', { fontFamily: FUENTE.maquina, fontSize: '34px', color: hex(COLOR.ocre4) }).setOrigin(0.5);
     this.add.text(width / 2, height - 36, 'Baja la palanca despacio, sin soltarla. (Arrastra, o mantén S / ↓)', {
       fontFamily: FUENTE.texto, fontSize: '19px', color: hex(COLOR.papel3),
@@ -67,6 +69,8 @@ export class PalancaScene extends Minijuego {
     if (vel > LIMITE) this.chirriar();
     this.y = nuevo;
     this.mango.y = nuevo;
+    // la cabina sube: la pared del hueco baja por detrás de la reja
+    this.hueco.tilePositionY = -Math.round(((nuevo - RIEL.arriba) / (RIEL.abajo - RIEL.arriba)) * PLANTAS * PLANTA_ARTE);
   }
 
   private chirriar() {

@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "vestibulo.entrar"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,oficina"
   }
  ],
  "tilesets": [],

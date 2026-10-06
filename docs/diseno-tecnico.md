@@ -583,16 +583,25 @@ interface SaveData {
 
 ## 12. Audio (técnico)
 
-| Tipo | Formato | Carga |
-|---|---|---|
-| Música | `.ogg` + `.m4a` (Safari) | En *streaming*, por acto |
-| Ambientes en bucle | `.ogg` + `.m4a` | Por localización |
-| Efectos | `.ogg` + `.m4a`, o *audio sprite* | Precargados por acto |
+Todo el audio se **sintetiza en tiempo real** con Web Audio: no hay archivos de sonido que descargar, el juego funciona igual sin conexión y cada sonido se adapta a la escena (el silbido de cohete dura exactamente lo que la escena necesita). El plan inicial de `.ogg` + `.m4a` se descartó por eso.
 
-- **Capas de ambiente:** zumbido de telepantalla, calle, pub, túnel… Cada localización define sus ambientes en Tiled.
-- **Ducking:** la música baja automáticamente cuando habla la telepantalla o suena un silbido de cohete.
-- **El silbido de cohete** es un evento de audio especial: se sintetiza en tiempo real con Web Audio (oscilador con barrido de tono más ruido) para que su duración se adapte exactamente a cada escena.
-- **Leitmotivs:** *Naranjas y limones* (melodía tradicional de dominio público), himno del Partido (composición original) y la canción prole de Dot (composición original). La elección concreta de música y sonidos se hará en la biblia de audio.
+| Canal | Qué suena | Dónde se define |
+|---|---|---|
+| **Música** (`src/systems/Musica.ts`) | Pistas en bucle escritas como partitura (notas, pulsos y voces) que un planificador programa por delante del reloj de audio. | Propiedad de mapa `musica=id` (con `musica_si=cond`) o `# musica:id` / `# musica:silencio` en ink. |
+| **Ambiente** (`src/systems/Ambiente.ts`) | Capas en bucle: un fondo continuo (ruido filtrado, zumbidos) y sucesos sueltos al azar para que no suene a bucle. | Propiedad de mapa `ambiente="tele,oficina"` o `# ambiente:capa,capa` / `# ambiente:silencio`. |
+| **Efectos** (`src/systems/AudioDirector.ts`) | Sonidos puntuales. | `# sfx:id` en ink y llamadas desde las escenas. |
+
+- **Volúmenes:** General, Música, Efectos y Ambiente, en *Opciones* del menú principal. Se guardan aparte de la partida (`capitulo2.opciones.volumen`).
+- **Ducking:** cuando habla la telepantalla, la música y el ambiente bajan; el silbido de cohete corta la música en seco; «Naranjas y limones» la agacha.
+- **Pistas:**
+  - `himno`, `himno_altavoz`, `himno_tele`: el himno del Partido (marcha original): afinado (créditos de A y B), desde los altavoces de la calle (saturado y algo desafinado) y en la telepantalla de noche.
+  - `prole`, `prole_piano`: la canción de Dot, leitmotiv de la vida prole (melodía original).
+  - `taberna`, `taberna_calle`, `taberna_lejos`: el piano de La Campana (melodía original).
+  - `crane`: el estudio de Crane; la música se vuelve cálida cuando habla.
+  - `caja_musica`, `naranjas_lento`, `naranjas_orquesta`: *Naranjas y limones* (tradicional, dominio público) en el sueño, en el epílogo del Final D y en sus créditos.
+  - `maquina`: la máquina de escribir convertida en ritmo (los años en la cripta, créditos del Final E).
+- **Ambientes:** `tele`, `oficina`, `cantina`, `calle`, `ruinas`, `mercado`, `noche`, `tunel`, `minimor`, `cripta`, `calderas`, `neon`, `goteo`, `edificio`. El Archivo B del Minimor no lleva ambiente: el zumbido de las telepantallas ocultas es la pista del sigilo.
+- **Leitmotivs:** *Naranjas y limones* (dominio público), el himno del Partido y la canción de Dot (composiciones originales).
 
 ---
 
@@ -817,7 +826,25 @@ interface SaveData {
 
 **Pendiente:**
 - Probar el joystick y el audio en móviles reales (iOS y Android).
-- El resto de la música (himno del Partido, drones de interiores) y los ambientes por localización llegan con M6.
+- ~~El resto de la música (himno del Partido, drones de interiores) y los ambientes por localización llegan con M6.~~ *(hecho en M6)*
+
+### Estado de M6 (arte y audio finales)
+
+- **Audio completo, sintetizado** (ver §12): tres canales con volumen propio (música, efectos y ambiente) y un menú de *Opciones* con los cuatro volúmenes.
+  - **Ambientes por localización** en 14 capas: telepantalla, oficina, cantina, calle, ruinas, mercado, noche, túnel, Minimor, cripta, calderas, neón, goteo y edificio. Todos los mapas declaran los suyos.
+  - **Música nueva:** el himno del Partido (afinado, desde los altavoces y en la telepantalla de noche), el tema de Crane, *Naranjas y limones* en caja de música (el sueño), al piano lento (el epílogo) y con orquesta (créditos del Final D), y la máquina de escribir como ritmo (los años en la cripta y los créditos del Final E, con un silbido lejano que nunca cae).
+  - **Montajes de los finales A y B:** el himno pasa del altavoz a perfectamente afinado; la sirena y la multitud en la plaza.
+  - **Ducking:** cuando habla la telepantalla, la música y el ambiente bajan.
+  - **Efectos nuevos:** puerta metálica, portazo, furgoneta, botas, campanilla, estática, sirena, multitud, aplauso, cerrojo, obturador, chincheta y el silbido lejano. Los `# sfx:` del ink que usaban el sello para puertas, cerrojos o pasos usan ahora el sonido que toca.
+  - Una prueba comprueba que cada `# sfx:`, `# musica:` y `# ambiente:` del ink, y cada música o ambiente de un mapa, existe.
+- **Arte de los minijuegos** (`art/minijuegos/`, cada escena carga sus texturas en su `preload()`): los catorce que se dibujaban con rectángulos tienen ahora arte propio.
+  - Mecánicos: la palanca del montacargas, la garita de las llaves, el cerrojo de combinación, el suelo del Centro con la pancarta, la calle del mercado de Sammy y la sala blanca de las 24 horas.
+  - De papel: la Ficha, el parte, el diario, el libro, la Planilla, el comparador, la declaración y el Capítulo II en el rodillo de la máquina de Goldstein, cada uno sobre su mesa.
+- **191 pruebas.**
+
+**Pendiente (M7):**
+- Probar el audio y el joystick en móviles reales (iOS y Android).
+- El resto de opciones de §9 (velocidad del texto, dificultad del crimen facial, sigilo, destellos, tamaño de la UI, mano dominante) y las opciones dentro de la partida.
 
 ---
 

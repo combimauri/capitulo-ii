@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "minimor.entrar"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "minimor"
   }
  ],
  "tilesets": [],

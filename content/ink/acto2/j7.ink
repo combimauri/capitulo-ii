@@ -95,7 +95,7 @@ PENSAMIENTO: La limpiadora. La mujer de la calle Stepney. La misma mirada. # id:
 -> DONE
 
 === j7_nell ===
-PENSAMIENTO: Busco en la tercera balda. Detrás de mí, la puerta se cierra con un clic. # sfx:sello # id:j7_03_pens_01
+PENSAMIENTO: Busco en la tercera balda. Detrás de mí, la puerta se cierra con un clic. # sfx:cerrojo # id:j7_03_pens_01
 ~ nell_suministros = true
 PENSAMIENTO: Me giro. # refrescar # prota:abajo # id:j7_03_pens_02
 PENSAMIENTO: La limpiadora, delante de la puerta. El carrito bloquea la salida. # id:j7_03_pens_03

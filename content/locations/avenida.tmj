@@ -28,6 +28,16 @@
    "name": "fondos_alt",
    "type": "string",
    "value": "loc-avenida_furgoneta:jornada==11"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "calle"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "himno_altavoz"
   }
  ],
  "tilesets": [],

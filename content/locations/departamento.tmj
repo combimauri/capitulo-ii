@@ -25,6 +25,11 @@
    "value": "depto.entrar"
   },
   {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,oficina"
+  },
+  {
    "name": "fondo_alt",
    "type": "string",
    "value": "loc-departamento_j3"

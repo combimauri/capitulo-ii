@@ -48,13 +48,18 @@ export class CapituloScene extends Minijuego {
 
   constructor() { super('Capitulo'); }
 
+  preload() {
+    for (const k of ['fondo', 'rodillo', 'hoja', 'tarjeta', 'tarjeta-luz']) this.load.image(`capitulo-${k}`, `assets/minijuegos/capitulo-${k}.png`);
+  }
+
   create() {
-    const { width, height } = this.scale;
     this.lineas = []; this.datos = {}; this.voces = 0;
     this.cameras.main.fadeIn(500, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0x1a120b).setOrigin(0);
-    for (let i = 0; i < 18; i++) this.add.circle(Phaser.Math.Between(0, width), Phaser.Math.Between(0, height), Phaser.Math.Between(20, 60), 0xffb050, 0.025);
+    // la mesa de la cripta a la luz de las velas, con el cuerpo de la máquina de Goldstein abajo: capitulo-fondo
+    this.add.image(0, 0, 'capitulo-fondo').setOrigin(0).setScale(2);
     this.capa = this.add.container(0, 0);
+    // el carro de la máquina, por encima de la hoja (el papel sale de detrás del rodillo)
+    this.add.image(0, 484, 'capitulo-rodillo').setOrigin(0).setScale(2);
     void this.componer();
   }
 
@@ -71,15 +76,18 @@ export class CapituloScene extends Minijuego {
       const alto = Math.min(76, Math.floor((480 - y0) / opciones.length) - 10);
       opciones.forEach((o, i) => {
         const y = y0 + i * (alto + 10) + alto / 2;
-        const f = this.add.rectangle(480, y, 820, alto, 0xe2d9bf).setStrokeStyle(2, 0x6a5c44).setInteractive({ useHandCursor: true });
+        // un papelito por opción (nine-slice, 820 × alto); al pasar por encima, el mismo papel más claro
+        const papel = (clave: string) => this.add.nineslice(480, y, clave, undefined, 410, Math.round(alto / 2), 8, 8, 8, 8).setScale(2);
+        const f = papel('capitulo-tarjeta').setInteractive({ useHandCursor: true });
+        const luz = papel('capitulo-tarjeta-luz').setVisible(false);
         const t = this.add.text(90, y - (o.nota ? 8 : 0), o.texto, {
           fontFamily: FUENTE.texto, fontSize: '19px', color: o.goldstein ? '#5a4a30' : '#2a2218', fontStyle: o.goldstein ? 'italic' : 'normal',
           wordWrap: { width: 780 },
         }).setOrigin(0, 0.5);
-        this.capa.add([f, t]);
+        this.capa.add([f, luz, t]);
         if (o.nota) this.capa.add(this.add.text(870, y + alto / 2 - 6, o.nota, { fontFamily: FUENTE.maquina, fontSize: '16px', color: '#6a5c44' }).setOrigin(1, 1));
-        f.on('pointerover', () => f.setFillStyle(0xf0e6c8));
-        f.on('pointerout', () => f.setFillStyle(0xe2d9bf));
+        f.on('pointerover', () => luz.setVisible(true));
+        f.on('pointerout', () => luz.setVisible(false));
         f.once('pointerup', () => { audio.play('plumilla'); ok(i); });
       });
     });
@@ -144,7 +152,7 @@ export class CapituloScene extends Minijuego {
   /** Goldstein lo teclea en la máquina, línea a línea. */
   private async mecanografiar() {
     this.capa.removeAll(true);
-    const hoja = this.add.rectangle(480, 20, 860, 1400, 0xe8dfc4).setOrigin(0.5, 0).setStrokeStyle(1, 0x8f8a7a);
+    const hoja = this.add.image(50, 20, 'capitulo-hoja').setOrigin(0).setScale(2);   // 860 × 1400, como antes
     this.capa.add(hoja);
     let y = 34;
     for (const l of this.lineas) {
@@ -165,7 +173,9 @@ export class CapituloScene extends Minijuego {
     }
     audio.play('sello');
     const texto = this.lineas.map((l) => l.texto).join('¶');
-    const aviso = this.add.text(480, 528, '[ toca para continuar ]', { fontFamily: FUENTE.maquina, fontSize: '20px', color: hex(COLOR.papel3) }).setOrigin(0.5, 1);
+    const aviso = this.add.text(480, 528, '[ toca para continuar ]', {
+      fontFamily: FUENTE.maquina, fontSize: '20px', color: hex(COLOR.papel3), stroke: hex(COLOR.negro), strokeThickness: 4,   // sobre la guía del carro
+    }).setOrigin(0.5, 1);
     this.tweens.add({ targets: aviso, alpha: 0.3, duration: 600, yoyo: true, repeat: -1 });
     await this.espera(600);
     this.input.once('pointerup', () => this.terminar({ resultado: 'escrito', datos: { ...this.datos, texto, voces: this.voces } }, 800));

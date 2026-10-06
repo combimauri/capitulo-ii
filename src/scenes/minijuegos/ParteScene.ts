@@ -26,32 +26,33 @@ export class ParteScene extends Minijuego {
 
   constructor() { super('Parte'); }
 
+  preload() {
+    this.load.image('parte-fondo', 'assets/minijuegos/parte-fondo.png');
+    this.load.image('parte-directiva', 'assets/minijuegos/parte-directiva.png');
+  }
+
   create() {
     this.doc = documento(this.params.documento ?? '')!;
     this.elegidas = {};
     const { width, height } = this.scale;
     this.cameras.main.fadeIn(300, 11, 12, 15);
 
-    // escritorio
-    this.add.rectangle(width / 2, height / 2, width, height, 0x2e221b);
-    for (let y = 0; y < height; y += 18) this.add.rectangle(width / 2, y, width, 1, 0x1a1411);
+    // escritorio metálico del Minipax, con el parte impreso encima (membrete, filete rojo y pie): parte-fondo
+    this.add.image(0, 0, 'parte-fondo').setOrigin(0).setScale(2);
 
     // directiva del tubo neumático
     const tubo = this.add.container(40, 24);
-    tubo.add(this.add.rectangle(0, 0, 380, 120, COLOR.papel4).setOrigin(0).setStrokeStyle(1, 0x8f8a7a));
+    tubo.add(this.add.image(0, 0, 'parte-directiva').setOrigin(0).setScale(2));
     tubo.add(this.add.text(12, 10, 'DIRECTIVA · TUBO 14', { fontFamily: FUENTE.maquina, fontSize: '18px', color: hex(COLOR.rojo3) }));
     tubo.add(this.add.text(12, 34, this.doc.directiva.join('\n'), { fontFamily: FUENTE.maquina, fontSize: '19px', color: hex(COLOR.gris2), lineSpacing: 1 }));
     tubo.setAngle(-2).setAlpha(0);
     this.tweens.add({ targets: tubo, alpha: 1, y: 30, duration: 400 });
     audio.play('tubo');
 
-    // papel del parte
-    this.add.rectangle(PAPEL.x + 4, PAPEL.y + 4, PAPEL.w, PAPEL.h, 0x000000, 0.4).setOrigin(0);
-    this.add.rectangle(PAPEL.x, PAPEL.y, PAPEL.w, PAPEL.h, COLOR.papel3).setOrigin(0).setStrokeStyle(1, 0x8f8a7a);
+    // papel del parte (dibujado en parte-fondo)
     this.add.text(PAPEL.x + PAPEL.w / 2, PAPEL.y + 22, this.doc.titulo, {
       fontFamily: FUENTE.maquina, fontSize: '28px', color: hex(COLOR.gris2),
     }).setOrigin(0.5, 0);
-    this.add.rectangle(PAPEL.x + 30, PAPEL.y + 58, PAPEL.w - 60, 2, COLOR.rojo3).setOrigin(0);
     this.capa = this.add.container(0, 0);
 
     this.pensamiento = this.add.text(width / 2, height - 22, '', {

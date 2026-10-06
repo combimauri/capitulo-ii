@@ -5,9 +5,9 @@
 === final_a ===
 // FA.01 — El piso · Esa misma noche
 { inventario ? diario:
-    PENSAMIENTO: En el hueco junto al armario, con el cuaderno en las manos. La telepantalla, a mi espalda, emite el himno. # id:fa_01_pens_00
+    PENSAMIENTO: En el hueco junto al armario, con el cuaderno en las manos. La telepantalla, a mi espalda, emite el himno. # musica:himno_tele # id:fa_01_pens_00
 - else:
-    PENSAMIENTO: En el hueco junto al armario, con las manos vacías. La telepantalla, a mi espalda, emite el himno. # id:fa_01_pens_00b
+    PENSAMIENTO: En el hueco junto al armario, con las manos vacías. La telepantalla, a mi espalda, emite el himno. # musica:himno_tele # id:fa_01_pens_00b
 }
 PENSAMIENTO: Un cuaderno de un hombre que no existió. Una prole que dice cosas imposibles. Un papel azul que no existe. # id:fa_01_pens_01
 PENSAMIENTO: Estoy cansad{o}. Voss tenía razón: el cansancio produce recuerdos que no existen. # id:fa_01_pens_02
@@ -28,7 +28,7 @@ HILDA: Lo sabía. Sabía que eras de los buenos. # id:fa_02_hilda_03
 PENSAMIENTO: Me abraza. # id:fa_02_pens_02
 
 // FA.03 — Montaje · Las semanas siguientes
-CARTEL: Las semanas siguientes. # vineta:fin # id:fa_03_cartel
+CARTEL: Las semanas siguientes. # vineta:fin # musica:himno_altavoz # id:fa_03_cartel
 PENSAMIENTO: En el Minipax, el carrito de la limpieza, abandonado en mitad del pasillo. Otra limpiadora, más joven, vacía las papeleras. # vineta:loc-pasillo # id:fa_03_01
 PENSAMIENTO: Voss me estrecha la mano. En la mesa, una mención enmarcada: «Por su vigilancia ejemplar». # vineta:loc-despacho_voss # id:fa_03_02
 PENSAMIENTO: En el mercado de Watney Street, el puesto de Dot, vacío, con el toldo arrancado. # vineta:loc-mercado # id:fa_03_03
@@ -38,16 +38,16 @@ PENSAMIENTO: Lo miro. Escupo en el suelo. # id:fa_03_06
 PENSAMIENTO: Traidor. # id:fa_03_07
 
 // FA.04 — La Semana del Odio · La plaza
-PENSAMIENTO: La Semana del Odio. La plaza, llena hasta los bordes. Banderas, efigies, pancartas. Estoy en primera fila, junto a Hilda y a Parsons. # vineta:vineta-plaza # id:fa_04_pens_00
+PENSAMIENTO: La Semana del Odio. La plaza, llena hasta los bordes. Banderas, efigies, pancartas. Estoy en primera fila, junto a Hilda y a Parsons. # vineta:vineta-plaza # sfx:sirena # id:fa_04_pens_00
 ORADOR: …¡y Eurasia, con su barbarie…! # id:fa_04_orador_01
 PENSAMIENTO: Un hombre le pasa un papel. Lo lee sin detenerse. # id:fa_04_pens_01
 ORADOR: …¡Estasia! ¡Estasia, con su barbarie, que desde siempre…! # id:fa_04_orador_02
-PENSAMIENTO: La multitud duda medio segundo. Luego ruge. Yo también rujo. La cara no necesita control. # id:fa_04_pens_02
+PENSAMIENTO: La multitud duda medio segundo. Luego ruge. Yo también rujo. La cara no necesita control. # sfx:multitud # id:fa_04_pens_02
 PENSAMIENTO: Estasia. Siempre fue Estasia. Siempre. # vineta:vineta-plaza_gris # id:fa_04_pens_03
 PENSAMIENTO: Qué alivio no tener que recordar nada. # esperar:1.2 # id:fa_04_pens_04
 
 // FA.05 — Cierre
-PENSAMIENTO: El rostro del Gran Hermano en la pantalla gigante. Me cae una lágrima. Sonrío. # id:fa_05_pens_00
+PENSAMIENTO: El rostro del Gran Hermano en la pantalla gigante. Me cae una lágrima. Sonrío. # musica:himno # id:fa_05_pens_00
 CARTEL: Había vencido sobre sí mism{o}. # vineta:fin # id:fa_05_cartel_01
 CARTEL: Amaba al Gran Hermano. # id:fa_05_cartel_02
 CARTEL: FINAL A · DOBLEMÁSBUENO # id:fa_05_fin # final:A
@@ -72,7 +72,7 @@ VOSS: De verdad lo creo. # id:fb_01_voss_02
 
 // FB.02 — La caída
 = caida
-PENSAMIENTO: La Campana: la puerta reventada. La campana de «S. Clem…», arrancada de la barra y tirada en el suelo. # vineta:loc-pub,gris=si # id:fb_02_01
+PENSAMIENTO: La Campana: la puerta reventada. La campana de «S. Clem…», arrancada de la barra y tirada en el suelo. # vineta:loc-pub,gris=si # musica:himno_altavoz # id:fb_02_01
 PENSAMIENTO: En el Minipax, el carrito de la limpieza lo empuja ahora otra limpiadora, más joven, con la cabeza gacha. # vineta:loc-pasillo # id:fb_02_02
 {
 - fb_variante == "san_clemente":
@@ -84,7 +84,7 @@ PENSAMIENTO: En el Minipax, el carrito de la limpieza lo empuja ahora otra limpi
 - else:
     PENSAMIENTO: Parque de la Victoria. El patíbulo. En las cuerdas, la limpiadora, con su pañuelo. A su lado, un hombre al que no conozco. # vineta:vineta-patibulo # id:fb_02_03
 }
-PENSAMIENTO: Abajo, la multitud. Los hijos de Parsons, con Hilda, en primera fila. Yo estoy en la tribuna, junto a Voss. # id:fb_02_04
+PENSAMIENTO: Abajo, la multitud. Los hijos de Parsons, con Hilda, en primera fila. Yo estoy en la tribuna, junto a Voss. # musica:himno # id:fb_02_04
 PENSAMIENTO: Es fácil. Muy fácil. # cf:id=CF-FB-EJECUCION,expr=jubilo,dif=facil,golpes=8,coro=¡Muerte!/¡Traidores! # id:fb_02_05
 PENSAMIENTO: Ya no cuesta. # id:fb_02_06
 -> reclutamiento
@@ -115,7 +115,7 @@ CRANE: El Subdirector me ha hablado mucho de usted. Tiene buen ojo. Igual que yo
 // FB.04 — El estudio
 = en_el_estudio
 CARTEL: Unos meses después. # vineta:fin # id:fb_04_cartel
-PENSAMIENTO: Un estudio de fotografía pequeño y cálido, en Southwark. Suena la campanilla de la puerta. # vineta:loc-estudio_j6 # id:fb_04_pens_00
+PENSAMIENTO: Un estudio de fotografía pequeño y cálido, en Southwark. Suena la campanilla de la puerta. # vineta:loc-estudio_j6 # musica:crane # sfx:campanilla # id:fb_04_pens_00
 PENSAMIENTO: Entra una mujer prole joven con un pañuelo en la cabeza. Trae una foto estropeada por el agua: un niño pequeño, sonriendo. # id:fb_04_pens_01
 MUJER: Me han dicho que usted… que restaura fotos. # id:fb_04_mujer_01
 PENSAMIENTO: Detrás del mostrador, en mangas de camisa y con chaleco de lana: yo. # id:fb_04_pens_02

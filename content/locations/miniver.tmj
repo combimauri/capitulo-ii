@@ -25,6 +25,11 @@
    "value": "miniver.entrar"
   },
   {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,oficina"
+  },
+  {
    "name": "sigilo",
    "type": "string",
    "value": "miniver.visto"

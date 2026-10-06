@@ -17,7 +17,7 @@ export class PancartaScene extends Minijuego {
   private letra = new Set<number>();
   private pintadas = new Set<number>();
   private fuera = new Set<number>();
-  private pintura!: Phaser.GameObjects.Graphics;
+  private pintura!: Phaser.GameObjects.RenderTexture;   // a la resolución del arte (480x270), mostrada a 2x
   private origen = { x: 0, y: 0 };
   private progreso!: Phaser.GameObjects.Text;
   private acabado = false;
@@ -25,30 +25,36 @@ export class PancartaScene extends Minijuego {
 
   constructor() { super('Pancarta'); }
 
+  preload() {
+    this.load.image('pancarta-fondo', 'assets/minijuegos/pancarta-fondo.png');
+    this.load.image('pancarta-brocha', 'assets/minijuegos/pancarta-brocha.png');
+    this.load.spritesheet('pancarta-mancha', 'assets/minijuegos/pancarta-mancha.png', { frameWidth: 11, frameHeight: 11 });
+  }
+
   create() {
     this.letra.clear(); this.pintadas.clear(); this.fuera.clear(); this.acabado = false;
     const { width, height } = this.scale;
     this.cameras.main.fadeIn(300, 11, 12, 15);
-    this.add.rectangle(width / 2, height / 2, width, height, 0x2e221b);
+    // el suelo del Centro con la tela extendida y las letras ya trazadas a lápiz (en las mismas celdas que puntúan)
+    this.add.image(0, 0, 'pancarta-fondo').setOrigin(0).setScale(2);
     const anchoLema = LEMA.length * 4 * PIXEL;
     this.origen = { x: Math.round((width - anchoLema) / 2), y: 200 };
-    this.add.rectangle(width / 2, 240, anchoLema + 60, 120, 0xd8d2bd).setStrokeStyle(3, 0x8f8a7a);
     this.add.text(width / 2, 60, 'Pinta las letras sin salirte', { fontFamily: FUENTE.texto, fontSize: '24px', color: hex(COLOR.papel4) }).setOrigin(0.5);
     this.progreso = this.add.text(width / 2, 380, '', { fontFamily: FUENTE.maquina, fontSize: '24px', color: hex(COLOR.papel3) }).setOrigin(0.5);
 
-    // contorno de las letras y celdas que cuentan como "dentro"
-    const g = this.add.graphics().lineStyle(1, 0x8f8a7a, 1);
+    // celdas que cuentan como "dentro" (el contorno de las letras está dibujado en pancarta-fondo)
     [...LEMA].forEach((ch, i) => {
       const bits = FUENTE_3X5[ch] ?? FUENTE_3X5[' '];
       [...bits].forEach((b, k) => {
         if (b !== '1') return;
         const x = this.origen.x + i * 4 * PIXEL + (k % 3) * PIXEL, y = this.origen.y + Math.floor(k / 3) * PIXEL;
-        g.fillStyle(0xc1b89e, 1).fillRect(x, y, PIXEL, PIXEL);
-        g.strokeRect(x, y, PIXEL, PIXEL);
         for (let cy = y; cy < y + PIXEL; cy += CELDA) for (let cx = x; cx < x + PIXEL; cx += CELDA) this.letra.add(this.celda(cx, cy));
       });
     });
-    this.pintura = this.add.graphics();
+    this.pintura = this.add.renderTexture(0, 0, width / 2, height / 2).setOrigin(0).setScale(2);
+    // la brocha sigue al puntero (la punta, abajo a la izquierda, es donde pinta)
+    const brocha = this.add.image(-100, -100, 'pancarta-brocha').setOrigin(1 / 20, 19 / 20).setScale(2).setDepth(5);
+    this.input.on('pointermove', (p: Phaser.Input.Pointer) => brocha.setPosition(p.x, p.y));
 
     // el trazo se interpola entre puntos para que un gesto rápido no deje huecos
     const pintar = (p: Phaser.Input.Pointer) => {
@@ -56,6 +62,7 @@ export class PancartaScene extends Minijuego {
       const desde = this.ultimo ?? { x: p.x, y: p.y };
       const pasos = Math.max(1, Math.ceil(Phaser.Math.Distance.Between(desde.x, desde.y, p.x, p.y) / CELDA));
       for (let i = 1; i <= pasos; i++) this.pintar(desde.x + ((p.x - desde.x) * i) / pasos, desde.y + ((p.y - desde.y) * i) / pasos);
+      this.pintura.render();
       this.ultimo = { x: p.x, y: p.y };
     };
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => { this.ultimo = null; pintar(p); });
@@ -73,7 +80,8 @@ export class PancartaScene extends Minijuego {
   }
 
   private pintar(x: number, y: number) {
-    this.pintura.fillStyle(COLOR.rojo3, 1).fillCircle(x, y, BROCHA);
+    // una pincelada de 11x11 px de arte (= radio BROCHA en el juego), alineada a la rejilla del arte
+    this.pintura.stamp('pancarta-mancha', Phaser.Math.Between(0, 2), Math.round(x / 2) - 5, Math.round(y / 2) - 5, { originX: 0, originY: 0 });
     for (let dy = -BROCHA; dy <= BROCHA; dy += CELDA) {
       for (let dx = -BROCHA; dx <= BROCHA; dx += CELDA) {
         if (dx * dx + dy * dy > BROCHA * BROCHA) continue;

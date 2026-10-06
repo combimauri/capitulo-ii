@@ -13,7 +13,7 @@ PENSAMIENTO: Vuelve a la máquina de escribir. Cojo un libro de la estantería. 
 PENSAMIENTO: Nadie me buscará aquí. # esperar:1 # id:fe_01_pens_03
 PENSAMIENTO: «Nunca buscan aquí.» # id:fe_01_pens_04
 // FE.02 — Los años
-CARTEL: 1985 # vineta:vineta-cripta_1985 # id:fe_02_1985
+CARTEL: 1985 # vineta:vineta-cripta_1985 # musica:maquina # id:fe_02_1985
 PENSAMIENTO: Escribimos uno frente al otro. Brooke baja por la escalera con un cesto de comida y se lleva un fajo de copias. # sfx:tecla # id:fe_02_1985_txt
 CARTEL: 1987 # vineta:vineta-cripta_1987 # id:fe_02_1987
 PENSAMIENTO: Tose en el camastro. Le sostengo la taza. # sfx:tos # id:fe_02_1987_txt
@@ -28,9 +28,9 @@ PROTAGONISTA: …me debes tres peniques, dicen las campanas de San Martín. # id
 PENSAMIENTO: Le sirvo té. Frío. # id:fe_02_1993_txt_02
 // FE.03 — Los Dos Minutos de Odio
 { genero == "f":
-    PENSAMIENTO: El Gran Salón del Minipax. Los Dos Minutos de Odio. El chirrido metálico de siempre. # vineta:vineta-salon_odio_m # sfx:chirrido # id:fe_03_pens_00m
+    PENSAMIENTO: El Gran Salón del Minipax. Los Dos Minutos de Odio. El chirrido metálico de siempre. # vineta:vineta-salon_odio_m # sfx:chirrido # musica:silencio # id:fe_03_pens_00m
 - else:
-    PENSAMIENTO: El Gran Salón del Minipax. Los Dos Minutos de Odio. El chirrido metálico de siempre. # vineta:vineta-salon_odio_h # sfx:chirrido # id:fe_03_pens_00
+    PENSAMIENTO: El Gran Salón del Minipax. Los Dos Minutos de Odio. El chirrido metálico de siempre. # vineta:vineta-salon_odio_h # sfx:chirrido # musica:silencio # id:fe_03_pens_00
 }
 PENSAMIENTO: En la telepantalla gigante no aparece Goldstein. Aparece mi cara. Más vieja, con canas, con gafas. Con rasgos de enemigo. # id:fe_03_pens_01
 TELEPANTALLA: …la libertad… la memoria… un reloj que vuelve a andar… # id:fe_03_tp_01

@@ -33,6 +33,11 @@
    "name": "medidor_si",
    "type": "string",
    "value": "final_en_curso!=D"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "minimor"
   }
  ],
  "tilesets": [],

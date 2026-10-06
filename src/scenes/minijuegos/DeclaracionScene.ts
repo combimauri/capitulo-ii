@@ -19,13 +19,17 @@ export class DeclaracionScene extends Minijuego {
 
   constructor() { super('Declaracion'); }
 
+  preload() {
+    this.load.image('declaracion-fondo', 'assets/minijuegos/declaracion-fondo.png');
+  }
+
   create() {
     const { width, height } = this.scale;
     this.firmando = null; this.firmado = false;
     const nombre = String(narrativa.get('nombre')), apellido = String(narrativa.get('apellido'));
     this.cameras.main.fadeIn(500, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0xf2f2ee).setOrigin(0);
-    this.add.rectangle(width / 2, 260, 700, 440, 0xeeead9).setStrokeStyle(1, 0x8f8a7a);
+    // la mesa de acero de la sala blanca y el impreso del Minimor, sin sombras: declaracion-fondo
+    this.add.image(0, 0, 'declaracion-fondo').setOrigin(0).setScale(2);
     this.add.text(width / 2, 70, 'DECLARACIÓN VOLUNTARIA', { fontFamily: FUENTE.maquina, fontSize: '32px', color: '#22252a' }).setOrigin(0.5);
     const texto = [
       `Yo, ${nombre} ${apellido}, declaro que mi hermana, IVY ${apellido.toUpperCase()},`,

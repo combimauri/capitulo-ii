@@ -69,7 +69,7 @@ def a(x, y):
 MAPAS = []
 
 # ------------------------------------------------------------------ PRÓLOGO
-m = Mapa("stepney", "Calle Stepney, 1979", prota_tinte="#9aa0b8")
+m = Mapa("stepney", "Calle Stepney, 1979", prota_tinte="#9aa0b8", ambiente="ruinas")
 m.col(0, 0, 480, 104, "fachadas").col(176, 166, 86, 36, "monton").col(330, 188, 38, 22, "telepantalla")
 m.hot("telepantalla_rota", 326, 178, 48, 36, nombre_visible="Telepantalla rota", mirar="stepney.tele_mirar", aprox=a(350, 226), orientacion="arriba")
 m.hot("fuego", 118, 26, 124, 72, nombre_visible="Fuego", mirar="stepney.fuego_mirar", aprox=a(180, 118), orientacion="arriba")
@@ -77,7 +77,7 @@ m.hot("cascotes", 172, 154, 96, 54, nombre_visible="Montón de cascotes", mirar=
 m.spawn("inicio", 300, 238, "arriba")
 MAPAS.append(m)
 
-m = Mapa("stepney_ivy", "Calle Stepney, 1979", prota_tinte="#9aa0b8", al_entrar="stepney.ivy")
+m = Mapa("stepney_ivy", "Calle Stepney, 1979", prota_tinte="#9aa0b8", al_entrar="stepney.ivy", ambiente="ruinas")
 m.col(0, 0, 480, 104, "fachadas").col(168, 168, 136, 40, "ivy").col(330, 188, 38, 22, "telepantalla")
 m.hot("ivy", 172, 168, 124, 40, nombre_visible="Ivy", mirar="stepney.ivy_mirar", aprox=a(204, 222), orientacion="arriba")
 m.hot("reloj", 218, 198, 24, 16, nombre_visible="Reloj de Ivy", mirar="stepney.reloj_mirar", usar="stepney.reloj_usar", aprox=a(230, 224), orientacion="arriba", condicion="!reloj_cogido")
@@ -87,7 +87,7 @@ m.spawn("ivy", 232, 228, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 1
-m = Mapa("piso", "Piso del protagonista", al_entrar="piso.entrar")
+m = Mapa("piso", "Piso del protagonista", al_entrar="piso.entrar", ambiente="tele,edificio")
 m.muros(puerta=None)
 m.col(48, 60, 56, 116, "cama").col(284, 84, 46, 18, "armario").col(348, 118, 72, 52, "mesa").col(366, 138, 32, 46, "silla").col(198, 224, 16, 16, "perchero")
 for h in [("cartel_ivy", 192, 24, 40, 50, "Cartel de Ivy", "piso.cartel_mirar", "piso.cartel_usar", (212, 98), "arriba"),
@@ -106,7 +106,7 @@ m.hot("silla", 366, 138, 32, 46, nombre_visible="Silla", usar="fd_silla", aprox=
 m.spawn("cama", 118, 124, "abajo").spawn("puerta", 240, 232, "arriba")
 MAPAS.append(m)
 
-m = Mapa("escalera", "Mansiones Victoria · rellano", al_entrar="escalera.entrar", fondos_alt="loc-escalera_odio:jornada>=10")
+m = Mapa("escalera", "Mansiones Victoria · rellano", al_entrar="escalera.entrar", fondos_alt="loc-escalera_odio:jornada>=10", ambiente="edificio")
 m.muros(fondo=92)
 m.col(40, 112, 84, 80, "escalera_sube").col(316, 168, 6, 54, "barandilla_v").col(318, 156, 122, 10, "barandilla_h")
 m.hot("ascensor", 60, 26, 48, 58, nombre_visible="Ascensor", mirar="escalera.ascensor_mirar", aprox=a(84, 104), orientacion="arriba")
@@ -131,7 +131,7 @@ m.npc("hilda10n", 226, 162, sprite="hilda", nombre_visible="Hilda Grubb", condic
 m.spawn("piso", 201, 106, "abajo").spawn("abajo", 290, 228, "arriba")
 MAPAS.append(m)
 
-m = Mapa("avenida", "Avenida de la Victoria", ancho=960, al_entrar="avenida.entrar", fondos_alt="loc-avenida_furgoneta:jornada==11")
+m = Mapa("avenida", "Avenida de la Victoria", ancho=960, al_entrar="avenida.entrar", fondos_alt="loc-avenida_furgoneta:jornada==11", ambiente="calle", musica="himno_altavoz")
 m.col(0, 0, 960, 120, "fachadas").col(0, 198, 960, 72, "calzada").col(496, 118, 68, 34, "puesto")
 for fx in (150, 380, 640):
     m.col(fx - 4, 180, 8, 8, "farola")
@@ -150,7 +150,7 @@ m.npc("nino", 676, 176, sprite="nino", nombre_visible="Niño prole", hablar="ave
 m.spawn("portal", 40, 140, "abajo").spawn("calle", 820, 150, "izquierda")
 MAPAS.append(m)
 
-m = Mapa("vestibulo", "Ministerio de la Paz · vestíbulo", al_entrar="vestibulo.entrar")
+m = Mapa("vestibulo", "Ministerio de la Paz · vestíbulo", al_entrar="vestibulo.entrar", ambiente="tele,oficina")
 m.muros(fondo=104, puerta=(216, 264))
 m.col(58, 96, 24, 144, "columna_izq").col(398, 96, 24, 144, "columna_der")
 m.col(96, 138, 118, 18, "torniquetes_izq").col(260, 138, 122, 18, "torniquetes_der").col(376, 120, 48, 50, "garita")
@@ -164,7 +164,7 @@ m.npc("guardia2", 360, 200, sprite="guardia", nombre_visible="Guardia", mirar="v
 m.spawn("entrada", 240, 236, "arriba").spawn("ascensor", 89, 122, "abajo")
 MAPAS.append(m)
 
-m = Mapa("departamento", "Departamento de Partes y Cartografía", al_entrar="depto.entrar",
+m = Mapa("departamento", "Departamento de Partes y Cartografía", al_entrar="depto.entrar", ambiente="tele,oficina",
          fondo_alt="loc-departamento_j3", fondo_alt_si="amory_borrado")
 m.muros(fondo=96, puerta=(380, 412))
 for (mx, my) in [(90, 116), (170, 116), (250, 116), (90, 172), (170, 172), (250, 172)]:
@@ -195,7 +195,7 @@ m.npc("nell", 340, 204, sprite="nell", nombre_visible="Limpiadora", mirar="depto
 m.spawn("puerta", 396, 230, "arriba").spawn("mesa", 172, 216, "arriba").spawn("despacho", 71, 106, "abajo")
 MAPAS.append(m)
 
-m = Mapa("cantina", "Cantina del Minipax", al_entrar="cantina.entrar")
+m = Mapa("cantina", "Cantina del Minipax", al_entrar="cantina.entrar", ambiente="tele,cantina")
 m.muros(fondo=92)
 m.col(40, 90, 46, 150, "mostrador")
 for (mx, my) in [(110, 120), (250, 120), (110, 186), (250, 186)]:
@@ -211,7 +211,7 @@ MAPAS.append(m)
 
 CONO_PISO = "386,70;328,88;286,116;234,116;230,90;40,90;40,246;440,246;440,90"
 DIARIO_VISTO = "diario=j5_diario_cono"
-m = Mapa("piso_noche", "Piso del protagonista · noche", al_entrar="piso_noche.entrar", cono=CONO_PISO)
+m = Mapa("piso_noche", "Piso del protagonista · noche", al_entrar="piso_noche.entrar", cono=CONO_PISO, ambiente="tele,edificio", musica="himno_tele")
 m.muros()
 m.col(48, 60, 56, 116, "cama").col(284, 84, 46, 18, "armario").col(348, 118, 72, 52, "mesa").col(366, 138, 32, 46, "silla").col(198, 224, 16, 16, "perchero")
 m.hot("cartel_ivy", 192, 24, 40, 50, nombre_visible="Cartel de Ivy", mirar="piso_noche.cartel_mirar", usar="piso_noche.cartel_usar", aprox=a(212, 98), orientacion="arriba", con=DIARIO_VISTO)
@@ -237,13 +237,13 @@ m.npc("winston", 130, 222, sprite="winston", nombre_visible="Winston Smith", mir
 m.spawn("entrada", 240, 244, "arriba")
 MAPAS.append(m)
 
-m = Mapa("despacho_voss", "Despacho del Subdirector", al_entrar="voss_despacho.entrar")
+m = Mapa("despacho_voss", "Despacho del Subdirector", al_entrar="voss_despacho.entrar", ambiente="tele")
 m.col(0, 0, 480, 100, "pared").col(0, 0, 124, 270, "izq").col(356, 0, 124, 270, "der").col(0, 228, 480, 42, "inf").col(194, 100, 94, 36, "mesa")
 m.npc("voss", 241, 100, sprite="voss", nombre_visible="Subdirector Voss", mirar="voss_despacho.voss_mirar", solido="true", aprox=a(241, 150))
 m.spawn("puerta", 240, 220, "arriba")
 MAPAS.append(m)
 
-m = Mapa("centro", "Centro de la Comunidad", al_entrar="centro.entrar")
+m = Mapa("centro", "Centro de la Comunidad", al_entrar="centro.entrar", ambiente="cantina")
 m.muros(fondo=90, puerta=(224, 256))
 m.col(68, 116, 104, 62, "pingpong").col(358, 90, 74, 46, "piano").col(380, 138, 30, 12, "banqueta").col(188, 188, 144, 36, "pancarta")
 m.hot("martires", 180, 24, 96, 54, nombre_visible="Cartel de los mártires", mirar="centro.martires_mirar", aprox=a(228, 100), orientacion="arriba")
@@ -258,7 +258,7 @@ m.npc("f1", 110, 210, sprite="funcionaria1").npc("f2", 140, 214, sprite="funcion
 m.spawn("puerta", 240, 236, "arriba")
 MAPAS.append(m)
 
-m = Mapa("sueno", "Sueño", ancho=960, al_entrar="sueno.entrar")
+m = Mapa("sueno", "Sueño", ancho=960, al_entrar="sueno.entrar", musica="caja_musica")
 m.col(0, 0, 960, 122, "fachadas")
 for fx in (120, 400, 680):
     m.col(fx - 4, 154, 8, 8, "farola")
@@ -268,7 +268,7 @@ m.spawn("inicio", 60, 200, "derecha")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 3
-m = Mapa("pasillo", "Minipax · pasillo de la planta 14", ancho=960, al_entrar="pasillo.entrar", parpadeo="true")
+m = Mapa("pasillo", "Minipax · pasillo de la planta 14", ancho=960, al_entrar="pasillo.entrar", parpadeo="true", ambiente="neon,tele")
 m.col(0, 0, 960, 98, "pared").col(0, 196, 960, 74, "muro_inf").col(0, 0, 8, 270, "fondo_izq").col(952, 0, 8, 270, "fondo_der")
 m.col(700, 128, 36, 22, "carrito")
 m.hot("puerta_depto", 60, 40, 32, 48, nombre_visible="Cartografía", mirar="pasillo.puerta_depto_mirar", usar="pasillo.puerta_depto", aprox=a(76, 110), orientacion="arriba")
@@ -343,7 +343,7 @@ def mercado(m):
     m.col(118, 212, 74, 20, "puesto").col(718, 212, 74, 20, "puesto")
     return m
 
-m = mercado(Mapa("mercado", "Mercado de Watney Street", ancho=960, al_entrar="mercado.entrar", musica="prole", musica_si="!cohete_caido"))
+m = mercado(Mapa("mercado", "Mercado de Watney Street", ancho=960, al_entrar="mercado.entrar", musica="prole", musica_si="!cohete_caido", ambiente="mercado"))
 m.hot("estudio", 820, 30, 96, 70, nombre_visible="Estudio Crane", mirar="mercado.estudio_mirar", usar="mercado.ir_estudio", aprox=a(891, 112), orientacion="arriba")
 m.hot("cordones", 650, 128, 60, 22, nombre_visible="Puesto de cordones", mirar="mercado.cordones_mirar", aprox=a(680, 160), orientacion="arriba")
 m.hot("patatas", 180, 128, 76, 22, nombre_visible="Puesto de patatas", mirar="mercado.patatas_mirar", aprox=a(218, 160), orientacion="arriba")
@@ -358,7 +358,7 @@ m.npc("p3", 120, 168, sprite="funcionaria2", nombre_visible="Gente", mirar="merc
 m.spawn("inicio", 30, 172, "derecha").spawn("estudio", 891, 114, "abajo")
 MAPAS.append(m)
 
-m = mercado(Mapa("mercado_ruinas", "Mercado de Watney Street", ancho=960, al_entrar="ruinas.entrar", prota_tinte="#a9a9a9"))
+m = mercado(Mapa("mercado_ruinas", "Mercado de Watney Street", ancho=960, al_entrar="ruinas.entrar", prota_tinte="#a9a9a9", ambiente="ruinas"))
 m.col(486, 172, 68, 22, "crater")
 m.hot("metralla", 470, 194, 14, 14, nombre_visible="Trozo de metralla brillante", mirar="ruinas.metralla_mirar", usar="ruinas.metralla", aprox=a(470, 218), orientacion="arriba", condicion="!metralla_brillante_cogida")
 m.hot("salir", 0, 104, 10, 128, usar="ruinas.salir", auto="true")
@@ -369,7 +369,7 @@ m.npc("g2", 610, 216, sprite="guardia", nombre_visible="Patrulla", mirar="ruinas
 m.spawn("puesto", 218, 166, "derecha").spawn("calzada", 450, 210, "derecha")
 MAPAS.append(m)
 
-m = Mapa("estudio", "Estudio Crane", al_entrar="estudio.entrar", fondos_alt="loc-estudio_j12:jornada==12", fondo_alt="loc-estudio_j6", fondo_alt_si="bombilla_encendida")
+m = Mapa("estudio", "Estudio Crane", al_entrar="estudio.entrar", fondos_alt="loc-estudio_j12:jornada==12", fondo_alt="loc-estudio_j6", fondo_alt_si="bombilla_encendida", musica="crane")
 m.muros(x0=80, x1=400, fondo=96, puerta=(224, 256))
 m.col(96, 114, 82, 34, "mostrador").col(260, 98, 28, 44, "silla").col(358, 116, 28, 46, "estufa")
 m.hot("fotos", 88, 24, 140, 70, nombre_visible="Fotografías", mirar="estudio.fotos_mirar", aprox=a(158, 160), orientacion="arriba")
@@ -384,7 +384,7 @@ m.spawn("puerta", 240, 232, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 6
-m = Mapa("archivo", "Sala de archivo", al_entrar="archivo.entrar",
+m = Mapa("archivo", "Sala de archivo", al_entrar="archivo.entrar", ambiente="tele,oficina",
          conos="60,50;300,130;300,200;170,200|60,50;150,214;40,236;40,90", cono_var="archivo_vigilado")
 m.muros(fondo=96, puerta=(224, 256))
 m.col(42, 100, 26, 112, "estanteria_izq").col(412, 100, 28, 112, "estanteria_der").col(192, 150, 98, 28, "mesa").col(230, 178, 22, 18, "silla")
@@ -397,7 +397,7 @@ m.spawn("puerta", 240, 232, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 7
-m = Mapa("suministros", "Cuarto de suministros", al_entrar="suministros.entrar")
+m = Mapa("suministros", "Cuarto de suministros", al_entrar="suministros.entrar", ambiente="neon")
 m.muros(x0=120, x1=360, fondo=94, suelo=230, puerta=(224, 256))
 m.col(132, 188, 44, 26, "cajas").col(316, 184, 28, 22, "cajas")
 m.hot("hueco_tele", 218, 32, 46, 32, nombre_visible="Hueco tapado", mirar="suministros.hueco_mirar", aprox=a(240, 108), orientacion="arriba")
@@ -410,7 +410,7 @@ m.spawn("puerta", 240, 200, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 8
-m = Mapa("calderas", "Sala de calderas del Minipax", al_entrar="calderas.entrar")
+m = Mapa("calderas", "Sala de calderas del Minipax", al_entrar="calderas.entrar", ambiente="calderas")
 m.muros(fondo=96, puerta=(224, 256))
 m.col(52, 96, 96, 74, "caldera_a").col(160, 96, 68, 54, "caldera_b").col(56, 200, 54, 36, "sacos")
 m.hot("calderas", 52, 34, 176, 60, nombre_visible="Calderas", mirar="calderas.calderas_mirar", aprox=a(190, 168), orientacion="arriba")
@@ -427,7 +427,7 @@ MAPAS.append(m)
 CONO_BARRE_IZQ = "485,44;448,98;448,134;380,134;380,98;262,98;262,196;478,196"
 CONO_BARRE_DER = "485,44;700,98;700,196;664,196;664,150;628,150;628,196;492,196"
 CONO_GARITA = "700,150;812,150;812,196;700,196"
-m = Mapa("planta11", "Minipax · planta once", ancho=960, al_entrar="planta11.entrar", parpadeo="true",
+m = Mapa("planta11", "Minipax · planta once", ancho=960, al_entrar="planta11.entrar", parpadeo="true", ambiente="neon",
          sigilo="planta11.visto", conos=f"{CONO_BARRE_IZQ}|{CONO_BARRE_DER}", cono_periodo=6000, vigila=CONO_GARITA)
 m.col(0, 0, 960, 98, "pared").col(0, 196, 960, 74, "muro_inf").col(0, 0, 8, 270, "fondo_izq").col(952, 0, 8, 270, "fondo_der")
 m.col(420, 98, 28, 32, "columna").col(588, 150, 40, 18, "carrito").col(700, 98, 90, 30, "garita").col(880, 100, 16, 14, "atril")
@@ -447,7 +447,7 @@ m.npc("guardia", 930, 140, sprite="guardia", nombre_visible="Guardia", condicion
 m.spawn("montacargas", 48, 114, "abajo").spawn("columna", 400, 120, "derecha").spawn("archivo", 836, 114, "abajo")
 MAPAS.append(m)
 
-m = Mapa("archivo_restringido", "Archivo Restringido", al_entrar="archivo_r.entrar")
+m = Mapa("archivo_restringido", "Archivo Restringido", al_entrar="archivo_r.entrar", ambiente="tele")
 m.muros(fondo=96, puerta=(224, 256))
 for (x, y) in [(70, 112), (270, 112), (70, 156), (270, 156)]:
     m.col(x, y, 140, 14, "estanteria")
@@ -472,7 +472,7 @@ MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 9
 # «Sigilo social»: con la carpeta abierta y caminando, nadie repara en ti
-m = Mapa("miniver", "Ministerio de la Verdad · Departamento de Registro", ancho=960, al_entrar="miniver.entrar",
+m = Mapa("miniver", "Ministerio de la Verdad · Departamento de Registro", ancho=960, al_entrar="miniver.entrar", ambiente="tele,oficina",
          sigilo="miniver.visto", social="true", vigila="830,98;940,98;940,150;830,150")
 m.col(0, 0, 960, 98, "pared").col(0, 246, 40, 24, "muro_inf").col(80, 246, 880, 24, "muro_inf").col(40, 262, 40, 8, "umbral")
 m.col(0, 0, 8, 270, "fondo_izq").col(952, 0, 8, 270, "fondo_der")
@@ -489,7 +489,7 @@ m.npc("sup2", 480, 206, sprite="supervisor", nombre_visible="Supervisor", mirar=
 m.spawn("entrada", 60, 236, "arriba")
 MAPAS.append(m)
 
-m = Mapa("cantina_miniver", "Cantina del Miniver", al_entrar="cantina_miniver.entrar", fondo="loc-cantina_miniver")
+m = Mapa("cantina_miniver", "Cantina del Miniver", al_entrar="cantina_miniver.entrar", fondo="loc-cantina_miniver", ambiente="tele,cantina")
 m.muros(fondo=92)
 m.col(40, 90, 46, 150, "mostrador")
 for (mx, my) in [(110, 120), (250, 120), (110, 186), (250, 186)]:
@@ -503,7 +503,7 @@ m.hot("salir", 330, 238, 32, 10, nombre_visible="Escalera", usar="cantina_minive
 m.spawn("puerta", 340, 168, "abajo")
 MAPAS.append(m)
 
-m = Mapa("lavabos", "Miniver · lavabos de la planta tres", al_entrar="lavabos.entrar", fondos_alt="loc-lavabos_vaho:vaho")
+m = Mapa("lavabos", "Miniver · lavabos de la planta tres", al_entrar="lavabos.entrar", fondos_alt="loc-lavabos_vaho:vaho", ambiente="tele,goteo")
 m.muros(x0=80, x1=400, fondo=96, suelo=236)
 for x in (108, 148, 188, 228):
     m.col(x, 92, 28, 12, "lavamanos")
@@ -518,7 +518,7 @@ m.spawn("puerta", 346, 114, "abajo")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 10
-m = Mapa("departamento_noche", "Partes y Cartografía · la Gran Rectificación", al_entrar="j10_depto.entrar",
+m = Mapa("departamento_noche", "Partes y Cartografía · la Gran Rectificación", al_entrar="j10_depto.entrar", ambiente="tele,oficina",
          sigilo="j10_depto.visto", sigilo_si="cargando_prueba", checkpoint="mesa")
 m.muros(fondo=96, puerta=(380, 412))
 for (mx, my) in [(90, 116), (170, 116), (250, 116), (90, 172), (170, 172), (250, 172)]:
@@ -539,7 +539,7 @@ m.spawn("puerta", 396, 230, "arriba").spawn("mesa", 172, 216, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 11
-m = Mapa("minimor", "Ministerio del Amor · recepción", al_entrar="minimor.entrar")
+m = Mapa("minimor", "Ministerio del Amor · recepción", al_entrar="minimor.entrar", ambiente="minimor")
 m.muros(fondo=96, puerta=(224, 256))
 m.col(60, 150, 136, 14, "banco").col(296, 110, 128, 30, "mostrador")
 m.npc("funcionaria", 360, 106, sprite="funcionaria_minimor", nombre_visible="Funcionaria", mirar="minimor.funcionaria_mirar",
@@ -576,7 +576,7 @@ m.spawn("servicio", 64, 492, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 12
-m = Mapa("callejones", "Limehouse · de noche", ancho=1440, al_entrar="callejones.entrar", sigilo="callejones.visto", prota_tinte="#9aa4c4")
+m = Mapa("callejones", "Limehouse · de noche", ancho=1440, al_entrar="callejones.entrar", sigilo="callejones.visto", prota_tinte="#9aa4c4", ambiente="noche")
 m.col(0, 0, 1440, 92, "fachadas").col(0, 250, 1440, 20, "muro").col(0, 0, 8, 270, "fin_izq").col(1432, 0, 8, 270, "fin_der")
 for (x, y, w, h) in [(220, 140, 160, 50), (540, 140, 200, 50), (920, 140, 180, 50), (1200, 140, 120, 50)]:
     m.col(x, y, w, h, "tapia")
@@ -616,7 +616,7 @@ m.spawn("puerta", 240, 226, "arriba")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 13
-m = Mapa("shadwell", "Estación de Shadwell", al_entrar="shadwell.entrar", prota_tinte="#b4bccc")
+m = Mapa("shadwell", "Estación de Shadwell", al_entrar="shadwell.entrar", prota_tinte="#b4bccc", ambiente="calle")
 m.col(0, 0, 480, 92, "fachadas").col(0, 250, 480, 20, "borde").col(416, 92, 8, 8, "farola")
 m.hot("tablones", 200, 30, 80, 62, nombre_visible="Tablones", mirar="shadwell.tablones_mirar", usar="shadwell.tablones", aprox=a(240, 110), orientacion="arriba")
 m.hot("cartel", 186, 14, 108, 14, nombre_visible="Cartel", mirar="shadwell.cartel_mirar", aprox=a(190, 110), orientacion="arriba")
@@ -629,7 +629,7 @@ def tunel(m):
     m.col(0, 0, 960, 100, "boveda").col(0, 230, 960, 40, "borde").col(0, 0, 4, 270, "fin_izq").col(956, 0, 4, 270, "fin_der")
     return m
 
-m = tunel(Mapa("tunel1", "Túneles · Shadwell → Aldgate Este", ancho=960, al_entrar="tunel1.entrar", fondo="loc-tunel_nichos", oscuro="true"))
+m = tunel(Mapa("tunel1", "Túneles · Shadwell → Aldgate Este", ancho=960, al_entrar="tunel1.entrar", fondo="loc-tunel_nichos", oscuro="true", ambiente="tunel"))
 for x in (140, 380, 620, 860):
     m.hot(f"nicho{x}", x, 40, 36, 60, nombre_visible="Nicho", mirar="tunel1.nicho_mirar", escondite="true", aprox=a(x + 18, 108), orientacion="arriba")
 m.hot("silbido_a", 250, 100, 12, 130, usar="tunel1.silbido", auto="true", condicion="!silbido1")
@@ -638,7 +638,7 @@ m.hot("salida", 936, 100, 20, 130, usar="tunel1.salir", auto="true")
 m.spawn("inicio", 30, 170, "derecha")
 MAPAS.append(m)
 
-m = Mapa("anden_taller", "Túneles · un andén tapiado", al_entrar="taller.entrar", oscuro="true")
+m = Mapa("anden_taller", "Túneles · un andén tapiado", al_entrar="taller.entrar", oscuro="true", ambiente="tunel")
 m.col(0, 0, 480, 92, "pared").col(0, 200, 480, 70, "foso").col(60, 92, 140, 18, "telepantallas").col(300, 110, 80, 30, "mesa")
 m.hot("teles", 60, 30, 140, 62, nombre_visible="Telepantallas desmontadas", mirar="taller.teles_mirar", aprox=a(130, 120), orientacion="arriba")
 m.hot("mesa", 300, 100, 80, 40, nombre_visible="Mesa de trabajo", mirar="taller.mesa_mirar", aprox=a(340, 154), orientacion="arriba")
@@ -648,7 +648,7 @@ m.spawn("entrada", 24, 150, "derecha")
 MAPAS.append(m)
 
 m = tunel(Mapa("tunel3", "Túneles · Liverpool Street → Bank", ancho=960, al_entrar="tunel3.entrar", fondo="loc-tunel_derrumbe", oscuro="true",
-               al_chocar="tunel3.choque"))
+               al_chocar="tunel3.choque", ambiente="tunel"))
 m.col(600, 100, 100, 100, "derrumbe").col(600, 200, 100, 30, "derrumbe_nuevo", condicion="crane_perdido").col(710, 100, 14, 8, "puntal")
 m.hot("derrumbe", 600, 100, 100, 100, nombre_visible="Derrumbe", mirar="tunel3.derrumbe_mirar", aprox=a(586, 150), orientacion="derecha")
 m.hot("puntal", 710, 40, 14, 70, nombre_visible="Puntal podrido", mirar="tunel3.puntal_mirar", usar="tunel3.puntal", aprox=a(742, 114), orientacion="izquierda")
@@ -657,7 +657,7 @@ m.hot("salida", 936, 100, 20, 130, usar="tunel3.salir", auto="true")
 m.spawn("inicio", 120, 170, "derecha")
 MAPAS.append(m)
 
-m = tunel(Mapa("tunel4", "Túneles · Bank → Temple", ancho=960, al_entrar="tunel4.entrar", fondo="loc-tunel_carteles", oscuro="true"))
+m = tunel(Mapa("tunel4", "Túneles · Bank → Temple", ancho=960, al_entrar="tunel4.entrar", fondo="loc-tunel_carteles", oscuro="true", ambiente="tunel"))
 m.hot("carteles", 120, 30, 460, 60, nombre_visible="Carteles viejos", mirar="tunel4.carteles_mirar", aprox=a(340, 110), orientacion="arriba")
 m.hot("nina", 700, 28, 60, 64, nombre_visible="Cartel de la niña", mirar="tunel4.nina_mirar", aprox=a(730, 110), orientacion="arriba")
 m.hot("plano", 850, 30, 90, 60, nombre_visible="Plano del metro", mirar="tunel4.plano_mirar", aprox=a(895, 110), orientacion="arriba")
@@ -665,7 +665,7 @@ m.hot("salida", 936, 100, 20, 130, usar="tunel4.salir", auto="true")
 m.spawn("inicio", 30, 170, "derecha")
 MAPAS.append(m)
 
-m = Mapa("cripta", "Cripta de San Clemente", al_entrar="cripta.entrar")
+m = Mapa("cripta", "Cripta de San Clemente", al_entrar="cripta.entrar", ambiente="cripta")
 m.muros(fondo=96)
 m.col(100, 92, 100, 12, "estanteria").col(300, 92, 130, 12, "estanteria").col(150, 140, 80, 30, "mesa").col(340, 180, 80, 30, "camastro").col(52, 200, 16, 16, "telefono")
 m.hot("libros", 100, 28, 100, 64, nombre_visible="Libros", mirar="cripta.libros_mirar", aprox=a(150, 112), orientacion="arriba")
@@ -677,7 +677,7 @@ m.spawn("escalera", 64, 114, "abajo")
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ FINALES C y D
-m = Mapa("celda", "Ministerio del Amor · celda", al_entrar="celda.entrar", medidor="hambre,Hambre", medidor_si="final_en_curso!=D")
+m = Mapa("celda", "Ministerio del Amor · celda", al_entrar="celda.entrar", medidor="hambre,Hambre", medidor_si="final_en_curso!=D", ambiente="minimor")
 m.muros(fondo=92)
 m.col(40, 92, 400, 16, "banco").col(40, 92, 16, 154, "banco").col(424, 92, 16, 154, "banco").col(60, 214, 16, 16, "cubo")
 m.hot("banco", 160, 92, 160, 16, nombre_visible="Banco", usar="celda.esperar", aprox=a(240, 132), orientacion="arriba")
@@ -690,14 +690,14 @@ m.npc("esqueleto", 110, 112, sprite="esqueleto", nombre_visible="Preso", mirar="
 m.spawn("banco", 240, 136, "abajo")
 MAPAS.append(m)
 
-m = Mapa("sala_obrien", "Ministerio del Amor · sala blanca", al_entrar="sala_obrien.entrar")
+m = Mapa("sala_obrien", "Ministerio del Amor · sala blanca", al_entrar="sala_obrien.entrar", ambiente="minimor")
 m.muros(fondo=96)
 m.col(180, 120, 120, 50, "camilla").col(330, 150, 90, 30, "mesa")
 m.npc("obrien", 316, 142, sprite="obrien", nombre_visible="O'Brien", solido="false")
 m.spawn("camilla", 240, 190, "arriba")
 MAPAS.append(m)
 
-m = Mapa("cafe", "Café del Castaño", al_entrar="cafe.entrar")
+m = Mapa("cafe", "Café del Castaño", al_entrar="cafe.entrar", ambiente="tele")
 m.muros(fondo=96, puerta=(224, 256))
 m.col(100, 140, 50, 30, "mesa").col(220, 170, 50, 30, "mesa").col(330, 130, 50, 30, "mesa").col(400, 100, 36, 100, "barra")
 m.hot("mesa", 220, 160, 50, 40, nombre_visible="Mi mesa", usar="cafe.mesa", aprox=a(245, 214), orientacion="arriba")

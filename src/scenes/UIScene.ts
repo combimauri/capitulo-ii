@@ -451,6 +451,7 @@ export class UIScene extends Phaser.Scene {
       return;
     }
     const tele = l.kind === 'telepantalla';
+    if (tele) audio.agachar(1.5 + l.text.length * 0.045);   // cuando habla la telepantalla, lo demás baja
     this.cajaFondo.setFillStyle(tele ? COLOR.tele1 : COLOR.papel3).setStrokeStyle(2, tele ? COLOR.tele4 : COLOR.gris2);
     this.cajaFranja.setFillStyle(tele ? COLOR.tele4 : COLOR.rojo3);
     this.texto.setStyle({ fontFamily: tele ? FUENTE.maquina : FUENTE.texto, fontSize: tele ? '28px' : '22px',

@@ -28,6 +28,11 @@
    "name": "fondos_alt",
    "type": "string",
    "value": "loc-lavabos_vaho:vaho"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,goteo"
   }
  ],
  "tilesets": [],

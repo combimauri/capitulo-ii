@@ -15,8 +15,10 @@ const DOCS = import.meta.glob('../../../content/documentos/*.json', { eager: tru
 const docDe = (id: string) => Object.entries(DOCS).find(([ruta]) => ruta.endsWith(`/${id}.json`))?.[1];
 const interpolar = (s: string) => s.replace(/\{(\w+)\}/g, (_, v) => String(narrativa.get(v) ?? ''));
 
-const SEPIA = { fondo: 0xc4ab7e, tinta: 0x5a3d22 };
+const SEPIA = { tinta: 0x5a3d22 };
 const IZQ = 60, DER = 500, ANCHO = 400, Y0 = 70;
+/** Dónde está el documento: la mesa del archivo (por defecto) o el banco del parque (el Times de J9). */
+const MESA: Record<string, 'archivo' | 'banco'> = { comparar_times_j9: 'banco' };
 
 export class ComparadorScene extends Minijuego {
   private marcas: Phaser.GameObjects.GameObject[] = [];
@@ -24,20 +26,19 @@ export class ComparadorScene extends Minijuego {
 
   constructor() { super('Comparar'); }
 
+  preload() {
+    for (const m of ['archivo', 'banco']) this.load.image(`comparar-fondo-${m}`, `assets/minijuegos/comparar-fondo-${m}.png`);
+  }
+
   create() {
     const doc = docDe(this.params.documento ?? '')!;
     const { width, height } = this.scale;
     this.marcas = []; this.filas = [];
     this.cameras.main.fadeIn(400, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0x1a1411).setOrigin(0);
-    // el recuerdo: sepia, con los bordes difuminados
-    this.add.rectangle(IZQ, Y0, ANCHO, 380, SEPIA.fondo).setOrigin(0).setAlpha(0.92);
-    for (let i = 0; i < 6; i++) this.add.rectangle(IZQ - i, Y0 - i, ANCHO + i * 2, 380 + i * 2).setOrigin(0).setStrokeStyle(1, SEPIA.fondo, 0.5 - i * 0.08);
+    // la mesa (archivo o banco), el recuerdo en sepia con los bordes deshechos y el documento con su filete: el fondo
+    this.add.image(0, 0, `comparar-fondo-${MESA[this.params.documento ?? ''] ?? 'archivo'}`).setOrigin(0).setScale(2);
     this.add.text(IZQ + 20, Y0 + 14, doc.recuerdo, { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(SEPIA.tinta) });
-    // el documento del archivo
-    this.add.rectangle(DER, Y0, ANCHO, 380, COLOR.papel4).setOrigin(0).setStrokeStyle(1, 0x8f8a7a);
     this.add.text(DER + 20, Y0 + 14, doc.documento, { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.gris2) });
-    this.add.rectangle(DER + 20, Y0 + 44, ANCHO - 40, 2, COLOR.rojo3).setOrigin(0);
 
     doc.campos.forEach((c, i) => {
       const y = Y0 + 64 + i * (doc.alto ?? 44);

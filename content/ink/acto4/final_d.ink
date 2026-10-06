@@ -126,7 +126,7 @@ PENSAMIENTO: Me cogerán hoy o dentro de un mes. Prefiero hoy. Hoy todavía sé 
 }
 ~ fd_escalera_vista = true
 PENSAMIENTO: Las Mansiones Victoria. Hilda, en el rellano, con una pancarta nueva. # id:fd_03_hilda_00
-PENSAMIENTO: Me mira con los ojos muy abiertos. Entra en su piso dando un portazo. # sfx:sello # id:fd_03_hilda_01
+PENSAMIENTO: Me mira con los ojos muy abiertos. Entra en su piso dando un portazo. # sfx:portazo # id:fd_03_hilda_01
 PENSAMIENTO: Se la oye descolgar un teléfono. # id:fd_03_hilda_02 # escena:piso # pos:puerta
 -> DONE
 
@@ -160,7 +160,7 @@ PENSAMIENTO: Me pongo de pie delante, dentro del cono de la telepantalla. A plen
 
 === fd_silla ===
 PENSAMIENTO: Me siento frente a la telepantalla. Espero. # id:fd_03_silla_00
-PENSAMIENTO: Pasos en la escalera. Muchos. Botas. # sfx:golpes # esperar:1.5 # id:fd_03_silla_01
+PENSAMIENTO: Pasos en la escalera. Muchos. Botas. # sfx:botas # esperar:1.5 # id:fd_03_silla_01
 PENSAMIENTO: Veinticuatro horas, dijo Nell. Es todo lo que me pidió. # id:fd_03_silla_02
 PENSAMIENTO: Negro. # fx:negro # id:fd_03_negro
 -> final_c.llegada
@@ -179,7 +179,7 @@ WINSTON: ¿Ha hecho algo que valiera la pena? # id:fd_04_winston_01
 PROTAGONISTA: Creo que sí. # id:fd_04_prot_01
 PENSAMIENTO: Me mira con una envidia que no esconde. # id:fd_04_pens_01
 WINSTON: Yo creí que sí. Ahora no me acuerdo de qué era. # id:fd_04_winston_02
-PENSAMIENTO: La puerta se abre. # sfx:sello # id:fd_04_pens_02 # escena:sala_obrien # pos:camilla
+PENSAMIENTO: La puerta se abre. # sfx:puerta # id:fd_04_pens_02 # escena:sala_obrien # pos:camilla
 -> DONE
 
 === fd_obrien ===

@@ -42,9 +42,9 @@ export class EpilogoScene extends Minijuego {
       y += t.height + 22;
     }
     this.fin = -(y - height / 2);
-    // la canción, al piano, muy lenta
-    this.time.delayedCall(1500, () => audio.play('naranjas'));
-    this.time.addEvent({ delay: 16000, loop: true, callback: () => audio.play('naranjas') });
+    // la canción, al piano, muy lenta (sigue sonando en el patio, después)
+    audio.ambiente.poner([]);
+    audio.musica.poner('naranjas_lento');
     this.input.on('pointerup', () => { if (this.listo) this.terminar({ resultado: 'leido' }, 2000); });
     this.input.keyboard?.on('keydown', () => { if (this.listo) this.terminar({ resultado: 'leido' }, 2000); });
   }
@@ -79,8 +79,14 @@ export class CreditosScene extends Minijuego {
     this.lista = this.add.text(width / 2, height + 20, lineas.join('\n'), {
       fontFamily: FUENTE.maquina, fontSize: '28px', color: '#d8d2bd', align: 'center', lineSpacing: 8,
     }).setOrigin(0.5, 0);
-    if (this.params.final === 'E') this.time.addEvent({ delay: 180, loop: true, callback: () => { if (Math.random() < 0.6) audio.play('tecla'); } });
-    else this.time.delayedCall(800, () => audio.play('naranjas'));
+    audio.ambiente.poner([]);
+    if (this.params.final === 'E') {
+      // la máquina de escribir y, muy lejos, un silbido que nunca termina de caer
+      audio.musica.poner('maquina');
+      audio.play('silbido_lejos', 90);
+    } else {
+      audio.musica.poner('naranjas_orquesta');   // Final D: «Naranjas y limones», ahora con orquesta
+    }
     this.input.on('pointerup', () => this.terminar({ resultado: 'fin' }, 1500));
   }
 

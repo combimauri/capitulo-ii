@@ -28,6 +28,11 @@
    "name": "prota_tinte",
    "type": "string",
    "value": "#b4bccc"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "calle"
   }
  ],
  "tilesets": [],

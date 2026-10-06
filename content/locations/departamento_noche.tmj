@@ -25,6 +25,11 @@
    "value": "j10_depto.entrar"
   },
   {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tele,oficina"
+  },
+  {
    "name": "sigilo",
    "type": "string",
    "value": "j10_depto.visto"

@@ -70,6 +70,11 @@ def main():
         icono.icono(t).save(iconos / f"icono-{t}.png")
     print("ok icono de la app")
 
+    sys.path.append(str(ART))
+    import minijuegos
+    for nombre in minijuegos.exportar(DESTINO / "minijuegos"):
+        print("ok minijuego", nombre)
+
     import escenarios
     for nombre in escenarios.exportar(DESTINO / "locations"):
         print("ok escenario", nombre)

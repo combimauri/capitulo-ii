@@ -1,7 +1,7 @@
 import Phaser from 'phaser';
 import { narrativa, registro, mano, mision } from '../core/juego';
 import { SaveSystem } from '../core/SaveSystem';
-import { audio } from '../systems/AudioDirector';
+import { audio, type Canal } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
 
 let avisoVisto = false;
@@ -11,6 +11,8 @@ export class MenuScene extends Phaser.Scene {
 
   create() {
     audio.musica.poner(null);
+    audio.ambiente.poner([]);
+    audio.pararLargos();
     if (!avisoVisto) this.aviso(); else this.menu();
   }
 
@@ -50,6 +52,7 @@ export class MenuScene extends Phaser.Scene {
     if (partida) opciones.push(['Continuar', () => this.continuar()]);
     opciones.push(['Nueva partida', () => this.nueva()]);
     if (SaveSystem.capitulos().length) opciones.push(['Capítulos II', () => this.galeria()]);
+    opciones.push(['Opciones', () => this.opciones()]);
 
     opciones.forEach(([texto, accion], i) => {
       const y = 270 + i * 54;
@@ -82,9 +85,48 @@ export class MenuScene extends Phaser.Scene {
         fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.gris3), align: 'center', wordWrap: { width: 760 },
       }).setOrigin(0.5);
     });
-    this.add.text(width - 12, height - 10, 'v0.2', {
+    this.add.text(width - 12, height - 10, 'v0.3', {
       fontFamily: FUENTE.maquina, fontSize: '16px', color: hex(COLOR.gris3),
     }).setOrigin(1, 1);
+  }
+
+  /** Opciones de sonido: los cuatro volúmenes (diseño técnico §9). Mientras está abierto suena algo para oírlos. */
+  private opciones() {
+    const { width, height } = this.scale;
+    const capa = this.add.container(0, 0).setDepth(10);
+    capa.add(this.add.rectangle(0, 0, width, height, 0x0b0c0f, 1).setOrigin(0).setInteractive());
+    capa.add(this.add.text(width / 2, 70, 'OPCIONES · SONIDO', { fontFamily: FUENTE.maquina, fontSize: '36px', color: hex(COLOR.papel4) }).setOrigin(0.5));
+    audio.musica.poner('prole');
+    audio.ambiente.poner(['calle']);
+    const CANALES: [Canal, string][] = [['general', 'General'], ['musica', 'Música'], ['efectos', 'Efectos'], ['ambiente', 'Ambiente']];
+    const ANCHO = 320, X0 = width / 2 - 60;
+    CANALES.forEach(([canal, nombre], i) => {
+      const y = 160 + i * 74;
+      capa.add(this.add.text(X0 - 40, y, nombre, { fontFamily: FUENTE.texto, fontSize: '22px', color: hex(COLOR.papel3) }).setOrigin(1, 0.5));
+      const pista = this.add.rectangle(X0, y, ANCHO, 8, COLOR.gris2).setOrigin(0, 0.5);
+      const lleno = this.add.rectangle(X0, y, ANCHO * audio.volumenes[canal], 8, COLOR.rojo3).setOrigin(0, 0.5);
+      const asa = this.add.rectangle(X0 + ANCHO * audio.volumenes[canal], y, 16, 30, COLOR.papel4).setStrokeStyle(2, COLOR.gris1);
+      const valor = this.add.text(X0 + ANCHO + 24, y, '', { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel3) }).setOrigin(0, 0.5);
+      // zona de toque generosa: toda la fila (44 px de alto como mínimo)
+      const zona = this.add.rectangle(X0 - 10, y, ANCHO + 20, 48, 0, 0).setOrigin(0, 0.5).setInteractive({ useHandCursor: true });
+      capa.add([pista, lleno, asa, valor, zona]);
+      const pintar = () => {
+        const v = audio.volumenes[canal];
+        lleno.setSize(ANCHO * v, 8); asa.setX(X0 + ANCHO * v); valor.setText(`${Math.round(v * 100)} %`);
+      };
+      const fijar = (px: number) => { audio.ajustarVolumen(canal, Math.round(((px - X0) / ANCHO) * 20) / 20); pintar(); };
+      let arrastrando = false;
+      zona.on('pointerdown', (p: Phaser.Input.Pointer) => { audio.desbloquear(); arrastrando = true; fijar(p.x); });
+      this.input.on('pointermove', (p: Phaser.Input.Pointer) => { if (arrastrando && p.isDown) fijar(p.x); });
+      this.input.on('pointerup', () => {
+        if (arrastrando && (canal === 'efectos' || canal === 'general')) audio.play('sello');
+        arrastrando = false;
+      });
+      pintar();
+    });
+    const cerrar = this.add.rectangle(width / 2, height - 60, 180, 40, COLOR.gris2).setStrokeStyle(1, COLOR.gris3).setInteractive({ useHandCursor: true });
+    capa.add([cerrar, this.add.text(width / 2, height - 60, 'cerrar', { fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel3) }).setOrigin(0.5)]);
+    cerrar.on('pointerup', () => { audio.musica.poner(null); audio.ambiente.poner([]); this.scene.restart(); });
   }
 
   /** Galería de los Capítulos II escritos en distintas partidas, de uno en uno. */

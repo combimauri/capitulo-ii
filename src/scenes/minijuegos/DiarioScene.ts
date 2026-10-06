@@ -29,26 +29,21 @@ export class DiarioScene extends Minijuego {
 
   constructor() { super('Diario'); }
 
+  preload() {
+    this.load.image('diario-fondo', 'assets/minijuegos/diario-fondo.png');
+  }
+
   create() {
-    const { width, height } = this.scale;
+    const { width } = this.scale;
     this.escribiendo = false;
     this.cameras.main.fadeIn(400, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0x0b0c0f).setOrigin(0);
-    // el cuaderno abierto: tapas negras, papel crema de antes de la Revolución
-    this.add.rectangle(width / 2, 280, 760, 440, 0x16181c).setStrokeStyle(2, 0x2f3338);
-    this.add.rectangle(IZQ.x - 14, 70, 360, 420, 0xe6dcc0).setOrigin(0);
-    this.add.rectangle(DER.x - 14, 70, 360, 420, 0xece3c8).setOrigin(0);
-    this.add.rectangle(width / 2, 280, 10, 420, 0x000000, 0.25);
-    // renglones al paso de la letra (21 px + 7 de interlineado ≈ 27,5)
-    for (let y = 112 + 25; y < 470; y += 27.5) this.add.rectangle(DER.x - 4, Math.round(y), 336, 1, 0xb9ae90).setOrigin(0, 0.5);
-    // restos de las primeras páginas, arrancadas
-    for (let y = 76; y < 484; y += 9) this.add.rectangle(width / 2 - 8, y, 6, 4, 0xd8ccae);
-    // el pájaro diminuto de la tapa
-    const g = this.add.graphics();
-    g.lineStyle(2, GRAFITO).beginPath().moveTo(IZQ.x + 290, 98).lineTo(IZQ.x + 298, 104).lineTo(IZQ.x + 306, 96).strokePath();
+    // el cuaderno abierto sobre la mesa de la cocina: tapas negras, papel crema de antes de la Revolución, el lomo
+    // con los restos de las primeras páginas arrancadas, los renglones al paso de la letra (21 px + 7 de interlineado
+    // ≈ 27,5) y el pájaro de Amory en la primera hoja. Todo en diario-fondo.
+    this.add.image(0, 0, 'diario-fondo').setOrigin(0).setScale(2);
 
     const lapiz = narrativa.list('inventario').includes('lapiz_amory') ? 'con el lápiz de Amory' : 'con un lápiz cualquiera';
-    this.add.text(width / 2, 506, lapiz, { fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.gris3) }).setOrigin(0.5);
+    this.add.text(width / 2, 506, lapiz, { fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.papel3) }).setOrigin(0.5).setAlpha(0.8);
     this.escrito = this.add.text(DER.x, 112, '', {
       fontFamily: FUENTE.texto, fontSize: '21px', color: hex(GRAFITO), lineSpacing: 7, wordWrap: { width: DER.w - 10, useAdvancedWrap: true },
     });

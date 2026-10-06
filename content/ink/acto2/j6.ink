@@ -271,7 +271,7 @@ PENSAMIENTO: Lo ha dicho sin girarse. # id:j6_04_recorte_usar_2
     -> DONE
 }
 ~ inspeccion_hecha = true
-PENSAMIENTO: Apenas cierro la puerta, llaman. Tres golpes secos. # sfx:sello # id:j6_05_pens_00
+PENSAMIENTO: Apenas cierro la puerta, llaman. Tres golpes secos. # sfx:golpes # id:j6_05_pens_00
 HILDA: ¡Inspección del Comité, {nombre}! ¡Abre, que vengo cargada! # id:j6_05_hilda_01
 { inventario ? diario or inventario ? parte_alterado:
     -> esconder

@@ -33,6 +33,11 @@
    "name": "al_chocar",
    "type": "string",
    "value": "tunel3.choque"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "tunel"
   }
  ],
  "tilesets": [],

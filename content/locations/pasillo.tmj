@@ -28,6 +28,11 @@
    "name": "parpadeo",
    "type": "string",
    "value": "true"
+  },
+  {
+   "name": "ambiente",
+   "type": "string",
+   "value": "neon,tele"
   }
  ],
  "tilesets": [],

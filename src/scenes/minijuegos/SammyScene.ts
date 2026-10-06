@@ -8,6 +8,7 @@
 import Phaser from 'phaser';
 import { Minijuego } from './Minijuego';
 import { audio } from '../../systems/AudioDirector';
+import { texturaProta } from '../../core/juego';
 import { COLOR, FUENTE, hex } from '../../ui/estilo';
 
 const ELEGIR_MS = 4000;
@@ -15,27 +16,31 @@ const PISTA = { x0: 140, x1: 820, y: 470 };
 
 export class SammyScene extends Minijuego {
   private capa!: Phaser.GameObjects.Container;
-  private prota!: Phaser.GameObjects.Arc;
+  private prota!: Phaser.GameObjects.Sprite;
   private resuelto = false;
 
   constructor() { super('Sammy'); }
+
+  preload() {
+    this.load.image('sammy-fondo', 'assets/minijuegos/sammy-fondo.png');
+    this.load.image('sammy-nino', 'assets/minijuegos/sammy-nino.png');
+  }
 
   create() {
     const { width, height } = this.scale;
     this.resuelto = false;
     this.cameras.main.fadeIn(150, 255, 255, 255);
     // el mercado congelado, desaturado y oscuro: el tiempo se ralentiza
-    // el mercado a 2x, centrado en el bordillo de Sammy (x≈520 del mapa)
-    const fondo = this.add.image(width / 2 - 80, height / 2, 'loc-mercado').setScale(2).setTint(0x8a8a8a);
+    // la calle del mercado en el instante del silbido: gente pegada al suelo, Dot alzando la cabeza
+    const fondo = this.add.image(width / 2, height / 2, 'sammy-fondo').setScale(2).setTint(0x8a8a8a);
     this.tweens.add({ targets: fondo, scale: fondo.scale * 1.06, duration: 9000 });
     this.add.rectangle(0, 0, width, height, 0x000000, 0.45).setOrigin(0);
     this.capa = this.add.container(0, 0).setDepth(10);
 
-    // pista: el protagonista, Sammy agachado de espaldas
-    this.add.rectangle(PISTA.x0, PISTA.y, PISTA.x1 - PISTA.x0, 4, COLOR.papel3, 0.5).setOrigin(0, 0.5);
-    this.add.circle(PISTA.x1, PISTA.y, 12, COLOR.ocre4).setStrokeStyle(2, 0x000000);
-    this.add.text(PISTA.x1, PISTA.y + 22, 'SAMMY', { fontFamily: FUENTE.maquina, fontSize: '18px', color: hex(COLOR.ocre4) }).setOrigin(0.5, 0);
-    this.prota = this.add.circle(PISTA.x0, PISTA.y, 10, 0x3f5f9f).setStrokeStyle(2, 0x000000);
+    // pista: el protagonista, Sammy agachado de espaldas en mitad de la calzada
+    this.add.image(PISTA.x1, PISTA.y + 6, 'sammy-nino').setOrigin(0.5, 1).setScale(2);
+    this.add.text(PISTA.x1, PISTA.y + 12, 'SAMMY', { fontFamily: FUENTE.maquina, fontSize: '18px', color: hex(COLOR.ocre4) }).setOrigin(0.5, 0);
+    this.prota = this.add.sprite(PISTA.x0, PISTA.y + 6, texturaProta(), 10).setOrigin(0.5, 1).setScale(2);   // de perfil, a la derecha
 
     audio.play('silbido', 9);
     this.elegir();
@@ -90,7 +95,11 @@ export class SammyScene extends Minijuego {
 
   /** Avanza hacia Sammy (0..1); nunca llega a 1. */
   private mover(hasta: number) {
-    this.tweens.add({ targets: this.prota, x: PISTA.x0 + (PISTA.x1 - PISTA.x0) * hasta, duration: 500, ease: 'Sine.easeOut' });
+    this.prota.play({ key: `${this.prota.texture.key}-derecha-andar`, frameRate: 14 }, true);
+    this.tweens.add({
+      targets: this.prota, x: PISTA.x0 + (PISTA.x1 - PISTA.x0) * hasta, duration: 500, ease: 'Sine.easeOut',
+      onComplete: () => this.prota.stop().setFrame(10),
+    });
   }
 
   /** Los obstáculos: cada uno razonable; el conjunto, imposible. */

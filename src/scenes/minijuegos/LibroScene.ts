@@ -34,12 +34,17 @@ export class LibroScene extends Minijuego {
 
   constructor() { super('Libro'); }
 
+  preload() {
+    this.load.image('libro-fondo', 'assets/minijuegos/libro-fondo.png');
+    for (const v of [0, 1, 2]) this.load.image(`libro-hoja-${v}`, `assets/minijuegos/libro-hoja-${v}.png`);
+  }
+
   create() {
-    const { width, height } = this.scale;
     this.fragmento = FRAGMENTOS[this.params.fragmento ?? '1'];
     this.pagina = 0; this.recuerdo = null;
     this.cameras.main.fadeIn(500, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0x120d0a).setOrigin(0);
+    // la mesa del sótano, la vela, las tapas viejas y el fajo cosido con hilo: libro-fondo
+    this.add.image(0, 0, 'libro-fondo').setOrigin(0).setScale(2);
     const medida = this.add.text(0, 0, 'MMMMMMMMMM', { fontFamily: FUENTE.maquina, fontSize: `${LETRA}px` });
     this.anchoLetra = medida.width / 10;
     medida.destroy();
@@ -86,12 +91,8 @@ export class LibroScene extends Minijuego {
     this.capa.removeAll(true);
     this.recuerdo?.destroy(); this.recuerdo = null;
     const c = this.capa;
-    const rnd = new Phaser.Math.RandomDataGenerator([`${this.params.fragmento}-${this.pagina}`]);
-    c.add(this.add.rectangle(HOJA.x + 5, HOJA.y + 5, HOJA.w, HOJA.h, 0x000000, 0.5).setOrigin(0));
-    c.add(this.add.rectangle(HOJA.x, HOJA.y, HOJA.w, HOJA.h, 0xe2d9bf).setOrigin(0).setStrokeStyle(1, 0x8f8a7a));
-    // manchas, una quemadura en una esquina y los agujeros del hilo que cose las hojas
-    for (let i = 0; i < 10; i++) c.add(this.add.circle(HOJA.x + rnd.between(20, HOJA.w - 20), HOJA.y + rnd.between(20, HOJA.h - 20), rnd.between(3, 14), 0x8f7a50, rnd.realInRange(0.04, 0.12)));
-    for (let k = 0; k < 4; k++) c.add(this.add.circle(HOJA.x + 14, HOJA.y + 80 + k * 100, 3, 0x5a4a30));
+    // la hoja de encima (manchas, una quemadura o una esquina rota, y el hilo que cose el fajo): una de tres variantes
+    c.add(this.add.image(HOJA.x, HOJA.y, `libro-hoja-${this.pagina % 3}`).setOrigin(0).setScale(2));
     c.add(this.add.text(HOJA.x + HOJA.w - 20, HOJA.y + HOJA.h - 14, `— ${this.pagina + 1} —`, {
       fontFamily: FUENTE.maquina, fontSize: '18px', color: '#6a5c44',
     }).setOrigin(1, 1));

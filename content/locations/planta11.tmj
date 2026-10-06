@@ -30,6 +30,11 @@
    "value": "true"
   },
   {
+   "name": "ambiente",
+   "type": "string",
+   "value": "neon"
+  },
+  {
    "name": "sigilo",
    "type": "string",
    "value": "planta11.visto"

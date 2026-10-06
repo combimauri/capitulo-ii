@@ -29,15 +29,20 @@ export class CopiarScene extends Minijuego {
 
   constructor() { super('Copiar'); }
 
+  preload() {
+    this.load.image('copiar-fondo', 'assets/minijuegos/copiar-fondo.png');
+  }
+
   create() {
     const { width, height } = this.scale;
     this.filas = []; this.actual = null; this.progreso = 0; this.restante = TIEMPO; this.copiadas = []; this.hecho = false;
     this.porLinea = this.params.lapiz === 'si' ? 4 : 5;
     this.cameras.main.fadeIn(300, 11, 12, 15);
-    this.add.rectangle(0, 0, width, height, 0x0b0c0f).setOrigin(0);
+    // la mesa de lectura del Archivo Restringido, la carpeta azul con la planilla impresa (cabecera de columnas,
+    // filetes, pie del Minipax, ALTO SECRETO) y el cuaderno de la derecha con sus renglones: copiar-fondo
+    this.add.image(0, 0, 'copiar-fondo').setOrigin(0).setScale(2);
     const d = docDe(this.params.doc ?? 'planilla_s18');
-    // la planilla, a la izquierda (azul pálido)
-    this.add.rectangle(20, 60, 600, 440, 0xc9d6e3).setOrigin(0).setStrokeStyle(1, 0x6a7a8a);
+    // la planilla, a la izquierda (azul pálido, dibujada en el fondo)
     const copiables = [...lineas(d?.lineas).slice(1), ...lineas(d?.pie)];
     copiables.forEach((texto, i) => {
       const y = 80 + i * 34;
@@ -50,10 +55,7 @@ export class CopiarScene extends Minijuego {
       zona.on('pointerup', () => this.empezar(fila));
       this.filas.push(fila);
     });
-    // el cuaderno, a la derecha
-    this.add.rectangle(636, 60, 304, 440, 0xe8e2cc).setOrigin(0).setStrokeStyle(1, 0x8f8a7a);
-    for (let y = 92; y < 496; y += 24) this.add.rectangle(646, y, 284, 1, 0x9ab0c8).setOrigin(0);
-    this.add.rectangle(670, 60, 1, 440, 0xc8a0a0).setOrigin(0);
+    // el cuaderno, a la derecha (renglones y margen, en el fondo)
     this.cuaderno = this.add.text(676, 72, '', {
       fontFamily: FUENTE.texto, fontSize: '14px', color: '#4a4a52', lineSpacing: 7, wordWrap: { width: 256 },
     });
