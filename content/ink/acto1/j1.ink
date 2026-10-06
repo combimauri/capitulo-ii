@@ -7,6 +7,9 @@
 { jornada == 2:
     -> j2_piso
 }
+{ jornada == 3:
+    -> j3_piso
+}
 { gimnasia_hecha or jornada != 1:
     -> DONE
 }
@@ -35,6 +38,10 @@ PENSAMIENTO: Pero así está bien: una mártir no sonríe. # id:piso_cartel_usar
 -> DONE
 
 = reloj_mirar
+{ jornada >= 3:
+    PENSAMIENTO: Las nueve y cuarenta. Siempre las nueve y cuarenta. # id:j3_01_reloj_mirar
+    -> DONE
+}
 PENSAMIENTO: Las nueve y cuarenta. Nunca le he dado cuerda. No quiero que vuelva a andar. # id:piso_reloj_mirar
 -> DONE
 
@@ -85,6 +92,9 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 { not desayunado:
     PENSAMIENTO: Primero el desayuno. Un estómago vacío es un estómago desleal. # id:piso_puerta_usar_01
     -> DONE
+}
+{ jornada == 3:
+    -> j3_salir_piso
 }
 # escena:escalera # pos:piso
 -> DONE
@@ -293,6 +303,9 @@ PENSAMIENTO: El ascensor de la izquierda. Funciona. # id:j1_04_ascensor_mirar
 { jornada == 2:
     -> j2_entrar
 }
+{ jornada == 3:
+    -> j3_entrar
+}
 { depto_visto:
     -> DONE
 }
@@ -345,6 +358,9 @@ PENSAMIENTO: Mi mesa. Máquina de escribir, tubo neumático, telepantalla. Todo 
 { jornada == 2:
     -> j2_mesa
 }
+{ jornada == 3:
+    -> j3_mesa
+}
 { parte_j1_enviado:
     PENSAMIENTO: El parte ya va camino de las telepantallas. # id:j1_05_mesa_hecha
     -> DONE
@@ -360,6 +376,9 @@ PENSAMIENTO: Esta noche lo leerán en todas las telepantallas de Oceanía. Mis p
 -> DONE
 
 = mapa_mirar
+{ jornada == 3:
+    -> j3_mapa
+}
 PENSAMIENTO: Malabar. Nuestras banderas rojas avanzan como sangre limpia. Las negras retroceden. Así es la historia. # id:j1_05_mapa_mirar
 -> DONE
 
@@ -372,7 +391,21 @@ PENSAMIENTO: El despacho del Subdirector. El único con ventana de toda la plant
 -> DONE
 
 = despacho
+{ jornada == 3:
+    -> j3_despacho
+}
 PENSAMIENTO: No se entra sin ser llamad{o}. # id:j1_05_despacho_usar
+-> DONE
+
+= personal_mirar
+PENSAMIENTO: El archivador del personal. Una ficha por cada uno de nosotros, por orden alfabético. # id:j1_05_personal_mirar
+-> DONE
+
+= personal
+{ jornada == 3:
+    -> j3_personal
+}
+PENSAMIENTO: No tengo nada que buscar ahí. # id:j1_05_personal_usar
 -> DONE
 
 = registro_mirar
@@ -403,6 +436,9 @@ PENSAMIENTO: Tengo trabajo. # id:j1_05_nell_hablar
 = salir
 { jornada == 2:
     -> j2_salir
+}
+{ jornada == 3:
+    -> j3_salir
 }
 { not parte_j1_enviado:
     PENSAMIENTO: Primero el parte. Malabar no espera. # id:j1_05_salir_no
@@ -439,6 +475,9 @@ AMORY: Come, come. El guiso se enfría y luego sabe a guiso frío. # id:j1_06_am
 === piso_noche ===
 
 = entrar
+{ jornada == 3:
+    -> j3_noche
+}
 { noche_vista:
     -> DONE
 }
@@ -455,10 +494,25 @@ PENSAMIENTO: Son mis palabras. Las está diciendo toda Oceanía. Ivy, ¿lo oyes?
 -> DONE
 
 = cartel_mirar
+{ jornada == 3:
+    PENSAMIENTO: Ivy. La miro mucho rato. # id:j3_06_cartel_mirar
+    -> DONE
+}
 PENSAMIENTO: Hoy hemos ganado {parte_j1_km} kilómetros. Mañana ganaremos más. # id:j1_07_cartel_mirar
 -> DONE
 
+= ventana_mirar
+{ jornada == 3:
+    -> j3_ventana
+}
+PENSAMIENTO: La ciudad a oscuras. Solo brillan los ministerios. # id:j1_07_ventana_mirar
+-> DONE
+
 = tele_mirar
+{ jornada == 3:
+    PENSAMIENTO: Música marcial. Tambores, trompetas. Nada que pensar. # id:j3_06_tele_mirar
+    -> DONE
+}
 PENSAMIENTO: El noticiero repite la victoria. Una y otra vez. Nunca me canso. # id:j1_07_tele_mirar
 -> DONE
 
@@ -467,6 +521,9 @@ PENSAMIENTO: Mañana, a las siete y cuarto, el silbato. # id:j1_07_cama_mirar
 -> DONE
 
 = dormir
+{ jornada == 3:
+    -> j3_dormir
+}
 ~ jornada = 2
 ~ desayunado = false
 CARTEL: JORNADA 2 # fx:negro # id:j1_07_jornada2 # escena:piso # pos:cama

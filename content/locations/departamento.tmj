@@ -23,6 +23,16 @@
    "name": "al_entrar",
    "type": "string",
    "value": "depto.entrar"
+  },
+  {
+   "name": "fondo_alt",
+   "type": "string",
+   "value": "loc-departamento_j3"
+  },
+  {
+   "name": "fondo_alt_si",
+   "type": "string",
+   "value": "amory_borrado"
   }
  ],
  "tilesets": [],
@@ -250,6 +260,17 @@
      "visible": true,
      "rotation": 0,
      "type": ""
+    },
+    {
+     "id": 20,
+     "name": "archivador",
+     "x": 414,
+     "y": 204,
+     "width": 24,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
     }
    ],
    "opacity": 1,
@@ -263,7 +284,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 20,
+     "id": 21,
      "name": "mi_mesa",
      "x": 170,
      "y": 166,
@@ -301,7 +322,7 @@
      ]
     },
     {
-     "id": 21,
+     "id": 22,
      "name": "mapa",
      "x": 148,
      "y": 28,
@@ -334,7 +355,7 @@
      ]
     },
     {
-     "id": 22,
+     "id": 23,
      "name": "memoria",
      "x": 328,
      "y": 44,
@@ -363,11 +384,16 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "lapiz_amory=j3_lapiz_agujero"
       }
      ]
     },
     {
-     "id": 23,
+     "id": 24,
      "name": "despacho",
      "x": 52,
      "y": 30,
@@ -405,7 +431,7 @@
      ]
     },
     {
-     "id": 24,
+     "id": 25,
      "name": "registro",
      "x": 350,
      "y": 116,
@@ -438,7 +464,7 @@
      ]
     },
     {
-     "id": 25,
+     "id": 26,
      "name": "telepantalla",
      "x": 376,
      "y": 26,
@@ -471,7 +497,7 @@
      ]
     },
     {
-     "id": 26,
+     "id": 27,
      "name": "salir",
      "x": 380,
      "y": 238,
@@ -502,6 +528,120 @@
        "value": "abajo"
       }
      ]
+    },
+    {
+     "id": 28,
+     "name": "personal",
+     "x": 414,
+     "y": 196,
+     "width": 24,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Archivador del personal"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.personal_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "depto.personal"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "402,222"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "proyeccion",
+     "x": 154,
+     "y": 48,
+     "width": 38,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Proyección nueva"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j3_proyeccion"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "172,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "name": "papelera_amory",
+     "x": 296,
+     "y": 190,
+     "width": 14,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Papelera"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j3_papelera"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "318,196"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -515,7 +655,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 33,
+     "id": 39,
      "name": "puerta",
      "x": 396,
      "y": 230,
@@ -534,7 +674,7 @@
      ]
     },
     {
-     "id": 34,
+     "id": 40,
      "name": "mesa",
      "x": 172,
      "y": 216,
@@ -553,7 +693,7 @@
      ]
     },
     {
-     "id": 35,
+     "id": 41,
      "name": "despacho",
      "x": 71,
      "y": 106,
@@ -583,7 +723,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 27,
+     "id": 31,
      "name": "voss",
      "x": 72,
      "y": 112,
@@ -617,7 +757,7 @@
      ]
     },
     {
-     "id": 28,
+     "id": 32,
      "name": "amory",
      "x": 304,
      "y": 206,
@@ -647,11 +787,55 @@
        "name": "mirar",
        "type": "string",
        "value": "depto.amory_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!amory_borrado"
       }
      ]
     },
     {
-     "id": 29,
+     "id": 33,
+     "name": "pell",
+     "x": 304,
+     "y": 206,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "pell"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarada Pell"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "j3_pell"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j3_pell_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
+    },
+    {
+     "id": 34,
      "name": "func1",
      "x": 114,
      "y": 160,
@@ -690,7 +874,7 @@
      ]
     },
     {
-     "id": 30,
+     "id": 35,
      "name": "func2",
      "x": 274,
      "y": 160,
@@ -725,11 +909,65 @@
        "name": "orientacion_jugador",
        "type": "string",
        "value": "derecha"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!amory_borrado"
       }
      ]
     },
     {
-     "id": 31,
+     "id": 36,
+     "name": "brooke",
+     "x": 274,
+     "y": 160,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "brooke"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarada Brooke"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "j3_brooke"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j3_brooke_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "236,160"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
+    },
+    {
+     "id": 37,
      "name": "func3",
      "x": 114,
      "y": 216,
@@ -768,7 +1006,7 @@
      ]
     },
     {
-     "id": 32,
+     "id": 38,
      "name": "nell",
      "x": 340,
      "y": 204,
@@ -814,5 +1052,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 36
+ "nextobjectid": 42
 }

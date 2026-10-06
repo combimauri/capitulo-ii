@@ -157,6 +157,9 @@ PENSAMIENTO: La telepantalla de la mesa está encendida, a medio metro. ¿Lo hab
 
 === voss_despacho ===
 = entrar
+{ jornada == 3:
+    -> j3_voss
+}
 { amory_reaccion != "denuncia" or despacho_visto:
     -> DONE
 }
@@ -282,6 +285,8 @@ PENSAMIENTO: Ivy. Salta a la comba. Cada vez que me acerco, la calle se alarga. 
 IVY (NIÑA): ¿Qué hora es? # sfx:silbido # id:j2_06_ivy_02
 PENSAMIENTO: Miro mi muñeca. Llevo su reloj. Las nueve y cuarenta. # id:j2_06_pens_01
 CARTEL: 21:40 # sfx:impacto # fx:destello # id:j2_06_cartel
-CARTEL: JORNADA 3 # fx:negro # sfx:silbato # id:j2_06_jornada3
-CARTEL: Continuará. La Jornada 3 está en preparación. # id:j2_06_fin # final:demo
+~ jornada = 3
+~ desayunado = false
+~ amory_borrado = true
+CARTEL: JORNADA 3 # fx:negro # sfx:silbato # id:j2_06_jornada3 # escena:piso # pos:cama
 -> DONE

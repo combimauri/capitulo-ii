@@ -1,7 +1,7 @@
 {
   "reloj_ivy": { "nombre": "Reloj de Ivy", "icono": "icono-reloj", "descripcion": "Cristal roto. Parado a las nueve y cuarenta. Nunca le he dado cuerda." },
   "ficha": { "nombre": "Ficha del Partido", "icono": "icono-ficha", "descripcion": "Mi ficha de afiliación. Número, foto y sello. Sin ella no existo." },
-  "lapiz_amory": { "nombre": "Lápiz mordido", "icono": "icono-lapiz", "descripcion": "Iniciales F.A. grabadas con la uña." },
+  "lapiz_amory": { "nombre": "Lápiz mordido", "icono": "icono-lapiz", "descripcion": "Iniciales F.A. grabadas con la uña.", "mirar": "objetos.lapiz_mirar" },
   "foto_ivy": { "nombre": "Foto de Ivy", "icono": "icono-foto", "descripcion": "Quemada por un borde. Su cara casi no se ve." },
   "diario": { "nombre": "Cuaderno", "icono": "icono-diario", "descripcion": "Tapas negras. Un pájaro dibujado por dentro." }
 }

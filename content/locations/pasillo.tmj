@@ -1,0 +1,480 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Minipax · pasillo de la planta 14"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-pasillo"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "pasillo.entrar"
+  },
+  {
+   "name": "parpadeo",
+   "type": "string",
+   "value": "true"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/pasillo.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 98,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_inf",
+     "x": 0,
+     "y": 196,
+     "width": 960,
+     "height": 74,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "fondo_izq",
+     "x": 0,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "fondo_der",
+     "x": 952,
+     "y": 0,
+     "width": 8,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "carrito",
+     "x": 700,
+     "y": 128,
+     "width": 36,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 6,
+     "name": "puerta_depto",
+     "x": 60,
+     "y": 40,
+     "width": 32,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cartografía"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.puerta_depto_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "pasillo.puerta_depto"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "76,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "telepantalla",
+     "x": 352,
+     "y": 38,
+     "width": 46,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.tele_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "375,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "cartel",
+     "x": 586,
+     "y": 34,
+     "width": 36,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cartel"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.cartel_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "604,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "suministros",
+     "x": 760,
+     "y": 40,
+     "width": 32,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cuarto de suministros"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.suministros_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "pasillo.suministros_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "776,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "carrito",
+     "x": 698,
+     "y": 106,
+     "width": 40,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Carrito de la limpieza"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.carrito_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "718,162"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "salir",
+     "x": 886,
+     "y": 38,
+     "width": 36,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Escalera"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "pasillo.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "904,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "encuentro",
+     "x": 630,
+     "y": 98,
+     "width": 12,
+     "height": 98,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "pasillo.encuentro"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!nell_se_fue"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "depto",
+     "x": 76,
+     "y": 114,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 13,
+     "name": "nell",
+     "x": 752,
+     "y": 150,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nell"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Limpiadora"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.nell_mirar"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "pasillo.encuentro"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "752,168"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!nell_se_fue"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "guardia",
+     "x": 540,
+     "y": 172,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "guardia"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Guardia"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pasillo.guardia_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "guardia_pasillo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 16
+}

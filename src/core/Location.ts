@@ -18,6 +18,8 @@ export interface Hotspot extends Rect {
   condicion?: string;
   /** Se activa al pisar la zona (salidas por los bordes, encuentros). */
   auto?: boolean;
+  /** Usar un objeto del inventario aquí: item → knot ("lapiz_amory=j3_depto.agujero_lapiz;…"). */
+  con?: Record<string, string>;
 }
 
 export interface Npc extends Point {
@@ -50,6 +52,10 @@ export interface LocationData {
   sigueCamara: boolean;
   /** Tinte del protagonista (p. ej. de noche en el prólogo). */
   tinteProta?: number;
+  /** Fondo alternativo cuando se cumple una condición (el mismo sitio, cambiado). */
+  fondoAlt?: { clave: string; condicion: string };
+  /** Luces de neón que parpadean. */
+  parpadeo: boolean;
 }
 
 interface TiledProp { name: string; value: unknown }
@@ -69,6 +75,7 @@ export function parseTiled(id: string, raw: string): LocationData {
       name: o.name, nombre: p.nombre_visible ?? o.name, x: o.x, y: o.y, w: o.width, h: o.height,
       mirar: p.mirar, usar: p.usar, hablar: p.hablar, aprox: { x: ax, y: ay },
       orientacion: p.orientacion as Dir | undefined, condicion: p.condicion, auto: p.auto === 'true',
+      con: p.con ? Object.fromEntries(p.con.split(';').map((par) => par.split('=').map((x) => x.trim()))) : undefined,
     };
   };
   return {
@@ -96,6 +103,8 @@ export function parseTiled(id: string, raw: string): LocationData {
     }),
     alEntrar: mp.al_entrar,
     tinteProta: mp.prota_tinte ? parseInt(mp.prota_tinte.replace('#', ''), 16) : undefined,
+    fondoAlt: mp.fondo_alt ? { clave: mp.fondo_alt, condicion: mp.fondo_alt_si ?? '' } : undefined,
+    parpadeo: mp.parpadeo === 'true',
     sigueCamara: map.width * map.tilewidth > 480 || map.height * map.tileheight > 288,   // 270 px = 17 tiles (272)
   };
 }

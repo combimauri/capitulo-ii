@@ -673,7 +673,7 @@ interface SaveData {
 |---|---|---|
 | **M0 · Esqueleto** ✅ | Proyecto Vite + Phaser + inkjs. Escalado de píxeles. Puente narrativo con un `.ink` de prueba. Caja de diálogo, elecciones y guardado básico. Panel de depuración mínimo. | Se puede jugar una conversación ramificada de prueba en escritorio y en móvil, guardar y cargar. |
 | **M1 · Corte vertical** ✅ | **Prólogo + Jornada 1 completos:** escombros, ficha de afiliación, piso, escalera, calle, Minipax, cantina. Crimen facial (gimnasia y noticia). Minijuego de partes. Inventario. Arte provisional de calidad aceptable para 3 localizaciones. | Se juega de principio a fin en ~15 min, en escritorio y móvil, con audio. Sirve para validar tono, controles y legibilidad. |
-| **M2 · Acto I** 🔶 | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
+| **M2 · Acto I** ✅ | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
 | **M3 · Acto II + Final A** | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
 | **M4 · Sistema de sigilo + Acto III** | Sigilo completo. Las tres misiones. Gran Rectificación. Expediente de Ivy. Lista de Len. Crane. Persecución. Final B. | Jugable hasta J12. |
 | **M5 · Acto IV + finales** | Túneles (mapa de tres capas y cohetes), cripta, conversación, composición del Capítulo II, finales C, C0, D y E, créditos y desbloqueos. | Los cinco finales y C0 se alcanzan. Bot y rutas dirigidas en verde. |
@@ -705,9 +705,9 @@ interface SaveData {
 - **40 pruebas**, entre ellas las que simulan resultados de minijuegos y verifican que cambian la historia, y las que comprueban que cada transición apunta a un mapa y a un punto de aparición existentes.
 - **Atajos de depuración** en la consola del navegador (solo en desarrollo): `saltar('escena', 'knot', { variables })`.
 
-### Estado de M2 (en curso)
+### Estado de M2 (Acto I completo)
 
-- **Jornada 2 jugable de principio a fin:** mañana en el piso, Parsons en la escalera, Dos Minutos de Odio, mover el frente, reacción ante Amory (tres ramas, una lleva al despacho de Voss), Centro Comunitario y sueño con Ivy. Termina con una tarjeta de «Continuará» que vuelve al menú.
+- **Jornada 2 jugable de principio a fin:** mañana en el piso, Parsons en la escalera, Dos Minutos de Odio, mover el frente, reacción ante Amory (tres ramas, una lleva al despacho de Voss), Centro Comunitario y sueño con Ivy. El sueño lleva a la Jornada 3.
 - **4 escenarios nuevos:** salón del Odio, despacho de Voss, Centro Comunitario y sueño (este último con cámara que sigue al jugador).
 - **Minijuegos nuevos:**
   - Crimen facial de los Dos Minutos de Odio, definido por datos (`content/cf/`) y con cuatro fases que cambian de pantalla y de ritmo.
@@ -722,12 +722,23 @@ interface SaveData {
   - El piano toca «Oranges and Lemons» transcrita nota a nota, con cuerdas desafinadas y bajo.
   - Caminar con zancada, balanceo de brazos y rebote. Al correr, la animación se acelera.
   - Joystick con zona muerta y centro que sigue al dedo. No se queda andando solo con un segundo dedo, al salir de la pantalla ni al pasar la app a segundo plano.
-- **54 pruebas**, con las penalizaciones del Odio, las tres reacciones ante Amory y el detalle de las gafas.
+- **Jornada 3 jugable de principio a fin**, que cierra el Acto I: la mesa vacía (Pell y Brooke), el archivador del personal, el despacho de Voss, el doblepensar, el lápiz y el agujero de la memoria, el pasillo con la limpiadora que desaparece y el monólogo final según el estado. Termina en «FIN DEL ACTO I» y vuelve al menú.
+- **Registro de diálogos** (`src/core/Registro.ts`, `RegistroScene`): anota cada línea con id, se consulta con `L` o el botón REG. y se guarda con la partida.
+- **Doblepensar** (`# dp:id=…`, configurado en `content/doblepensar/`): el registro se desplaza solo, los nombres se deshacen y el jugador decide. Aceptar los borra («—»), también en lo que se anote después. Recordar los tacha.
+- **Usar con:** en el inventario, MIRAR (con knot de ink si el texto depende de la historia) y USAR CON… El objeto queda en la mano hasta usarlo en un hotspot con la propiedad `con`.
+- **Mapas:**
+  - Fondo alternativo por condición (`fondo_alt`, `fondo_alt_si`). El departamento cambia cuando Amory deja de existir.
+  - Luces de neón que fallan (`parpadeo`).
+  - Comando `prota:dir` para girar al protagonista.
+- **Nuevos personajes y escenarios:** Pell, Brooke, el pasillo de la planta 14 y la variante del departamento.
+- **74 pruebas**, con todas las ramas de la Jornada 3 y el registro.
 
-**Pendiente para M2:**
-- Jornada 3.
-- Doblepensar y registro de diálogos.
-- Probar el joystick en un móvil real (en el navegador solo se ha probado con toques simulados).
+**Pendiente:**
+- Probar el joystick en un móvil real.
+- Pulir el arte provisional del pasillo.
+- La música y los ambientes llegan en M6.
+
+---
 
 ## 16. Riesgos y mitigaciones
 

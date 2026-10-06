@@ -20,7 +20,8 @@ python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/location
 | Caminar | WASD / flechas (Mayús = correr) · clic en el suelo | Arrastrar el dedo (joystick) o tocar el suelo |
 | Usar lo que tienes delante | `E` / Espacio · clic en el objeto | Botón USAR o tocar el objeto |
 | Mirar | `Q` · clic derecho | Botón MIRAR o mantener pulsado el objeto |
-| Objetos | `I` | Botón OBJ. |
+| Objetos (mirar, o «usar con…» algo del escenario) | `I` · `Esc` suelta el objeto | Botón OBJ. |
+| Registro de diálogos | `L` | Botón REG. |
 | Avanzar diálogo | Espacio / Enter / clic | Tocar |
 | Elegir opción | 1–9, flechas + Enter, clic | Tocar |
 | Depuración | `F1` | — |

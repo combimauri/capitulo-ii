@@ -4,7 +4,7 @@
  * puntos interactivos, personajes, transiciones pedidas desde ink y depuración.
  */
 import Phaser from 'phaser';
-import { narrativa, LOCALIZACIONES, RESOLUCION, EV, tactil } from '../core/juego';
+import { narrativa, registro, mano, LOCALIZACIONES, RESOLUCION, EV, tactil } from '../core/juego';
 import { contains, cumple, overlaps, type Dir, type Hotspot, type LocationData, type Npc, type Point, type Rect } from '../core/Location';
 import { NavGrid } from '../systems/Pathfinding';
 import { SaveSystem } from '../core/SaveSystem';
@@ -30,6 +30,7 @@ interface Pulsacion {
 export class LocationScene extends Phaser.Scene {
   private loc!: LocationData;
   private prota!: Phaser.GameObjects.Sprite;
+  private fondo!: Phaser.GameObjects.Image;
   private sombra!: Phaser.GameObjects.Ellipse;
   private texturaProta = 'prot_h';
   private dir: Dir = 'abajo';
@@ -63,7 +64,8 @@ export class LocationScene extends Phaser.Scene {
     this.ruta = []; this.alLlegar = null; this.enfocado = null; this.pulsacion = null;
     this.npcs.clear(); this.zonasPisadas.clear(); this.cambioPendiente = {}; this.limpiar = [];
 
-    this.add.image(0, 0, this.loc.fondo).setOrigin(0).setDepth(-1000);
+    this.fondo = this.add.image(0, 0, this.loc.fondo).setOrigin(0).setDepth(-1000);
+    if (this.loc.parpadeo) this.neones();
 
     const spawn = this.loc.spawns.find((s) => s.name === data.spawn) ?? this.loc.spawns[0];
     const x = data.x ?? spawn.x, y = data.y ?? spawn.y;
@@ -185,6 +187,21 @@ export class LocationScene extends Phaser.Scene {
     });
   }
 
+  /** Tubos de neón que fallan: la sala se oscurece a destellos irregulares. */
+  private neones() {
+    const velo = this.add.rectangle(0, 0, this.loc.width, this.loc.height, 0x000000, 0).setOrigin(0).setDepth(9000);
+    const fallo = () => {
+      if (!this.scene.isActive()) return;
+      const veces = Phaser.Math.Between(1, 3);
+      for (let i = 0; i < veces; i++) {
+        this.time.delayedCall(i * 110, () => velo.setAlpha(0.35));
+        this.time.delayedCall(i * 110 + 55, () => velo.setAlpha(0));
+      }
+      this.time.delayedCall(Phaser.Math.Between(900, 3200), fallo);
+    };
+    this.time.delayedCall(600, fallo);
+  }
+
   private soltarJoystick() {
     if (!tactil.activo) return;
     tactil.activo = false; tactil.x = 0; tactil.y = 0;
@@ -205,14 +222,17 @@ export class LocationScene extends Phaser.Scene {
       this.autoguardar();
     };
     const depurar = (activo: boolean) => { this.depurando = activo; };
+    // paneles (registro) que detienen el mundo sin ser un diálogo
+    const pausa = (activa: boolean) => { if (activa) inicio(); else { this.ocupado = false; this.finDialogo = this.time.now; } };
     const accion = (modo: 'principal' | 'mirar') => this.actuarEnfocado(modo);
     ev.on(EV.dialogoIniciar, inicio);
     ev.on(EV.dialogoFin, fin);
     ev.on(EV.depurar, depurar);
     ev.on(EV.accion, accion);
+    ev.on(EV.pausa, pausa);
     const quitar = narrativa.on('command', (t: Tag) => this.comando(t));
     this.limpiar.push(() => {
-      ev.off(EV.dialogoIniciar, inicio); ev.off(EV.dialogoFin, fin); ev.off(EV.depurar, depurar); ev.off(EV.accion, accion);
+      ev.off(EV.dialogoIniciar, inicio); ev.off(EV.dialogoFin, fin); ev.off(EV.depurar, depurar); ev.off(EV.accion, accion); ev.off(EV.pausa, pausa);
       quitar();
     });
   }
@@ -230,6 +250,10 @@ export class LocationScene extends Phaser.Scene {
       this.actualizarVisibilidad();
     } else if (t.key === 'final') {
       this.finalPendiente = true;
+    } else if (t.key === 'prota') {
+      // prota:izquierda → el protagonista se gira (sin moverse)
+      this.dir = t.value as Dir;
+      this.parar();
     } else if (t.key === 'npc') {
       // npc:nombre=dir  → orienta a un personaje (p. ej. hacia el jugador)
       for (const [nombre, dir] of Object.entries(t.params)) {
@@ -352,6 +376,8 @@ export class LocationScene extends Phaser.Scene {
   // ------------------------------------------------------------------ visibilidad según la historia
   private actualizarVisibilidad() {
     const leer = (v: string) => narrativa.get(v);
+    const alt = this.loc.fondoAlt;
+    this.fondo.setTexture(alt && cumple(alt.condicion, leer) ? alt.clave : this.loc.fondo);
     this.colisionesActivas = this.loc.colisiones.filter((c) => cumple(c.condicion, leer));
     const conAccion = (h: Hotspot) => !!(h.mirar || h.usar || h.hablar);
     this.hotspotsVisibles = this.loc.hotspots.filter((h) => conAccion(h) && cumple(h.condicion, leer));
@@ -417,7 +443,13 @@ export class LocationScene extends Phaser.Scene {
   }
 
   private actuar(h: Hotspot, modo: 'principal' | 'mirar') {
-    const ruta = modo === 'mirar' ? h.mirar : (h.hablar ?? h.usar ?? h.mirar);
+    let ruta = modo === 'mirar' ? h.mirar : (h.hablar ?? h.usar ?? h.mirar);
+    // con un objeto en la mano, la acción principal es usarlo aquí
+    if (mano.item && modo === 'principal') {
+      ruta = h.con?.[mano.item] ?? 'objetos.no_sirve';
+      mano.item = null;
+      this.game.events.emit(EV.mano);
+    }
     if (!ruta) return;
     if (h.orientacion && !h.auto) { this.dir = h.orientacion; this.parar(); }
     if (!narrativa.hasPath(ruta)) { console.warn(`[ink] no existe "${ruta}"`); return; }
@@ -456,6 +488,7 @@ export class LocationScene extends Phaser.Scene {
     }
     SaveSystem.guardar('auto', {
       ink: narrativa.saveState(),
+      registro: registro.serializar(),
       mundo: { escena: this.loc.id, x: Math.round(this.prota.x), y: Math.round(this.prota.y), dir: this.dir },
       meta: { jornada: Number(narrativa.get('jornada')) || 1 },
     });

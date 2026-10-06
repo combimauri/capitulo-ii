@@ -10,10 +10,11 @@ import { UIScene } from './scenes/UIScene';
 import { CascotesScene } from './scenes/minijuegos/CascotesScene';
 import { FichaScene } from './scenes/minijuegos/FichaScene';
 import { FacecrimeScene } from './scenes/minijuegos/FacecrimeScene';
+import { RegistroScene } from './scenes/RegistroScene';
 import { ParteScene } from './scenes/minijuegos/ParteScene';
 import { FrenteScene } from './scenes/minijuegos/FrenteScene';
 import { PancartaScene } from './scenes/minijuegos/PancartaScene';
-import { RESOLUCION, narrativa, EV } from './core/juego';
+import { RESOLUCION, narrativa, registro, EV } from './core/juego';
 
 registerSW({ immediate: true });
 
@@ -28,7 +29,7 @@ const juego = new Phaser.Game({
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   input: { activePointers: 2 },
   dom: { createContainer: true },
-  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene],
+  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, RegistroScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):
@@ -37,6 +38,7 @@ if (import.meta.env.DEV) {
   Object.assign(window, {
     juego,
     narrativa,
+    registro,
     saltar(escena: string, knot?: string, vars: Record<string, unknown> = {}) {
       for (const [k, v] of Object.entries(vars)) narrativa.set(k, v);
       juego.scene.getScenes(true).forEach((s) => { if (!['UI', 'Location'].includes(s.scene.key)) s.scene.stop(); });

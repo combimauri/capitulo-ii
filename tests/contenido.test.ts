@@ -58,7 +58,7 @@ describe('localizaciones', () => {
     it(`${loc.id}: cada acción de cada hotspot existe en ink y sus líneas tienen id único`, () => {
       const vistos = new Map<string, string>();
       for (const h of [...loc.hotspots, ...loc.npcs.map((n) => n.hotspot)]) {
-        for (const ruta of [h.mirar, h.usar, h.hablar].filter(Boolean) as string[]) {
+        for (const ruta of [h.mirar, h.usar, h.hablar, ...Object.values(h.con ?? {})].filter(Boolean) as string[]) {
           for (const eleccion of [0, 1, 2]) {
             const b = new NarrativeBridge(resultado.json!);
             expect(b.hasPath(ruta), `${h.name} → ${ruta}`).toBe(true);
@@ -189,6 +189,130 @@ describe('jornada 2', () => {
       }
     });
   }
+});
+
+/** Juega un fragmento: elige `elecciones` en orden (0 si se acaban) y simula los minijuegos. */
+function jugar(b: NarrativeBridge, ruta: string, opts: { elecciones?: number[]; minijuegos?: Record<string, unknown> } = {}) {
+  const textos: string[] = [];
+  const comandos: string[] = [];
+  const quitar = b.on('command', (t: { key: string; value: string }) => comandos.push(`${t.key}:${t.value}`));
+  const elecciones = [...(opts.elecciones ?? [])];
+  b.goTo(ruta);
+  for (let i = 0; i < 200; i++) {
+    const paso = b.next();
+    if (paso.type === 'accion') {
+      for (const [k, v] of Object.entries(opts.minijuegos ?? {})) b.set(k, v);
+      if (paso.line) textos.push(paso.line.text);
+    } else if (paso.type === 'line') textos.push(paso.line.text);
+    else if (paso.type === 'choices') b.choose(paso.choices[Math.min(elecciones.shift() ?? 0, paso.choices.length - 1)].index);
+    else break;
+  }
+  quitar();
+  return { texto: textos.join(' '), comandos };
+}
+
+describe('jornada 3', () => {
+  const nueva = (vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 3);
+    b.set('amory_borrado', true);
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+
+  it('el sueño termina la jornada 2 y despierta en la 3, con Amory ya borrado', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 2);
+    const { comandos } = jugar(b, 'sueno.final');
+    expect(b.get('jornada')).toBe(3);
+    expect(b.get('amory_borrado')).toBe(true);
+    expect(comandos).toContain('escena:piso');
+    expect(comandos.some((c) => c.startsWith('final'))).toBe(false);
+  });
+
+  it('al despacho de Voss solo se entra tras hablar con Pell y con Brooke (que sube la Sospecha)', () => {
+    const b = nueva();
+    expect(jugar(b, 'depto.despacho').comandos).not.toContain('escena:despacho_voss');
+    jugar(b, 'j3_pell');
+    expect(jugar(b, 'depto.despacho').comandos).not.toContain('escena:despacho_voss');
+    jugar(b, 'j3_brooke');
+    expect(b.get('sospecha')).toBe(3);
+    expect(jugar(b, 'depto.despacho').comandos).toContain('escena:despacho_voss');
+  });
+
+  it('con Voss: si le denunciaste, la Duda sube; si insistes, la Sospecha sube 10', () => {
+    const b = nueva({ amory_reaccion: 'denuncia' });
+    const { texto } = jugar(b, 'voss_despacho.entrar', { elecciones: [1] });
+    expect(texto).toContain('exceso de cansancio');
+    expect(b.get('duda')).toBe(5);
+    expect(b.get('sospecha')).toBe(10);
+    const b2 = nueva({ amory_reaccion: 'risa' });
+    expect(jugar(b2, 'voss_despacho.entrar', { elecciones: [0] }).texto).toContain('Está pálido');
+    expect(b2.get('sospecha')).toBe(0);
+  });
+
+  it('al volver del despacho llega el doblepensar; aceptar baja Duda y Sospecha, recordar sube la Duda', () => {
+    const a = nueva({ voss_j3_visto: true, duda: 10, sospecha: 10 });
+    const ra = jugar(a, 'depto.entrar', { minijuegos: { dp_j3_amory: 'aceptar' } });
+    expect(ra.texto).toContain('Siempre ha sido así');
+    expect(ra.comandos).toContain('objeto:lapiz_amory');
+    expect([a.get('duda'), a.get('sospecha')]).toEqual([5, 5]);
+    const r = nueva({ voss_j3_visto: true, duda: 10 });
+    expect(jugar(r, 'depto.entrar', { minijuegos: { dp_j3_amory: 'recordar' } }).texto).toContain('Felix Amory existía ayer');
+    expect(r.get('duda')).toBe(25);
+    expect(r.get('diario_amory')).toBe(true);
+  });
+
+  it('tirar el lápiz por el agujero de la memoria lo destruye; guardarlo no', () => {
+    const conLapiz = (vars: Record<string, unknown>) => {
+      const b = nueva();
+      b.set('jornada', 2);
+      jugar(b, 'j2_mesa', { elecciones: [1], minijuegos: { frente_j2: 'hecho' } });   // Amory presta el lápiz
+      b.set('jornada', 3);
+      for (const [k, v] of Object.entries(vars)) b.set(k, v);
+      return b;
+    };
+    const antes = conLapiz({ duda: 12 });
+    expect(jugar(antes, 'j3_lapiz_agujero').texto).toContain('Tengo que devolvérselo');
+    const tirar = conLapiz({ dp_j3_amory: 'aceptar', duda: 12 });
+    jugar(tirar, 'j3_lapiz_agujero', { elecciones: [0] });
+    expect(tirar.get('lapiz_destruido')).toBe(true);
+    expect(tirar.get('duda')).toBe(2);
+    expect(tirar.list('inventario')).not.toContain('lapiz_amory');
+    const guardar = conLapiz({ dp_j3_amory: 'recordar' });
+    jugar(guardar, 'j3_lapiz_agujero', { elecciones: [1] });
+    expect(guardar.list('inventario')).toContain('lapiz_amory');
+    expect(jugar(guardar, 'objetos.lapiz_mirar').texto).toContain('Esto existió');
+  });
+
+  it('en el pasillo, la limpiadora desaparece cuando el guardia dobla la esquina', () => {
+    const b = nueva({ dp_j3_amory: 'recordar' });
+    expect(jugar(b, 'pasillo.nell_mirar').texto).toContain('Son los dibujos de Amory');
+    expect(jugar(b, 'pasillo.salir').comandos).not.toContain('escena:piso_noche');
+    const { comandos } = jugar(b, 'pasillo.encuentro');
+    expect(b.get('nell_se_fue')).toBe(true);
+    expect(b.get('guardia_pasillo')).toBe(true);
+    expect(comandos).toEqual(expect.arrayContaining(['prota:izquierda', 'prota:derecha']));
+    expect(jugar(b, 'pasillo.salir').comandos).toContain('escena:piso_noche');
+  });
+
+  for (const [dp, duda, reaccion, esperado] of [
+    ['aceptar', 0, 'risa', 'Mañana ganaremos más kilómetros'],
+    ['aceptar', 15, 'risa', '¿Por qué no recuerdo con quién comía los martes?'],
+    ['recordar', 30, 'reprimenda', 'Felix Amory existía. Felix Amory existía.'],
+    ['aceptar', 0, 'denuncia', 'Yo dije su nombre'],
+  ] as const) {
+    it(`cierre del Acto I: ${dp}, duda ${duda}, ${reaccion}`, () => {
+      const b = nueva({ dp_j3_amory: dp, duda, amory_reaccion: reaccion });
+      expect(jugar(b, 'piso_noche.entrar').texto).toContain(esperado);
+    });
+  }
+
+  it('dormir cierra el Acto I y vuelve al menú', () => {
+    const { texto, comandos } = jugar(nueva(), 'piso_noche.dormir');
+    expect(texto).toContain('FIN DEL ACTO I');
+    expect(comandos).toContain('final:demo');
+  });
 });
 
 describe('estado', () => {

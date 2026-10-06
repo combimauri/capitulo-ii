@@ -4,7 +4,7 @@
  * controles táctiles, inventario, ojo de la Sospecha y depuración.
  */
 import Phaser from 'phaser';
-import { narrativa, EV, ITEMS, tactil } from '../core/juego';
+import { narrativa, registro, mano, EV, ITEMS, tactil } from '../core/juego';
 import type { ChoiceOption, Line } from '../core/NarrativeBridge';
 import type { Tag } from '../core/tags';
 import type { ResultadoMinijuego } from './minijuegos/Minijuego';
@@ -16,7 +16,7 @@ const CAJA = { x: 40, y: 386, w: 880, h: 132 };
 
 /** Minijuegos por etiqueta: cf → Facecrime; minijuego:<tipo> → escena. */
 const MINIJUEGOS: Record<string, string> = {
-  cf: 'Facecrime', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta',
+  cf: 'Facecrime', dp: 'Registro', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta',
 };
 
 interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
@@ -54,6 +54,9 @@ export class UIScene extends Phaser.Scene {
   private depuracion!: Phaser.GameObjects.Text;
   private depurando = false;
   private inventarioAbiertoEn = 0;
+  private consultando = false;
+  private enMano!: Phaser.GameObjects.Container;
+  private aviso!: Phaser.GameObjects.Container;
 
   constructor() { super('UI'); }
 
@@ -70,6 +73,9 @@ export class UIScene extends Phaser.Scene {
     this.joystick = this.add.graphics().setDepth(25);
     this.inventario = this.add.container(0, 0).setVisible(false).setDepth(60);
     this.ojo = this.add.graphics().setDepth(20);
+    this.enMano = this.add.container(0, 0).setDepth(22).setVisible(false);
+    this.aviso = this.add.container(0, 0).setDepth(45).setVisible(false);
+    this.consultando = false;
     this.dibujarOjo(Number(narrativa.get('sospecha')) || 0);
     narrativa.observe('sospecha', (v) => this.dibujarOjo(Number(v)));
     this.depuracion = this.add.text(8, 8, '', {
@@ -80,11 +86,15 @@ export class UIScene extends Phaser.Scene {
     const iniciar = (ruta?: string) => this.iniciar(ruta);
     const foco = (info: FocoInfo | null) => this.mostrarFoco(info);
     const joy = () => this.dibujarJoystick();
+    const manoCambia = () => this.dibujarMano();
     ev.on(EV.dialogoIniciar, iniciar);
     ev.on(EV.foco, foco);
     ev.on(EV.joystick, joy);
-    const quitar = narrativa.on('command', () => undefined);
-    this.events.once('shutdown', () => { ev.off(EV.dialogoIniciar, iniciar); ev.off(EV.foco, foco); ev.off(EV.joystick, joy); quitar(); });
+    ev.on(EV.mano, manoCambia);
+    const quitar = narrativa.on('command', (t: Tag) => { if (t.key === 'objeto') this.avisarObjeto(t.value); });
+    this.events.once('shutdown', () => {
+      ev.off(EV.dialogoIniciar, iniciar); ev.off(EV.foco, foco); ev.off(EV.joystick, joy); ev.off(EV.mano, manoCambia); quitar();
+    });
 
     const kb = this.input.keyboard!;
     ['SPACE', 'ENTER', 'E'].forEach((k) => kb.on(`keydown-${k}`, () => this.confirmar()));
@@ -93,7 +103,11 @@ export class UIScene extends Phaser.Scene {
     kb.on('keydown-W', () => this.moverSeleccion(-1));
     kb.on('keydown-S', () => this.moverSeleccion(1));
     kb.on('keydown-I', () => this.alternarInventario());
-    kb.on('keydown-ESC', () => { if (this.inventario.visible) this.alternarInventario(); });
+    kb.on('keydown-ESC', () => {
+      if (this.inventario.visible) this.alternarInventario();
+      else if (mano.item) this.soltarObjeto();
+    });
+    kb.on('keydown-L', () => this.abrirRegistro());
     kb.on('keydown', (e: KeyboardEvent) => {
       audio.desbloquear();
       const n = Number(e.key);
@@ -112,7 +126,8 @@ export class UIScene extends Phaser.Scene {
   }
 
   update() {
-    this.botones.setVisible(this.esTactil && !this.activo && !this.inventario.visible);
+    this.botones.setVisible(this.esTactil && !this.activo && !this.inventario.visible && !this.consultando);
+    this.enMano.setVisible(!!mano.item && !this.activo && !this.consultando);
     if (this.depurando) {
       this.depuracion.setText([
         'DEPURACIÓN (F1)',
@@ -177,6 +192,7 @@ export class UIScene extends Phaser.Scene {
     boton(880, 450, 44, 'USAR', () => this.game.events.emit(EV.accion, 'principal'));
     boton(790, 488, 34, 'MIRAR', () => this.game.events.emit(EV.accion, 'mirar'));
     boton(900, 92, 30, 'OBJ.', () => this.alternarInventario());
+    boton(900, 160, 30, 'REG.', () => this.abrirRegistro());
   }
 
   // ------------------------------------------------------------------ flujo de diálogo
@@ -260,6 +276,9 @@ export class UIScene extends Phaser.Scene {
       for (const [k, v] of Object.entries(r.datos ?? {})) {
         if (narrativa.story.variablesState.GlobalVariableExistsWithName(`cf_${id}_${k}`)) narrativa.set(`cf_${id}_${k}`, String(v));
       }
+    } else if (tipo === 'dp') {
+      // # dp:id=DP-J3-AMORY → dp_j3_amory = "aceptar" | "recordar"
+      narrativa.set((params.id ?? '').toLowerCase().replace(/-/g, '_'), r.resultado);
     } else if (tipo === 'ficha' && r.datos) {
       for (const k of ['nombre', 'apellido', 'num']) narrativa.set(k, String(r.datos[k]));
       narrativa.call('fijar_genero', String(r.datos.genero));
@@ -303,6 +322,7 @@ export class UIScene extends Phaser.Scene {
   // ------------------------------------------------------------------ líneas
   private mostrarLinea(l: Line) {
     this.ocultarTodo();
+    if (l.kind !== 'cartel') registro.anotar(l.id, l.kind === 'pensamiento' ? 'PENSAMIENTO' : l.kind === 'telepantalla' ? 'TELEPANTALLA' : l.speaker, l.text);
     if (l.kind === 'pensamiento') {
       this.pensamiento.setVisible(true);
       this.escribir(this.pensamientoTexto, l.text);
@@ -313,7 +333,7 @@ export class UIScene extends Phaser.Scene {
     if (l.kind === 'cartel') {
       this.cartel.setVisible(true).setAlpha(0);
       this.tweens.add({ targets: this.cartel, alpha: 1, duration: 300 });
-      this.cartelTexto.setText(l.text);
+      this.cartelTexto.setText(l.text.replace(/¶/g, '\n'));   // ¶ = salto de línea (ink no deja escribir otro)
       return;
     }
     const tele = l.kind === 'telepantalla';
@@ -426,24 +446,103 @@ export class UIScene extends Phaser.Scene {
     if (!abrir) return;
     const items = narrativa.list('inventario');
     const c = this.inventario;
+    if (mano.item) this.soltarObjeto();
     this.inventarioAbiertoEn = this.time.now;
     // el mismo toque que abre el panel no debe cerrarlo al soltarse
     c.add(this.add.rectangle(0, 0, 960, 540, 0x000000, 0.6).setOrigin(0).setInteractive()
       .on('pointerup', () => { if (this.time.now - this.inventarioAbiertoEn > 300) this.alternarInventario(); }));
     c.add(this.add.rectangle(480, 270, 640, 300, 0x2e221b).setStrokeStyle(3, 0x1a1411));
     c.add(this.add.text(480, 142, 'OBJETOS', { fontFamily: FUENTE.maquina, fontSize: '30px', color: hex(COLOR.papel4) }).setOrigin(0.5));
-    const desc = this.add.text(480, 370, items.length ? 'Toca un objeto para mirarlo.' : 'No llevas nada.', {
+    const desc = this.add.text(480, 340, items.length ? 'Toca un objeto.' : 'No llevas nada.', {
       fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel3), align: 'center', wordWrap: { width: 580 },
     }).setOrigin(0.5);
     c.add(desc);
+    // acciones sobre el objeto elegido: mirarlo o cogerlo para usarlo con algo del escenario
+    let elegido: string | null = null;
+    const accion = (x: number, etiqueta: string, alPulsar: () => void) => {
+      const fondo = this.add.rectangle(x, 390, 170, 36, COLOR.gris2).setStrokeStyle(2, COLOR.gris3).setInteractive({ useHandCursor: true });
+      const t = this.add.text(x, 390, etiqueta, { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel4) }).setOrigin(0.5);
+      fondo.on('pointerover', () => fondo.setFillStyle(COLOR.rojo3));
+      fondo.on('pointerout', () => fondo.setFillStyle(COLOR.gris2));
+      fondo.on('pointerup', () => { if (elegido) alPulsar(); });
+      const b = this.add.container(0, 0, [fondo, t]).setVisible(false);
+      c.add(b);
+      return b;
+    };
+    const mirar = accion(390, 'MIRAR', () => {
+      const ruta = ITEMS[elegido!]?.mirar;
+      if (ruta && narrativa.hasPath(ruta)) { this.alternarInventario(); this.game.events.emit(EV.dialogoIniciar, ruta); }
+    });
+    const usar = accion(570, 'USAR CON…', () => {
+      mano.item = elegido;
+      this.alternarInventario();
+      this.dibujarMano();
+    });
+    const marcos: Phaser.GameObjects.Rectangle[] = [];
     items.forEach((id, i) => {
       const item = ITEMS[id];
-      const x = 480 - (items.length - 1) * 60 + i * 120, y = 250;
+      const x = 480 - (items.length - 1) * 60 + i * 120, y = 240;
       const casilla = this.add.rectangle(x, y, 92, 92, 0x1a1411).setStrokeStyle(2, COLOR.gris3).setInteractive({ useHandCursor: true });
+      marcos.push(casilla);
       c.add(casilla);
       if (item && this.textures.exists(item.icono)) c.add(this.add.image(x, y, item.icono).setScale(4));
-      casilla.on('pointerup', () => desc.setText(item ? `${item.nombre}\n${item.descripcion}` : id));
+      casilla.on('pointerup', () => {
+        elegido = id;
+        marcos.forEach((m) => m.setStrokeStyle(2, m === casilla ? COLOR.rojo4 : COLOR.gris3));
+        desc.setText(item ? `${item.nombre}\n${item.descripcion}` : id);
+        mirar.setVisible(!!item?.mirar);
+        usar.setVisible(true).setX(item?.mirar ? 0 : -90);
+      });
     });
+  }
+
+  /** Abre el registro de diálogos para consultarlo (fuera de los diálogos). */
+  private abrirRegistro() {
+    if (this.activo || this.enAccion || this.consultando) return;
+    if (this.inventario.visible) this.alternarInventario();
+    this.consultando = true;
+    this.foco.setVisible(false);
+    this.game.events.emit(EV.pausa, true);
+    void this.lanzarMinijuego('Registro', {}).then(() => {
+      this.consultando = false;
+      this.game.events.emit(EV.pausa, false);
+    });
+  }
+
+  /** Un objeto nuevo en el inventario: aviso breve arriba. */
+  private avisarObjeto(id: string) {
+    const item = ITEMS[id];
+    if (!item) return;
+    const a = this.aviso.removeAll(true).setVisible(true).setAlpha(0).setY(-20);
+    a.add(this.add.rectangle(480, 164, 360, 58, COLOR.gris1, 0.92).setStrokeStyle(2, COLOR.ocre4));
+    if (this.textures.exists(item.icono)) a.add(this.add.image(334, 164, item.icono).setScale(2.5));
+    a.add(this.add.text(372, 150, item.nombre.toUpperCase(), { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.ocre4) }));
+    a.add(this.add.text(372, 172, 'en el inventario', { fontFamily: FUENTE.texto, fontSize: '15px', color: hex(COLOR.papel3) }));
+    this.tweens.add({ targets: a, alpha: 1, y: 0, duration: 300 });
+    this.tweens.add({ targets: a, alpha: 0, delay: 3200, duration: 500, onComplete: () => a.setVisible(false) });
+  }
+
+  /** Indicador del objeto en la mano (arriba a la izquierda), con un aspa para soltarlo. */
+  private dibujarMano() {
+    const c = this.enMano.removeAll(true);
+    const item = mano.item ? ITEMS[mano.item] : null;
+    if (!item) { c.setVisible(false); return; }
+    const texto = this.add.text(70, 30, `${item.nombre} · ${this.esTactil ? 'toca' : 'elige'} dónde usarlo`, {
+      fontFamily: FUENTE.texto, fontSize: '17px', color: hex(COLOR.papel4),
+    }).setOrigin(0, 0.5);
+    const ancho = texto.width + 110;
+    c.add(this.add.rectangle(16, 30, ancho, 40, COLOR.gris1, 0.9).setOrigin(0, 0.5).setStrokeStyle(2, COLOR.ocre4));
+    if (this.textures.exists(item.icono)) c.add(this.add.image(42, 30, item.icono).setScale(2));
+    c.add(texto);
+    const x = this.add.text(16 + ancho - 22, 30, '✕', { fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel3) })
+      .setOrigin(0.5).setInteractive({ useHandCursor: true });
+    x.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); this.soltarObjeto(); });
+    c.add(x);
+  }
+
+  private soltarObjeto() {
+    mano.item = null;
+    this.dibujarMano();
   }
 
   /** El ojo se abre a medida que sube la Sospecha (biblia visual §8). */

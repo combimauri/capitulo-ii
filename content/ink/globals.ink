@@ -67,3 +67,20 @@ VAR despacho_visto = false
 VAR centro_visto = false
 VAR pancarta_j2 = ""
 VAR sueno_visto = false
+
+// Jornada 3
+VAR amory_borrado = false              // desde la mañana de la J3, Amory no ha existido nunca (para el mundo)
+VAR gimnasia_j3 = false
+VAR cf_j3_gimnasia = ""
+VAR depto_j3_visto = false
+VAR pell_hablado = false
+VAR brooke_hablado = false
+VAR voss_j3_visto = false
+VAR voss_j3_insistir = false
+VAR dp_j3_amory = ""                   // "aceptar" | "recordar"
+VAR diario_amory = false               // pista para el diario (disponible desde la J5)
+VAR lapiz_destruido = false
+VAR pasillo_visto = false
+VAR guardia_pasillo = false
+VAR nell_se_fue = false
+VAR noche_j3_vista = false

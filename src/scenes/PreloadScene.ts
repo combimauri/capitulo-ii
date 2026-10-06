@@ -18,7 +18,7 @@ export class PreloadScene extends Phaser.Scene {
     this.load.on('progress', (p: number) => barra.setSize(300 * p, 6));
 
     // escenarios: un PNG por localización (o el indicado en la propiedad "fondo" del mapa)
-    const fondos = new Set(Object.values(LOCALIZACIONES).map((l) => l.fondo));
+    const fondos = new Set(Object.values(LOCALIZACIONES).flatMap((l) => [l.fondo, ...(l.fondoAlt ? [l.fondoAlt.clave] : [])]));
     for (const clave of fondos) this.load.image(clave, `assets/locations/${clave.replace(/^loc-/, '')}.png`);
 
     // protagonista (H y M) y personajes de los mapas

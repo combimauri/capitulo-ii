@@ -255,6 +255,39 @@
        "value": "arriba"
       }
      ]
+    },
+    {
+     "id": 13,
+     "name": "ventana",
+     "x": 100,
+     "y": 20,
+     "width": 84,
+     "height": 52,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ventana"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "piso_noche.ventana_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "142,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -268,7 +301,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 13,
+     "id": 14,
      "name": "puerta",
      "x": 240,
      "y": 232,
@@ -304,5 +337,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 14
+ "nextobjectid": 15
 }

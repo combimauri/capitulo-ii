@@ -1,4 +1,7 @@
-"""J1.05 — Departamento de Partes y Cartografía del Frente (Minipax, planta 14)."""
+"""J1.05 — Departamento de Partes y Cartografía del Frente (Minipax, planta 14).
+
+Variante "j3": la mesa de Amory sin pájaros y su proyección, firmada por otro, clavada en el mapa.
+"""
 import random
 
 from pixel import Canvas, K
@@ -35,7 +38,30 @@ def mapa_malabar(cv, x, y, w, h):
     cv.text(x + w // 2 - cv.text_width("MALABAR") // 2, y + h - 12, "MALABAR", K("gris", 1))
 
 
-def dibujar():
+def proyeccion_pell(cv, x, y):
+    """La proyección de Amory clavada sobre el mapa: el mundo estirado, sin pájaros, firmada «PELL A.»."""
+    cv.rect(x + 2, y + 2, x + 38, y + 30, K("gris", 1))                       # sombra
+    cv.rect(x, y, x + 36, y + 28, K("papel", 4))
+    cv.d.ellipse([x + 3, y + 4, x + 33, y + 22], outline=K("cielo", 4))       # retícula ovalada
+    cv.hline(x + 3, x + 33, y + 13, K("cielo", 5)); cv.vline(x + 18, y + 4, y + 22, K("cielo", 5))
+    cv.poly([(x + 6, y + 9), (x + 15, y + 6), (x + 17, y + 12), (x + 9, y + 17)], K("granate", 4))   # Oceanía, enorme
+    cv.poly([(x + 21, y + 7), (x + 29, y + 9), (x + 27, y + 14), (x + 22, y + 12)], K("gris", 5))
+    cv.text(x + 4, y + 22, "PELL A.", K("gris", 2))
+    cv.px(x + 18, y + 1, K("rojo", 4)); cv.px(x + 18, y + 2, K("gris", 2))      # chincheta
+
+
+def archivador(cv, x, y):
+    """Archivador del personal junto a la entrada: tres cajones con tarjetero."""
+    cv.rect(x, y, x + 22, y + 8, K("gris", 6)); cv.hline(x, x + 22, y, K("gris", 7))
+    cv.rect(x, y + 8, x + 22, y + 44, K("gris", 5)); cv.frame(x, y + 8, x + 22, y + 44, K("gris", 3))
+    for k in range(3):
+        cy = y + 11 + k * 11
+        cv.frame(x + 2, cy, x + 20, cy + 9, K("gris", 3))
+        cv.rect(x + 8, cy + 2, x + 14, cy + 4, K("papel", 3))                   # tarjetero
+        cv.hline(x + 9, x + 13, cy + 6, K("gris", 7))                          # tirador
+
+
+def dibujar(variante=None):
     cv = Canvas(W, H)
     P.tapa_muro(cv, X0 - 12, WT - 12, X1 + 12, WT)
     P.papel_pintado(cv, X0, WT, X1, WB, rampa="pared", base=3, motivo="rayas")
@@ -60,11 +86,18 @@ def dibujar():
         P.mesa_oficina(cv, mx, my, telepantallita=True, semilla=i)
         cv.rect(mx + 20, my - 18, mx + 23, my, K("gris", 5))                 # tubo vertical
         P.silla(cv, mx + 14, my + 30, rampa="gris", base=4)
-    # papeles con pájaros en la mesa de Amory
     ax, ay = MESA_AMORY
-    cv.rect(ax + 26, ay + 2, ax + 40, ay + 14, K("papel", 4))
-    for (bx, by) in [(ax + 29, ay + 5), (ax + 34, ay + 9), (ax + 37, ay + 4)]:
-        cv.px(bx, by, K("gris", 1)); cv.px(bx + 1, by - 1, K("gris", 1)); cv.px(bx - 1, by - 1, K("gris", 1))
+    if variante == "j3":
+        # la misma mesa, con un parte a medio teclear; ni un pájaro
+        cv.rect(ax + 26, ay + 2, ax + 40, ay + 14, K("papel", 3))
+        for k in range(4):
+            cv.hline(ax + 28, ax + 38 - (k % 2) * 3, ay + 4 + k * 2, K("gris", 5))
+        proyeccion_pell(cv, 154, 48)
+    else:
+        # papeles con pájaros en la mesa de Amory
+        cv.rect(ax + 26, ay + 2, ax + 40, ay + 14, K("papel", 4))
+        for (bx, by) in [(ax + 29, ay + 5), (ax + 34, ay + 9), (ax + 37, ay + 4)]:
+            cv.px(bx, by, K("gris", 1)); cv.px(bx + 1, by - 1, K("gris", 1)); cv.px(bx - 1, by - 1, K("gris", 1))
     # mesa del Registro (para la Jornada 4): mapa de Londres bajo cristal
     cv.rect(352, 120, 424, 160, K("madera", 3)); cv.rect(356, 124, 420, 156, K("papel", 3))
     for k in range(358, 420, 8):
@@ -73,6 +106,7 @@ def dibujar():
         cv.hline(356, 420, k, K("papel", 2))
     cv.d.line([(356, 146), (380, 138), (400, 142), (420, 132)], fill=K("cielo", 4), width=2)   # el Támesis
     cv.rect(352, 160, 424, 164, K("madera", 1))
+    archivador(cv, 414, 196)
     # papeleras
     for (px_, py_) in [(140, 140), (220, 140), (140, 196), (300, 196)]:
         P.papelera(cv, px_, py_)

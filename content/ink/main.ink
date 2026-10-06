@@ -5,5 +5,7 @@ INCLUDE funciones.ink
 INCLUDE prologo.ink
 INCLUDE acto1/j1.ink
 INCLUDE acto1/j2.ink
+INCLUDE acto1/j3.ink
+INCLUDE objetos.ink
 
 -> prologo

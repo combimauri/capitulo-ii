@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { narrativa } from '../core/juego';
+import { narrativa, registro, mano } from '../core/juego';
 import { SaveSystem } from '../core/SaveSystem';
 import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
@@ -73,6 +73,8 @@ export class MenuScene extends Phaser.Scene {
 
   private nueva() {
     narrativa.reset();
+    registro.vaciar();
+    mano.item = null;
     this.registry.set('introPendiente', true);   // UIScene arranca el flujo principal al estar lista
     this.scene.start('Location', { escena: 'stepney', spawn: 'inicio', cargado: true });
     this.scene.launch('UI');
@@ -82,6 +84,8 @@ export class MenuScene extends Phaser.Scene {
     const p = SaveSystem.cargar('auto');
     if (!p) return this.nueva();
     narrativa.loadState(p.ink);
+    registro.cargar(p.registro);
+    mano.item = null;
     this.scene.start('Location', { escena: p.mundo.escena, x: p.mundo.x, y: p.mundo.y, dir: p.mundo.dir, cargado: true });
     this.scene.launch('UI');
   }

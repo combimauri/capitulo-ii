@@ -10,6 +10,8 @@ export interface SaveData {
   ink: string;
   mundo: { escena: string; x: number; y: number; dir: Dir };
   meta: { jornada: number };
+  /** Registro de diálogos (con lo que el doblepensar haya reescrito). */
+  registro?: ReturnType<import('./Registro').Registro['serializar']>;
 }
 
 function storage(): Storage | null {
