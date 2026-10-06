@@ -10,6 +10,7 @@
 | Protagonista en 4 direcciones | [art/personajes/protagonista_hoja@6x.png](../art/personajes/protagonista_hoja@6x.png) |
 | Elenco principal | [art/personajes/elenco@5x.png](../art/personajes/elenco@5x.png) |
 | Paleta | [art/paleta@4x.png](../art/paleta@4x.png) |
+| Retratos del crimen facial | [art/personajes/retratos_protagonista@2x.png](../art/personajes/retratos_protagonista@2x.png) |
 
 ---
 
@@ -207,7 +208,7 @@ Es el retrato más importante del juego, porque es la interfaz del microjuego (v
 
 Las dos versiones (H y M) comparten la composición; solo cambian el pelo y los rasgos.
 
-> **Estado:** pendiente de una prueba de estilo. Es lo más difícil de producir por código y conviene validarlo antes de hacer el resto.
+> **Estado:** prueba hecha → [art/personajes/retratos_protagonista@2x.png](../art/personajes/retratos_protagonista@2x.png) (generador: [retrato_protagonista.py](../art/personajes/retrato_protagonista.py)). La cara se construye por capas y cada expresión es un conjunto de parámetros de ojos, cejas y boca. Lleva un **contraluz verde por la derecha** (la telepantalla siempre está ahí).
 
 ---
 
@@ -320,6 +321,6 @@ Prioridad: **M1** = corte vertical (Prólogo + J1). **A1–A4** = acto en que ap
 
 ## 10. Pendientes de validar
 
-1. **Prueba de estilo de los retratos** (crimen facial del protagonista).
+1. ~~Prueba de estilo de los retratos~~ → hecha, pendiente de aprobación.
 2. **Animación de caminar** del protagonista (4 direcciones × 4 fotogramas).
 3. **Piezas que faltan:** gorra de guardia, cuerpo ancho (Parsons), faja de la Liga Anti-Sex (Julia) y el físico corpulento de O'Brien.
