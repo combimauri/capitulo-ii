@@ -46,6 +46,10 @@ def main():
     ic.exportar(DESTINO / "iconos", DESTINO / "minijuegos")
     import odio
     odio.exportar(DESTINO / "minijuegos")
+    import londres
+    londres.exportar(DESTINO / "minijuegos")
+    import vinetas
+    vinetas.exportar(DESTINO / "vinetas")
     print("ok iconos y minijuegos")
 
     import icono

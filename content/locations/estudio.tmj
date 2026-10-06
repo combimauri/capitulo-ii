@@ -1,0 +1,473 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Estudio Crane"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-estudio"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "estudio.entrar"
+  },
+  {
+   "name": "fondo_alt",
+   "type": "string",
+   "value": "loc-estudio_j6"
+  },
+  {
+   "name": "fondo_alt_si",
+   "type": "string",
+   "value": "bombilla_encendida"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/estudio.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 84,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 396,
+     "y": 0,
+     "width": 84,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "mostrador",
+     "x": 96,
+     "y": 114,
+     "width": 82,
+     "height": 34,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "silla",
+     "x": 260,
+     "y": 98,
+     "width": 28,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "estufa",
+     "x": 358,
+     "y": 116,
+     "width": 28,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 10,
+     "name": "fotos",
+     "x": 88,
+     "y": 24,
+     "width": 140,
+     "height": 70,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Fotografías"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "estudio.fotos_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "158,160"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "cuarto",
+     "x": 330,
+     "y": 44,
+     "width": 30,
+     "height": 48,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cuarto oscuro"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "estudio.cuarto_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "estudio.cuarto"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "345,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "fondos",
+     "x": 240,
+     "y": 26,
+     "width": 72,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Fondos pintados"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "estudio.fondos_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "salir",
+     "x": 224,
+     "y": 240,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "estudio.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,236"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "recorte",
+     "x": 178,
+     "y": 76,
+     "width": 20,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Recorte enmarcado"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j6_recorte_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j6_recorte_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "190,160"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==6"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 17,
+     "name": "puerta",
+     "x": 240,
+     "y": 232,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "crane",
+     "x": 200,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "crane"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Abel Crane"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "estudio.crane"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "estudio.crane_mirar"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "camara",
+     "x": 320,
+     "y": 186,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "tripode"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cámara"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "estudio.camara_mirar"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "300,196"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 18
+}

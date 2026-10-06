@@ -151,7 +151,79 @@
    "id": 3,
    "name": "hotspots",
    "type": "objectgroup",
-   "objects": [],
+   "objects": [
+    {
+     "id": 11,
+     "name": "salir",
+     "x": 330,
+     "y": 238,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "cantina.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "346,234"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "silla",
+     "x": 280,
+     "y": 208,
+     "width": 26,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Silla vacía"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j4_silla_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "296,234"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
+    }
+   ],
    "opacity": 1,
    "visible": true,
    "x": 0,
@@ -163,7 +235,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 14,
+     "id": 18,
      "name": "puerta",
      "x": 340,
      "y": 176,
@@ -223,11 +295,104 @@
        "name": "aprox",
        "type": "string",
        "value": "216,182"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!amory_borrado"
       }
      ]
     },
     {
-     "id": 11,
+     "id": 13,
+     "name": "pell",
+     "x": 140,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "pell"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarada Pell"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j4_pell_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "140,234"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "brooke",
+     "x": 400,
+     "y": 110,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "brooke"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarada Brooke"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "j4_brooke"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j3_brooke_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "400,128"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "amory_borrado"
+      }
+     ]
+    },
+    {
+     "id": 15,
      "name": "f1",
      "x": 140,
      "y": 110,
@@ -246,7 +411,7 @@
      ]
     },
     {
-     "id": 12,
+     "id": 16,
      "name": "f2",
      "x": 160,
      "y": 176,
@@ -261,11 +426,16 @@
        "name": "sprite",
        "type": "string",
        "value": "funcionario1"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!amory_borrado"
       }
      ]
     },
     {
-     "id": 13,
+     "id": 17,
      "name": "f3",
      "x": 380,
      "y": 176,
@@ -291,5 +461,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 15
+ "nextobjectid": 19
 }

@@ -160,6 +160,9 @@ PENSAMIENTO: La telepantalla de la mesa está encendida, a medio metro. ¿Lo hab
 { jornada == 3:
     -> j3_voss
 }
+{ jornada == 7 and nell_respuesta == "denunciar":
+    -> final_b
+}
 { amory_reaccion != "denuncia" or despacho_visto:
     -> DONE
 }

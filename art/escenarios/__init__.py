@@ -20,7 +20,7 @@ def exportar(destino):
         subprocess.run([sys.executable, str(ART / "pruebas" / "piso_hd.py"), "--sin-protagonista", *flags,
                         f"--salida={destino / (nombre + '.png')}"], check=True, capture_output=True)
         hechos.append(nombre)
-    for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina", "salon_odio", "despacho_voss", "centro", "sueno", "pasillo"):
+    for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina", "salon_odio", "despacho_voss", "centro", "sueno", "pasillo", "limehouse", "pub", "mercado", "estudio", "archivo", "suministros"):
         try:
             m = __import__(modulo)
         except ModuleNotFoundError:
@@ -29,4 +29,8 @@ def exportar(destino):
         hechos.append(modulo)
         if modulo == "departamento":
             m.dibujar("j3").img.save(destino / "departamento_j3.png"); hechos.append("departamento_j3")
+        if modulo == "estudio":
+            m.dibujar("j6").img.save(destino / "estudio_j6.png"); hechos.append("estudio_j6")
+        if modulo == "mercado":
+            m.dibujar("ruinas").img.save(destino / "mercado_ruinas.png"); hechos.append("mercado_ruinas")
     return hechos

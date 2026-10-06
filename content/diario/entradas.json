@@ -1,0 +1,11 @@
+{
+  "entradas": [
+    {"id": "diario_amory", "titulo": "Amory", "frases": [{"texto": "Felix Amory existió. Se sentaba a mi lado. Dibujaba pájaros."}, {"texto": "Un hombre puede dejar de haber existido entre la noche y la mañana."}, {"texto": "Yo dije su nombre en voz alta. Después nadie volvió a decirlo.", "si": "amory_reaccion==denuncia"}]},
+    {"id": "diario_sammy", "titulo": "Sammy", "frases": [{"texto": "Hoy murió un niño que se llamaba Sammy. Tenía ochenta y cuatro trozos de metralla."}, {"texto": "Mis dedos tocaron su camisa. No fue suficiente.", "si": "sammy_intento"}, {"texto": "Me escondí detrás de un puesto de patatas mientras un niño moría.", "si": "!sammy_intento"}]},
+    {"id": "diario_cohetes", "titulo": "Los cohetes", "frases": [{"texto": "Los cohetes solo caen sobre los proles."}, {"texto": "Eurasia nunca se equivoca de barrio."}, {"texto": "Eurasia es cobarde. ¿O es otra cosa?", "si": "patron_conclusion==cobardes"}]},
+    {"id": "diario_parte", "titulo": "El parte", "frases": [{"texto": "Escribí {parte_j1_km} kilómetros. Ahora he escrito cero. Las dos cosas llevan mi firma."}, {"texto": "El pasado no ha ocurrido. Se redacta."}]},
+    {"id": "diario_ivy", "titulo": "Ivy", "frases": [{"texto": "Ivy sonreía. Tenía un diente mellado. En el cartel tiene la boca cerrada."}, {"texto": "Le cambiaron la nariz para que fuera más fácil llorarla."}]},
+    {"id": "diario_chocolate", "titulo": "El chocolate", "frases": [{"texto": "Treinta gramos en marzo. Veinte en abril. Y dimos las gracias."}, {"texto": "Si no recuerdas cuánto tenías, cualquier cosa es un aumento."}]},
+    {"id": "diario_nell", "titulo": "La limpiadora", "frases": [{"texto": "Una mujer sin nombre sacó tres piedras de encima de Ivy. Llevo cinco años sin verla."}, {"texto": "Los proles también limpian. Lo ven todo. Nadie les ve a ellos."}]}
+  ]
+}

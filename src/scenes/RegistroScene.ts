@@ -14,7 +14,10 @@ import { COLOR, FUENTE, hex } from '../ui/estilo';
 
 interface DpConfig {
   lineas: string[];
-  alias: Alias;
+  /** Doblepensar sobre una persona: sus nombres se borran o se tachan. */
+  alias?: Alias;
+  /** Doblepensar sobre lo que se dijo: id de línea → texto nuevo (admite {variables} de ink). */
+  reescribir?: Record<string, string>;
   telepantalla: string;
   aceptar: string;
   recordar: string;
@@ -27,6 +30,12 @@ const COL_TEXTO = 236;
 const RUIDO = '▓▒░#%&@$*';
 
 interface Fila { entrada: EntradaRegistro; y: number; hablante: Phaser.GameObjects.Text; texto: Phaser.GameObjects.Text; tachon: Phaser.GameObjects.Rectangle }
+
+/** Sustituye {variable} por su valor en ink. */
+const interpolar = (s: string) => s.replace(/\{(\w+)\}/g, (_, v) => String(narrativa.get(v) ?? ''));
+
+/** Tacha un texto entero con el carácter combinado U+0336. */
+const tacharTodo = (texto: string) => [...texto].map((c) => (c === ' ' ? c : c + '\u0336')).join('');
 
 /** Tacha las apariciones de un nombre con el carácter combinado U+0336. */
 const tachar = (texto: string, alias: Alias) =>
@@ -115,7 +124,8 @@ export class RegistroScene extends Minijuego {
 
   private textoTachado(e: EntradaRegistro) {
     const alias = registro.aliasDe(e);
-    return alias ? tachar(e.texto, alias) : e.texto;
+    if (alias) return tachar(e.texto, alias);
+    return e.estado === 'tachada' ? tacharTodo(e.texto) : e.texto;   // una línea reescrita que se recuerda
   }
 
   /** Lo que no es el listado (avisos, opciones, estática) se dibuja por encima, con su cámara. */
@@ -169,7 +179,10 @@ export class RegistroScene extends Minijuego {
   private async doblepensar(c: DpConfig) {
     const espera = (ms: number) => new Promise<void>((ok) => this.time.delayedCall(ms, ok));
     this.estatica(true);
-    const afectadas = this.filas.filter((f) => registro.afectadas(c.lineas, c.alias).includes(f.entrada));
+    const cambios = c.reescribir ? Object.fromEntries(Object.entries(c.reescribir).map(([k, v]) => [k, interpolar(v)])) : null;
+    const afectadas = cambios
+      ? this.filas.filter((f) => f.entrada.id in cambios)
+      : this.filas.filter((f) => registro.afectadas(c.lineas, c.alias ?? []).includes(f.entrada));
     await espera(700);
 
     // el registro se desplaza solo hasta la primera línea afectada
@@ -184,7 +197,8 @@ export class RegistroScene extends Minijuego {
 
     // las letras tiemblan, se deshacen y se recomponen como "—"
     const visibles = afectadas.filter((f) => f.y - this.desplazamiento < LISTA.h + 40);
-    await this.deshacer(visibles, c.alias);
+    if (cambios) await this.reescribirFilas(visibles, cambios);
+    else await this.deshacer(visibles, c.alias ?? []);
     this.estatica(false);
     await espera(700);
 
@@ -193,21 +207,30 @@ export class RegistroScene extends Minijuego {
     const tele = this.fuera(this.add.text(width / 2, 462, '', {
       fontFamily: FUENTE.maquina, fontSize: '24px', color: hex(COLOR.tele5), align: 'center', wordWrap: { width: 820 },
     }).setOrigin(0.5));
-    for (let i = 1; i <= c.telepantalla.length; i++) {
-      tele.setText(c.telepantalla.slice(0, i));
+    const susurro = interpolar(c.telepantalla);
+    for (let i = 1; i <= susurro.length; i++) {
+      tele.setText(susurro.slice(0, i));
       await espera(32);
     }
     await espera(900);
 
     const decision = await this.elegir(c);
     tele.destroy();
-    registro.doblepensar(c.lineas, c.alias, decision);
-    if (decision === 'recordar') {
+    if (cambios) registro.reescribir(cambios, decision);
+    else registro.doblepensar(c.lineas, c.alias ?? [], decision);
+    if (decision === 'recordar' && cambios) {
+      // lo que se oyó vuelve, tachado de arriba abajo: se recuerda contra el documento
+      audio.play('plumilla');
+      for (const f of afectadas) {
+        f.texto.setText(this.formato(f.entrada, this.textoTachado(f.entrada)));
+        await espera(120);
+      }
+    } else if (decision === 'recordar') {
       audio.play('plumilla');
       for (const f of afectadas) {
         f.hablante.setText(this.etiqueta(f.entrada));
         f.texto.setText(this.formato(f.entrada, this.textoTachado(f.entrada)));
-        f.tachon.setVisible(registro.nombra(f.entrada, c.alias)).setSize(f.hablante.width + 4, 2).setScale(0, 1);
+        f.tachon.setVisible(registro.nombra(f.entrada, c.alias ?? [])).setSize(f.hablante.width + 4, 2).setScale(0, 1);
         this.tweens.add({ targets: f.tachon, scaleX: 1, duration: 260 });
         await espera(90);
       }
@@ -261,12 +284,28 @@ export class RegistroScene extends Minijuego {
     }
   }
 
+  /** Las líneas tiemblan y se recomponen diciendo otra cosa. */
+  private async reescribirFilas(filas: Fila[], cambios: Record<string, string>) {
+    const espera = (ms: number) => new Promise<void>((ok) => this.time.delayedCall(ms, ok));
+    for (let paso = 0; paso < 18; paso++) {
+      for (const f of filas) {
+        const viejo = f.entrada.texto, nuevo = cambios[f.entrada.id];
+        const n = Math.floor((paso / 17) * nuevo.length);
+        const mezcla = [...nuevo.slice(0, n)].join('') + [...viejo.slice(n)].map((ch) => (ch === ' ' || Math.random() < 0.6 ? ch : RUIDO[Math.floor(Math.random() * RUIDO.length)])).join('');
+        f.texto.setText(this.formato(f.entrada, mezcla)).setX(LISTA.x + COL_TEXTO + Phaser.Math.Between(-1, 1));
+      }
+      if (paso % 2 === 0) audio.play(paso % 4 === 0 ? 'grieta' : 'tecla');
+      await espera(80);
+    }
+    for (const f of filas) f.texto.setText(this.formato(f.entrada, cambios[f.entrada.id])).setX(LISTA.x + COL_TEXTO);
+  }
+
   private elegir(c: DpConfig): Promise<'aceptar' | 'recordar'> {
     return new Promise((ok) => {
       const { width } = this.scale;
       const capa = this.fuera(this.add.container(0, 0).setDepth(20));
       capa.add(this.add.rectangle(LISTA.x - 14, 190, LISTA.w + 28, 140, 0x000000, 0.82).setOrigin(0));
-      const opciones: ['aceptar' | 'recordar', string][] = [['aceptar', c.aceptar], ['recordar', c.recordar]];
+      const opciones: ['aceptar' | 'recordar', string][] = [['aceptar', interpolar(c.aceptar)], ['recordar', interpolar(c.recordar)]];
       let elegido = false;
       const fin = (d: 'aceptar' | 'recordar') => {
         if (elegido) return;

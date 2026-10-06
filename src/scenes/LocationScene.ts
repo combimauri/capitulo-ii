@@ -31,6 +31,7 @@ export class LocationScene extends Phaser.Scene {
   private loc!: LocationData;
   private prota!: Phaser.GameObjects.Sprite;
   private fondo!: Phaser.GameObjects.Image;
+  private cono!: Phaser.GameObjects.Graphics;
   private sombra!: Phaser.GameObjects.Ellipse;
   private texturaProta = 'prot_h';
   private dir: Dir = 'abajo';
@@ -66,6 +67,12 @@ export class LocationScene extends Phaser.Scene {
 
     this.fondo = this.add.image(0, 0, this.loc.fondo).setOrigin(0).setDepth(-1000);
     if (this.loc.parpadeo) this.neones();
+    this.cono = this.add.graphics().setDepth(8000);
+    const verCono = () => this.dibujarCono();
+    this.game.events.on(EV.mano, verCono);
+    this.events.once('shutdown', () => this.game.events.off(EV.mano, verCono));
+    this.dibujarCono();
+    if (this.loc.conosRotativos) this.vigilancia(this.loc.conosRotativos);
 
     const spawn = this.loc.spawns.find((s) => s.name === data.spawn) ?? this.loc.spawns[0];
     const x = data.x ?? spawn.x, y = data.y ?? spawn.y;
@@ -79,6 +86,7 @@ export class LocationScene extends Phaser.Scene {
     for (const npc of this.loc.npcs) {
       const sprite = this.add.sprite(npc.x, npc.y, `npc-${npc.sprite}`, npc.frame ?? 0).setOrigin(0.5, 1).setDepth(npc.y);
       if (npc.dir === 'izquierda') sprite.setFlipX(true);
+      if (this.loc.tinteProta !== undefined) sprite.setTint(this.loc.tinteProta);   // la misma luz para todos
       this.npcs.set(npc.name, { npc, sprite, visible: true });
     }
     this.actualizarVisibilidad();
@@ -187,6 +195,29 @@ export class LocationScene extends Phaser.Scene {
     });
   }
 
+  /** Con el diario en la mano se ve hasta dónde llega la telepantalla. */
+  private dibujarCono() {
+    this.cono.clear();
+    if (!this.loc.cono || mano.item !== 'diario') return;
+    const puntos = this.loc.cono.map((p) => new Phaser.Math.Vector2(p.x, p.y));
+    this.cono.fillStyle(0x7fc496, 0.13).fillPoints(puntos, true)
+      .lineStyle(1, 0x7fc496, 0.6).strokePoints(puntos, true);
+  }
+
+  /** Una telepantalla de techo que gira: alterna sus conos cada 5 segundos y lo anota en ink. */
+  private vigilancia(v: { conos: Point[][]; variable: string }) {
+    const g = this.add.graphics().setDepth(8000);
+    let i = 0;
+    const girar = () => {
+      const puntos = v.conos[i].map((p) => new Phaser.Math.Vector2(p.x, p.y));
+      g.clear().fillStyle(0x7fc496, 0.14).fillPoints(puntos, true).lineStyle(1, 0x7fc496, 0.7).strokePoints(puntos, true);
+      if (v.variable) narrativa.set(v.variable, i === 0);
+      i = (i + 1) % v.conos.length;
+    };
+    girar();
+    this.time.addEvent({ delay: 5000, loop: true, callback: girar });
+  }
+
   /** Tubos de neón que fallan: la sala se oscurece a destellos irregulares. */
   private neones() {
     const velo = this.add.rectangle(0, 0, this.loc.width, this.loc.height, 0x000000, 0).setOrigin(0).setDepth(9000);
@@ -250,6 +281,7 @@ export class LocationScene extends Phaser.Scene {
       this.actualizarVisibilidad();
     } else if (t.key === 'final') {
       this.finalPendiente = true;
+      if (t.value && t.value !== 'demo') SaveSystem.registrarFinal(t.value);
     } else if (t.key === 'prota') {
       // prota:izquierda → el protagonista se gira (sin moverse)
       this.dir = t.value as Dir;

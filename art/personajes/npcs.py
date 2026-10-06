@@ -22,6 +22,14 @@ NPCS = {
     "voss": _por_nombre("VOSS"),
     "nell": _por_nombre("NELL"),
     "nino": _por_nombre("SAMMY"),
+    "dot": _por_nombre("DOT"),
+    "crane": _por_nombre("CRANE"),
+    "viejo": (E.construir("corto", "chaleco"), {**PELO("papel", 1), "H": K("papel", 3), **PIEL(0), "n": K("madera", 0),
+              "d": K("madera", 1), "v": K("tela", 2), "V": K("tela", 1), "c": K("papel", 2), "t": K("madera", 0),
+              "L": K("gris", 5), "p": K("tela", 1), **BOTAS}),
+    "tabernero": (E.construir("despeinado", "chaleco"), {**PELO("pelo", 1), **PIEL(1), "n": K("granate", 0),
+                  "d": K("granate", 1), "v": K("papel", 3), "V": K("papel", 2), "c": K("papel", 4), "t": K("granate", 1),
+                  "L": K("gris", 5), "p": K("madera", 1), **BOTAS}),
     "guardia": (E.construir("gorra", "abrigo"),
                 {**PELO("pelo"), **PIEL(0), **ropa("gris", 2), **BOTAS, "g": K("gris", 0), "p": K("gris", 1),
                  "f": K("gris", 0), "F": K("gris", 2), "x": K("rojo", 3)}),
@@ -54,6 +62,35 @@ NPCS = {
 }
 
 
+def tripode():
+    """La cámara de fuelle de Crane sobre su trípode (no es un personaje: se dibuja aparte)."""
+    from PIL import ImageDraw
+    img = Image.new("RGBA", (20, 40), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    for (x0, x1) in [(10, 3), (10, 17), (10, 10)]:
+        d.line([(x0, 20), (x1, 39)], fill=K("madera", 2) + (255,))
+    d.rectangle([4, 9, 13, 19], fill=K("gris", 1) + (255,))                               # caja
+    d.rectangle([13, 11, 17, 17], fill=K("madera", 1) + (255,))                           # fuelle
+    d.line([(14, 11), (14, 17)], fill=K("madera", 3) + (255,)); d.line([(16, 11), (16, 17)], fill=K("madera", 3) + (255,))
+    d.ellipse([16, 12, 19, 16], fill=K("gris", 6) + (255,))                               # objetivo
+    d.rectangle([2, 6, 7, 9], fill=K("gris", 2) + (255,))                                 # paño negro
+    return img
+
+
+def carrito():
+    """El carrito de la limpieza de Nell, para bloquear una puerta (no es un personaje)."""
+    from PIL import ImageDraw
+    img = Image.new("RGBA", (20, 40), (0, 0, 0, 0))
+    d = ImageDraw.Draw(img)
+    rgba = lambda c: c + (255,)
+    d.rectangle([1, 24, 18, 26], fill=rgba(K("gris", 6))); d.rectangle([1, 34, 18, 36], fill=rgba(K("gris", 5)))
+    d.line([(1, 24), (1, 38)], fill=rgba(K("gris", 4))); d.line([(18, 24), (18, 38)], fill=rgba(K("gris", 4)))
+    d.rectangle([10, 27, 17, 33], fill=rgba(K("gris", 5))); d.rectangle([10, 27, 17, 28], fill=rgba(K("cielo", 3)))
+    d.rectangle([2, 18, 9, 24], fill=rgba(K("tela", 3))); d.line([(14, 8), (14, 27)], fill=rgba(K("madera", 3)))
+    d.point([(3, 38), (16, 38)], fill=rgba(K("gris", 1)))
+    return img
+
+
 def exportar(destino):
     destino = Path(destino)
     destino.mkdir(parents=True, exist_ok=True)
@@ -65,4 +102,6 @@ def exportar(destino):
                 if ch in pal:
                     img.putpixel((dx + c, dy + r), pal[ch] + (255,))
         img.save(destino / f"{nombre}.png")
-    return list(NPCS)
+    tripode().save(destino / "tripode.png")
+    carrito().save(destino / "carrito.png")
+    return list(NPCS) + ["tripode", "carrito"]

@@ -1,0 +1,562 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Mercado de Watney Street"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-mercado"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "mercado.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/mercado.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 104,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro",
+     "x": 0,
+     "y": 232,
+     "width": 960,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "puesto",
+     "x": 38,
+     "y": 104,
+     "width": 74,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "puesto",
+     "x": 178,
+     "y": 104,
+     "width": 80,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "puesto",
+     "x": 328,
+     "y": 104,
+     "width": 84,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "puesto",
+     "x": 648,
+     "y": 104,
+     "width": 64,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "puesto",
+     "x": 118,
+     "y": 212,
+     "width": 74,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "puesto",
+     "x": 718,
+     "y": 212,
+     "width": 74,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 9,
+     "name": "estudio",
+     "x": 820,
+     "y": 30,
+     "width": 96,
+     "height": 70,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Estudio Crane"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.estudio_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "mercado.ir_estudio"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "891,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "cordones",
+     "x": 650,
+     "y": 128,
+     "width": 60,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puesto de cordones"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.cordones_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "680,160"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "patatas",
+     "x": 180,
+     "y": 128,
+     "width": 76,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puesto de patatas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.patatas_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "218,160"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "salir",
+     "x": 0,
+     "y": 104,
+     "width": 10,
+     "height": 128,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "mercado.salir"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "cohete",
+     "x": 760,
+     "y": 104,
+     "width": 12,
+     "height": 128,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "mercado.cohete"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "estudio_visto && !cohete_caido"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 20,
+     "name": "inicio",
+     "x": 30,
+     "y": 172,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "estudio",
+     "x": 891,
+     "y": 114,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 14,
+     "name": "dot",
+     "x": 370,
+     "y": 162,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "dot"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Dot"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "mercado.dot"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.dot_mirar"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "sammy",
+     "x": 512,
+     "y": 170,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nino"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Sammy"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "mercado.sammy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.sammy_mirar"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "tuerto",
+     "x": 680,
+     "y": 124,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "viejo"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Vendedor de cordones"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.cordones_mirar"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "680,160"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "p1",
+     "x": 250,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole1"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Gente"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.gente_mirar"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "p2",
+     "x": 600,
+     "y": 196,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole2"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Gente"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.gente_mirar"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "p3",
+     "x": 120,
+     "y": 168,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionaria2"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Gente"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "mercado.gente_mirar"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 22
+}

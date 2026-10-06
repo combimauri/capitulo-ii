@@ -45,3 +45,7 @@
 
 === function baja_sospecha(n) ===
 ~ sospecha = limitar(sospecha - n)
+// si el Comité leyó el diario, la Sospecha ya no baja de 40 (guion J6.05), aunque Nell lo recupere
+{ comite_leyo and sospecha < 40:
+    ~ sospecha = 40
+}

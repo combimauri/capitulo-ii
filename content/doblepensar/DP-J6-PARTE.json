@@ -1,0 +1,10 @@
+{
+  "lineas": ["j1_07_tp_*"],
+  "reescribir": {
+    "j1_07_tp_02": "Nuestras gloriosas fuerzas han resistido con firmeza en el frente de Mysore, manteniendo sus posiciones.",
+    "j1_07_tp_03": "Han sido capturados {prisioneros_j6} prisioneros euroasiáticos."
+  },
+  "telepantalla": "Quien controla el pasado controla el futuro. Usted escribió lo que está escrito.",
+  "aceptar": "Siempre escribí «resistido con firmeza».",
+  "recordar": "Escribí «{parte_j1_verbo}». Escribí {parte_j1_km} kilómetros."
+}

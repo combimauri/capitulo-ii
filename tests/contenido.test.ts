@@ -308,10 +308,352 @@ describe('jornada 3', () => {
     });
   }
 
-  it('dormir cierra el Acto I y vuelve al menú', () => {
-    const { texto, comandos } = jugar(nueva(), 'piso_noche.dormir');
+  it('dormir cierra el Acto I y despierta en la Jornada 4', () => {
+    const b = nueva();
+    const { texto, comandos } = jugar(b, 'piso_noche.dormir');
     expect(texto).toContain('FIN DEL ACTO I');
-    expect(comandos).toContain('final:demo');
+    expect(comandos).toContain('escena:piso');
+    expect(b.get('jornada')).toBe(4);
+  });
+});
+
+describe('jornada 4', () => {
+  const nueva = (vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 4);
+    b.set('amory_borrado', true);
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+
+  it('por la mañana, el cajón de la mesa guarda la foto de Ivy', () => {
+    const b = nueva();
+    jugar(b, 'piso.entrar');
+    const { comandos } = jugar(b, 'piso.cajon_usar');
+    expect(b.list('inventario')).toContain('foto_ivy');
+    expect(comandos).toContain('objeto:foto_ivy');
+  });
+
+  it('Voss asigna el Registro; el cajón da el compás y, bajo el fieltro, la lámina y la nota', () => {
+    const b = nueva({ amory_reaccion: 'denuncia' });
+    expect(jugar(b, 'depto.entrar').texto).toContain('buen ojo');
+    expect(b.get('registro_asignado')).toBe(true);
+    jugar(b, 'j4_cajon');
+    expect(b.list('inventario')).toContain('compas');
+    jugar(b, 'j4_cajon');
+    expect(b.list('inventario')).toEqual(expect.arrayContaining(['zonificacion', 'nota_amory']));
+    expect(b.get('duda')).toBe(5);
+  });
+
+  it('mirar el mapa con la lámina sube la Duda y, con Duda alta, recuerda la nota', () => {
+    const b = nueva({ duda: 25, registro_asignado: true });
+    jugar(b, 'j4_cajon'); jugar(b, 'j4_cajon');
+    const { texto } = jugar(b, 'j4_libro', { minijuegos: { registro_j4_lamina: 'si' } });
+    expect(texto).toContain('Todas en zona prole');
+    expect(texto).toContain('¿Por qué nunca en el centro?');
+    expect(b.get('duda')).toBe(33);
+    const sin = nueva({ registro_asignado: true });
+    expect(jugar(sin, 'j4_libro', { minijuegos: { registro_j4_lamina: 'no' } }).texto).not.toContain('zona prole');
+  });
+
+  it('el día sigue: Registro → cantina → parte ilegible → ir a Limehouse o volver a casa', () => {
+    const b = nueva();
+    expect(jugar(b, 'depto.salir').comandos).not.toContain('escena:cantina');
+    b.set('registro_j4_hecho', true);
+    expect(jugar(b, 'depto.salir').comandos).toContain('escena:cantina');
+    jugar(b, 'cantina.entrar');
+    expect(jugar(b, 'cantina.salir').comandos).toContain('escena:departamento');
+    const ir = jugar(b, 'depto.entrar', { elecciones: [0] });
+    expect(ir.texto).toContain('ilegible');
+    expect(ir.comandos).toContain('escena:limehouse');
+    expect(b.get('visita_prole_j4')).toBe(true);
+    const b2 = nueva({ registro_j4_hecho: true, cantina_j4_vista: true });
+    expect(jugar(b2, 'depto.entrar', { elecciones: [1] }).comandos).toContain('escena:piso_noche');
+    expect(b2.get('visita_prole_j4')).toBe(false);
+  });
+
+  it('en Limehouse, Dot completa el parte, Sammy ofrece metralla y aparece Crane', () => {
+    const b = nueva();
+    expect(jugar(b, 'limehouse.volver').comandos).not.toContain('escena:piso_noche');
+    jugar(b, 'pub.entrar');
+    const { texto } = jugar(b, 'limehouse.sammy', { elecciones: [1, 0] });
+    expect(texto).toContain('Los Hennessy');
+    expect(b.get('ilegible_completado')).toBe(true);
+    expect(b.get('dot_confianza')).toBe(2);
+    expect(b.list('inventario')).toContain('metralla_sammy');
+    expect(b.get('crane_aparece')).toBe(true);
+    jugar(b, 'piso.cajon_usar');   // sin cajon_disponible: la foto no está
+    b.set('cajon_disponible', true);
+    jugar(b, 'piso.cajon_usar');
+    expect(jugar(b, 'limehouse.crane').texto).toContain('Le devolveré la cara de su hermana');
+    expect(b.list('inventario')).toContain('tarjeta_crane');
+    expect(jugar(b, 'objetos.foto_mirar').texto).toContain('Ya tengo su cara');
+    expect(jugar(b, 'limehouse.volver').comandos).toContain('escena:piso_noche');
+  });
+
+  it('volver tarde de un barrio prole: Hilda lo apunta (Sospecha +3)', () => {
+    const b = nueva({ visita_prole_j4: true, hilda_aprecio: 1 });
+    expect(jugar(b, 'piso_noche.entrar').texto).toContain('Qué celo');
+    expect(b.get('sospecha')).toBe(3);
+    const c = nueva({ visita_prole_j4: true, hilda_aprecio: 2 });
+    jugar(c, 'piso_noche.entrar');
+    expect(c.get('sospecha')).toBe(0);
+    const { comandos } = jugar(c, 'piso_noche.dormir');
+    expect(c.get('jornada')).toBe(5);
+    expect(comandos).toContain('escena:piso');
+  });
+});
+
+describe('jornada 5', () => {
+  const nueva = (vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 5);
+    b.set('amory_borrado', true);
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+  const conFoto = (vars: Record<string, unknown> = {}) => {
+    const b = nueva({ cajon_disponible: true, ...vars });
+    jugar(b, 'j4_cajon_piso');
+    return b;
+  };
+
+  it('por la mañana: sin tarjeta, el anuncio del periódico; con la foto, decidir si llevarla', () => {
+    const b = conFoto();
+    expect(jugar(b, 'piso.entrar').texto).toContain('ESTUDIO CRANE');
+    b.set('desayunado', true);
+    expect(jugar(b, 'piso.puerta_usar', { elecciones: [0] }).comandos).toContain('escena:mercado');
+    expect(b.get('foto_a_crane')).toBe(true);
+    const sin = nueva({ desayunado: true });
+    expect(jugar(sin, 'piso.puerta_usar').texto).toContain('CERRADA POR REFORMAS');
+  });
+
+  it('en el estudio, hablar de «Naranjas y limones» da información a Crane', () => {
+    const b = conFoto({ foto_a_crane: true });
+    jugar(b, 'estudio.entrar', { elecciones: [1, 0] });
+    expect(b.get('crane_info')).toBe(1);
+    expect(b.get('sospecha')).toBe(3);
+    expect(b.list('inventario')).not.toContain('foto_ivy');
+  });
+
+  for (const [sammy, duda, sospecha, pos] of [['correr', 10, 8, 'calzada'], ['cubierto', 5, 0, 'puesto'], ['paralizado', 5, 0, 'puesto']] as const) {
+    it(`el cohete del mercado: ${sammy}`, () => {
+      const b = nueva();
+      const { comandos } = jugar(b, 'mercado.cohete', { minijuegos: { sammy_j5: sammy } });
+      expect([b.get('duda'), b.get('sospecha')]).toEqual([duda, sospecha]);
+      expect(comandos).toEqual(expect.arrayContaining(['escena:mercado_ruinas', `pos:${pos}`]));
+      expect(b.get('sammy_intento')).toBe(sammy === 'correr');
+      const despues = jugar(b, 'ruinas.entrar').texto;
+      expect(despues).toContain('Retiren eso');
+      expect(b.get('diario_sammy')).toBe(true);
+      expect(b.get('dot_confianza')).toBe(sammy === 'correr' ? 2 : 0);
+    });
+  }
+
+  it('mentir a Voss sobre el retraso, si corriste hacia el impacto, cuesta 10 de Sospecha', () => {
+    const b = nueva({ sammy_intento: true });
+    expect(jugar(b, 'depto.entrar', { elecciones: [1] }).texto).toContain('Corría hacia el impacto');
+    expect(b.get('sospecha')).toBe(10);
+    const v = nueva();
+    jugar(v, 'depto.entrar', { elecciones: [0, 1] });
+    expect(v.get('sospecha')).toBe(3);
+  });
+
+  it('el patrón: la conclusión sube la Duda; dejar la lámina puesta cuesta 10 de Sospecha', () => {
+    const b = nueva({ ilegible_completado: true });
+    const { texto } = jugar(b, 'j4_libro', { elecciones: [0], minijuegos: { registro_j5_lamina_puesta: 'si' } });
+    expect(texto).toContain('Once de once');
+    expect(texto).toContain('Stepney fue la excepción');
+    expect(b.list('inventario')).toEqual(expect.arrayContaining(['zonificacion', 'compas']));
+    expect(b.get('patron_conclusion')).toBe('proles');
+    expect(b.get('duda')).toBe(10);
+    expect(b.get('sospecha')).toBe(10);
+    expect(b.get('diario_cohetes')).toBe(true);
+    const c = nueva();
+    jugar(c, 'j5_libro', { elecciones: [2], minijuegos: { registro_j5_lamina_puesta: 'no' } });
+    expect(c.get('diario_cohetes')).toBe(false);
+  });
+
+  it('el diario: aparece en el abrigo; abrirlo a la vista cuesta Sospecha; escribir en el hueco sube la Duda', () => {
+    const b = nueva({ dp_j3_amory: 'aceptar' });
+    expect(jugar(b, 'piso_noche.abrigo').texto).toContain('Se llamaba Felix');
+    expect(b.list('inventario')).toContain('diario');
+    expect(b.get('duda')).toBe(5);
+    jugar(b, 'j5_diario_cono'); jugar(b, 'j5_diario_cono');
+    expect(b.get('sospecha')).toBe(5);
+    const { texto } = jugar(b, 'j5_hueco', { elecciones: [0], minijuegos: { diario_entradas: 1 } });
+    expect(texto).toContain('1984. Creo.');
+    expect(b.get('diario_iniciado')).toBe(true);
+    expect(b.get('diario_escondite')).toBe('cartel');
+    expect(b.get('duda')).toBe(10);
+    expect(jugar(b, 'piso_noche.dormir').comandos).toContain('escena:piso');
+    expect(b.get('jornada')).toBe(6);
+  });
+
+  it('cada entrada del diario está declarada en ink (desbloqueo y «escrita»)', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    const entradas = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/diario/entradas.json'), 'utf8')).entradas as { id: string }[];
+    for (const e of entradas) {
+      expect(b.story.variablesState.GlobalVariableExistsWithName(e.id), e.id).toBe(true);
+      expect(b.story.variablesState.GlobalVariableExistsWithName(`${e.id}_escrita`), `${e.id}_escrita`).toBe(true);
+    }
+  });
+});
+
+describe('jornada 6', () => {
+  const nueva = (vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 6);
+    b.set('amory_borrado', true);
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+  const con = (b: NarrativeBridge, ...items: string[]) => {
+    const inv = b.story.variablesState.$('inventario') as unknown as { AddItem: (i: string) => void };
+    for (const i of items) inv.AddItem(i);
+    b.story.variablesState.$('inventario', inv as never);
+    return b;
+  };
+
+  it('Hilda en la escalera: «siete muertos son siete muertos» se apunta', () => {
+    const b = nueva({ hilda_aprecio: 1 });
+    expect(jugar(b, 'escalera.entrar', { elecciones: [0] }).texto).toContain('Inspección del Comité');
+    expect([b.get('sospecha'), b.get('hilda_aprecio')]).toEqual([5, 0]);
+  });
+
+  it('el archivo: la caja buena, el parte que no es el mío y el doblepensar sobre lo que oí', () => {
+    const b = nueva({ parte_j1_prisioneros: '12.000', parte_j1_km: '30', parte_j1_verbo: 'aplastado al enemigo', duda: 20 });
+    const { texto } = jugar(b, 'archivo.estanterias', { elecciones: [0, 2], minijuegos: { dp_j6_parte: 'recordar' } });
+    expect(texto).toContain('Esta no es');
+    expect(texto).toContain('Escribí «aplastado al enemigo». Escribí 30 kilómetros');
+    expect(b.get('prisioneros_j6')).toBe('1.200');
+    expect(b.get('duda')).toBe(35);
+    expect(b.get('diario_parte')).toBe(true);
+    expect(b.get('parte_en_mesa')).toBe(true);
+  });
+
+  it('guardarse el parte alterado: si la telepantalla del techo mira, Voss aparece en la puerta', () => {
+    const visto = nueva({ archivo_vigilado: true, parte_en_mesa: true });
+    expect(jugar(visto, 'archivo.parte_coger').texto).toContain('¿Encuentra lo que busca, camarada?');
+    expect(visto.get('sospecha')).toBe(15);
+    expect(visto.list('inventario')).not.toContain('parte_alterado');
+    const oculto = nueva({ archivo_vigilado: false, parte_en_mesa: true });
+    jugar(oculto, 'archivo.parte_coger');
+    expect(oculto.list('inventario')).toContain('parte_alterado');
+    expect(oculto.get('prueba_parte')).toBe(true);
+  });
+
+  it('Crane devuelve la cara de Ivy y prueba hasta dónde se habla en su estudio', () => {
+    const b = nueva({ foto_a_crane: true });
+    jugar(b, 'estudio.entrar', { elecciones: [1, 1, 1] });
+    expect(b.list('inventario')).toContain('foto_ivy_restaurada');
+    expect(b.get('crane_info')).toBe(3);
+    expect(b.get('sospecha')).toBe(13);
+    expect(b.get('crane_trastienda')).toBe(true);
+    jugar(b, 'j6_recorte_mirar'); jugar(b, 'j6_recorte_mirar');
+    expect(b.get('duda')).toBe(10);
+    expect(b.get('diario_chocolate')).toBe(true);
+  });
+
+  it('la inspección: el diario mal escondido se lo lleva el Comité y la Sospecha ya no baja de 40', () => {
+    const b = con(nueva({ hilda_aprecio: 1, diario_iniciado: true }), 'diario');
+    const { texto } = jugar(b, 'piso_noche.entrar', { minijuegos: { escondite_j6_diario: 'colchon' } });
+    expect(texto).toContain('Nota el bulto');
+    expect(b.get('diario_confiscado')).toBe(true);
+    expect(b.get('sospecha')).toBe(25);
+    expect(b.get('comite_leyo')).toBe(true);
+    b.story.EvaluateFunction('baja_sospecha', [20]);
+    expect(b.get('sospecha')).toBe(40);
+  });
+
+  it('la inspección: detrás del cartel de Ivy, pedir que no lo toque lo salva', () => {
+    const b = con(nueva({ hilda_aprecio: 1, visita_prole_j4: true, foto_a_crane: true }), 'diario', 'parte_alterado');
+    jugar(b, 'piso_noche.entrar', { elecciones: [0], minijuegos: { escondite_j6_diario: 'cartel', escondite_j6_parte: 'cajon' } });
+    expect(b.get('diario_confiscado')).toBe(false);
+    expect(b.get('hilda_aprecio')).toBe(2);
+    expect(b.list('inventario')).not.toContain('parte_alterado');
+    expect(b.get('sospecha')).toBe(15);   // el papel con sello (+10) y «te vieron en Limehouse» (+5)
+    const h = con(nueva(), 'diario');
+    jugar(h, 'piso_noche.entrar', { minijuegos: { escondite_j6_diario: 'hornillo' } });
+    expect(h.get('diario_hollin')).toBe(true);
+    expect(jugar(h, 'piso_noche.dormir').comandos).toContain('escena:piso');
+  });
+
+  it('las líneas que reescribe cada doblepensar existen en ink', () => {
+    const ids = new Set(inkFiles(path.join(RAIZ, 'content/ink')).flatMap((f) => [...fs.readFileSync(f, 'utf8').matchAll(/# id:(\w+)/g)].map((m) => m[1])));
+    for (const f of fs.readdirSync(path.join(RAIZ, 'content/doblepensar'))) {
+      const c = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/doblepensar', f), 'utf8'));
+      for (const id of Object.keys(c.reescribir ?? {})) expect(ids.has(id), `${f}: ${id}`).toBe(true);
+    }
+  });
+});
+
+describe('jornada 7 y los finales del Acto II', () => {
+  const nueva = (vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 7);
+    b.set('amory_borrado', true);
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+  /** Todas las líneas de un recorrido tienen id (los finales no cuelgan de ningún hotspot). */
+  const conIds = (b: NarrativeBridge, ruta: string, elecciones: number[] = []) => {
+    b.goTo(ruta);
+    const lineas = [];
+    for (let i = 0; i < 300; i++) {
+      const paso = b.next();
+      if (paso.type === 'line') lineas.push(paso.line);
+      else if (paso.type === 'accion') { if (paso.line) lineas.push(paso.line); }
+      else if (paso.type === 'choices') b.choose(paso.choices[Math.min(elecciones.shift() ?? 0, paso.choices.length - 1)].index);
+      else break;
+    }
+    for (const l of lineas) expect(l.id, l.text).toBeTruthy();
+    return lineas.map((l) => l.text).join(' ');
+  };
+
+  it('Nell: la canción, hasta cuatro preguntas (devuelve el diario si lo tenía el Comité) y aceptar', () => {
+    const b = nueva({ diario_confiscado: true, comite_leyo: true, patron_conclusion: 'proles', sospecha: 55 });
+    const { texto, comandos } = jugar(b, 'suministros.cintas', { elecciones: [1, 2, 2, 0, 0] });
+    expect(comandos).toContain('prota:abajo');
+    expect(texto).toContain('Los proles también limpian allí');
+    expect(texto).toContain('a tres plantas de aquí');
+    expect(texto).toContain('Basta de preguntas');
+    expect(texto).toContain('Sobre todo con la gente amable');
+    expect(b.list('inventario')).toEqual(expect.arrayContaining(['diario', 'llave_calderas']));
+    expect(b.get('diario_confiscado')).toBe(false);
+    expect(b.get('nell_respuesta')).toBe('aceptar');
+    const { comandos: fin } = jugar(b, 'piso_noche.dormir');
+    expect(fin).toContain('final:demo');
+    expect(b.get('jornada')).toBe(8);
+  });
+
+  it('negarse con poca Duda lleva al Final A', () => {
+    const b = nueva({ duda: 10 });
+    expect(jugar(b, 'j7_nell.peticion', { elecciones: [1] }).comandos).toContain('escena:piso_noche');
+    expect(b.get('nell_respuesta')).toBe('negar');
+    b.goTo('piso_noche.entrar');
+    const texto = conIds(b, 'piso_noche.entrar');
+    expect(texto).toContain('Amaba al Gran Hermano');
+    expect(texto).toContain('Estasia. Siempre fue Estasia');
+  });
+
+  it('negarse con Duda alta deja la decisión para la noche', () => {
+    const b = nueva({ duda: 40 });
+    jugar(b, 'j7_nell.peticion', { elecciones: [1] });
+    expect(b.get('nell_respuesta')).toBe('dudar');
+    jugar(b, 'piso_noche.dormir', { elecciones: [0] });
+    expect(b.get('nell_respuesta')).toBe('aceptar_tarde');
+    const c = nueva({ duda: 40, nell_respuesta: 'dudar' });
+    const { comandos } = jugar(c, 'piso_noche.dormir', { elecciones: [1] });
+    expect(comandos).toContain('final:A');
+  });
+
+  it('denunciar a Nell lleva al Final B temprano', () => {
+    const b = nueva();
+    expect(jugar(b, 'j7_nell.peticion', { elecciones: [2] }).comandos).toContain('escena:despacho_voss');
+    const texto = conIds(b, 'voss_despacho.entrar');
+    expect(texto).toContain('Restauro fotografías antiguas');
+    expect(texto).toContain('miembro de la organización conocida como la Hermandad');
   });
 });
 

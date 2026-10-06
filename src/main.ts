@@ -14,6 +14,11 @@ import { RegistroScene } from './scenes/RegistroScene';
 import { ParteScene } from './scenes/minijuegos/ParteScene';
 import { FrenteScene } from './scenes/minijuegos/FrenteScene';
 import { PancartaScene } from './scenes/minijuegos/PancartaScene';
+import { ImpactosScene } from './scenes/minijuegos/ImpactosScene';
+import { SammyScene } from './scenes/minijuegos/SammyScene';
+import { DiarioScene } from './scenes/minijuegos/DiarioScene';
+import { ComparadorScene } from './scenes/minijuegos/ComparadorScene';
+import { EsconderScene } from './scenes/minijuegos/EsconderScene';
 import { RESOLUCION, narrativa, registro, EV } from './core/juego';
 
 registerSW({ immediate: true });
@@ -29,7 +34,7 @@ const juego = new Phaser.Game({
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   input: { activePointers: 2 },
   dom: { createContainer: true },
-  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, RegistroScene],
+  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene, RegistroScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):

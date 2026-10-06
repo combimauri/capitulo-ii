@@ -55,6 +55,19 @@ export const SaveSystem = {
     }
   },
 
+  /** Finales alcanzados en cualquier partida (desbloquean líneas del menú). */
+  finales(): string[] {
+    try { return JSON.parse(storage()?.getItem(PREFIJO + 'finales') ?? '[]') as string[]; } catch { return []; }
+  },
+
+  registrarFinal(id: string) {
+    const s = storage();
+    if (!s) return;
+    const lista = new Set(this.finales());
+    lista.add(id);
+    try { s.setItem(PREFIJO + 'finales', JSON.stringify([...lista])); } catch { /* nada */ }
+  },
+
   borrar(ranura: string) {
     try { storage()?.removeItem(PREFIJO + ranura); } catch { /* nada */ }
   },

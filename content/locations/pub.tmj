@@ -1,0 +1,476 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Pub «La Campana»"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-pub"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "pub.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/pub.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 92,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "barra",
+     "x": 52,
+     "y": 92,
+     "width": 190,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "mesa",
+     "x": 290,
+     "y": 120,
+     "width": 40,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "mesa",
+     "x": 370,
+     "y": 120,
+     "width": 40,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "mesa",
+     "x": 300,
+     "y": 190,
+     "width": 40,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 11,
+     "name": "campana",
+     "x": 138,
+     "y": 22,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Campana"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pub.campana_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "148,146"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "diana",
+     "x": 298,
+     "y": 36,
+     "width": 30,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Diana"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pub.diana_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "312,106"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "salir",
+     "x": 224,
+     "y": 240,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "pub.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,236"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 18,
+     "name": "puerta",
+     "x": 240,
+     "y": 232,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 14,
+     "name": "tabernero",
+     "x": 150,
+     "y": 92,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "tabernero"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Tabernero"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "pub.tabernero"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pub.tabernero_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "150,146"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "viejo",
+     "x": 352,
+     "y": 212,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "viejo"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Viejo"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "pub.viejo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pub.viejo_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "372,226"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "p1",
+     "x": 300,
+     "y": 116,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole1"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Proles"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pub.proles_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "272,118"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "p2",
+     "x": 410,
+     "y": 140,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole2"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Proles"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "pub.proles_mirar"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 19
+}

@@ -1,0 +1,414 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Cuarto de suministros"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-suministros"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "suministros.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/suministros.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 94,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 124,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 356,
+     "y": 0,
+     "width": 124,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 228,
+     "width": 224,
+     "height": 42,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 228,
+     "width": 224,
+     "height": 42,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 238,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "cajas",
+     "x": 132,
+     "y": 188,
+     "width": 44,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "cajas",
+     "x": 316,
+     "y": 184,
+     "width": 28,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 9,
+     "name": "hueco_tele",
+     "x": 218,
+     "y": 32,
+     "width": 46,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Hueco tapado"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "suministros.hueco_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "balda_izq",
+     "x": 126,
+     "y": 62,
+     "width": 82,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Tercera balda"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "suministros.balda_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "suministros.cintas"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "168,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "balda_der",
+     "x": 276,
+     "y": 62,
+     "width": 80,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Tercera balda"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "suministros.balda_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "suministros.cintas"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "316,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "salir",
+     "x": 224,
+     "y": 226,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "suministros.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,218"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "puerta",
+     "x": 240,
+     "y": 200,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 13,
+     "name": "nell",
+     "x": 232,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nell"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Limpiadora"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "suministros.nell_mirar"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "suministros.nell_hablar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "nell_suministros"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "232,180"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "carrito",
+     "x": 254,
+     "y": 222,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "carrito"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "nell_suministros"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 16
+}

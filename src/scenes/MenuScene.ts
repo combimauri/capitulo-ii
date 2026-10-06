@@ -66,6 +66,13 @@ export class MenuScene extends Phaser.Scene {
         fontFamily: FUENTE.texto, fontSize: '14px', color: hex(COLOR.rojo4),
       }).setOrigin(0.5);
     }
+    // líneas que dejan los finales alcanzados (guion, «Desbloqueos del menú principal»)
+    const LINEAS: Record<string, string> = { A: 'Naranjas y limones…', B: 'Los proles también limpian.' };
+    SaveSystem.finales().filter((f) => LINEAS[f]).forEach((f, i) => {
+      this.add.text(width / 2, 290 + opciones.length * 54 + 10 + i * 24, LINEAS[f], {
+        fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.gris3),
+      }).setOrigin(0.5);
+    });
     this.add.text(width - 12, height - 10, 'v0.1 · demo técnica', {
       fontFamily: FUENTE.maquina, fontSize: '16px', color: hex(COLOR.gris3),
     }).setOrigin(1, 1);

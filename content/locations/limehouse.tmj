@@ -1,0 +1,578 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Limehouse"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-limehouse"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "limehouse.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/limehouse.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 108,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro",
+     "x": 0,
+     "y": 232,
+     "width": 960,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "escombros",
+     "x": 716,
+     "y": 108,
+     "width": 210,
+     "height": 34,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "farola",
+     "x": 146,
+     "y": 162,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "farola",
+     "x": 466,
+     "y": 162,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "farola",
+     "x": 636,
+     "y": 162,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 7,
+     "name": "altavoz",
+     "x": 552,
+     "y": 4,
+     "width": 26,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Altavoz"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.altavoz_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "566,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "ropa",
+     "x": 380,
+     "y": 22,
+     "width": 140,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ropa tendida"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.ropa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "450,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "pub",
+     "x": 288,
+     "y": 54,
+     "width": 74,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Pub «La Campana»"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.pub_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "limehouse.entrar_pub"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "325,118"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "casa",
+     "x": 690,
+     "y": 20,
+     "width": 200,
+     "height": 86,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Casa alcanzada"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.casa_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "limehouse.casa"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "770,150"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "llegar",
+     "x": 650,
+     "y": 108,
+     "width": 12,
+     "height": 124,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "limehouse.casa"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!casa_vista"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "volver",
+     "x": 0,
+     "y": 108,
+     "width": 10,
+     "height": 124,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "limehouse.volver"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 19,
+     "name": "entrada",
+     "x": 28,
+     "y": 172,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "pub",
+     "x": 325,
+     "y": 122,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 13,
+     "name": "sammy",
+     "x": 744,
+     "y": 202,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nino"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Niño de la lata"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "limehouse.sammy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.sammy_mirar"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "dot",
+     "x": 806,
+     "y": 196,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "dot"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mujer del pañuelo"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "limehouse.dot"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.dot_mirar"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "prole1",
+     "x": 872,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole2"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Proles"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.proles_mirar"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "prole2",
+     "x": 900,
+     "y": 196,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole1"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Proles"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.proles_mirar"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "crane",
+     "x": 600,
+     "y": 204,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "crane"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Hombre de la cámara"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "limehouse.crane"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "limehouse.crane_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_aparece"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "tripode",
+     "x": 622,
+     "y": 200,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "tripode"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_aparece"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 21
+}

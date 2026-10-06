@@ -106,6 +106,14 @@ def dibujar(variante=None):
         cv.hline(356, 420, k, K("papel", 2))
     cv.d.line([(356, 146), (380, 138), (400, 142), (420, 132)], fill=K("cielo", 4), width=2)   # el Támesis
     cv.rect(352, 160, 424, 164, K("madera", 1))
+    cv.hline(384, 392, 162, K("ocre", 3))                                            # tirador de latón del cajón
+    if variante == "j3":
+        # el Libro de Registro (tapas de tela gris) y el frasco de chinchetas negras
+        cv.rect(356, 138, 374, 156, K("gris", 5)); cv.frame(356, 138, 374, 156, K("gris", 3))
+        cv.vline(358, 139, 155, K("gris", 3)); cv.rect(362, 143, 371, 146, K("papel", 3))
+        cv.rect(410, 125, 418, 134, K("cielo", 6)); cv.frame(410, 125, 418, 134, K("cielo", 4))
+        for (bx, by) in [(412, 129), (415, 131), (413, 132), (416, 128)]:
+            cv.px(bx, by, K("gris", 0))
     archivador(cv, 414, 196)
     # papeleras
     for (px_, py_) in [(140, 140), (220, 140), (140, 196), (300, 196)]:

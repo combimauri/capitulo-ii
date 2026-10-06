@@ -1,0 +1,11 @@
+{
+  "fecha": "18.4.84",
+  "partes": [
+    { "distrito": "LIMEHOUSE", "celda": "J-8", "hora": "23:47", "bajas": 4 },
+    { "distrito": "BERMONDSEY", "celda": "H-10", "hora": "02:15", "bajas": 2 },
+    { "distrito": "STEPNEY ESTE", "celda": "J-7", "hora": "04:30", "bajas": 0 },
+    { "distrito": "SOUTHWARK", "celda": "F-10", "hora": "19:05", "bajas": 6 },
+    { "distrito": "POPLAR", "celda": "K-7", "hora": "21:20", "bajas": 3 },
+    { "distrito": "SHADWELL", "celda": "I-8", "hora": "22:00", "bajas": 9 }
+  ]
+}

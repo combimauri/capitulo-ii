@@ -1,0 +1,13 @@
+{
+  "recuerdo": "LO QUE ESCRIBÍ · 14.4.84",
+  "documento": "ARCHIVO · PARTE N.º 3 · ABRIL 84",
+  "campos": [
+    { "etiqueta": "Fecha", "recuerdo": "14.4.84", "documento": "11.4.84" },
+    { "etiqueta": "Frente", "recuerdo": "Malabar", "documento": "Mysore" },
+    { "etiqueta": "Acción", "recuerdo": "{parte_j1_verbo}", "documento": "resistido con firmeza" },
+    { "etiqueta": "Kilómetros", "recuerdo": "{parte_j1_km}", "documento": "0 (posiciones mantenidas)" },
+    { "etiqueta": "Prisioneros", "recuerdo": "{parte_j1_prisioneros}", "documento": "{prisioneros_j6}" },
+    { "etiqueta": "Bajas enemigas", "recuerdo": "{parte_j1_bajas}", "documento": "" },
+    { "etiqueta": "Firma", "recuerdo": "{nombre} {apellido}", "documento": "{nombre} {apellido}" }
+  ]
+}

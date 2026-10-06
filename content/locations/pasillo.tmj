@@ -241,7 +241,7 @@
       {
        "name": "usar",
        "type": "string",
-       "value": "pasillo.suministros_mirar"
+       "value": "pasillo.ir_suministros"
       },
       {
        "name": "aprox",
@@ -378,6 +378,25 @@
        "value": "abajo"
       }
      ]
+    },
+    {
+     "id": 16,
+     "name": "suministros",
+     "x": 776,
+     "y": 114,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -464,7 +483,7 @@
       {
        "name": "condicion",
        "type": "string",
-       "value": "guardia_pasillo"
+       "value": "guardia_pasillo && jornada==3"
       }
      ]
     }
@@ -476,5 +495,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 16
+ "nextobjectid": 17
 }

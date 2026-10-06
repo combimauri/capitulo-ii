@@ -28,7 +28,7 @@ type Listener = (...args: any[]) => void;
 const COMANDOS = new Set(['escena', 'pos', 'jornada', 'musica', 'ambiente', 'final', 'npc', 'refrescar', 'objeto', 'prota']);
 
 /** Etiquetas que detienen el diálogo hasta que el motor termina (minijuegos, pausas, efectos). */
-const ACCIONES = new Set(['cf', 'dp', 'minijuego', 'sigilo', 'documento', 'comparar', 'fx', 'esperar', 'bloquear_input', 'sfx']);
+const ACCIONES = new Set(['cf', 'dp', 'minijuego', 'sigilo', 'documento', 'comparar', 'fx', 'esperar', 'bloquear_input', 'sfx', 'recuerdo', 'vineta']);
 
 export class NarrativeBridge {
   readonly story: Story;

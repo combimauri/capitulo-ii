@@ -44,7 +44,8 @@ def dibujar():
 
     # muros
     cv.rect(X0 - 12, WT, X0, FB + 12, K("gris", 3)); cv.rect(X1, WT, X1 + 12, FB + 12, K("gris", 3))
-    cv.rect(X0 - 12, FB, X1 + 12, FB + 12, K("gris", 3))
+    cv.rect(X0 - 12, FB, 330, FB + 12, K("gris", 3)); cv.rect(362, FB, X1 + 12, FB + 12, K("gris", 3))
+    cv.rect(330, FB, 362, FB + 12, K("madera", 2))                                   # puerta al pasillo
     cv.add_light(X0, WB, X1, FB, 0)
     cv.add_glow_suave(246, 80, 110, 0.18, squash=1.3, limite=(X0, WT, X1, FB))
     cv.bake_lighting()

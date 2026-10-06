@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "piso_noche.entrar"
+  },
+  {
+   "name": "cono",
+   "type": "string",
+   "value": "386,70;328,88;286,116;234,116;230,90;40,90;40,246;440,246;440,90"
   }
  ],
  "tilesets": [],
@@ -182,6 +187,11 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "diario=j5_diario_cono"
       }
      ]
     },
@@ -220,6 +230,11 @@
        "name": "orientacion",
        "type": "string",
        "value": "izquierda"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "diario=j5_diario_cono"
       }
      ]
     },
@@ -253,6 +268,11 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "diario=j5_diario_cono"
       }
      ]
     },
@@ -286,6 +306,92 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "diario=j5_diario_cono"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "abrigo",
+     "x": 196,
+     "y": 176,
+     "width": 20,
+     "height": 64,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Abrigo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "piso_noche.abrigo_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "piso_noche.abrigo"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "226,226"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "diario=j5_diario_cono"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "hueco",
+     "x": 236,
+     "y": 84,
+     "width": 44,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Hueco junto al armario"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "piso_noche.hueco_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "258,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "con",
+       "type": "string",
+       "value": "diario=j5_hueco"
       }
      ]
     }
@@ -301,7 +407,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 14,
+     "id": 16,
      "name": "puerta",
      "x": 240,
      "y": 232,
@@ -337,5 +443,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 15
+ "nextobjectid": 17
 }

@@ -38,6 +38,9 @@ export class PreloadScene extends Phaser.Scene {
     // minijuegos e iconos
     this.load.image('cascotes-fondo', 'assets/minijuegos/cascotes-fondo.png');
     this.load.image('mapa-frente', 'assets/minijuegos/mapa-frente.png');
+    this.load.image('londres', 'assets/minijuegos/londres.png');
+    this.load.image('londres-zonas', 'assets/minijuegos/londres-zonas.png');
+    for (const v of ['plaza', 'plaza_gris', 'patibulo']) this.load.image(`vineta-${v}`, `assets/vinetas/${v}.png`);
     for (const p of ['goldstein', 'oveja', 'soldado', 'diccionario', 'gran_hermano']) this.load.image(`cf-${p}`, `assets/minijuegos/cf-${p}.png`);
     for (const i of [1, 2, 3]) this.load.image(`cascote-${i}`, `assets/minijuegos/cascote-${i}.png`);
     for (const item of Object.values(ITEMS)) this.load.image(item.icono, `assets/iconos/${item.icono}.png`);

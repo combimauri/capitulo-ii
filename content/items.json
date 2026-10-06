@@ -1,7 +1,16 @@
 {
-  "reloj_ivy": { "nombre": "Reloj de Ivy", "icono": "icono-reloj", "descripcion": "Cristal roto. Parado a las nueve y cuarenta. Nunca le he dado cuerda." },
-  "ficha": { "nombre": "Ficha del Partido", "icono": "icono-ficha", "descripcion": "Mi ficha de afiliación. Número, foto y sello. Sin ella no existo." },
-  "lapiz_amory": { "nombre": "Lápiz mordido", "icono": "icono-lapiz", "descripcion": "Iniciales F.A. grabadas con la uña.", "mirar": "objetos.lapiz_mirar" },
-  "foto_ivy": { "nombre": "Foto de Ivy", "icono": "icono-foto", "descripcion": "Quemada por un borde. Su cara casi no se ve." },
-  "diario": { "nombre": "Cuaderno", "icono": "icono-diario", "descripcion": "Tapas negras. Un pájaro dibujado por dentro." }
+  "reloj_ivy": {"nombre": "Reloj de Ivy", "icono": "icono-reloj", "descripcion": "Cristal roto. Parado a las nueve y cuarenta. Nunca le he dado cuerda."},
+  "ficha": {"nombre": "Ficha del Partido", "icono": "icono-ficha", "descripcion": "Mi ficha de afiliación. Número, foto y sello. Sin ella no existo."},
+  "lapiz_amory": {"nombre": "Lápiz mordido", "icono": "icono-lapiz", "descripcion": "Iniciales F.A. grabadas con la uña.", "mirar": "objetos.lapiz_mirar"},
+  "foto_ivy": {"nombre": "Foto de Ivy", "icono": "icono-foto", "descripcion": "Quemada por un borde. Su cara casi no se ve.", "mirar": "objetos.foto_mirar"},
+  "diario": {"nombre": "Cuaderno", "icono": "icono-diario", "descripcion": "Tapas negras. Un pájaro dibujado por dentro.", "mirar": "objetos.diario_mirar"},
+  "compas": {"nombre": "Compás", "icono": "icono-compas", "descripcion": "De latón, del cajón del Registro. Una punta y una mina."},
+  "zonificacion": {"nombre": "Lámina de zonificación", "icono": "icono-zonificacion", "descripcion": "Transparente, con sello oficial: distritos del Partido y distritos proletarios."},
+  "nota_amory": {"nombre": "Nota doblada", "icono": "icono-nota", "descripcion": "Letra apretada: «¿Por qué nunca en el centro?»", "mirar": "objetos.nota_mirar"},
+  "metralla_sammy": {"nombre": "Metralla", "icono": "icono-metralla", "descripcion": "Un trozo retorcido con un cordel. «Nunca te cae un cohete donde ya tienes uno.»"},
+  "tarjeta_crane": {"nombre": "Tarjeta de Crane", "icono": "icono-tarjeta", "descripcion": "ABEL CRANE · FOTOGRAFÍA · Calle Cable, junto al mercado."},
+  "metralla_brillante": {"nombre": "Metralla brillante", "icono": "icono-metralla-brillante", "descripcion": "La que Sammy se agachó a recoger. «Parece plata.»"},
+  "parte_alterado": {"nombre": "Parte alterado", "icono": "icono-parte", "descripcion": "Mysore. «Resistido con firmeza.» Cero kilómetros. Y mi firma."},
+  "foto_ivy_restaurada": {"nombre": "Foto de Ivy", "icono": "icono-foto-restaurada", "descripcion": "Restaurada por Crane. Ivy sonríe. Tiene un diente mellado.", "mirar": "objetos.foto_restaurada_mirar"},
+  "llave_calderas": {"nombre": "Llave de calderas", "icono": "icono-llave", "descripcion": "Grande y oxidada. La sala de calderas comunica con el montacargas viejo.", "mirar": "objetos.llave_mirar"}
 }

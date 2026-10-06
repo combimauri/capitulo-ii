@@ -468,6 +468,44 @@
        "value": "abajo"
       }
      ]
+    },
+    {
+     "id": 19,
+     "name": "cajon",
+     "x": 400,
+     "y": 150,
+     "width": 18,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cajón de la mesa"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "piso.cajon_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "piso.cajon_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "424,180"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -481,7 +519,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 19,
+     "id": 20,
      "name": "cama",
      "x": 118,
      "y": 124,
@@ -500,7 +538,7 @@
      ]
     },
     {
-     "id": 20,
+     "id": 21,
      "name": "puerta",
      "x": 240,
      "y": 232,
@@ -536,5 +574,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 21
+ "nextobjectid": 22
 }

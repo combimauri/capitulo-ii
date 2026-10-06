@@ -1,0 +1,10 @@
+{
+  "fecha": "19.4.84",
+  "anteriores": ["j4"],
+  "partes": [
+    { "distrito": "WATNEY ST.", "celda": "J-8", "hora": "08:12", "bajas": 7 },
+    { "distrito": "WAPPING", "celda": "I-9", "hora": "00:40", "bajas": 3 },
+    { "distrito": "ROTHERHITHE", "celda": "J-10", "hora": "02:55", "bajas": 5 },
+    { "distrito": "DEPTFORD", "celda": "K-11", "hora": "04:10", "bajas": 2 }
+  ]
+}

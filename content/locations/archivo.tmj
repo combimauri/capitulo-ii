@@ -1,0 +1,405 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Sala de archivo"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-archivo"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "archivo.entrar"
+  },
+  {
+   "name": "conos",
+   "type": "string",
+   "value": "60,50;300,130;300,200;170,200|60,50;150,214;40,236;40,90"
+  },
+  {
+   "name": "cono_var",
+   "type": "string",
+   "value": "archivo_vigilado"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/archivo.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "estanteria_izq",
+     "x": 42,
+     "y": 100,
+     "width": 26,
+     "height": 112,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "estanteria_der",
+     "x": 412,
+     "y": 100,
+     "width": 28,
+     "height": 112,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "mesa",
+     "x": 192,
+     "y": 150,
+     "width": 98,
+     "height": 28,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "silla",
+     "x": 230,
+     "y": 178,
+     "width": 22,
+     "height": 18,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 11,
+     "name": "estanterias",
+     "x": 70,
+     "y": 26,
+     "width": 340,
+     "height": 66,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Estanterías"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo.estanterias_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo.estanterias"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "telepantalla",
+     "x": 46,
+     "y": 34,
+     "width": 26,
+     "height": 18,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla del techo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo.tele_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "86,112"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "lampara",
+     "x": 260,
+     "y": 132,
+     "width": 24,
+     "height": 12,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Lámpara verde"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo.lampara_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "304,164"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "parte",
+     "x": 228,
+     "y": 150,
+     "width": 26,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Parte alterado"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "archivo.parte_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo.parte_coger"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "270,196"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "parte_en_mesa && !parte_cogido"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "salir",
+     "x": 224,
+     "y": 240,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "archivo.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,236"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 16,
+     "name": "puerta",
+     "x": 240,
+     "y": 232,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 17
+}

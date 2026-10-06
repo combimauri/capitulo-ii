@@ -191,6 +191,10 @@ CARTEL: Fin de la jornada. # fx:negro # id:j3_05_cartel # escena:pasillo # pos:d
 === pasillo ===
 
 = entrar
+{ jornada == 7 and not suministros_visto:
+    PENSAMIENTO: El cuarto de suministros, al fondo del pasillo. # id:j7_02_pasillo
+    -> DONE
+}
 { pasillo_visto:
     -> DONE
 }
@@ -234,6 +238,13 @@ PENSAMIENTO: ¿Dónde…? # id:j3_05_pens_09
 }
 -> DONE
 
+= ir_suministros
+{ jornada == 7:
+    # escena:suministros # pos:puerta
+    -> DONE
+}
+-> suministros_mirar
+
 = suministros_mirar
 { nell_se_fue:
     PENSAMIENTO: Cerrado con llave. ¿Por dónde ha salido? # id:j3_05_suministros_01
@@ -263,6 +274,14 @@ PENSAMIENTO: La jornada ha terminado. # id:j3_05_depto_usar
 -> DONE
 
 = salir
+{ jornada == 7:
+    { nell_respuesta == "":
+        PENSAMIENTO: Primero, la cinta. # id:j7_02_salir_cinta
+    - else:
+        CARTEL: Esa noche. # fx:negro # id:j7_05_cartel_pasillo # escena:piso_noche # pos:puerta
+    }
+    -> DONE
+}
 { not nell_se_fue:
     PENSAMIENTO: La limpiadora me está mirando. # id:j3_05_salir_no
     -> DONE
@@ -308,5 +327,7 @@ PENSAMIENTO: Muy lejos, el silbido de un cohete. # sfx:silbido # esperar:2.6 # i
 PENSAMIENTO: Un impacto amortiguado, en otro barrio. No me muevo. # sfx:impacto # id:j3_06_dormir_02
 CARTEL: FIN DEL ACTO I # id:j3_06_fin_acto
 CARTEL: ACTO II¶LA GRIETA # id:j3_06_acto2
-CARTEL: Continuará. El Acto II está en preparación. # id:j3_06_continuara # final:demo
+~ jornada = 4
+~ desayunado = false
+CARTEL: JORNADA 4 # sfx:silbato # id:j3_06_jornada4 # escena:piso # pos:cama
 -> DONE

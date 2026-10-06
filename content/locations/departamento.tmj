@@ -569,6 +569,92 @@
     },
     {
      "id": 29,
+     "name": "libro",
+     "x": 356,
+     "y": 136,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Libro de Registro"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j4_libro_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j4_libro"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "366,176"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "registro_asignado"
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "name": "cajon_registro",
+     "x": 378,
+     "y": 156,
+     "width": 24,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cajón del Registro"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "j4_cajon_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "j4_cajon"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "390,176"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "registro_asignado"
+      }
+     ]
+    },
+    {
+     "id": 31,
      "name": "proyeccion",
      "x": 154,
      "y": 48,
@@ -606,7 +692,7 @@
      ]
     },
     {
-     "id": 30,
+     "id": 32,
      "name": "papelera_amory",
      "x": 296,
      "y": 190,
@@ -655,7 +741,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 39,
+     "id": 42,
      "name": "puerta",
      "x": 396,
      "y": 230,
@@ -674,7 +760,7 @@
      ]
     },
     {
-     "id": 40,
+     "id": 43,
      "name": "mesa",
      "x": 172,
      "y": 216,
@@ -693,7 +779,7 @@
      ]
     },
     {
-     "id": 41,
+     "id": 44,
      "name": "despacho",
      "x": 71,
      "y": 106,
@@ -723,7 +809,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 31,
+     "id": 33,
      "name": "voss",
      "x": 72,
      "y": 112,
@@ -757,7 +843,46 @@
      ]
     },
     {
-     "id": 32,
+     "id": 34,
+     "name": "voss_mesa",
+     "x": 150,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "voss"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Subdirector Voss"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.voss_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "voss_espera"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "152,236"
+      }
+     ]
+    },
+    {
+     "id": 35,
      "name": "amory",
      "x": 304,
      "y": 206,
@@ -796,7 +921,7 @@
      ]
     },
     {
-     "id": 33,
+     "id": 36,
      "name": "pell",
      "x": 304,
      "y": 206,
@@ -835,7 +960,7 @@
      ]
     },
     {
-     "id": 34,
+     "id": 37,
      "name": "func1",
      "x": 114,
      "y": 160,
@@ -874,7 +999,7 @@
      ]
     },
     {
-     "id": 35,
+     "id": 38,
      "name": "func2",
      "x": 274,
      "y": 160,
@@ -918,7 +1043,7 @@
      ]
     },
     {
-     "id": 36,
+     "id": 39,
      "name": "brooke",
      "x": 274,
      "y": 160,
@@ -967,7 +1092,7 @@
      ]
     },
     {
-     "id": 37,
+     "id": 40,
      "name": "func3",
      "x": 114,
      "y": 216,
@@ -1006,7 +1131,7 @@
      ]
     },
     {
-     "id": 38,
+     "id": 41,
      "name": "nell",
      "x": 340,
      "y": 204,
@@ -1052,5 +1177,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 42
+ "nextobjectid": 45
 }

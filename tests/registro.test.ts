@@ -57,6 +57,17 @@ describe('registro', () => {
     expect(r.entradas.at(-1)?.texto).toBe(`Disculpe, camarada. ¿Sabe dónde se ha sentado hoy ${BORRADO}?`);
   });
 
+  it('reescribir: aceptar cambia lo que se dijo; recordar lo conserva, tachado', () => {
+    const a = new Registro();
+    a.anotar('j1_07_tp_02', 'TELEPANTALLA', 'Nuestras fuerzas han aplastado al enemigo.');
+    a.reescribir({ j1_07_tp_02: 'Nuestras fuerzas han resistido con firmeza.' }, 'aceptar');
+    expect(a.entradas[0]).toMatchObject({ texto: 'Nuestras fuerzas han resistido con firmeza.', estado: 'reescrita' });
+    const r = new Registro();
+    r.anotar('j1_07_tp_02', 'TELEPANTALLA', 'Nuestras fuerzas han aplastado al enemigo.');
+    r.reescribir({ j1_07_tp_02: 'Otra cosa.' }, 'recordar');
+    expect(r.entradas[0]).toMatchObject({ texto: 'Nuestras fuerzas han aplastado al enemigo.', estado: 'tachada' });
+  });
+
   it('se guarda y se restaura con las decisiones', () => {
     const r = conHistoria();
     r.doblepensar(LINEAS, ALIAS, 'aceptar');
@@ -74,7 +85,7 @@ describe('registro', () => {
     expect(ids.length).toBeGreaterThan(0);
     for (const id of ids) {
       const c = JSON.parse(fs.readFileSync(path.join(raiz, 'content/doblepensar', `${id}.json`), 'utf8'));
-      expect(c.alias.length).toBeGreaterThan(0);
+      expect((c.alias?.length ?? 0) + Object.keys(c.reescribir ?? {}).length, id).toBeGreaterThan(0);
       expect(c.lineas.length).toBeGreaterThan(0);
       expect(c.aceptar && c.recordar && c.telepantalla).toBeTruthy();
     }

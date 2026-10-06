@@ -674,7 +674,7 @@ interface SaveData {
 | **M0 · Esqueleto** ✅ | Proyecto Vite + Phaser + inkjs. Escalado de píxeles. Puente narrativo con un `.ink` de prueba. Caja de diálogo, elecciones y guardado básico. Panel de depuración mínimo. | Se puede jugar una conversación ramificada de prueba en escritorio y en móvil, guardar y cargar. |
 | **M1 · Corte vertical** ✅ | **Prólogo + Jornada 1 completos:** escombros, ficha de afiliación, piso, escalera, calle, Minipax, cantina. Crimen facial (gimnasia y noticia). Minijuego de partes. Inventario. Arte provisional de calidad aceptable para 3 localizaciones. | Se juega de principio a fin en ~15 min, en escritorio y móvil, con audio. Sirve para validar tono, controles y legibilidad. |
 | **M2 · Acto I** ✅ | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
-| **M3 · Acto II + Final A** | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
+| **M3 · Acto II + Final A** ✅ | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
 | **M4 · Sistema de sigilo + Acto III** | Sigilo completo. Las tres misiones. Gran Rectificación. Expediente de Ivy. Lista de Len. Crane. Persecución. Final B. | Jugable hasta J12. |
 | **M5 · Acto IV + finales** | Túneles (mapa de tres capas y cohetes), cripta, conversación, composición del Capítulo II, finales C, C0, D y E, créditos y desbloqueos. | Los cinco finales y C0 se alcanzan. Bot y rutas dirigidas en verde. |
 | **M6 · Arte y audio finales** | Sustitución del arte provisional, música, ambientes y efectos. | — |
@@ -737,6 +737,30 @@ interface SaveData {
 - Probar el joystick en un móvil real.
 - Pulir el arte provisional del pasillo.
 - La música y los ambientes llegan en M6.
+
+### Estado de M3 (Acto II completo, con los Finales A y B temprano)
+
+- **Jornadas 4 a 7 jugables**, con todas las ramas del guion. La Jornada 7 termina en el Acto III («Continuará»), en el Final A o en el Final B temprano.
+- **Minijuegos nuevos:**
+  - **Registro de impactos** (`content/impactos/`): chinchetas en el mapa de Londres, la lámina de zonificación y el compás. En la J5, modo guiado: lámina, un círculo de 2 km desde cada ministerio y el aviso de Brooke.
+  - **Contrarreloj de Sammy:** elegir en 4 segundos y tres obstáculos razonables; siempre falla.
+  - **Diario:** entradas desbloqueadas por variables de ink, frases filtradas por el estado y con {variables}. El año se resiste. Lo escrito se guarda para el Capítulo II (`diario_texto`).
+  - **Comparador de documentos:** el recuerdo en sepia frente al documento del archivo.
+  - **Esconder el diario** antes de que Hilda abra la puerta.
+- **Doblepensar sobre lo que se dijo:** además de borrar nombres, reescribe líneas concretas del registro (`reescribir` en `content/doblepensar/`). Al recordarlas, quedan tachadas enteras.
+- **Telepantallas:**
+  - Cono de visión del piso, visible con el diario en la mano. El hueco junto al armario es el único ángulo muerto.
+  - Telepantalla de techo que gira en el archivo (`conos`, `cono_var`).
+- **Acciones de ink nuevas:** `recuerdo:` (un destello del pasado) y `vineta:` (viñetas fijas de los montajes de los finales).
+- **Finales:** se registran fuera de la partida y desbloquean líneas en el menú principal.
+- **Suelo de Sospecha:** si el Comité llega a leer el diario, la Sospecha ya no baja de 40.
+- **Escenarios nuevos:** Limehouse, el pub La Campana, el mercado de Watney Street (antes y después del cohete), el estudio de Crane, la sala de archivo y el cuarto de suministros. También la mesa del Registro, la plaza de la Semana del Odio y el patíbulo.
+- **Personajes nuevos:** Dot, Sammy, Crane, el viejo del pub, el tabernero y el trípode y el carrito como figuras.
+- **115 pruebas**, con todas las decisiones del acto y los dos finales recorridos línea a línea.
+
+**Pendiente para M3:**
+- La música de taberna y el leitmotiv prole.
+- Una ilustración propia para la foto restaurada de Ivy.
 
 ---
 

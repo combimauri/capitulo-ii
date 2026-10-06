@@ -77,6 +77,19 @@ export class Registro {
   /** ¿El hablante de esta entrada es la persona? */
   nombra(e: EntradaRegistro, alias: Alias) { return regexAlias(alias).test(e.hablante); }
 
+  /**
+   * Doblepensar sobre lo que se dijo (no sobre quién): líneas concretas que el Partido ha reescrito.
+   * Aceptar: la línea pasa a decir lo nuevo. Recordar: se conserva lo que se oyó, tachado entero.
+   */
+  reescribir(cambios: Record<string, string>, decision: 'aceptar' | 'recordar'): EntradaRegistro[] {
+    const afectadas = this.entradas.filter((e) => e.id in cambios);
+    for (const e of afectadas) {
+      e.original ??= { hablante: e.hablante, texto: e.texto };
+      if (decision === 'aceptar') { e.texto = cambios[e.id]; e.estado = 'reescrita'; } else e.estado = 'tachada';
+    }
+    return afectadas;
+  }
+
   serializar() {
     return { entradas: this.entradas, decisiones: this.decisiones };
   }

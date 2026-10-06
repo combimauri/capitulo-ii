@@ -56,6 +56,10 @@ export interface LocationData {
   fondoAlt?: { clave: string; condicion: string };
   /** Luces de neón que parpadean. */
   parpadeo: boolean;
+  /** Lo que ve la telepantalla (polígono); se dibuja cuando el jugador lleva el diario en la mano. */
+  cono?: Point[];
+  /** Telepantalla que gira: dos conos que se alternan cada pocos segundos; la variable dice si mira el primero. */
+  conosRotativos?: { conos: Point[][]; variable: string };
 }
 
 interface TiledProp { name: string; value: unknown }
@@ -105,6 +109,11 @@ export function parseTiled(id: string, raw: string): LocationData {
     tinteProta: mp.prota_tinte ? parseInt(mp.prota_tinte.replace('#', ''), 16) : undefined,
     fondoAlt: mp.fondo_alt ? { clave: mp.fondo_alt, condicion: mp.fondo_alt_si ?? '' } : undefined,
     parpadeo: mp.parpadeo === 'true',
+    conosRotativos: mp.conos ? {
+      conos: mp.conos.split('|').map((c) => c.split(';').map((p) => { const [x, y] = p.split(',').map(Number); return { x, y }; })),
+      variable: mp.cono_var ?? '',
+    } : undefined,
+    cono: mp.cono ? mp.cono.split(';').map((p) => { const [x, y] = p.split(',').map(Number); return { x, y }; }) : undefined,
     sigueCamara: map.width * map.tilewidth > 480 || map.height * map.tileheight > 288,   // 270 px = 17 tiles (272)
   };
 }

@@ -59,8 +59,86 @@ def icono_diario():
     return _rgba(cv)
 
 
+def icono_compas():
+    cv = Canvas(16, 16)
+    cv.ellipse(6, 1, 10, 5, K("ocre", 3), outline=K("ocre", 1))                    # bisagra
+    cv.d.line([7, 4, 3, 14], fill=K("ocre", 2)); cv.d.line([9, 4, 13, 14], fill=K("ocre", 2))
+    cv.px(3, 14, K("gris", 6)); cv.px(13, 14, K("gris", 1))                        # punta y mina
+    cv.hline(5, 11, 9, K("ocre", 1))
+    return _rgba(cv)
+
+
+def icono_zonificacion():
+    cv = Canvas(16, 16)
+    cv.rect(2, 2, 14, 14, K("cielo", 6)); cv.frame(2, 2, 14, 14, K("cielo", 4))
+    cv.poly([(3, 3), (9, 3), (8, 9), (3, 8)], K("papel", 4))                       # distritos del Partido
+    cv.poly([(9, 3), (13, 3), (13, 13), (5, 13), (8, 9)], K("madera", 3))          # proletarios
+    cv.ellipse(9, 9, 13, 13, None, outline=K("rojo", 3))                          # sello
+    return _rgba(cv)
+
+
+def icono_nota():
+    cv = Canvas(16, 16)
+    cv.poly([(2, 4), (13, 2), (14, 12), (3, 14)], K("papel", 3))
+    for y in (6, 8, 10):
+        cv.hline(4, 11, y, K("gris", 4))
+    cv.px(11, 4, K("gris", 1)); cv.px(10, 3, K("gris", 1)); cv.px(12, 3, K("gris", 1))   # pájaro
+    return _rgba(cv)
+
+
+def icono_metralla():
+    cv = Canvas(16, 16)
+    cv.d.line([4, 1, 8, 6], fill=K("madera", 3)); cv.d.line([12, 1, 8, 6], fill=K("madera", 3))   # cordel
+    cv.poly([(6, 6), (11, 5), (13, 9), (9, 14), (4, 11)], K("gris", 4))
+    cv.d.line([(6, 6), (11, 5), (13, 9)], fill=K("gris", 6)); cv.px(8, 9, K("granate", 2))
+    return _rgba(cv)
+
+
+def icono_tarjeta():
+    cv = Canvas(16, 16)
+    cv.rect(1, 4, 15, 12, K("papel", 4)); cv.frame(1, 4, 15, 12, K("papel", 1))
+    cv.rect(3, 6, 6, 9, K("gris", 2)); cv.px(4, 7, K("papel", 4))                 # una camarita
+    cv.hline(8, 13, 7, K("gris", 3)); cv.hline(8, 12, 9, K("gris", 4))
+    return _rgba(cv)
+
+
+def icono_metralla_brillante():
+    cv = Canvas(16, 16)
+    cv.poly([(4, 7), (10, 3), (14, 8), (9, 13), (3, 11)], K("gris", 6))
+    cv.d.line([(4, 7), (10, 3), (14, 8)], fill=K("papel", 4)); cv.px(9, 6, K("papel", 4)); cv.px(8, 7, K("gris", 8))
+    return _rgba(cv)
+
+
+def icono_parte():
+    cv = Canvas(16, 16)
+    cv.rect(3, 1, 13, 15, K("papel", 3)); cv.frame(3, 1, 13, 15, K("papel", 0))
+    for y in (4, 6, 8, 10):
+        cv.hline(5, 11, y, K("gris", 3))
+    cv.ellipse(7, 10, 13, 15, None, outline=K("rojo", 3)); cv.px(10, 12, K("rojo", 3))
+    return _rgba(cv)
+
+
+def icono_foto_restaurada():
+    cv = Canvas(16, 16)
+    cv.rect(2, 3, 14, 13, K("papel", 4)); cv.rect(3, 4, 13, 11, K("papel", 1))
+    cv.rect(5, 6, 7, 8, K("piel", 3)); cv.rect(9, 6, 11, 8, K("piel", 3))
+    cv.hline(5, 7, 9, K("rojo", 3))                                       # la sonrisa de Ivy
+    return _rgba(cv)
+
+
+def icono_llave():
+    cv = Canvas(16, 16)
+    cv.ellipse(1, 3, 8, 10, None, outline=K("ocre", 1)); cv.ellipse(2, 4, 7, 9, None, outline=K("ocre", 2))
+    cv.rect(7, 6, 15, 7, K("ocre", 1)); cv.rect(12, 8, 13, 10, K("ocre", 1)); cv.rect(14, 8, 15, 9, K("ocre", 1))
+    cv.px(10, 6, K("madera", 2)); cv.px(4, 8, K("madera", 2))                       # óxido
+    return _rgba(cv)
+
+
 ICONOS = {"icono-reloj": icono_reloj, "icono-ficha": icono_ficha, "icono-lapiz": icono_lapiz,
-          "icono-foto": icono_foto, "icono-diario": icono_diario}
+          "icono-foto": icono_foto, "icono-diario": icono_diario, "icono-compas": icono_compas,
+          "icono-zonificacion": icono_zonificacion, "icono-nota": icono_nota, "icono-metralla": icono_metralla,
+          "icono-tarjeta": icono_tarjeta, "icono-metralla-brillante": icono_metralla_brillante,
+          "icono-parte": icono_parte, "icono-foto-restaurada": icono_foto_restaurada, "icono-llave": icono_llave}
 
 
 def cascotes_fondo():

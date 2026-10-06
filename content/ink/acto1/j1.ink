@@ -10,6 +10,18 @@
 { jornada == 3:
     -> j3_piso
 }
+{ jornada == 4:
+    -> j4_piso
+}
+{ jornada == 5:
+    -> j5_piso
+}
+{ jornada == 6:
+    -> j6_piso
+}
+{ jornada == 7:
+    -> j7_piso
+}
 { gimnasia_hecha or jornada != 1:
     -> DONE
 }
@@ -29,6 +41,9 @@ TELEPANTALLA: ¡Alto! ¡Descanso! # cf:id=CF-J1-GIMNASIA,expr=entusiasmo,dif=fac
 -> DONE
 
 = cartel_mirar
+{ jornada >= 4:
+    -> j4_cartel_mirar
+}
 PENSAMIENTO: Ivy. Cada mañana te lo prometo. Cada mañana. Eurasia pagará cada piedra de la calle Stepney. # id:piso_cartel_mirar
 -> DONE
 
@@ -80,6 +95,17 @@ PENSAMIENTO: Una sola llama, como todos los hornillos del bloque. # id:piso_horn
 PENSAMIENTO: La cama está hecha. Una cama deshecha es una mente deshecha. # id:piso_cama_mirar
 -> DONE
 
+= cajon_mirar
+PENSAMIENTO: Ahí guardo lo único que saqué de la calle Stepney, aparte del reloj. # id:piso_cajon_mirar
+-> DONE
+
+= cajon_usar
+{ cajon_disponible:
+    -> j4_cajon_piso
+}
+PENSAMIENTO: Ahora no. # id:piso_cajon_usar_no
+-> DONE
+
 = abrigo_mirar
 PENSAMIENTO: Mi abrigo. Gris, como todos los abrigos. # id:piso_abrigo_mirar
 -> DONE
@@ -93,7 +119,13 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
     PENSAMIENTO: Primero el desayuno. Un estómago vacío es un estómago desleal. # id:piso_puerta_usar_01
     -> DONE
 }
-{ jornada == 3:
+{ jornada == 5:
+    -> j5_salir_piso
+}
+{ jornada == 6:
+    -> j6_salir_piso
+}
+{ jornada >= 3:
     -> j3_salir_piso
 }
 # escena:escalera # pos:piso
@@ -105,6 +137,9 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 = entrar
 { jornada == 2:
     -> j2_parsons
+}
+{ jornada == 6:
+    -> j6_hilda
 }
 { escalera_vista:
     -> DONE
@@ -198,6 +233,9 @@ PROTAGONISTA: Lo estoy. # id:j1_02_prot_03
 = bajar
 { jornada == 2:
     -> j2_bajar
+}
+{ jornada == 6:
+    -> j6_bajar
 }
 { not hilda_j1:
     HILDA: ¡{nombre}! ¡Espera, espera, que no se escapa nadie sin pasar por la lata! # id:j1_02_hilda_espera
@@ -306,6 +344,18 @@ PENSAMIENTO: El ascensor de la izquierda. Funciona. # id:j1_04_ascensor_mirar
 { jornada == 3:
     -> j3_entrar
 }
+{ jornada == 4:
+    -> j4_entrar
+}
+{ jornada == 5:
+    -> j5_entrar
+}
+{ jornada == 6:
+    -> j6_entrar
+}
+{ jornada == 7:
+    -> j7_entrar
+}
 { depto_visto:
     -> DONE
 }
@@ -409,6 +459,9 @@ PENSAMIENTO: No tengo nada que buscar ahí. # id:j1_05_personal_usar
 -> DONE
 
 = registro_mirar
+{ jornada >= 4:
+    -> j4_registro_mirar
+}
 PENSAMIENTO: La mesa del Registro de Impactos. Un mapa de Londres bajo un cristal. Hoy no la usa nadie. # id:j1_05_registro_mirar
 -> DONE
 
@@ -440,6 +493,15 @@ PENSAMIENTO: Tengo trabajo. # id:j1_05_nell_hablar
 { jornada == 3:
     -> j3_salir
 }
+{ jornada == 4:
+    -> j4_salir
+}
+{ jornada == 5:
+    -> j5_salir
+}
+{ jornada == 7:
+    -> j7_salir
+}
 { not parte_j1_enviado:
     PENSAMIENTO: Primero el parte. Malabar no espera. # id:j1_05_salir_no
     -> DONE
@@ -451,6 +513,9 @@ PENSAMIENTO: Tengo trabajo. # id:j1_05_nell_hablar
 === cantina ===
 
 = entrar
+{ jornada == 4:
+    -> j4_cantina
+}
 { cantina_vista:
     -> DONE
 }
@@ -467,6 +532,13 @@ TELEPANTALLA: …la producción de botas en el último trimestre ha superado el 
 CARTEL: La tarde pasa entre partes y banderitas. # id:j1_06_cartel # escena:piso_noche # pos:puerta
 -> DONE
 
+= salir
+{ jornada == 4:
+    -> j4_cantina_salir
+}
+PENSAMIENTO: Todavía no he terminado de comer. # id:j1_06_salir_no
+-> DONE
+
 = amory
 AMORY: Come, come. El guiso se enfría y luego sabe a guiso frío. # id:j1_06_amory_06
 -> DONE
@@ -477,6 +549,18 @@ AMORY: Come, come. El guiso se enfría y luego sabe a guiso frío. # id:j1_06_am
 = entrar
 { jornada == 3:
     -> j3_noche
+}
+{ jornada == 4:
+    -> j4_noche
+}
+{ jornada == 5:
+    -> j5_noche
+}
+{ jornada == 6:
+    -> j6_noche
+}
+{ jornada == 7:
+    -> j7_noche
 }
 { noche_vista:
     -> DONE
@@ -494,22 +578,39 @@ PENSAMIENTO: Son mis palabras. Las está diciendo toda Oceanía. Ivy, ¿lo oyes?
 -> DONE
 
 = cartel_mirar
-{ jornada == 3:
+{ jornada == 7 and (nell_respuesta == "aceptar" or nell_respuesta == "dudar"):
+    -> j7_cartel_mirar
+}
+{ jornada >= 3:
     PENSAMIENTO: Ivy. La miro mucho rato. # id:j3_06_cartel_mirar
     -> DONE
 }
 PENSAMIENTO: Hoy hemos ganado {parte_j1_km} kilómetros. Mañana ganaremos más. # id:j1_07_cartel_mirar
 -> DONE
 
+= abrigo_mirar
+PENSAMIENTO: Mi abrigo. Gris, como todos los abrigos. # id:j1_07_abrigo_mirar
+-> DONE
+
+= abrigo
+{ jornada == 5:
+    -> j5_abrigo
+}
+PENSAMIENTO: Mañana me hará falta. # id:j1_07_abrigo_usar
+-> DONE
+
+= hueco_mirar
+-> j5_hueco_mirar
+
 = ventana_mirar
-{ jornada == 3:
+{ jornada >= 3:
     -> j3_ventana
 }
 PENSAMIENTO: La ciudad a oscuras. Solo brillan los ministerios. # id:j1_07_ventana_mirar
 -> DONE
 
 = tele_mirar
-{ jornada == 3:
+{ jornada >= 3:
     PENSAMIENTO: Música marcial. Tambores, trompetas. Nada que pensar. # id:j3_06_tele_mirar
     -> DONE
 }
@@ -523,6 +624,18 @@ PENSAMIENTO: Mañana, a las siete y cuarto, el silbato. # id:j1_07_cama_mirar
 = dormir
 { jornada == 3:
     -> j3_dormir
+}
+{ jornada == 4:
+    -> j4_dormir
+}
+{ jornada == 5:
+    -> j5_dormir
+}
+{ jornada == 6:
+    -> j6_dormir
+}
+{ jornada == 7:
+    -> j7_dormir
 }
 ~ jornada = 2
 ~ desayunado = false

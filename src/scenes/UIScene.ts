@@ -16,7 +16,7 @@ const CAJA = { x: 40, y: 386, w: 880, h: 132 };
 
 /** Minijuegos por etiqueta: cf → Facecrime; minijuego:<tipo> → escena. */
 const MINIJUEGOS: Record<string, string> = {
-  cf: 'Facecrime', dp: 'Registro', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta',
+  cf: 'Facecrime', dp: 'Registro', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta', impactos: 'Impactos', sammy: 'Sammy', diario: 'Diario', comparar: 'Comparar', esconder: 'Esconder',
 };
 
 interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
@@ -55,6 +55,7 @@ export class UIScene extends Phaser.Scene {
   private depurando = false;
   private inventarioAbiertoEn = 0;
   private consultando = false;
+  private avisosPendientes: string[] = [];
   private enMano!: Phaser.GameObjects.Container;
   private aviso!: Phaser.GameObjects.Container;
 
@@ -215,6 +216,7 @@ export class UIScene extends Phaser.Scene {
 
   private terminar() {
     this.activo = false;
+    if (this.vinetaActual) { const v = this.vinetaActual; this.vinetaActual = null; this.tweens.add({ targets: v, alpha: 0, duration: 500, onComplete: () => v.destroy() }); }
     this.ocultarTodo();
     if (this.velo.alpha > 0) this.tweens.add({ targets: this.velo, alpha: 0, duration: 700 });
     this.game.events.emit(EV.dialogoFin);
@@ -246,6 +248,12 @@ export class UIScene extends Phaser.Scene {
         await this.esperar(Number(a.value) * 1000 || 1000);
       } else if (a.key === 'fx') {
         await this.efecto(a.value);
+      } else if (a.key === 'recuerdo') {
+        this.ocultarTodo();
+        await this.recuerdo(a.value);
+      } else if (a.key === 'vineta') {
+        this.ocultarTodo();
+        await this.vineta(a.value);
       } else {
         const tipo = a.key === 'minijuego' ? a.value.split(',')[0].trim() : a.key;
         const escena = MINIJUEGOS[tipo];
@@ -282,11 +290,51 @@ export class UIScene extends Phaser.Scene {
     } else if (tipo === 'ficha' && r.datos) {
       for (const k of ['nombre', 'apellido', 'num']) narrativa.set(k, String(r.datos[k]));
       narrativa.call('fijar_genero', String(r.datos.genero));
+    } else if (tipo === 'diario') {
+      // la frase queda guardada para el Capítulo II; la entrada ya no se vuelve a ofrecer
+      if (r.resultado && r.datos?.entrada) {
+        narrativa.set(`${r.datos.entrada}_escrita`, true);
+        narrativa.set('diario_ultima', r.resultado);
+        narrativa.set('diario_texto', `${narrativa.get('diario_texto') || ''}¶${r.resultado}`);
+        narrativa.set('diario_entradas', (Number(narrativa.get('diario_entradas')) || 0) + 1);
+      }
     } else if (params.resultado) {
       narrativa.set(params.resultado, r.resultado);   // p. ej. # minijuego:pancarta,resultado=pancarta_j2
     } else if (params.vars && r.datos) {
       for (const [k, v] of Object.entries(r.datos)) narrativa.set(`${params.vars}_${k}`, v);
     }
+  }
+
+  /** Un recuerdo que asalta (≈2 s): la imagen en sepia, a golpes de luz.  # recuerdo:loc-stepney_ivy */
+  private recuerdo(clave: string): Promise<void> {
+    return new Promise((ok) => {
+      if (!this.textures.exists(clave)) return ok();
+      const img = this.add.image(480, 270, clave).setScale(2).setTint(0xc8a878).setDepth(45).setAlpha(0);
+      audio.play('grieta');
+      this.tweens.add({ targets: img, alpha: { from: 0, to: 0.95 }, duration: 90, yoyo: true, repeat: 4, hold: 260,
+        onComplete: () => { img.destroy(); ok(); } });
+    });
+  }
+
+  /**
+   * Viñetas fijas de los montajes: una imagen a pantalla completa bajo el texto, hasta la siguiente viñeta
+   * o «vineta:fin».  # vineta:loc-pasillo · # vineta:vineta-plaza,gris=si
+   */
+  private vinetaActual: Phaser.GameObjects.Image | null = null;
+  private vineta(valor: string): Promise<void> {
+    const [clave, ...resto] = valor.split(',');
+    const gris = resto.some((r) => r.trim() === 'gris=si');
+    return new Promise((ok) => {
+      const vieja = this.vinetaActual;
+      this.vinetaActual = null;
+      if (vieja) this.tweens.add({ targets: vieja, alpha: 0, duration: 400, onComplete: () => vieja.destroy() });
+      if (clave === 'fin' || !this.textures.exists(clave)) { this.time.delayedCall(vieja ? 400 : 0, ok); return; }
+      const img = this.add.image(480, 270, clave).setDepth(25).setAlpha(0);
+      img.setScale(Math.max(960 / img.width, 540 / img.height));
+      if (gris) img.setTint(0x9a9a9a);
+      this.vinetaActual = img;
+      this.tweens.add({ targets: img, alpha: 1, duration: 600, onComplete: () => ok() });
+    });
   }
 
   /** Efectos de pantalla: negro, blanco, fundido, temblor, destello. */
@@ -451,17 +499,17 @@ export class UIScene extends Phaser.Scene {
     // el mismo toque que abre el panel no debe cerrarlo al soltarse
     c.add(this.add.rectangle(0, 0, 960, 540, 0x000000, 0.6).setOrigin(0).setInteractive()
       .on('pointerup', () => { if (this.time.now - this.inventarioAbiertoEn > 300) this.alternarInventario(); }));
-    c.add(this.add.rectangle(480, 270, 640, 300, 0x2e221b).setStrokeStyle(3, 0x1a1411));
-    c.add(this.add.text(480, 142, 'OBJETOS', { fontFamily: FUENTE.maquina, fontSize: '30px', color: hex(COLOR.papel4) }).setOrigin(0.5));
-    const desc = this.add.text(480, 340, items.length ? 'Toca un objeto.' : 'No llevas nada.', {
+    c.add(this.add.rectangle(480, 270, 680, 380, 0x2e221b).setStrokeStyle(3, 0x1a1411));
+    c.add(this.add.text(480, 104, 'OBJETOS', { fontFamily: FUENTE.maquina, fontSize: '30px', color: hex(COLOR.papel4) }).setOrigin(0.5));
+    const desc = this.add.text(480, 370, items.length ? 'Toca un objeto.' : 'No llevas nada.', {
       fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel3), align: 'center', wordWrap: { width: 580 },
     }).setOrigin(0.5);
     c.add(desc);
     // acciones sobre el objeto elegido: mirarlo o cogerlo para usarlo con algo del escenario
     let elegido: string | null = null;
     const accion = (x: number, etiqueta: string, alPulsar: () => void) => {
-      const fondo = this.add.rectangle(x, 390, 170, 36, COLOR.gris2).setStrokeStyle(2, COLOR.gris3).setInteractive({ useHandCursor: true });
-      const t = this.add.text(x, 390, etiqueta, { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel4) }).setOrigin(0.5);
+      const fondo = this.add.rectangle(x, 422, 170, 36, COLOR.gris2).setStrokeStyle(2, COLOR.gris3).setInteractive({ useHandCursor: true });
+      const t = this.add.text(x, 422, etiqueta, { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel4) }).setOrigin(0.5);
       fondo.on('pointerover', () => fondo.setFillStyle(COLOR.rojo3));
       fondo.on('pointerout', () => fondo.setFillStyle(COLOR.gris2));
       fondo.on('pointerup', () => { if (elegido) alPulsar(); });
@@ -476,16 +524,18 @@ export class UIScene extends Phaser.Scene {
     const usar = accion(570, 'USAR CON…', () => {
       mano.item = elegido;
       this.alternarInventario();
-      this.dibujarMano();
+      this.game.events.emit(EV.mano);   // redibuja el indicador (aquí) y el cono de la telepantalla (en el escenario)
     });
     const marcos: Phaser.GameObjects.Rectangle[] = [];
     items.forEach((id, i) => {
       const item = ITEMS[id];
-      const x = 480 - (items.length - 1) * 60 + i * 120, y = 240;
-      const casilla = this.add.rectangle(x, y, 92, 92, 0x1a1411).setStrokeStyle(2, COLOR.gris3).setInteractive({ useHandCursor: true });
+      // hasta seis por fila
+      const fila = Math.floor(i / 6), enFila = Math.min(6, items.length - fila * 6), col = i % 6;
+      const x = 480 - (enFila - 1) * 50 + col * 100, y = 182 + fila * 96;
+      const casilla = this.add.rectangle(x, y, 84, 84, 0x1a1411).setStrokeStyle(2, COLOR.gris3).setInteractive({ useHandCursor: true });
       marcos.push(casilla);
       c.add(casilla);
-      if (item && this.textures.exists(item.icono)) c.add(this.add.image(x, y, item.icono).setScale(4));
+      if (item && this.textures.exists(item.icono)) c.add(this.add.image(x, y, item.icono).setScale(3.5));
       casilla.on('pointerup', () => {
         elegido = id;
         marcos.forEach((m) => m.setStrokeStyle(2, m === casilla ? COLOR.rojo4 : COLOR.gris3));
@@ -513,13 +563,18 @@ export class UIScene extends Phaser.Scene {
   private avisarObjeto(id: string) {
     const item = ITEMS[id];
     if (!item) return;
+    // si ya hay un aviso a la vista, este espera su turno
+    if (this.aviso.visible) { this.avisosPendientes.push(id); return; }
     const a = this.aviso.removeAll(true).setVisible(true).setAlpha(0).setY(-20);
     a.add(this.add.rectangle(480, 164, 360, 58, COLOR.gris1, 0.92).setStrokeStyle(2, COLOR.ocre4));
     if (this.textures.exists(item.icono)) a.add(this.add.image(334, 164, item.icono).setScale(2.5));
     a.add(this.add.text(372, 150, item.nombre.toUpperCase(), { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.ocre4) }));
     a.add(this.add.text(372, 172, 'en el inventario', { fontFamily: FUENTE.texto, fontSize: '15px', color: hex(COLOR.papel3) }));
     this.tweens.add({ targets: a, alpha: 1, y: 0, duration: 300 });
-    this.tweens.add({ targets: a, alpha: 0, delay: 3200, duration: 500, onComplete: () => a.setVisible(false) });
+    this.tweens.add({
+      targets: a, alpha: 0, delay: 2600, duration: 400,
+      onComplete: () => { a.setVisible(false); const sig = this.avisosPendientes.shift(); if (sig) this.avisarObjeto(sig); },
+    });
   }
 
   /** Indicador del objeto en la mano (arriba a la izquierda), con un aspa para soltarlo. */
@@ -542,7 +597,7 @@ export class UIScene extends Phaser.Scene {
 
   private soltarObjeto() {
     mano.item = null;
-    this.dibujarMano();
+    this.game.events.emit(EV.mano);
   }
 
   /** El ojo se abre a medida que sube la Sospecha (biblia visual §8). */
