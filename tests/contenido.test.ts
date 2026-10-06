@@ -103,6 +103,7 @@ function recorrerConMinijuegos(b: NarrativeBridge, resultados: (accion: string) 
 describe('los resultados de los minijuegos cambian la historia', () => {
   it('fallar la gimnasia provoca la reprimenda y sube la Sospecha', () => {
     const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 1);
     b.goTo('piso.entrar');
     const t = recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j1_gimnasia: 'fallo' } : {}));
     expect(t).toContain('Más energía');
@@ -111,6 +112,7 @@ describe('los resultados de los minijuegos cambian la historia', () => {
 
   it('hacerla bien provoca el elogio', () => {
     const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 1);
     b.goTo('piso.entrar');
     expect(recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j1_gimnasia: 'perfecto' } : {}))).toContain('Mirad todos');
   });
@@ -129,6 +131,64 @@ describe('los resultados de los minijuegos cambian la historia', () => {
     expect(b.get('sospecha')).toBe(4);
     expect(b.get('parte_j1_enviado')).toBe(true);
   });
+});
+
+describe('jornada 2', () => {
+  it('fallar los Dos Minutos de Odio y además la transición al Gran Hermano suma 10 de Sospecha', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 2);
+    b.goTo('odio.sentarse');
+    recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j2_odio: 'fallo', cf_j2_odio_transicion: 'fallo' } : {}));
+    expect(b.get('sospecha')).toBe(10);
+  });
+
+  it('un Odio perfecto hace que O\'Brien te mire', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 2);
+    b.goTo('odio.sentarse');
+    const t = recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j2_odio: 'perfecto', cf_j2_odio_transicion: 'ok' } : {}));
+    expect(t).toContain('me mira de reojo');
+    expect(b.get('sospecha')).toBe(0);
+  });
+
+  it('solo quien mira a Amory en el clímax le ve limpiarse las gafas', () => {
+    for (const amory of ['visto', 'no']) {
+      const b = new NarrativeBridge(resultado.json!);
+      b.set('jornada', 2);
+      b.goTo('odio.sentarse');
+      const t = recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j2_odio: 'aceptable', cf_j2_odio_amory: amory } : {}));
+      expect(t.includes('limpiándose las gafas')).toBe(amory === 'visto');
+    }
+  });
+
+  for (const [indice, reaccion, duda, sospecha, escena] of [
+    [0, 'risa', 5, 25, null], [1, 'reprimenda', 0, 20, null], [2, 'denuncia', 0, 20, 'despacho_voss'],
+  ] as const) {
+    it(`la broma de Amory: ${reaccion}`, () => {
+      const b = new NarrativeBridge(resultado.json!);
+      const escenas: string[] = [];
+      b.on('command', (t: { key: string; value: string }) => { if (t.key === 'escena') escenas.push(t.value); });
+      b.set('jornada', 2);
+      b.set('sospecha', 20);
+      b.goTo('depto.mesa');
+      for (let i = 0; i < 100; i++) {
+        const paso = b.next();
+        if (paso.type === 'accion') { if (paso.acciones.some((x) => x.key === 'minijuego')) b.set('frente_j2', 'hecho'); }
+        else if (paso.type === 'choices') b.choose(paso.choices[indice].index);
+        else if (paso.type === 'end') break;
+      }
+      expect(b.get('amory_reaccion')).toBe(reaccion);
+      expect(b.get('duda')).toBe(duda);
+      expect(b.get('sospecha')).toBe(sospecha);
+      expect(b.list('inventario')).toContain('lapiz_amory');
+      expect(escenas.includes('despacho_voss')).toBe(escena === 'despacho_voss');
+      if (reaccion === 'denuncia') {
+        b.goTo('voss_despacho.entrar');
+        recorrer(b);
+        expect(b.get('sospecha')).toBe(10);
+      }
+    });
+  }
 });
 
 describe('estado', () => {

@@ -19,6 +19,7 @@ const RADIO_INTERACCION = 26;
 const PULSACION_LARGA = 400;     // ms → mirar
 const ARRASTRE_JOYSTICK = 14;    // px de pantalla para activar el joystick
 const RADIO_JOYSTICK = 44;
+const ZONA_MUERTA = 0.18;        // fracción del radio en la que el dedo aún no mueve al personaje
 const DIRS: Dir[] = ['abajo', 'izquierda', 'derecha', 'arriba'];
 
 interface Pulsacion {
@@ -115,6 +116,7 @@ export class LocationScene extends Phaser.Scene {
 
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
       if (this.ocupado || this.ignorarPulsacion || this.registry.get('uiCapturo') === p.downTime) return;
+      if (tactil.activo) return;   // un segundo dedo mientras el primero lleva el joystick
       const punto = { x: p.worldX, y: p.worldY };
       const h = this.hotspotEn(punto);
       if (p.rightButtonDown()) {
@@ -144,28 +146,50 @@ export class LocationScene extends Phaser.Scene {
         tactil.origen = { x: pul.x, y: pul.y };
       }
       if (pul.joystick) {
-        const d = Math.hypot(dx, dy) || 1;
-        const k = Math.min(1, d / RADIO_JOYSTICK);
-        tactil.x = (dx / d) * k;
-        tactil.y = (dy / d) * k;
+        let d = Math.hypot(dx, dy) || 1;
+        if (d > RADIO_JOYSTICK) {
+          // el centro sigue al dedo: cambiar de dirección no obliga a volver hasta el origen
+          pul.x = p.x - (dx / d) * RADIO_JOYSTICK;
+          pul.y = p.y - (dy / d) * RADIO_JOYSTICK;
+          tactil.origen = { x: pul.x, y: pul.y };
+          d = RADIO_JOYSTICK;
+        }
+        const k = Math.max(0, (d / RADIO_JOYSTICK - ZONA_MUERTA) / (1 - ZONA_MUERTA));
+        tactil.x = ((p.x - pul.x) / d) * k;
+        tactil.y = ((p.y - pul.y) / d) * k;
         this.game.events.emit(EV.joystick);
       }
     });
 
-    this.input.on('pointerup', (p: Phaser.Input.Pointer) => {
+    const soltar = (p: Phaser.Input.Pointer) => {
       if (this.ignorarPulsacion) { this.ignorarPulsacion = false; this.pulsacion = null; return; }
       const pul = this.pulsacion;
+      if (pul && pul.id !== p.id) return;   // se levantó otro dedo
       this.pulsacion = null;
       if (pul?.joystick) {
-        tactil.activo = false; tactil.x = 0; tactil.y = 0;
-        this.game.events.emit(EV.joystick);
+        this.soltarJoystick();
         return;
       }
       if (!pul || pul.consumida || this.ocupado || p.rightButtonReleased()) return;
       pul.timer?.remove();
       if (pul.hotspot) this.irYActuar(pul.hotspot, 'principal');
       else this.caminarA({ x: p.worldX, y: p.worldY });
+    };
+    this.input.on('pointerup', soltar);
+    // el dedo sale de la pantalla, la app pasa a segundo plano o se cambia de escena: nunca seguir andando solo
+    this.input.on('pointerupoutside', (p: Phaser.Input.Pointer) => { if (this.pulsacion?.id === p.id) { this.pulsacion = null; this.soltarJoystick(); } });
+    this.game.events.on(Phaser.Core.Events.BLUR, this.soltarJoystick, this);
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => {
+      this.game.events.off(Phaser.Core.Events.BLUR, this.soltarJoystick, this);
+      this.soltarJoystick();
     });
+  }
+
+  private soltarJoystick() {
+    if (!tactil.activo) return;
+    tactil.activo = false; tactil.x = 0; tactil.y = 0;
+    this.pulsacion = null;
+    this.game.events.emit(EV.joystick);
   }
 
   private configurarNarrativa() {
@@ -224,8 +248,10 @@ export class LocationScene extends Phaser.Scene {
         this.ruta = []; this.alLlegar = null;
         const corre = this.teclas.SHIFT.isDown || (tactil.activo && Math.hypot(v.x, v.y) > 0.95);
         const vel = VELOCIDAD * (corre ? 1.6 : 1);
+        this.prota.anims.timeScale = corre ? 1.6 : 1;   // al correr, las piernas van al mismo ritmo
         this.mover(v.x * vel * dt, v.y * vel * dt);
       } else if (this.ruta.length) {
+        this.prota.anims.timeScale = 1;
         this.seguirRuta(dt);
       } else {
         this.parar();
@@ -233,9 +259,26 @@ export class LocationScene extends Phaser.Scene {
       this.actualizarFoco();
       this.comprobarZonas();
     }
+    this.alejarPersonajes(dt);
     this.prota.setDepth(this.prota.y);
     this.sombra.setPosition(this.prota.x, this.prota.y - 1).setDepth(this.prota.y - 1);
     this.dibujarDepuracion();
+  }
+
+  /** Personajes con "huye": retroceden hacia la derecha mientras el jugador se acerca. */
+  private alejarPersonajes(dt: number) {
+    for (const n of this.npcs.values()) {
+      const huye = n.npc.huye;
+      if (!huye || !n.visible) continue;
+      const dx = n.sprite.x - this.prota.x;
+      if (dx > 0 && dx < huye && n.sprite.x < this.loc.width - 24) {
+        const paso = VELOCIDAD * 1.05 * dt;
+        n.sprite.x += paso;
+        n.npc.x = n.sprite.x;
+        n.npc.hotspot.x += paso;
+        n.npc.hotspot.aprox.x += paso;
+      }
+    }
   }
 
   private direccionEntrada(): Point {

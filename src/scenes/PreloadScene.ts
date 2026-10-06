@@ -33,9 +33,12 @@ export class PreloadScene extends Phaser.Scene {
         this.load.image(`retrato-prot_${g}_${e}_grieta`, `assets/retratos/prot_${g}_${e}_grieta.png`);
       }
     }
+    for (const f of ['neutral', 'grita', 'grita2', 'gafas']) this.load.image(`retrato-amory_${f}`, `assets/retratos/amory_${f}.png`);
 
     // minijuegos e iconos
     this.load.image('cascotes-fondo', 'assets/minijuegos/cascotes-fondo.png');
+    this.load.image('mapa-frente', 'assets/minijuegos/mapa-frente.png');
+    for (const p of ['goldstein', 'oveja', 'soldado', 'diccionario', 'gran_hermano']) this.load.image(`cf-${p}`, `assets/minijuegos/cf-${p}.png`);
     for (const i of [1, 2, 3]) this.load.image(`cascote-${i}`, `assets/minijuegos/cascote-${i}.png`);
     for (const item of Object.values(ITEMS)) this.load.image(item.icono, `assets/iconos/${item.icono}.png`);
     this.load.on('loaderror', (f: Phaser.Loader.File) => console.warn('[carga] falta', f.src));
@@ -47,7 +50,7 @@ export class PreloadScene extends Phaser.Scene {
         this.anims.create({
           key: `${g}-${dir}-andar`,
           frames: this.anims.generateFrameNumbers(g, { start: fila * 5 + 1, end: fila * 5 + 4 }),
-          frameRate: 7,
+          frameRate: 8,
           repeat: -1,
         });
       });

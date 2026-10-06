@@ -1,0 +1,217 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Sueño"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-sueno"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "sueno.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/sueno.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 122,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "farola",
+     "x": 116,
+     "y": 154,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "farola",
+     "x": 396,
+     "y": 154,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "farola",
+     "x": 676,
+     "y": 154,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 6,
+     "name": "final",
+     "x": 860,
+     "y": 120,
+     "width": 100,
+     "height": 150,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": ""
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "sueno.final"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 7,
+     "name": "inicio",
+     "x": 60,
+     "y": 200,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 5,
+     "name": "ivy",
+     "x": 420,
+     "y": 200,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "ivy_nina"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ivy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "sueno.ivy_mirar"
+      },
+      {
+       "name": "huye",
+       "type": "string",
+       "value": "120"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 8
+}

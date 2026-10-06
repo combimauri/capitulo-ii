@@ -1,0 +1,14 @@
+{
+  "dif": "media",
+  "fases": [
+    { "expr": "odio", "golpes": 10, "bpm": 84, "pantalla": "goldstein",
+      "pensamiento": "Goldstein. Goldstein. Tú diste la orden.", "coro": ["¡Fuera!", "¡Traidor!"] },
+    { "expr": "odio", "golpes": 10, "bpm": 104, "pantalla": "oveja", "pantalla_mitad": "soldado",
+      "pensamiento": "Tú y tus perros. La calle Stepney. La mano de Ivy.", "coro": ["¡Muerte!", "¡Cerdo!"] },
+    { "expr": "odio", "golpes": 10, "bpm": 120, "pantalla": "diccionario",
+      "pensamiento": "¡Te arrancaría los ojos con mis propias manos!", "coro": ["¡Aaah!"] },
+    { "expr": "duelo", "golpes": 6, "bpm": 72, "pantalla": "gran_hermano", "transicion": true,
+      "pensamiento": "El Gran Hermano. Sereno. Siempre sereno.", "coro": ["¡G-H!", "¡G-H!"] }
+  ],
+  "vecino": { "retrato": "amory", "nombre": "AMORY", "fase": 2 }
+}

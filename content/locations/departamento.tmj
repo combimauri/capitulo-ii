@@ -551,6 +551,25 @@
        "value": "arriba"
       }
      ]
+    },
+    {
+     "id": 35,
+     "name": "despacho",
+     "x": 71,
+     "y": 106,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -783,7 +802,7 @@
       {
        "name": "condicion",
        "type": "string",
-       "value": "parte_j1_enviado"
+       "value": "parte_j1_enviado && jornada==1"
       }
      ]
     }
@@ -795,5 +814,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 35
+ "nextobjectid": 36
 }

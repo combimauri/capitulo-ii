@@ -4,7 +4,7 @@
  */
 
 type Sfx = 'silbido' | 'impacto' | 'pitido' | 'silbato' | 'sello' | 'tubo' | 'tecla' | 'plumilla'
-  | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos';
+  | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos' | 'naranjas' | 'chirrido';
 
 class Audio {
   private ctx: AudioContext | null = null;
@@ -47,9 +47,59 @@ class Audio {
       case 'tos':
         this.ruido(ctx, out, t, 0.12, 700, 0.2);
         return this.ruido(ctx, out, t + 0.22, 0.1, 600, 0.15);
+      case 'naranjas': return this.naranjas(ctx, out, t);
+      case 'chirrido':
+        this.tono(ctx, out, t, 1900, 1.4, 0.08, 'sawtooth');
+        return this.tono(ctx, out, t, 2350, 1.4, 0.06, 'square');
       case 'fanfarria':
         [523, 659, 784, 1046].forEach((f, i) => this.tono(ctx, out, t + i * 0.16, f, 0.22, 0.1, 'square'));
         return;
+    }
+  }
+
+  /**
+   * "Oranges and Lemons" (tonada tradicional, dominio público), las dos primeras frases en 3/4:
+   * «Naranjas y limones, dicen las campanas de San Clemente…». En un piano viejo y desafinado.
+   */
+  private naranjas(ctx: AudioContext, out: AudioNode, t: number) {
+    const beat = 60 / 126;
+    const frase = 'G5:0:1 E5:1:1 G5:2:1 E5:3:1 C5:4:1 D5:5:.5 E5:5.5:.5 F5:6:1 D5:7:1 G5:8:1 E5:9:1 C5:10:2';
+    // la segunda frase («You owe me five farthings…») arranca con dos corcheas
+    const segunda = frase.replace('G5:0:1', 'G5:0:.5 G5:0.5:.5').replace(/:(\d+(?:\.\d+)?):/g, (_, b) => `:${Number(b) + 12}:`);
+    const melodia = `${frase} ${segunda}`;
+    for (const nota of melodia.split(' ')) {
+      const [n, b, d] = nota.split(':');
+      this.piano(ctx, out, t + Number(b) * beat, this.frecuencia(n), Number(d) * beat + 0.35, 0.11);
+    }
+    // mano izquierda: una nota grave en la primera parte de cada compás (do, do, sol, do)
+    ['C3', 'C3', 'G2', 'C3', 'C3', 'C3', 'G2', 'C3'].forEach((n, i) =>
+      this.piano(ctx, out, t + i * 3 * beat, this.frecuencia(n), 3 * beat, 0.07));
+  }
+
+  private frecuencia(nota: string) {
+    const semitono = { C: 0, D: 2, E: 4, F: 5, G: 7, A: 9, B: 11 }[nota[0] as 'C'];
+    const midi = 12 * (Number(nota.slice(-1)) + 1) + semitono + (nota.includes('#') ? 1 : 0);
+    return 440 * 2 ** ((midi - 69) / 12);
+  }
+
+  /** Nota de piano viejo: dos cuerdas que no coinciden, un armónico y un ataque seco. */
+  private piano(ctx: AudioContext, out: AudioNode, t: number, f: number, dur: number, vol: number) {
+    const desafino = 1 + (Math.random() - 0.5) * 0.012;
+    const g = ctx.createGain();
+    g.gain.setValueAtTime(0.0001, t);
+    g.gain.exponentialRampToValueAtTime(vol, t + 0.006);
+    g.gain.exponentialRampToValueAtTime(vol * 0.35, t + 0.25);
+    g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+    g.connect(out);
+    for (const [mult, tipo, peso] of [[1, 'triangle', 1], [1.009, 'triangle', 0.7], [2.004, 'sine', 0.25]] as const) {
+      const osc = ctx.createOscillator();
+      const go = ctx.createGain();
+      osc.type = tipo;
+      osc.frequency.value = f * desafino * mult;
+      go.gain.value = peso;
+      osc.connect(go).connect(g);
+      osc.start(t);
+      osc.stop(t + dur + 0.05);
     }
   }
 

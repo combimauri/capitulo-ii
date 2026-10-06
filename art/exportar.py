@@ -38,10 +38,14 @@ def main():
         for e in ["NEUTRAL", "ENTUSIASMO", "ODIO", "JUBILO", "DESPRECIO", "DUELO"]:
             rp.retrato(e, fem).save(DESTINO / "retratos" / f"prot_{g}_{e.lower()}.png")
             rp.retrato(e, fem, agrietada=True).save(DESTINO / "retratos" / f"prot_{g}_{e.lower()}_grieta.png")
+    import retrato_amory
+    retrato_amory.exportar(DESTINO / "retratos")
     print("ok retratos")
 
     import iconos as ic
     ic.exportar(DESTINO / "iconos", DESTINO / "minijuegos")
+    import odio
+    odio.exportar(DESTINO / "minijuegos")
     print("ok iconos y minijuegos")
 
     import icono

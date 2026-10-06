@@ -1,0 +1,497 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Ministerio de la Verdad · Gran Salón"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-salon_odio"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "odio.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/salon_odio.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pantalla",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 28,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 452,
+     "y": 0,
+     "width": 28,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf",
+     "x": 0,
+     "y": 250,
+     "width": 480,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "fila",
+     "x": 34,
+     "y": 104,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "fila",
+     "x": 260,
+     "y": 104,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "fila",
+     "x": 34,
+     "y": 132,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "fila",
+     "x": 260,
+     "y": 132,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "fila",
+     "x": 34,
+     "y": 160,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "fila",
+     "x": 260,
+     "y": 160,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 11,
+     "name": "fila",
+     "x": 34,
+     "y": 188,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 12,
+     "name": "fila",
+     "x": 260,
+     "y": 188,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 13,
+     "name": "fila",
+     "x": 34,
+     "y": 216,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 14,
+     "name": "fila",
+     "x": 260,
+     "y": 216,
+     "width": 186,
+     "height": 24,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "pantalla",
+     "x": 126,
+     "y": 12,
+     "width": 228,
+     "height": 78,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "odio.pantalla_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "asiento",
+     "x": 186,
+     "y": 160,
+     "width": 22,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mi asiento"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "odio.sentarse"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "odio.asiento_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "238,176"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 21,
+     "name": "entrada",
+     "x": 240,
+     "y": 244,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 17,
+     "name": "amory",
+     "x": 226,
+     "y": 146,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "amory"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Felix Amory"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "odio.amory"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "odio.amory_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "244,150"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "julia",
+     "x": 270,
+     "y": 166,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "julia"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mujer de la faja escarlata"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "odio.julia_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "246,168"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "obrien",
+     "x": 256,
+     "y": 118,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obrien"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Hombre del Partido Interior"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "odio.obrien_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "236,132"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "winston",
+     "x": 130,
+     "y": 222,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "winston"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Winston Smith"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "odio.winston_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "150,248"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 22
+}

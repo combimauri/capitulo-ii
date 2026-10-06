@@ -28,6 +28,8 @@ export interface Npc extends Point {
   hotspot: Hotspot;
   /** Caja de colisión en los pies. */
   solido: boolean;
+  /** Si el jugador se acerca a menos de esta distancia, el personaje se aleja (sueños). */
+  huye?: number;
 }
 
 export interface Spawn extends Point { name: string; orientacion: Dir }
@@ -89,6 +91,7 @@ export function parseTiled(id: string, raw: string): LocationData {
       return {
         name: o.name, x: o.x, y: o.y, sprite: p.sprite ?? o.name, dir: (p.dir ?? 'abajo') as Dir,
         frame: p.frame !== undefined ? Number(p.frame) : undefined, hotspot: h, solido: p.solido !== 'false',
+        huye: p.huye ? Number(p.huye) : undefined,
       };
     }),
     alEntrar: mp.al_entrar,

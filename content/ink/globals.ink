@@ -51,3 +51,19 @@ VAR nell_mirada = false
 VAR cantina_vista = false
 VAR noche_vista = false
 VAR cf_j1_noticia = ""
+
+// Jornada 2
+VAR gimnasia_j2 = false
+VAR cf_j2_gimnasia = ""
+VAR parsons_j2 = false
+VAR cf_j2_odio = ""
+VAR cf_j2_odio_transicion = ""
+VAR cf_j2_odio_amory = "no"            // "visto" si miró a Amory justo cuando se limpiaba las gafas
+VAR odio_hecho = false
+VAR depto_j2_visto = false
+VAR frente_j2 = ""
+VAR amory_reaccion = ""
+VAR despacho_visto = false
+VAR centro_visto = false
+VAR pancarta_j2 = ""
+VAR sueno_visto = false

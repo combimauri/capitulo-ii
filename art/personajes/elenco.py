@@ -114,6 +114,17 @@ NINO = espejo([
 ])
 
 
+NINA = [r[:] for r in NINO]
+NINA[0:5] = [x + x[::-1] for x in ["....oooo", "...ohhhh", "..ohhHhh", "..ohhhhh", ".oohhhhh"]]
+NINA[13] = "...nrrrrrrrrn..."            # pañuelo rojo de los Espías
+NINA = [list(r) for r in NINA]
+for _r in range(6, 13):                    # trenzas
+    NINA[_r][1] = "h"; NINA[_r][14] = "h"
+NINA[13][1] = "o"; NINA[13][14] = "o"
+NINA = ["".join(r) for r in NINA]
+NINO_ESPIA = NINO[:13] + ["...nrrrrrrrrn..."] + NINO[14:]
+
+
 def construir(cabeza, cuerpo, parches=()):
     filas = espejo(CABEZAS[cabeza] + CUERPOS[cuerpo])
     filas = [list(f) for f in filas]

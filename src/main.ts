@@ -11,6 +11,8 @@ import { CascotesScene } from './scenes/minijuegos/CascotesScene';
 import { FichaScene } from './scenes/minijuegos/FichaScene';
 import { FacecrimeScene } from './scenes/minijuegos/FacecrimeScene';
 import { ParteScene } from './scenes/minijuegos/ParteScene';
+import { FrenteScene } from './scenes/minijuegos/FrenteScene';
+import { PancartaScene } from './scenes/minijuegos/PancartaScene';
 import { RESOLUCION, narrativa, EV } from './core/juego';
 
 registerSW({ immediate: true });
@@ -26,7 +28,7 @@ const juego = new Phaser.Game({
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
   input: { activePointers: 2 },
   dom: { createContainer: true },
-  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene],
+  scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):

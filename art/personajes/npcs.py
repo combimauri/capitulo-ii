@@ -36,6 +36,18 @@ NPCS = {
                "L": K("gris", 5), "p": K("tela", 1), **BOTAS}),
     "oficial": (E.construir("repeinado", "abrigo"), {**PELO("gris", 0), "H": K("gris", 2), **PIEL(-1), **ropa("gris", 2),
                 **BOTAS, "g": K("gris", 0), "p": K("gris", 1)}),
+    "julia": (E.construir("melena", "mono", [(19 + k, 4 + k, "r") for k in range(11)] + [(19 + k, 5 + k, "r") for k in range(11)]),
+              {**PELO("pelo", 0), **PIEL(0), **ropa("azul"), **BOTAS, "r": K("rojo", 4)}),
+    "obrien": (E.construir("repeinado", "abrigo", E.GAFAS), {**PELO("gris", 1), "H": K("gris", 4), **PIEL(1), **ropa("gris", 2),
+               **BOTAS, "g": K("gris", 0), "G": K("cielo", 6), "p": K("gris", 1)}),
+    "parsons": (E.construir("corto", "mono"), {**PELO("ocre", 0), **PIEL(1), **ropa("azul"), **BOTAS}),
+    "hija_parsons": (E.NINA, {**PELO("pelo", 1), **PIEL(1), "n": K("azul", 0), "d": K("azul", 1), "b": K("azul", 2),
+                     "p": K("azul", 1), "r": K("rojo", 4), **BOTAS}),
+    "nino_parsons": (E.NINO_ESPIA, {**PIEL(1), "c": K("azul", 0), "C": K("azul", 2), "n": K("azul", 0), "d": K("azul", 1),
+                     "b": K("azul", 2), "p": K("azul", 1), "r": K("rojo", 4), "g": K("rojo", 4), **BOTAS}),
+    "ivy_nina": (E.NINA, {"o": K("madera", 0), "h": K("madera", 2), "H": K("madera", 4), "O": K("papel", 0), "S": K("papel", 1),
+                 "s": K("papel", 2), "l": K("papel", 3), "e": K("madera", 0), "m": K("madera", 1), "n": K("madera", 1),
+                 "d": K("madera", 2), "b": K("papel", 2), "p": K("madera", 3), "r": K("papel", 3), "w": K("madera", 1), "W": K("madera", 2)}),
 }
 
 

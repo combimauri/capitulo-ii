@@ -2,7 +2,10 @@
  * Crimen facial (diseño técnico §6.2, biblia visual §6.2).
  * Microjuego de ritmo: llegan marcas con una expresión; hay que acertarlas al compás.
  * Etiqueta de ink:  # cf:id=CF-J1-GIMNASIA,expr=entusiasmo,dif=facil,coro=¡Uno!/¡Dos!,tutorial=si
- * Varias fases:     # cf:id=CF-J2-ODIO,fases=odio:12/duelo:6,dif=media
+ * Varias fases:     # cf:id=CF-J2-ODIO  → configuración en content/cf/CF-J2-ODIO.json
+ *                   (fases con su ritmo, imágenes de la telepantalla, pensamientos y coro)
+ * Vecino opcional:  alguien sentado al lado al que se puede mirar de reojo (tecla A o tocándolo).
+ *                   En el último tramo de su fase clave hace algo que solo ve quien lo está mirando.
  */
 import Phaser from 'phaser';
 import { Minijuego } from './Minijuego';
@@ -25,10 +28,21 @@ const DIFICULTAD = {
   dificil: { bpm: 120, ventana: 100, golpes: 20 },
 } as const;
 
+interface FaseConfig {
+  expr: Expr; golpes: number; bpm?: number; pantalla?: string; pantalla_mitad?: string;
+  pensamiento?: string; coro?: string[]; transicion?: boolean;
+}
+interface VecinoConfig { retrato: string; nombre: string; fase: number }
+interface CfConfig { dif?: keyof typeof DIFICULTAD; fases: FaseConfig[]; vecino?: VecinoConfig }
+const CONFIGS = import.meta.glob('../../../content/cf/*.json', { eager: true, import: 'default' }) as Record<string, CfConfig>;
+const configDe = (id?: string) => Object.entries(CONFIGS).find(([ruta]) => id && ruta.endsWith(`/${id}.json`))?.[1];
+
 const PISTA = { y: 470, xGolpe: 210, xInicio: 900 };
 const ANTICIPACION = 2400;   // ms que tarda una marca en cruzar la pista
+const VECINO = { x: 588, y: 292, escala: 0.8, escalaMirando: 1.7, mirada: 1600, momento: 1300 };
 
-interface Marca { t: number; expr: Expr; obj: Phaser.GameObjects.Container; resuelta: boolean }
+interface Marca { t: number; expr: Expr; obj: Phaser.GameObjects.Container; resuelta: boolean; fase: number }
+interface FaseActiva extends FaseConfig { inicio: number; fin: number }
 
 export class FacecrimeScene extends Minijuego {
   private marcas: Marca[] = [];
@@ -44,29 +58,51 @@ export class FacecrimeScene extends Minijuego {
   private exprs: Expr[] = [];
   private empezado = false;
   private fin = 0;
+  private fases: FaseActiva[] = [];
+  private faseActual = -1;
+  private pantalla: Phaser.GameObjects.Image | null = null;
+  private textoPensamiento!: Phaser.GameObjects.Text;
+  private fallosTransicion = 0;
+  private vecino: (VecinoConfig & { img: Phaser.GameObjects.Image; marco: Phaser.GameObjects.Rectangle;
+    etiqueta: Phaser.GameObjects.Text; mirandoHasta: number; visto: boolean }) | null = null;
 
   constructor() { super('Facecrime'); }
 
   create() {
     const { width, height } = this.scale;
     this.marcas = []; this.aciertos = 0; this.grietas = 0; this.empezado = false;
+    this.faseActual = -1; this.fallosTransicion = 0; this.pantalla = null; this.vecino = null;
     this.genero = narrativa.get('genero') === 'f' ? 'm' : 'h';
-    const dif = DIFICULTAD[(this.params.dif as keyof typeof DIFICULTAD) ?? 'facil'] ?? DIFICULTAD.facil;
+    const config = configDe(this.params.id);
+    const dif = DIFICULTAD[(config?.dif ?? this.params.dif as keyof typeof DIFICULTAD) ?? 'facil'] ?? DIFICULTAD.facil;
     this.ventana = dif.ventana;
 
-    const fases = (this.params.fases ?? `${this.params.expr ?? 'entusiasmo'}:${dif.golpes}`)
-      .split('/').map((f) => { const [e, n] = f.split(':'); return { expr: e as Expr, n: Number(n) || dif.golpes }; });
+    const fases: FaseConfig[] = config?.fases ?? [{
+      expr: (this.params.expr ?? 'entusiasmo') as Expr,
+      golpes: Number(this.params.golpes) || dif.golpes,
+      coro: (this.params.coro ?? '').split('/').filter(Boolean),
+    }];
     this.exprs = [...new Set(fases.map((f) => f.expr))];
     this.exprActual = fases[0].expr;
-    this.coro = (this.params.coro ?? '').split('/').filter(Boolean);
+    this.coro = fases[0].coro ?? [];
 
     this.cameras.main.fadeIn(300, 11, 12, 15);
     this.add.rectangle(width / 2, height / 2, width, height, COLOR.tele0);
     for (let y = 0; y < height; y += 3) this.add.rectangle(width / 2, y, width, 1, 0x000000, 0.25);
 
-    // retrato del protagonista (96x96 a x3)
-    this.add.rectangle(width / 2, 214, 300, 300, COLOR.tele1).setStrokeStyle(3, COLOR.tele4);
-    this.retrato = this.add.image(width / 2, 214, this.claveRetrato('neutral')).setScale(3);
+    // con imágenes en la telepantalla: pantalla a la izquierda y retrato a la derecha
+    const conPantalla = fases.some((f) => f.pantalla);
+    const xRetrato = conPantalla ? 760 : width / 2;
+    if (conPantalla) {
+      this.add.rectangle(330, 214, 420, 316, 0x000000).setStrokeStyle(4, COLOR.gris3);
+      this.pantalla = this.add.image(330, 214, `cf-${fases[0].pantalla}`).setScale(4);
+    }
+    this.add.rectangle(xRetrato, 214, conPantalla ? 248 : 300, conPantalla ? 248 : 300, COLOR.tele1).setStrokeStyle(3, COLOR.tele4);
+    this.retrato = this.add.image(xRetrato, 214, this.claveRetrato('neutral')).setScale(conPantalla ? 2.5 : 3);
+    this.textoPensamiento = this.add.text(width / 2, 384, '', {
+      fontFamily: FUENTE.texto, fontSize: '20px', color: hex(COLOR.papel4), stroke: '#000', strokeThickness: 4,
+      align: 'center', wordWrap: { width: 700 },
+    }).setOrigin(0.5).setDepth(4);
     this.add.text(width / 2, 30, 'LA TELEPANTALLA TE ESTÁ MIRANDO', {
       fontFamily: FUENTE.maquina, fontSize: '26px', color: hex(COLOR.tele5),
     }).setOrigin(0.5);
@@ -78,14 +114,70 @@ export class FacecrimeScene extends Minijuego {
     this.add.rectangle(width / 2, PISTA.y, width - 80, 54, 0x000000, 0.45).setStrokeStyle(1, COLOR.tele1);
     this.add.circle(PISTA.xGolpe, PISTA.y, 26).setStrokeStyle(3, COLOR.papel4);
 
-    // marcas programadas a partir de las fases
-    const intervalo = 60000 / dif.bpm;
+    // marcas programadas a partir de las fases (cada fase con su ritmo)
     let t = 1800;
-    for (const f of fases) for (let i = 0; i < f.n; i++, t += intervalo) this.marcas.push({ t, expr: f.expr, obj: this.crearMarca(f.expr), resuelta: false });
+    this.fases = fases.map((f, i) => {
+      const intervalo = 60000 / (f.bpm ?? dif.bpm);
+      const inicio = t - 900;
+      for (let k = 0; k < f.golpes; k++, t += intervalo) {
+        this.marcas.push({ t, expr: f.expr, obj: this.crearMarca(f.expr), resuelta: false, fase: i });
+      }
+      t += 400;
+      return { ...f, inicio, fin: t };
+    });
     this.fin = t + 600;
 
+    if (config?.vecino && conPantalla) this.crearVecino(config.vecino);
     this.crearControles();
     if (this.params.tutorial === 'si') this.tutorial(); else this.empezar();
+  }
+
+  /** El compañero de al lado, visto de reojo: atenuado hasta que el jugador lo mira. */
+  private crearVecino(v: VecinoConfig) {
+    const marco = this.add.rectangle(VECINO.x, VECINO.y, 96 * VECINO.escala + 6, 96 * VECINO.escala + 6, COLOR.tele1)
+      .setStrokeStyle(2, COLOR.tele4).setDepth(6);
+    const img = this.add.image(VECINO.x, VECINO.y, `retrato-${v.retrato}_neutral`).setScale(VECINO.escala).setDepth(6);
+    const etiqueta = this.add.text(VECINO.x, VECINO.y + 48, `${v.nombre}${this.sys.game.device.os.desktop ? ' · A' : ''}`, {
+      fontFamily: FUENTE.maquina, fontSize: '18px', color: hex(COLOR.tele5),
+    }).setOrigin(0.5, 0).setDepth(6);
+    this.vecino = { ...v, img, marco, etiqueta, mirandoHasta: 0, visto: false };
+    this.atenuarVecino(true);
+    marco.setInteractive({ useHandCursor: true }).on('pointerdown', () => this.mirarVecino());
+    this.input.keyboard?.on('keydown-A', () => this.mirarVecino());
+  }
+
+  private atenuarVecino(reojo: boolean) {
+    const v = this.vecino!;
+    const escala = reojo ? VECINO.escala : VECINO.escalaMirando;
+    this.tweens.killTweensOf([v.img, v.marco]);
+    this.tweens.add({ targets: v.img, scale: escala, alpha: reojo ? 0.4 : 1, duration: 160 });
+    this.tweens.add({ targets: v.marco, scale: reojo ? 1 : escala / VECINO.escala, alpha: reojo ? 0.4 : 1, duration: 160 });
+    v.etiqueta.setAlpha(reojo ? 0.6 : 0);
+  }
+
+  private mirarVecino() {
+    const v = this.vecino;
+    if (!v || !this.empezado || this.inicio < 0) return;
+    const ahora = this.time.now - this.inicio;
+    const clave = this.fases[v.fase];
+    // si lo mira durante su fase clave, sigue mirándolo hasta el final de ese tramo
+    const hasta = ahora >= clave.inicio && ahora < clave.fin ? clave.fin : ahora + VECINO.mirada;
+    if (v.mirandoHasta <= ahora) this.atenuarVecino(false);
+    v.mirandoHasta = Math.max(v.mirandoHasta, hasta);
+  }
+
+  /** Fotograma del vecino según el momento: grita con el público salvo un segundo, al final del clímax. */
+  private actualizarVecino(ahora: number) {
+    const v = this.vecino;
+    if (!v) return;
+    const clave = this.fases[v.fase];
+    const mirando = ahora < v.mirandoHasta;
+    const callado = ahora >= clave.fin - VECINO.momento && ahora < clave.fin;
+    const enOdio = ahora >= this.fases[0].inicio && ahora < this.fases[this.fases.length - 1].fin;
+    const grito = Math.floor(ahora / 300) % 2 ? 'grita' : 'grita2';
+    v.img.setTexture(`retrato-${v.retrato}_${callado ? 'gafas' : enOdio ? grito : 'neutral'}`);
+    if (callado && mirando) v.visto = true;
+    if (!mirando && v.img.alpha === 1 && !this.tweens.isTweening(v.img)) this.atenuarVecino(true);
   }
 
   private claveRetrato(e: string) { return `retrato-prot_${this.genero}_${e}`; }
@@ -153,6 +245,8 @@ export class FacecrimeScene extends Minijuego {
     if (!this.empezado) return;
     if (this.inicio < 0) this.inicio = this.time.now;
     const ahora = this.time.now - this.inicio;
+    this.actualizarFase(ahora);
+    this.actualizarVecino(ahora);
     const proxima = this.marcas.find((m) => !m.resuelta);
     if (proxima && proxima.expr !== this.exprActual && proxima.t - ahora < 900) this.exprActual = proxima.expr;
 
@@ -165,6 +259,26 @@ export class FacecrimeScene extends Minijuego {
       }
     }
     if (ahora > this.fin && this.marcas.every((m) => m.resuelta)) this.acabar();
+  }
+
+  /** Cambia la imagen de la telepantalla, el pensamiento y el coro al entrar en cada fase. */
+  private actualizarFase(ahora: number) {
+    const i = this.fases.findIndex((f) => ahora >= f.inicio && ahora < f.fin);
+    if (i < 0) return;
+    const f = this.fases[i];
+    if (this.pantalla && f.pantalla_mitad && ahora > (f.inicio + f.fin) / 2) this.pantalla.setTexture(`cf-${f.pantalla_mitad}`);
+    if (i === this.faseActual) return;
+    this.faseActual = i;
+    this.coro = f.coro ?? this.coro;
+    if (this.pantalla && f.pantalla) {
+      this.pantalla.setTexture(`cf-${f.pantalla}`);
+      this.cameras.main.flash(120, 255, 255, 255);
+    }
+    if (f.pensamiento) {
+      this.textoPensamiento.setText(f.pensamiento).setAlpha(1);
+      this.tweens.killTweensOf(this.textoPensamiento);
+      this.tweens.add({ targets: this.textoPensamiento, alpha: 0, delay: 2200, duration: 500 });
+    }
   }
 
   private pulsar(e: Expr) {
@@ -184,6 +298,7 @@ export class FacecrimeScene extends Minijuego {
   private fallo(m: Marca) {
     m.resuelta = true;
     this.grietas++;
+    if (this.fases[m.fase]?.transicion) this.fallosTransicion++;
     audio.play('fallo');
     m.obj.destroy();
     this.cameras.main.shake(120, 0.005);
@@ -202,6 +317,9 @@ export class FacecrimeScene extends Minijuego {
       fontFamily: FUENTE.maquina, fontSize: '40px', color: hex(resultado === 'fallo' ? COLOR.rojo4 : COLOR.tele5),
       backgroundColor: '#000000', padding: { x: 16, y: 6 },
     }).setOrigin(0.5).setDepth(5);
-    this.time.delayedCall(1300, () => this.terminar({ resultado, datos: { aciertos: this.aciertos, total } }));
+    const transicion = this.fallosTransicion > 0 ? 'fallo' : 'ok';
+    const datos: Record<string, string | number> = { aciertos: this.aciertos, total, transicion };
+    if (this.vecino) datos[this.vecino.retrato] = this.vecino.visto ? 'visto' : 'no';
+    this.time.delayedCall(1300, () => this.terminar({ resultado, datos }));
   }
 }

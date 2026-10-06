@@ -62,6 +62,7 @@ PROTAGONISTA: …Eurasia. # esperar:1.2 # refrescar # id:p02_prot_03
 PENSAMIENTO: Eurasia. Eurasia. Eurasia. # id:p02_pens_02
 // P.03 — Ficha de Afiliación del Partido, y cinco años después
 ~ inventario += ficha
+~ jornada = 1
 # fx:blanco # minijuego:ficha # fx:negro # sfx:silbato
 CARTEL: Mansiones Victoria. Franja Aérea 1. 1984. # id:p03_cartel # escena:piso # pos:cama
 -> DONE

@@ -20,7 +20,7 @@ def exportar(destino):
         subprocess.run([sys.executable, str(ART / "pruebas" / "piso_hd.py"), "--sin-protagonista", *flags,
                         f"--salida={destino / (nombre + '.png')}"], check=True, capture_output=True)
         hechos.append(nombre)
-    for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina"):
+    for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina", "salon_odio", "despacho_voss", "centro", "sueno"):
         try:
             m = __import__(modulo)
         except ModuleNotFoundError:

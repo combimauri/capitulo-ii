@@ -1,0 +1,526 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Centro de la Comunidad"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-centro"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "centro.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/centro.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 90,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "pingpong",
+     "x": 68,
+     "y": 116,
+     "width": 104,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "piano",
+     "x": 358,
+     "y": 90,
+     "width": 74,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "banqueta",
+     "x": 380,
+     "y": 138,
+     "width": 30,
+     "height": 12,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "pancarta",
+     "x": 188,
+     "y": 188,
+     "width": 144,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 11,
+     "name": "martires",
+     "x": 180,
+     "y": 24,
+     "width": 96,
+     "height": 54,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cartel de los mártires"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.martires_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "228,100"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "piano",
+     "x": 358,
+     "y": 90,
+     "width": 74,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Piano"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.piano_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "centro.piano_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "370,152"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "pancarta",
+     "x": 188,
+     "y": 188,
+     "width": 144,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Pancarta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.pancarta_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "centro.pancarta_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "260,234"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "pingpong",
+     "x": 68,
+     "y": 116,
+     "width": 104,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mesa de ping-pong"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.pingpong_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "120,190"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "salir",
+     "x": 224,
+     "y": 240,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "centro.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,236"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 21,
+     "name": "puerta",
+     "x": 240,
+     "y": 236,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 16,
+     "name": "hilda",
+     "x": 252,
+     "y": 140,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "hilda"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Hilda Grubb"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "centro.hilda"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.hilda_mirar"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "parsons",
+     "x": 320,
+     "y": 160,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "parsons"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Parsons"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "centro.parsons"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.parsons_mirar"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "hija_parsons",
+     "x": 346,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "hija_parsons"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "La hija de Parsons"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "centro.hija_mirar"
+      }
+     ]
+    },
+    {
+     "id": 19,
+     "name": "f1",
+     "x": 110,
+     "y": 210,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionaria1"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "f2",
+     "x": 140,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionario2"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 22
+}

@@ -185,26 +185,87 @@ PIERNAS = {
     "abajo": (31, range(3, 10), range(10, 17)),
     "arriba": (31, range(3, 10), range(10, 17)),
     "derecha": (30, range(6, 11), range(10, 16)),
-    "izquierda": (30, range(9, 14), range(4, 10)),
 }
+# Manos en la vista frontal/trasera (filas, columnas izquierda, columnas derecha)
+MANOS = (range(27, 30), range(1, 4), range(16, 19))
 
 
-def levantar(filas, desde, columnas):
-    """Sube 1 px las columnas de una pierna (paso) y vacía la última fila."""
+def levantar(filas, desde, columnas, px=2):
+    """Sube unos píxeles las columnas de una pierna: el pie que avanza hacia la cámara (o se aleja)."""
     f = [list(r) for r in filas]
-    for r in range(desde, H - 1):
+    for r in range(desde, H):
         for c in columnas:
-            f[r][c] = f[r + 1][c]
-    for c in columnas:
-        f[H - 1][c] = "."
+            f[r][c] = f[r + px][c] if r + px < H else "."
+    return ["".join(r) for r in f]
+
+
+def bajar_torso(filas, desde):
+    """Rebote del paso: en el apoyo, todo lo que está por encima de las piernas baja 1 px."""
+    return ["." * W] + filas[:desde] + filas[desde + 1:]
+
+
+def mover_manos(filas, arriba, abajo):
+    """Balanceo de brazos en la vista frontal: una mano sube 1 px y la otra baja 1 px."""
+    f = [list(r) for r in filas]
+    filas_m = MANOS[0]
+    for cols, d in ((arriba, -1), (abajo, 1)):
+        orig = [[filas[r][c] for c in cols] for r in filas_m]
+        for i, r in enumerate(filas_m):
+            for j, c in enumerate(cols):
+                f[r][c] = "n" if orig[i][j] != "." and f[r][c] != "." else f[r][c]
+        for i, r in enumerate(filas_m):
+            for j, c in enumerate(cols):
+                if orig[i][j] in "sS":
+                    f[r + d][c] = orig[i][j]
+    return ["".join(r) for r in f]
+
+
+def zancada(filas, desde, atras, delante, lejana_delante=False):
+    """Vista lateral: las piernas se abren en V. Si la pierna que va delante es la lejana, va en sombra."""
+    f = [list(r) for r in filas]
+    sombra = {"b": "d", "B": "d", "W": "w"}
+    for r in range(desde + 1, H):
+        k = 0 if r < desde + 3 else 1 if r < desde + 6 else 2
+        orig = filas[r]
+        for c in range(min(atras) - 3, max(delante) + 4):
+            if 0 <= c < W:
+                f[r][c] = "."
+        capas = [(delante, 1, True), (atras, -1, False)] if lejana_delante else [(atras, -1, False), (delante, 1, False)]
+        for cols, sentido, oscura in capas:
+            for c in cols:
+                if orig[c] != "." and 0 <= c + k * sentido < W:
+                    f[r][c + k * sentido] = sombra.get(orig[c], orig[c]) if oscura else orig[c]
+    return ["".join(r) for r in f]
+
+
+def mano_lateral(filas, dx):
+    """El brazo cercano se balancea: la mano se desplaza dx px."""
+    f = [list(r) for r in filas]
+    for r in (26, 27, 28):
+        fila = filas[r]
+        seg = [c for c in range(8, 13) if fila[c] in "sS"]
+        for c in seg:
+            f[r][c] = "b"
+        for c in seg:
+            f[r][c + dx] = fila[c]
     return ["".join(r) for r in f]
 
 
 def fotogramas(vista, femenina=False):
     """[quieto, paso A, pasando, paso B, pasando]"""
-    base = (VISTAS_F if femenina else VISTAS)[vista]
+    vistas = VISTAS_F if femenina else VISTAS
+    if vista == "izquierda":
+        return [[r[::-1] for r in fr] for fr in fotogramas("derecha", femenina)]
+    base = vistas[vista]
     desde, a, b = PIERNAS[vista]
-    return [base, levantar(base, desde, a), base, levantar(base, desde, b), base]
+    if vista == "derecha":
+        paso_a = mano_lateral(zancada(base, desde, a, b), -1)
+        paso_b = mano_lateral(zancada(base, desde, a, b, lejana_delante=True), 1)
+    else:
+        izq, der = MANOS[1], MANOS[2]
+        paso_a = mover_manos(levantar(base, desde, a), arriba=der, abajo=izq)
+        paso_b = mover_manos(levantar(base, desde, b), arriba=izq, abajo=der)
+    return [base, bajar_torso(paso_a, desde), base, bajar_torso(paso_b, desde), base]
 
 
 ORDEN_HOJA = ["abajo", "izquierda", "derecha", "arriba"]
@@ -235,8 +296,21 @@ def dibujar(cv, x, y, vista="abajo", sombra=None):
     cv.grid(x, y, VISTAS[vista], PALETA)
 
 
+def hoja_paseo(ruta):
+    """Vista previa: los 5 fotogramas de cada dirección, H y M."""
+    from pixel import Canvas
+    cv = Canvas(10 * 24 + 8, 4 * 44 + 8, bg=("pared", 3))
+    for g, fem in enumerate((False, True)):
+        pal = PALETA_F if fem else PALETA
+        for fila, vista in enumerate(ORDEN_HOJA):
+            for col, frame in enumerate(fotogramas(vista, fem)):
+                cv.grid(4 + (g * 5 + col) * 24, 4 + fila * 44, frame, pal)
+    return cv.save(ruta, preview_scale=5)
+
+
 if __name__ == "__main__":
     from pixel import Canvas
+    print("ok", hoja_paseo(Path(__file__).parent / "protagonista_paseo.png"))
     cv = Canvas(4 * 32, 56, bg=("pared", 3))
     for i, v in enumerate(["abajo", "derecha", "arriba", "izquierda"]):
         dibujar(cv, 6 + i * 32, 6, v, sombra=K("pared", 1))

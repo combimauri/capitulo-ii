@@ -4,11 +4,13 @@
 === piso ===
 
 = entrar
-{ gimnasia_hecha:
+{ jornada == 2:
+    -> j2_piso
+}
+{ gimnasia_hecha or jornada != 1:
     -> DONE
 }
 ~ gimnasia_hecha = true
-~ jornada = 1
 TELEPANTALLA: ¡Buenos días, camaradas de entre treinta y cuarenta! ¡Arriba, arriba! ¡Tablas de gimnasia! # sfx:silbato # jornada:1 # id:j1_01_tp_01
 TELEPANTALLA: ¡Brazos arriba! ¡Uno, dos! ¡Uno, dos! # id:j1_01_tp_02
 // La etiqueta del minijuego va en la línea que se muestra DESPUÉS de jugarlo;
@@ -91,6 +93,9 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 === escalera ===
 
 = entrar
+{ jornada == 2:
+    -> j2_parsons
+}
 { escalera_vista:
     -> DONE
 }
@@ -113,6 +118,26 @@ PENSAMIENTO: El Gran Hermano te vigila. En cada rellano. Así nadie está solo n
 
 = parsons_mirar
 PENSAMIENTO: Los Parsons. Se oye a los niños jugar a los espías. # id:j1_02_parsons_mirar
+-> DONE
+
+= parsons_npc_mirar
+PENSAMIENTO: Parsons. Sudoroso y radiante, como siempre. # id:j2_02_parsons_mirar
+-> DONE
+
+= parsons_hablar
+PARSONS: ¡A la Semana del Odio le quedan diez días! ¡Diez! ¡Magnífico! # id:j2_02_parsons_hablar
+-> DONE
+
+= hija_mirar
+PENSAMIENTO: La niña lleva una libretita. Apunta cosas. # id:j2_02_hija_mirar
+-> DONE
+
+= hija_hablar
+HIJA PARSONS: Usted dice un nombre. Lo he apuntado. # id:j2_02_hija_hablar
+-> DONE
+
+= nino_mirar
+PENSAMIENTO: El pequeño de los Parsons. Pañuelo rojo de los Espías y una cuerda para ahorcar muñecos. # id:j2_02_nino_mirar
 -> DONE
 
 = sube_mirar
@@ -161,6 +186,9 @@ PROTAGONISTA: Lo estoy. # id:j1_02_prot_03
 -> DONE
 
 = bajar
+{ jornada == 2:
+    -> j2_bajar
+}
 { not hilda_j1:
     HILDA: ¡{nombre}! ¡Espera, espera, que no se escapa nadie sin pasar por la lata! # id:j1_02_hilda_espera
     -> hilda
@@ -262,6 +290,9 @@ PENSAMIENTO: El ascensor de la izquierda. Funciona. # id:j1_04_ascensor_mirar
 === depto ===
 
 = entrar
+{ jornada == 2:
+    -> j2_entrar
+}
 { depto_visto:
     -> DONE
 }
@@ -284,6 +315,9 @@ PENSAMIENTO: Felix Amory. Dibuja mapas con la lengua entre los dientes. En los m
 -> DONE
 
 = amory
+{ jornada == 2:
+    -> j2_amory
+}
 { parte_j1_enviado:
     AMORY: ¡A la cantina! Hoy hay guiso. Bueno, siempre hay guiso. # id:j1_05_amory_cantina
     -> DONE
@@ -308,6 +342,9 @@ PENSAMIENTO: Mi mesa. Máquina de escribir, tubo neumático, telepantalla. Todo 
 -> DONE
 
 = mesa
+{ jornada == 2:
+    -> j2_mesa
+}
 { parte_j1_enviado:
     PENSAMIENTO: El parte ya va camino de las telepantallas. # id:j1_05_mesa_hecha
     -> DONE
@@ -364,6 +401,9 @@ PENSAMIENTO: Tengo trabajo. # id:j1_05_nell_hablar
 -> DONE
 
 = salir
+{ jornada == 2:
+    -> j2_salir
+}
 { not parte_j1_enviado:
     PENSAMIENTO: Primero el parte. Malabar no espera. # id:j1_05_salir_no
     -> DONE
@@ -427,7 +467,7 @@ PENSAMIENTO: Mañana, a las siete y cuarto, el silbato. # id:j1_07_cama_mirar
 -> DONE
 
 = dormir
-# fx:negro
-CARTEL: JORNADA 2 # id:j1_07_jornada2
-CARTEL: Fin del corte vertical. Gracias por jugar. # id:j1_07_fin # final:demo
+~ jornada = 2
+~ desayunado = false
+CARTEL: JORNADA 2 # fx:negro # id:j1_07_jornada2 # escena:piso # pos:cama
 -> DONE

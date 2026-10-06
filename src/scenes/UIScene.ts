@@ -15,7 +15,9 @@ const VELOCIDAD_TEXTO = 55;          // caracteres por segundo
 const CAJA = { x: 40, y: 386, w: 880, h: 132 };
 
 /** Minijuegos por etiqueta: cf → Facecrime; minijuego:<tipo> → escena. */
-const MINIJUEGOS: Record<string, string> = { cf: 'Facecrime', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte' };
+const MINIJUEGOS: Record<string, string> = {
+  cf: 'Facecrime', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta',
+};
 
 interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
 
@@ -254,9 +256,15 @@ export class UIScene extends Phaser.Scene {
     if (tipo === 'cf') {
       const id = (params.id ?? '').toLowerCase().replace(/^cf-/, '').replace(/-/g, '_');
       narrativa.set(`cf_${id}`, r.resultado);
+      // datos extra que la historia quiera conocer: cf_<id>_transicion, cf_<id>_amory…
+      for (const [k, v] of Object.entries(r.datos ?? {})) {
+        if (narrativa.story.variablesState.GlobalVariableExistsWithName(`cf_${id}_${k}`)) narrativa.set(`cf_${id}_${k}`, String(v));
+      }
     } else if (tipo === 'ficha' && r.datos) {
       for (const k of ['nombre', 'apellido', 'num']) narrativa.set(k, String(r.datos[k]));
       narrativa.call('fijar_genero', String(r.datos.genero));
+    } else if (params.resultado) {
+      narrativa.set(params.resultado, r.resultado);   // p. ej. # minijuego:pancarta,resultado=pancarta_j2
     } else if (params.vars && r.datos) {
       for (const [k, v] of Object.entries(r.datos)) narrativa.set(`${params.vars}_${k}`, v);
     }

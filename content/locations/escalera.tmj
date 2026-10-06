@@ -335,7 +335,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 16,
+     "id": 19,
      "name": "piso",
      "x": 201,
      "y": 106,
@@ -399,7 +399,7 @@
       {
        "name": "condicion",
        "type": "string",
-       "value": "!winston_se_fue"
+       "value": "jornada==1 && !winston_se_fue"
       }
      ]
     },
@@ -434,6 +434,123 @@
        "name": "hablar",
        "type": "string",
        "value": "escalera.hilda"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==1"
+      }
+     ]
+    },
+    {
+     "id": 16,
+     "name": "parsons",
+     "x": 392,
+     "y": 132,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "parsons"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Parsons"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "escalera.parsons_npc_mirar"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "escalera.parsons_hablar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==2"
+      }
+     ]
+    },
+    {
+     "id": 17,
+     "name": "hija_parsons",
+     "x": 362,
+     "y": 136,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "hija_parsons"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "La hija de Parsons"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "escalera.hija_mirar"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "escalera.hija_hablar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==2"
+      }
+     ]
+    },
+    {
+     "id": 18,
+     "name": "nino_parsons",
+     "x": 414,
+     "y": 124,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nino_parsons"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "El hijo de Parsons"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "escalera.nino_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "jornada==2"
       }
      ]
     }
@@ -445,5 +562,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 17
+ "nextobjectid": 20
 }
