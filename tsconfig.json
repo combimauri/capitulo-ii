@@ -11,8 +11,7 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "noEmit": true,
-    "allowImportingTsExtensions": true,
-    "types": ["vite/client", "vite-plugin-pwa/client", "node"]
+    "allowImportingTsExtensions": true
   },
   "include": ["src", "tools", "tests", "vite.config.ts", "middleware.ts"]
 }
