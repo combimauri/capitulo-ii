@@ -39,6 +39,10 @@ En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.en
 - **Juego:** velocidad del texto, dificultad del crimen facial (normal, asistida o automática), penalización de sigilo, reducir destellos, tamaño del texto (100 % o 125 %) y mano dominante.
 - **Partida:** exportar la partida a un archivo `.json` e importarla (solo desde el menú).
 
+## Despliegue
+
+El juego está en Vercel (https://capitulo-ii.vercel.app): cada `git push` a `main` se despliega solo. El middleware de enrutado (`middleware.ts`) solo deja abrirlo desde Argentina, Bolivia, Brasil, Chile y España (lista `PAISES`); al resto le responde 403, también en los recursos y el service worker.
+
 ## Estructura
 
 ```

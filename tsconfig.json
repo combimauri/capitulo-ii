@@ -14,5 +14,5 @@
     "allowImportingTsExtensions": true,
     "types": ["vite/client", "vite-plugin-pwa/client", "node"]
   },
-  "include": ["src", "tools", "tests", "vite.config.ts"]
+  "include": ["src", "tools", "tests", "vite.config.ts", "middleware.ts"]
 }
