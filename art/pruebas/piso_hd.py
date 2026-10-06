@@ -10,6 +10,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "lib"))
 from pixel import Canvas, K  # noqa: E402
 
 random.seed(1984)
+NOCHE = "--noche" in sys.argv
 W, H = 480, 270
 cv = Canvas(W, H)
 R, HL, VL, PX = cv.rect, cv.hline, cv.vline, cv.px
@@ -62,7 +63,7 @@ R(WX0 - 4, WY0 - 4, WX1 + 4, WY1 + 4, K("madera", 2))
 cv.frame(WX0 - 4, WY0 - 4, WX1 + 4, WY1 + 4, K("madera", 1))
 # cielo en bandas
 for i, y in enumerate(range(WY0, WY1, 5)):
-    R(WX0, y, WX1, y + 5, K("cielo", 3 + min(i // 2, 3)))
+    R(WX0, y, WX1, y + 5, K("cielo", (0 if NOCHE else 3) + min(i // 2, 3)))
 # nubes
 for (cx, cy, w) in [(124, 31, 14), (154, 36, 18)]:
     HL(cx, cx + w, cy, K("cielo", 6)); HL(cx + 3, cx + w - 2, cy - 1, K("cielo", 6))
@@ -376,6 +377,8 @@ if "--sin-protagonista" not in sys.argv:
 
 # ---------------------------------------------------------------- iluminación
 def beam(x, y):
+    if NOCHE:
+        return -1
     # haz de la ventana: cae en diagonal sobre el suelo
     if y < WB:
         return 0
@@ -389,7 +392,12 @@ def beam(x, y):
 cv.add_light_fn(beam)
 cv.add_light_fn(lambda x, y: -1 if (WB <= y < FB and (x < X0 + 5 or x >= X1 - 5 or y >= FB - 5)) else 0)
 cv.add_light_fn(lambda x, y: -1 if y < WT + 6 and WT <= y else 0)
-cv.add_glow((TX0 + TX1) / 2, TY1 + 18, radii=[40, 70, 100], strengths=[0.26, 0.15, 0.07], squash=1.5)
+if NOCHE:
+    cv.add_glow_suave((TX0 + TX1) / 2, TY1 + 16, 150, 0.42, squash=1.4)
+    for (lx, ly) in [(112, 61), (126, 63), (158, 62), (168, 64), (140, 60), (150, 50), (146, 40)]:
+        PX(lx, ly, K("ocre", 4))        # ventanas encendidas al otro lado
+else:
+    cv.add_glow((TX0 + TX1) / 2, TY1 + 18, radii=[40, 70, 100], strengths=[0.26, 0.15, 0.07], squash=1.5)
 for y in range(H):
     for x in range(W):
         if not (X0 <= x < X1 and WT <= y < FB):

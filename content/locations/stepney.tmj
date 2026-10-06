@@ -1,0 +1,242 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Calle Stepney, 1979"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-stepney"
+  },
+  {
+   "name": "prota_tinte",
+   "type": "string",
+   "value": "#9aa0b8"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/stepney.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 104,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "monton",
+     "x": 176,
+     "y": 166,
+     "width": 86,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "telepantalla",
+     "x": 330,
+     "y": 188,
+     "width": 38,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 4,
+     "name": "telepantalla_rota",
+     "x": 326,
+     "y": 178,
+     "width": 48,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla rota"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "stepney.tele_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "350,226"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "fuego",
+     "x": 118,
+     "y": 26,
+     "width": 124,
+     "height": 72,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Fuego"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "stepney.fuego_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "180,118"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "cascotes",
+     "x": 172,
+     "y": 154,
+     "width": 96,
+     "height": 54,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Montón de cascotes"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "stepney.cascotes_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "stepney.cascotes_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "220,220"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 7,
+     "name": "inicio",
+     "x": 300,
+     "y": 238,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 8
+}

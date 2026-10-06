@@ -10,18 +10,22 @@ npm run dev        # servidor de desarrollo (http://localhost:5173)
 npm test           # pruebas: compilación de ink, linter de contenido, estado
 npm run build      # comprobación de tipos + compilación de producción (dist/)
 npm run art        # regenera el arte (Python + Pillow) y lo exporta a public/assets
+python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/locations)
 ```
 
-## Controles (demo técnica)
+## Controles
 
 | Acción | Teclado / ratón | Táctil |
 |---|---|---|
-| Caminar | WASD / flechas (Mayús = correr) · clic en el suelo | Tocar el suelo |
-| Usar lo que tienes delante | `E` / Espacio · clic en el objeto | Tocar el objeto |
-| Mirar | `Q` · clic derecho | Mantener pulsado el objeto |
+| Caminar | WASD / flechas (Mayús = correr) · clic en el suelo | Arrastrar el dedo (joystick) o tocar el suelo |
+| Usar lo que tienes delante | `E` / Espacio · clic en el objeto | Botón USAR o tocar el objeto |
+| Mirar | `Q` · clic derecho | Botón MIRAR o mantener pulsado el objeto |
+| Objetos | `I` | Botón OBJ. |
 | Avanzar diálogo | Espacio / Enter / clic | Tocar |
 | Elegir opción | 1–9, flechas + Enter, clic | Tocar |
 | Depuración | `F1` | — |
+
+En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.entrar')` para ir directamente a cualquier escena.
 
 ## Estructura
 

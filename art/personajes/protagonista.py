@@ -7,6 +7,7 @@ import sys
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "lib"))
+sys.path.insert(0, str(Path(__file__).resolve().parent))
 from pixel import K  # noqa: E402
 
 W, H = 20, 40
@@ -139,10 +140,44 @@ LADO_IZQ = [r[::-1] for r in LADO_DER]
 
 VISTAS = {"abajo": FRENTE, "derecha": LADO_DER, "arriba": ESPALDA, "izquierda": LADO_IZQ}
 
-for nombre, filas in VISTAS.items():
-    assert len(filas) == H, (nombre, len(filas))
-    for i, f in enumerate(filas):
-        assert len(f) == W, (nombre, i, len(f), f)
+
+# ---------------------------------------------------------------- versión femenina
+def _melena_espalda(filas):
+    f = [list(r) for r in filas]
+    for r in range(13, 21):                       # el pelo cae hasta los hombros
+        for c in range(3, 17):
+            if r >= 18 and not (3 <= c <= 5 or 14 <= c <= 16):
+                continue
+            f[r][c] = "o" if c in (3, 16) else ("H" if c in (8, 11) and r < 17 else "h")
+    return ["".join(x) for x in f]
+
+
+def _melena_lado(filas):
+    f = [list(r) for r in filas]
+    for r in range(11, 21):                       # melena por detrás de la oreja
+        for c in range(3, 8):
+            if f[r][c] in ".o" or (r >= 18 and c < 7):
+                f[r][c] = "o" if c == 3 else "h"
+    return ["".join(x) for x in f]
+
+
+def _frente_f():
+    import elenco
+    return elenco.construir("melena", "mono")
+
+
+FRENTE_F = _frente_f()
+ESPALDA_F = _melena_espalda(ESPALDA)
+LADO_DER_F = _melena_lado(LADO_DER)
+LADO_IZQ_F = [r[::-1] for r in LADO_DER_F]
+VISTAS_F = {"abajo": FRENTE_F, "derecha": LADO_DER_F, "arriba": ESPALDA_F, "izquierda": LADO_IZQ_F}
+PALETA_F = {**PALETA, "o": K("madera", 1), "h": K("madera", 2), "H": K("madera", 4)}
+
+for _vistas in (VISTAS, VISTAS_F):
+    for nombre, filas in _vistas.items():
+        assert len(filas) == H, (nombre, len(filas))
+        for i, f in enumerate(filas):
+            assert len(f) == W, (nombre, i, len(f), f)
 
 
 # Piernas por vista: (fila donde empiezan, columnas de la pierna A, columnas de la pierna B)
@@ -165,9 +200,9 @@ def levantar(filas, desde, columnas):
     return ["".join(r) for r in f]
 
 
-def fotogramas(vista):
+def fotogramas(vista, femenina=False):
     """[quieto, paso A, pasando, paso B, pasando]"""
-    base = VISTAS[vista]
+    base = (VISTAS_F if femenina else VISTAS)[vista]
     desde, a, b = PIERNAS[vista]
     return [base, levantar(base, desde, a), base, levantar(base, desde, b), base]
 
@@ -175,7 +210,7 @@ def fotogramas(vista):
 ORDEN_HOJA = ["abajo", "izquierda", "derecha", "arriba"]
 
 
-def hoja_sprites(ruta):
+def hoja_sprites(ruta, femenina=False):
     """Hoja de 5 columnas (quieto + 4 de caminar) x 4 filas (direcciones), fotogramas de 20x40."""
     from pixel import Canvas
     cv = Canvas(W * 5, H * len(ORDEN_HOJA), bg=("gris", 0))
@@ -184,11 +219,12 @@ def hoja_sprites(ruta):
     from PIL import ImageDraw
     cv.d = ImageDraw.Draw(cv.img)
     for fila, vista in enumerate(ORDEN_HOJA):
-        for col, frame in enumerate(fotogramas(vista)):
+        pal = PALETA_F if femenina else PALETA
+        for col, frame in enumerate(fotogramas(vista, femenina)):
             for r, row in enumerate(frame):
                 for c, ch in enumerate(row):
-                    if ch in PALETA:
-                        cv.img.putpixel((col * W + c, fila * H + r), PALETA[ch] + (255,))
+                    if ch in pal:
+                        cv.img.putpixel((col * W + c, fila * H + r), pal[ch] + (255,))
     cv.img.save(ruta)
     return ruta
 

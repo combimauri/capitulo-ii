@@ -1,6 +1,7 @@
 import Phaser from 'phaser';
 import { narrativa } from '../core/juego';
 import { SaveSystem } from '../core/SaveSystem';
+import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
 
 let avisoVisto = false;
@@ -27,7 +28,7 @@ export class MenuScene extends Phaser.Scene {
       fontFamily: FUENTE.texto, fontSize: '18px', color: hex(COLOR.papel3), align: 'center', lineSpacing: 6,
     }).setOrigin(0.5).setAlpha(0);
     this.tweens.add({ targets: t, alpha: 1, duration: 600 });
-    const seguir = () => { avisoVisto = true; this.scene.restart(); };
+    const seguir = () => { audio.desbloquear(); avisoVisto = true; this.scene.restart(); };
     this.input.once('pointerdown', seguir);
     this.input.keyboard?.once('keydown', seguir);
   }
@@ -56,7 +57,7 @@ export class MenuScene extends Phaser.Scene {
         .setOrigin(0.5);
       fondo.on('pointerover', () => fondo.setFillStyle(COLOR.rojo3));
       fondo.on('pointerout', () => fondo.setFillStyle(COLOR.gris2));
-      fondo.on('pointerup', accion);
+      fondo.on('pointerup', () => { audio.desbloquear(); accion(); });
     });
     this.input.keyboard?.once('keydown-ENTER', () => opciones[0][1]());
 
@@ -73,7 +74,7 @@ export class MenuScene extends Phaser.Scene {
   private nueva() {
     narrativa.reset();
     this.registry.set('introPendiente', true);   // UIScene arranca el flujo principal al estar lista
-    this.scene.start('Location', { escena: 'piso', spawn: 'cama' });
+    this.scene.start('Location', { escena: 'stepney', spawn: 'inicio', cargado: true });
     this.scene.launch('UI');
   }
 
@@ -81,7 +82,7 @@ export class MenuScene extends Phaser.Scene {
     const p = SaveSystem.cargar('auto');
     if (!p) return this.nueva();
     narrativa.loadState(p.ink);
-    this.scene.start('Location', { escena: p.mundo.escena, x: p.mundo.x, y: p.mundo.y, dir: p.mundo.dir });
+    this.scene.start('Location', { escena: p.mundo.escena, x: p.mundo.x, y: p.mundo.y, dir: p.mundo.dir, cargado: true });
     this.scene.launch('UI');
   }
 }

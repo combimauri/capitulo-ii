@@ -1,0 +1,424 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Avenida de la Victoria"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-avenida"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "avenida.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/avenida.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 120,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "calzada",
+     "x": 0,
+     "y": 198,
+     "width": 960,
+     "height": 72,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "puesto",
+     "x": 496,
+     "y": 118,
+     "width": 68,
+     "height": 34,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "farola",
+     "x": 146,
+     "y": 180,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "farola",
+     "x": 376,
+     "y": 180,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "farola",
+     "x": 636,
+     "y": 180,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 7,
+     "name": "portal",
+     "x": 20,
+     "y": 62,
+     "width": 38,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mansiones Victoria"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "avenida.portal_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "40,128"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "consignas",
+     "x": 296,
+     "y": 50,
+     "width": 84,
+     "height": 42,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cartel de las consignas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "avenida.consignas_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "338,128"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "helicoptero",
+     "x": 462,
+     "y": 10,
+     "width": 50,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Helicóptero"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "avenida.helicoptero_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "488,128"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "puesto",
+     "x": 496,
+     "y": 116,
+     "width": 68,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Proles discutiendo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "avenida.proles_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "530,166"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "minipax",
+     "x": 852,
+     "y": 70,
+     "width": 56,
+     "height": 44,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ministerio de la Paz"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "avenida.minipax"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "880,128"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 15,
+     "name": "portal",
+     "x": 40,
+     "y": 132,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 12,
+     "name": "prole1",
+     "x": 512,
+     "y": 166,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole1"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "prole2",
+     "x": 552,
+     "y": 168,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole2"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "nino",
+     "x": 676,
+     "y": 176,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nino"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Niño prole"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "avenida.nino"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "avenida.nino_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!nino_se_fue"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 16
+}

@@ -129,6 +129,19 @@ class Canvas:
                         self.glow[y][x] = max(self.glow[y][x], s)
                         break
 
+    def add_glow_suave(self, cx, cy, radio, fuerza, squash=1.0, pasos=7, limite=None):
+        """Resplandor con caída gradual cuantizada en `pasos` niveles (sin anillos duros)."""
+        x0, y0, x1, y1 = limite or (0, 0, self.w, self.h)
+        for y in range(max(0, y0), min(self.h, y1)):
+            for x in range(max(0, x0), min(self.w, x1)):
+                dx, dy = x - cx, (y - cy) * squash
+                d = (dx * dx + dy * dy) ** 0.5 / radio
+                if d < 1:
+                    k = fuerza * (1 - d) ** 1.6
+                    k = round(k * pasos / fuerza) / pasos * fuerza
+                    if k > self.glow[y][x]:
+                        self.glow[y][x] = k
+
     def add_emissive(self, x0, y0, x1, y1):
         self.emissive.append((x0, y0, x1, y1))
 

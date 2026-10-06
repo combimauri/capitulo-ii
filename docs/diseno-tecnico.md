@@ -259,6 +259,8 @@ PENSAMIENTO: ¿Lo habrá oído? # id:j2_04_pens_01
 | `# jornada:<n>` | — | Rótulo de jornada y autoguardado. |
 | `# final:<id>` | — | Termina la partida, guarda el desbloqueo y lanza los créditos. |
 
+> **Regla importante sobre las etiquetas de acción** (`cf`, `minijuego`, `esperar`, `fx`, `sfx`): ink ejecuta la lógica que hay **antes** de una línea en el mismo paso en que devuelve esa línea. Por eso la etiqueta de un minijuego se pone en la línea que debe mostrarse **después** de jugarlo, y toda la lógica que dependa del resultado (`{ cf_x == "fallo": … }`) va **detrás** de esa línea. Si la etiqueta va en una línea suelta justo antes de una condición, la condición se evalúa antes de jugar. Además, **después de esa lógica debe haber al menos otra línea de texto o de etiquetas**: si solo queda lógica hasta el final del fragmento, ink la ejecuta por adelantado. Cada minijuego tiene una prueba automática que simula su resultado y comprueba que cambia la historia.
+
 ### 4.6 Funciones externas (motor → ink)
 
 ink puede **preguntar** al motor con funciones externas registradas en el puente:
@@ -670,7 +672,7 @@ interface SaveData {
 | Hito | Contenido | Criterio de "hecho" |
 |---|---|---|
 | **M0 · Esqueleto** ✅ | Proyecto Vite + Phaser + inkjs. Escalado de píxeles. Puente narrativo con un `.ink` de prueba. Caja de diálogo, elecciones y guardado básico. Panel de depuración mínimo. | Se puede jugar una conversación ramificada de prueba en escritorio y en móvil, guardar y cargar. |
-| **M1 · Corte vertical** | **Prólogo + Jornada 1 completos:** escombros, ficha de afiliación, piso, escalera, calle, Minipax, cantina. Crimen facial (gimnasia y noticia). Minijuego de partes. Inventario. Arte provisional de calidad aceptable para 3 localizaciones. | Se juega de principio a fin en ~15 min, en escritorio y móvil, con audio. Sirve para validar tono, controles y legibilidad. |
+| **M1 · Corte vertical** ✅ | **Prólogo + Jornada 1 completos:** escombros, ficha de afiliación, piso, escalera, calle, Minipax, cantina. Crimen facial (gimnasia y noticia). Minijuego de partes. Inventario. Arte provisional de calidad aceptable para 3 localizaciones. | Se juega de principio a fin en ~15 min, en escritorio y móvil, con audio. Sirve para validar tono, controles y legibilidad. |
 | **M2 · Acto I** | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
 | **M3 · Acto II + Final A** | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
 | **M4 · Sistema de sigilo + Acto III** | Sigilo completo. Las tres misiones. Gran Rectificación. Expediente de Ivy. Lista de Len. Crane. Persecución. Final B. | Jugable hasta J12. |
@@ -693,6 +695,15 @@ interface SaveData {
 - 17 pruebas: compilación de ink, regla `{x|y}`, ids de línea únicos, rutas de los hotspots, colisiones y estado.
 
 **Pendiente para M1:** joystick virtual y botones táctiles, Ficha de Afiliación, crimen facial, minijuego de partes, escalera, calle y Minipax.
+
+### Estado de M1 (hecho)
+
+- **Prólogo + Jornada 1 jugables de principio a fin**, en 9 escenarios: calle Stepney (dos variantes), piso (día y noche), escalera, avenida (con cámara que sigue al jugador), vestíbulo del Minipax, Departamento de Partes y Cartografía y cantina.
+- **Minijuegos:** escombros, Ficha de Afiliación (con campos de texto reales), crimen facial (ritmo con retratos y máscara agrietada) y parte de guerra (documento con huecos).
+- **Sistemas:** acciones bloqueantes desde ink (minijuegos, pausas, efectos de pantalla, sonidos en secuencia), transiciones entre escenarios con punto de aparición, personajes no jugables con diálogo, objetos y colisiones condicionales, zonas automáticas, inventario, sonidos sintetizados con Web Audio y controles táctiles (botones y joystick).
+- **Arte:** protagonista H y M en 4 direcciones con animación de caminar, 14 personajes no jugables, 14 retratos de crimen facial, iconos e ilustraciones.
+- **40 pruebas**, entre ellas las que simulan resultados de minijuegos y verifican que cambian la historia, y las que comprueban que cada transición apunta a un mapa y a un punto de aparición existentes.
+- **Atajos de depuración** en la consola del navegador (solo en desarrollo): `saltar('escena', 'knot', { variables })`.
 
 ## 16. Riesgos y mitigaciones
 

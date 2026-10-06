@@ -1,0 +1,278 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Calle Stepney, 1979"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-stepney_ivy"
+  },
+  {
+   "name": "prota_tinte",
+   "type": "string",
+   "value": "#9aa0b8"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "stepney.ivy"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/stepney_ivy.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 104,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "ivy",
+     "x": 168,
+     "y": 168,
+     "width": 136,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "telepantalla",
+     "x": 330,
+     "y": 188,
+     "width": 38,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 4,
+     "name": "ivy",
+     "x": 172,
+     "y": 168,
+     "width": 124,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ivy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "stepney.ivy_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "204,222"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "reloj",
+     "x": 218,
+     "y": 198,
+     "width": 24,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Reloj de Ivy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "stepney.reloj_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "stepney.reloj_usar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "230,224"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!reloj_cogido"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 8,
+     "name": "ivy",
+     "x": 232,
+     "y": 228,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 6,
+     "name": "nell",
+     "x": 150,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nell"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "p_nell"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "oficial",
+     "x": 300,
+     "y": 140,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "oficial"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "p_oficial"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 9
+}

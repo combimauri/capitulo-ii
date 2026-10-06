@@ -15,14 +15,14 @@
    "value": "Piso del protagonista"
   },
   {
-   "name": "mundo",
-   "type": "string",
-   "value": "partido"
-  },
-  {
    "name": "fondo",
    "type": "string",
    "value": "loc-piso"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "piso.entrar"
   }
  ],
  "tilesets": [],
@@ -523,8 +523,18 @@
    "visible": true,
    "x": 0,
    "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
   }
  ],
- "nextlayerid": 5,
+ "nextlayerid": 6,
  "nextobjectid": 21
 }

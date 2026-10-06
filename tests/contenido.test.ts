@@ -25,6 +25,7 @@ function recorrer(b: NarrativeBridge, eleccion = 0) {
   for (let i = 0; i < 200; i++) {
     const paso = b.next();
     if (paso.type === 'line') lineas.push(paso.line);
+    else if (paso.type === 'accion') { if (paso.line) lineas.push(paso.line); }
     else if (paso.type === 'choices') b.choose(paso.choices[Math.min(eleccion, paso.choices.length - 1)].index);
     else break;
   }
@@ -56,7 +57,7 @@ describe('localizaciones', () => {
   for (const loc of localizaciones) {
     it(`${loc.id}: cada acción de cada hotspot existe en ink y sus líneas tienen id único`, () => {
       const vistos = new Map<string, string>();
-      for (const h of loc.hotspots) {
+      for (const h of [...loc.hotspots, ...loc.npcs.map((n) => n.hotspot)]) {
         for (const ruta of [h.mirar, h.usar, h.hablar].filter(Boolean) as string[]) {
           for (const eleccion of [0, 1, 2]) {
             const b = new NarrativeBridge(resultado.json!);
@@ -76,15 +77,64 @@ describe('localizaciones', () => {
     it(`${loc.id}: los puntos de aproximación y spawns no caen dentro de colisiones`, () => {
       const dentro = (p: { x: number; y: number }) =>
         loc.colisiones.some((c) => p.x - 5 < c.x + c.w && p.x + 5 > c.x && p.y - 5 < c.y + c.h && p.y > c.y);
-      for (const h of loc.hotspots) expect(dentro(h.aprox), `${h.name} aprox`).toBe(false);
+      for (const h of [...loc.hotspots.filter((x) => !x.auto), ...loc.npcs.map((n) => n.hotspot)]) {
+        if (h.mirar || h.usar || h.hablar) expect(dentro(h.aprox), `${h.name} aprox`).toBe(false);
+      }
       for (const s of loc.spawns) expect(dentro(s), `spawn ${s.name}`).toBe(false);
     });
   }
 });
 
+/** Recorre simulando los minijuegos: `resultados` decide qué variables escribe cada acción. */
+function recorrerConMinijuegos(b: NarrativeBridge, resultados: (accion: string) => Record<string, unknown>) {
+  const textos: string[] = [];
+  for (let i = 0; i < 200; i++) {
+    const paso = b.next();
+    if (paso.type === 'accion') {
+      for (const a of paso.acciones) for (const [k, v] of Object.entries(resultados(a.key === 'minijuego' ? a.value.split(',')[0] : a.key))) b.set(k, v);
+      if (paso.line) textos.push(paso.line.text);
+    } else if (paso.type === 'line') textos.push(paso.line.text);
+    else if (paso.type === 'choices') b.choose(0);
+    else break;
+  }
+  return textos.join(' ');
+}
+
+describe('los resultados de los minijuegos cambian la historia', () => {
+  it('fallar la gimnasia provoca la reprimenda y sube la Sospecha', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.goTo('piso.entrar');
+    const t = recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j1_gimnasia: 'fallo' } : {}));
+    expect(t).toContain('Más energía');
+    expect(b.get('sospecha')).toBe(3);
+  });
+
+  it('hacerla bien provoca el elogio', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.goTo('piso.entrar');
+    expect(recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j1_gimnasia: 'perfecto' } : {}))).toContain('Mirad todos');
+  });
+
+  it('fallar el júbilo del noticiero sube la Sospecha', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.goTo('piso_noche.entrar');
+    recorrerConMinijuegos(b, (a) => (a === 'cf' ? { cf_j1_noticia: 'fallo' } : {}));
+    expect(b.get('sospecha')).toBe(3);
+  });
+
+  it('cada palabra tibia del parte sube la Sospecha', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.goTo('depto.mesa');
+    recorrerConMinijuegos(b, (a) => (a === 'parte' ? { parte_j1_tibias: 2, parte_j1_verbo: 'resistido' } : {}));
+    expect(b.get('sospecha')).toBe(4);
+    expect(b.get('parte_j1_enviado')).toBe(true);
+  });
+});
+
 describe('estado', () => {
   it('desayunar desbloquea la puerta y el estado se guarda y restaura', () => {
     const b = new NarrativeBridge(resultado.json!);
+    const escenas: string[] = [];
     recorrer(b);
     b.goTo('piso.puerta_usar');
     expect(recorrer(b).map((l) => l.text).join(' ')).toMatch(/desayuno/i);
@@ -92,10 +142,36 @@ describe('estado', () => {
     recorrer(b);
     const guardado = b.saveState();
     const c = new NarrativeBridge(resultado.json!);
+    c.on('command', (t: { key: string; value: string }) => { if (t.key === 'escena') escenas.push(t.value); });
     c.loadState(guardado);
     expect(c.get('desayunado')).toBe(true);
     c.goTo('piso.puerta_usar');
-    expect(recorrer(c).some((l) => l.kind === 'cartel')).toBe(true);
+    recorrer(c);
+    expect(escenas).toEqual(['escalera']);
+  });
+
+  it('cada escena pedida desde ink existe como mapa', () => {
+    const ids = new Set(localizaciones.map((l) => l.id));
+    const texto = inkFiles(path.join(RAIZ, 'content/ink')).map((f) => fs.readFileSync(f, 'utf8')).join('\n');
+    for (const m of texto.matchAll(/#\s*escena:([\w]+)/g)) expect(ids.has(m[1]), m[1]).toBe(true);
+  });
+
+  it('cada # escena:x # pos:y apunta a un punto de aparición que existe en ese mapa', () => {
+    const porId = new Map(localizaciones.map((l) => [l.id, l]));
+    const texto = inkFiles(path.join(RAIZ, 'content/ink')).map((f) => fs.readFileSync(f, 'utf8')).join('\n');
+    for (const m of texto.matchAll(/#\s*escena:(\w+)\s*#\s*pos:(\w+)/g)) {
+      expect(porId.get(m[1])?.spawns.some((s) => s.name === m[2]), `${m[1]} → ${m[2]}`).toBe(true);
+    }
+  });
+
+  it('el parte de la jornada 1 llega al noticiero de la noche', () => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('parte_j1_verbo', 'aplastado al enemigo');
+    b.set('parte_j1_km', '30');
+    b.goTo('piso_noche.entrar');
+    const textos = recorrer(b).map((l) => l.text).join(' ');
+    expect(textos).toContain('aplastado al enemigo');
+    expect(textos).toContain('ganando 30 kilómetros');
   });
 
   it('la Sospecha no pasa de 0 a 100', () => {

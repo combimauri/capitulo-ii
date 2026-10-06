@@ -72,6 +72,9 @@ CABEZAS = {
     "sombrero": [
         "......ffff", ".....fFFFF", "....fFFFFF", "...fFFFFFF", "...ffxxxxx", ".fffffffff", "...ohhssss",
     ] + CARA,
+    "gorra": [  # guardias y Policía del Pensamiento
+        "......ffff", ".....fFFFF", "....fFFFFF", "...fFFFFFF", "...fxxxxxx", "..ffffffff", "...ohhssss",
+    ] + CARA,
     "nino": None,  # los niños usan su propia plantilla
 }
 

@@ -1,0 +1,799 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Departamento de Partes y Cartografía"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-departamento"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "depto.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/departamento.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 380,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 412,
+     "y": 244,
+     "width": 68,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 380,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "mesa",
+     "x": 88,
+     "y": 112,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "silla",
+     "x": 102,
+     "y": 142,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "mesa",
+     "x": 168,
+     "y": 112,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "silla",
+     "x": 182,
+     "y": 142,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 11,
+     "name": "mesa",
+     "x": 248,
+     "y": 112,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 12,
+     "name": "silla",
+     "x": 262,
+     "y": 142,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 13,
+     "name": "mesa",
+     "x": 88,
+     "y": 168,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 14,
+     "name": "silla",
+     "x": 102,
+     "y": 198,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 15,
+     "name": "mesa",
+     "x": 168,
+     "y": 168,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 16,
+     "name": "silla",
+     "x": 182,
+     "y": 198,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 17,
+     "name": "mesa",
+     "x": 248,
+     "y": 168,
+     "width": 48,
+     "height": 38,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 18,
+     "name": "silla",
+     "x": 262,
+     "y": 198,
+     "width": 20,
+     "height": 22,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 19,
+     "name": "registro",
+     "x": 350,
+     "y": 116,
+     "width": 78,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 20,
+     "name": "mi_mesa",
+     "x": 170,
+     "y": 166,
+     "width": 44,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mi mesa"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.mesa_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "depto.mesa"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "172,216"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "mapa",
+     "x": 148,
+     "y": 28,
+     "width": 154,
+     "height": 58,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mapa del frente"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.mapa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "226,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "memoria",
+     "x": 328,
+     "y": 44,
+     "width": 34,
+     "height": 28,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Agujero de la memoria"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.memoria_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "345,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "despacho",
+     "x": 52,
+     "y": 30,
+     "width": 40,
+     "height": 58,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Despacho del Subdirector"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.despacho_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "depto.despacho"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "71,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "registro",
+     "x": 350,
+     "y": 116,
+     "width": 78,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mesa del Registro"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.registro_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "388,176"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "telepantalla",
+     "x": 376,
+     "y": 26,
+     "width": 56,
+     "height": 42,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.tele_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "404,104"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 26,
+     "name": "salir",
+     "x": 380,
+     "y": 238,
+     "width": 32,
+     "height": 10,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "depto.salir"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "396,234"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 33,
+     "name": "puerta",
+     "x": 396,
+     "y": 230,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 34,
+     "name": "mesa",
+     "x": 172,
+     "y": 216,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 27,
+     "name": "voss",
+     "x": 72,
+     "y": 112,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "voss"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Subdirector Voss"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.voss_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "voss_presente"
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "amory",
+     "x": 304,
+     "y": 206,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "amory"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Felix Amory"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "depto.amory"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.amory_mirar"
+      }
+     ]
+    },
+    {
+     "id": 29,
+     "name": "func1",
+     "x": 114,
+     "y": 160,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionario1"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Funcionario"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.funcionario_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "152,160"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 30,
+     "name": "func2",
+     "x": 274,
+     "y": 160,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionaria1"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Funcionaria"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.funcionario_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "236,160"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "name": "func3",
+     "x": 114,
+     "y": 216,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "funcionario2"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Funcionario"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.funcionario_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "152,224"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 32,
+     "name": "nell",
+     "x": 340,
+     "y": 204,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nell"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Limpiadora"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "depto.nell_mirar"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "depto.nell_hablar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "parte_j1_enviado"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 35
+}

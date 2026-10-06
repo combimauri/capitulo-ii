@@ -18,14 +18,17 @@ export interface ChoiceOption {
 
 export type Step =
   | { type: 'line'; line: Line }
+  | { type: 'accion'; acciones: Tag[]; line: Line | null }
   | { type: 'choices'; choices: ChoiceOption[] }
   | { type: 'end' };
 
 type Listener = (...args: any[]) => void;
 
-/** Etiquetas que son comandos para el motor (no metadatos de la línea). */
-const COMANDOS = new Set(['escena', 'pos', 'jornada', 'cf', 'dp', 'minijuego', 'sigilo', 'documento',
-  'comparar', 'sfx', 'musica', 'ambiente', 'fx', 'esperar', 'bloquear_input', 'final']);
+/** Etiquetas que son comandos inmediatos para el motor (no detienen el diálogo). */
+const COMANDOS = new Set(['escena', 'pos', 'jornada', 'musica', 'ambiente', 'final', 'npc', 'refrescar']);
+
+/** Etiquetas que detienen el diálogo hasta que el motor termina (minijuegos, pausas, efectos). */
+const ACCIONES = new Set(['cf', 'dp', 'minijuego', 'sigilo', 'documento', 'comparar', 'fx', 'esperar', 'bloquear_input', 'sfx']);
 
 export class NarrativeBridge {
   readonly story: Story;
@@ -70,9 +73,12 @@ export class NarrativeBridge {
       const text = this.story.Continue() ?? '';
       const tags = (this.story.currentTags ?? []).map(parseTag);
       for (const t of tags) if (COMANDOS.has(t.key)) this.emit('command', t);
-      if (!text.trim()) continue;          // línea vacía: solo traía comandos
       const id = tags.find((t) => t.key === 'id')?.value ?? null;
-      return { type: 'line', line: { ...parseLine(text), id, tags } };
+      const line = text.trim() ? { ...parseLine(text), id, tags } : null;
+      const acciones = tags.filter((t) => ACCIONES.has(t.key));
+      if (acciones.length) return { type: 'accion', acciones, line };
+      if (!line) continue;                 // línea vacía: solo traía comandos
+      return { type: 'line', line };
     }
     if (this.story.currentChoices.length) {
       return {
@@ -90,6 +96,12 @@ export class NarrativeBridge {
   }
 
   // ---------------------------------------------------------------- variables
+  /** Lista de ink (p. ej. inventario) como array de nombres de elemento. */
+  list(name: string): string[] {
+    const v = this.story.variablesState.$(name) as unknown as { orderedItems?: { Key: { itemName: string } }[] } | null;
+    return v?.orderedItems?.map((e) => e.Key.itemName) ?? [];
+  }
+
   get<T = unknown>(name: string): T {
     return this.story.variablesState.$(name) as T;
   }

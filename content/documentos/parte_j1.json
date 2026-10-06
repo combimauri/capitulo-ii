@@ -1,0 +1,20 @@
+{
+  "directiva": [
+    "minipax.partes 14.4.84 malabar",
+    "victoria plusbuena confirmada",
+    "redactar parte · cifras doblemásbuenas",
+    "prisioneros euroasiáticos · bajas enemigas"
+  ],
+  "titulo": "PARTE DEL FRENTE · MALABAR",
+  "lineas": [
+    { "antes": "Nuestras gloriosas fuerzas han", "hueco": "verbo", "despues": "en el sector del río Malabar,",
+      "opciones": ["avanzado", "aplastado al enemigo", "resistido"], "tibias": ["avanzado", "resistido"] },
+    { "antes": "ganando", "hueco": "km", "despues": "kilómetros de terreno.", "opciones": ["4", "12", "30"] },
+    { "antes": "Han sido capturados", "hueco": "prisioneros", "despues": "prisioneros euroasiáticos.",
+      "opciones": ["800", "3.000", "12.000"] },
+    { "antes": "Las bajas enemigas se estiman en", "hueco": "bajas", "despues": ".",
+      "opciones": ["2.000", "9.000", "40.000"] },
+    { "antes": "El Gran Hermano ha felicitado personalmente a las tropas." }
+  ],
+  "pensamiento_tibio": "No. Más fuerza. Ivy merece más fuerza."
+}
