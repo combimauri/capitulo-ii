@@ -286,7 +286,8 @@ m.spawn("depto", 76, 114, "abajo").spawn("suministros", 776, 114, "abajo").spawn
 MAPAS.append(m)
 
 # ------------------------------------------------------------------ JORNADA 4
-m = Mapa("limehouse", "Limehouse", ancho=960, al_entrar="limehouse.entrar", fondos_alt="loc-limehouse_manana:final_en_curso==D")
+m = Mapa("limehouse", "Limehouse", ancho=960, al_entrar="limehouse.entrar", fondos_alt="loc-limehouse_manana:final_en_curso==D",
+         musica="taberna_calle", musica_si="final_en_curso!=D")
 TARDE, MANANA = "final_en_curso!=D", "final_en_curso==D"
 m.col(0, 0, 960, 108, "fachadas").col(0, 232, 960, 38, "muro").col(716, 108, 210, 34, "escombros")
 m.col(420, 112, 80, 26, "puesto", condicion=MANANA)
@@ -317,7 +318,7 @@ m.hot("irse", 0, 108, 10, 124, usar="fd_limehouse.salir", auto="true", condicion
 m.spawn("entrada", 28, 172, "derecha").spawn("pub", 325, 122, "abajo").spawn("casa_dot", 274, 122, "abajo")
 MAPAS.append(m)
 
-m = Mapa("pub", "Pub «La Campana»", al_entrar="pub.entrar")
+m = Mapa("pub", "Pub «La Campana»", al_entrar="pub.entrar", musica="taberna")
 m.muros(fondo=92, puerta=(224, 256))
 m.col(52, 92, 190, 38, "barra")
 for (mx, my) in [(290, 120), (370, 120), (300, 190)]:
@@ -342,7 +343,7 @@ def mercado(m):
     m.col(118, 212, 74, 20, "puesto").col(718, 212, 74, 20, "puesto")
     return m
 
-m = mercado(Mapa("mercado", "Mercado de Watney Street", ancho=960, al_entrar="mercado.entrar"))
+m = mercado(Mapa("mercado", "Mercado de Watney Street", ancho=960, al_entrar="mercado.entrar", musica="prole", musica_si="!cohete_caido"))
 m.hot("estudio", 820, 30, 96, 70, nombre_visible="Estudio Crane", mirar="mercado.estudio_mirar", usar="mercado.ir_estudio", aprox=a(891, 112), orientacion="arriba")
 m.hot("cordones", 650, 128, 60, 22, nombre_visible="Puesto de cordones", mirar="mercado.cordones_mirar", aprox=a(680, 160), orientacion="arriba")
 m.hot("patatas", 180, 128, 76, 22, nombre_visible="Puesto de patatas", mirar="mercado.patatas_mirar", aprox=a(218, 160), orientacion="arriba")
@@ -459,7 +460,7 @@ m.hot("salir", 224, 240, 32, 10, nombre_visible="Puerta", usar="archivo_r.salir"
 m.spawn("puerta", 240, 232, "arriba")
 MAPAS.append(m)
 
-m = Mapa("sotano_pub", "Sótano de La Campana", al_entrar="sotano.entrar")
+m = Mapa("sotano_pub", "Sótano de La Campana", al_entrar="sotano.entrar", musica="taberna_lejos")
 m.muros(x0=100, x1=380, fondo=96, suelo=236)
 m.col(118, 92, 28, 12, "escalera").col(106, 120, 44, 60, "barriles").col(196, 140, 88, 30, "mesa")
 m.hot("hueco", 300, 52, 24, 20, nombre_visible="Ladrillos sueltos", mirar="sotano.hueco_mirar", aprox=a(312, 110), orientacion="arriba")
@@ -603,7 +604,7 @@ m.npc("crane", 200, 220, sprite="crane", nombre_visible="Crane", condicion="cran
 m.spawn("inicio", 30, 170, "derecha").spawn("mitad", 750, 214, "derecha").spawn("final", 1140, 214, "derecha").spawn("atajo", 893, 104, "abajo")
 MAPAS.append(m)
 
-m = Mapa("casa_dot", "Casa de Dot", al_entrar="casa_dot.entrar")
+m = Mapa("casa_dot", "Casa de Dot", al_entrar="casa_dot.entrar", musica="prole", musica_si="final_en_curso==D")
 m.muros(x0=120, x1=360, fondo=96, suelo=236, puerta=(224, 256))
 m.col(300, 92, 44, 28, "estufa").col(196, 146, 74, 30, "mesa").col(226, 124, 14, 22, "silla").col(180, 148, 14, 22, "silla").col(128, 200, 32, 26, "barreno")
 m.hot("despensa", 132, 40, 30, 52, nombre_visible="Despensa", mirar="casa_dot.despensa_mirar", aprox=a(147, 110), orientacion="arriba")

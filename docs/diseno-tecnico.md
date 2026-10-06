@@ -735,7 +735,7 @@ interface SaveData {
 
 **Pendiente:**
 - Probar el joystick en un móvil real.
-- Pulir el arte provisional del pasillo.
+- ~~Pulir el arte provisional del pasillo.~~ *(hecho después de M5)*
 - La música y los ambientes llegan en M6.
 
 ### Estado de M3 (Acto II completo, con los Finales A y B temprano)
@@ -758,9 +758,9 @@ interface SaveData {
 - **Personajes nuevos:** Dot, Sammy, Crane, el viejo del pub, el tabernero y el trípode y el carrito como figuras.
 - **115 pruebas**, con todas las decisiones del acto y los dos finales recorridos línea a línea.
 
-**Pendiente para M3:**
-- La música de taberna y el leitmotiv prole.
-- Una ilustración propia para la foto restaurada de Ivy.
+**Pendiente para M3:** *(hecho después de M5; ver más abajo)*
+- ~~La música de taberna y el leitmotiv prole.~~
+- ~~Una ilustración propia para la foto restaurada de Ivy.~~
 
 ### Estado de M4 (Acto III completo, con el Final B «trato» y el arresto)
 
@@ -801,6 +801,23 @@ interface SaveData {
   - **B:** se añaden las variantes «arrepentimiento» y «San Clemente».
 - **Menú:** líneas de los finales C, D (la frase de cierre de esa partida) y E, la línea de todos los finales y la galería «Capítulos II».
 - **186 pruebas**, con cada final recorrido.
+
+### Después de M5: lo que faltaba del guion y pulido
+
+- **Túnel 3 a oscuras:** con la linterna apagada (`al_chocar=knot` en el mapa) se camina en línea recta, sin buscar camino, y cada choque cuenta (`choques`). Al cuarto, Crane enciende su linterna y alcanza al protagonista (`persigue_si` en el NPC).
+- **La celda:** medidor de hambre en pantalla (propiedad de mapa `medidor="var,Etiqueta"` con `medidor_si`), tres palizas y el aspecto del protagonista (`prota_aspecto`: `preso`, `golpeado`, `cafe`), que cambia sin salir de la escena con `refrescar`.
+- **Crimen facial automático** (`# minijuego:cf_auto,expr=odio`): la cara se crispa sola ante Goldstein, con el eco deformado de los Dos Minutos.
+- **FD.03 jugable:** Limehouse por la mañana (`loc-limehouse_manana`), con el mercado a medias, los niños y la mujer que tiende.
+- **Música sintetizada** (`src/systems/Musica.ts`): pistas en bucle programadas por delante del reloj de audio, sin archivos. Cada mapa elige la suya (`musica=id`, `musica_si=cond`) y ink puede imponer otra (`# musica:id`, `# musica:silencio`). El silbido de cohete la corta en seco y «Naranjas y limones» la agacha.
+  - `prole`: la canción de Dot, tarareada (vals en fa, melodía original). Es el leitmotiv de la vida prole: mercado, casa de Dot y Limehouse por la mañana.
+  - `taberna`, `taberna_calle`, `taberna_lejos`: el piano de La Campana (melodía original, bajo de paseo y murmullo con vasos), dentro del pub, desde la calle y a través del suelo del sótano.
+  - `prole_piano`: la canción de Dot al piano, con acompañamiento de vals.
+- **Arte:** el pasillo de la planta 14 rehecho y las fotos de Ivy (la quemada y manchada, y la restaurada por Crane), en versión H y M.
+- **Detalles:** el texto de los pensamientos se lee sobre el blanco (`fx:blanco`), el epílogo usa una tipografía de libro y omite las citas vacías, y las traiciones de la Habitación 101 ya no se tapan entre sí.
+
+**Pendiente:**
+- Probar el joystick y el audio en móviles reales (iOS y Android).
+- El resto de la música (himno del Partido, drones de interiores) y los ambientes por localización llegan con M6.
 
 ---
 

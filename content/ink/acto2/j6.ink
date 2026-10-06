@@ -214,10 +214,14 @@ PENSAMIENTO: Crane me espera con un sobre de papel marrón. # id:j6_04_pens_00
 CRANE: Tres días, le dije. Han sido dos. No podía dormir. Ábralo. # id:j6_04_crane_01
 ~ inventario += foto_ivy_restaurada
 ~ foto_restaurada = true
-PENSAMIENTO: El mismo parque. Los mismos dos niños. Ivy, con el uniforme de los Espías, sonríe abiertamente. Le falta un diente. # objeto:foto_ivy_restaurada # id:j6_04_pens_01
+{ genero == "f":
+    PENSAMIENTO: El mismo parque. Los mismos dos niños. Ivy, con el uniforme de los Espías, sonríe abiertamente. Le falta un diente. # objeto:foto_ivy_restaurada # vineta:vineta-foto_ivy_restaurada_m # id:j6_04_pens_01m
+- else:
+    PENSAMIENTO: El mismo parque. Los mismos dos niños. Ivy, con el uniforme de los Espías, sonríe abiertamente. Le falta un diente. # objeto:foto_ivy_restaurada # vineta:vineta-foto_ivy_restaurada_h # id:j6_04_pens_01
+}
 PENSAMIENTO: Yo, a su lado, le tiro de una trenza. # id:j6_04_pens_02
 PENSAMIENTO: Sonríe. # esperar:1.2 # id:j6_04_pens_03
-PENSAMIENTO: En el cartel no sonríe. # id:j6_04_pens_04
+PENSAMIENTO: En el cartel no sonríe. # vineta:fin # id:j6_04_pens_04
 PENSAMIENTO: Esta es su cara. Esta es su nariz. # id:j6_04_pens_05
 ~ sube_duda(5)
 ~ diario_ivy = true

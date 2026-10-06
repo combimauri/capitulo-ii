@@ -47,10 +47,14 @@ PENSAMIENTO: Buenos días, Ivy. # id:j4_01_cartel_01
 }
 ~ foto_cogida = true
 ~ inventario += foto_ivy
-PENSAMIENTO: Una fotografía quemada por un borde, arrugada y desvaída. Dos niños en un parque. # objeto:foto_ivy # id:j4_01_foto_01
+{ genero == "f":
+    PENSAMIENTO: Una fotografía quemada por un borde, arrugada y desvaída. Dos niños en un parque. # objeto:foto_ivy # vineta:vineta-foto_ivy_m # id:j4_01_foto_01m
+- else:
+    PENSAMIENTO: Una fotografía quemada por un borde, arrugada y desvaída. Dos niños en un parque. # objeto:foto_ivy # vineta:vineta-foto_ivy_h # id:j4_01_foto_01
+}
 PENSAMIENTO: Ivy, con unos diez años. Y yo, algo mayor. La cara de Ivy está casi borrada por una mancha de agua. # id:j4_01_foto_02
 PENSAMIENTO: Ya casi no se le ve la cara. En el cartel se le ve mejor. # id:j4_01_foto_03
-PENSAMIENTO: No es la misma cara. # esperar:0.8 # id:j4_01_foto_04
+PENSAMIENTO: No es la misma cara. # esperar:0.8 # vineta:fin # id:j4_01_foto_04
 -> DONE
 
 // ==================================================================== J4.02 — Departamento · Una tarea nueva

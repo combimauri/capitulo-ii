@@ -80,7 +80,7 @@ PENSAMIENTO: Salgo. # fx:negro # id:fd_03_salgo # escena:limehouse # pos:casa_do
     -> DONE
 }
 ~ fd_limehouse_visto = true
-PENSAMIENTO: No huyo. Limehouse por la mañana: el mercado reconstruido a medias, los niños, la ropa tendida, alguien que canta. # fx:aclarar # sfx:naranjas # id:fd_03_pens_00
+PENSAMIENTO: No huyo. Limehouse por la mañana: el mercado reconstruido a medias, los niños, la ropa tendida, alguien que canta. # fx:aclarar # musica:prole # id:fd_03_pens_00
 -> DONE
 
 = ropa_mirar
@@ -108,7 +108,7 @@ PENSAMIENTO: Una mujer tiende sábanas y canta. No sabe la letra entera. Se la i
 -> DONE
 
 = cantante
-PENSAMIENTO: Me paro a escucharla. Ella no deja de tender. # sfx:naranjas # id:fd_03_cantante_00
+PENSAMIENTO: Me paro a escucharla. Ella no deja de tender. # id:fd_03_cantante_00
 MUJER: ¿Quiere algo, camarada? # id:fd_03_cantante_01
 PROTAGONISTA: No. Siga cantando. # id:fd_03_cantante_02
 PENSAMIENTO: Se encoge de hombros. Sigue. # id:fd_03_cantante_03

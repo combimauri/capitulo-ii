@@ -23,6 +23,16 @@
    "name": "al_entrar",
    "type": "string",
    "value": "casa_dot.entrar"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "prole"
+  },
+  {
+   "name": "musica_si",
+   "type": "string",
+   "value": "final_en_curso==D"
   }
  ],
  "tilesets": [],

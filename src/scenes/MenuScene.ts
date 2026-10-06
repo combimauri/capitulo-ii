@@ -10,6 +10,7 @@ export class MenuScene extends Phaser.Scene {
   constructor() { super('Menu'); }
 
   create() {
+    audio.musica.poner(null);
     if (!avisoVisto) this.aviso(); else this.menu();
   }
 

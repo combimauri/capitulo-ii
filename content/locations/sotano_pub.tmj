@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "sotano.entrar"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "taberna_lejos"
   }
  ],
  "tilesets": [],

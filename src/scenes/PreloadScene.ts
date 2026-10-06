@@ -48,7 +48,8 @@ export class PreloadScene extends Phaser.Scene {
     this.load.image('londres-zonas', 'assets/minijuegos/londres-zonas.png');
     for (const v of ['plaza', 'plaza_gris', 'patibulo', 'patibulo5', 'foto_sotano', 'foto_iniciacion',
       'cripta_1985', 'cripta_1987', 'cripta_1988', 'cripta_1990', 'cripta_1993', 'pasillo_suelo', 'habitacion101',
-      'despacho_obrien', 'despacho_obrien_crane', 'patio_limehouse', 'patio_limehouse_len', 'salon_odio_h', 'salon_odio_m', 'limehouse_manana']) {
+      'despacho_obrien', 'despacho_obrien_crane', 'patio_limehouse', 'patio_limehouse_len', 'salon_odio_h', 'salon_odio_m', 'limehouse_manana',
+      'foto_ivy_h', 'foto_ivy_m', 'foto_ivy_restaurada_h', 'foto_ivy_restaurada_m']) {
       this.load.image(`vineta-${v}`, `assets/vinetas/${v}.png`);
     }
     this.load.image('reloj-ivy-grande', 'assets/minijuegos/reloj-ivy-grande.png');

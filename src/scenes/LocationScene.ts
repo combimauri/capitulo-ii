@@ -76,6 +76,8 @@ export class LocationScene extends Phaser.Scene {
   private contraAlgo = false;
   /** La linterna de otro (Crane, cuando te ha oído): se ve aunque todo esté a oscuras. */
   private luzAjena: Phaser.GameObjects.Image | null = null;
+  /** # musica:id desde ink: manda sobre la del mapa hasta cambiar de escena («silencio» la quita). */
+  private musicaForzada: string | null | undefined = undefined;
   private ultimoChoque = 0;
 
   constructor() { super('Location'); }
@@ -86,6 +88,7 @@ export class LocationScene extends Phaser.Scene {
     this.ocupado = false;
     this.ruta = []; this.alLlegar = null; this.enfocado = null; this.pulsacion = null;
     this.npcs.clear(); this.zonasPisadas.clear(); this.cambioPendiente = {}; this.limpiar = [];
+    this.musicaForzada = undefined;
 
     this.fondo = this.add.image(0, 0, this.loc.fondo).setOrigin(0).setDepth(-1000);
     if (this.loc.parpadeo) this.neones();
@@ -344,6 +347,9 @@ export class LocationScene extends Phaser.Scene {
       if (this.cambioPendiente.escena) { this.cambioPendiente.spawn = t.value; return; }
       const s = this.loc.spawns.find((sp) => sp.name === t.value);
       if (s) { this.colocar(s.x, s.y); this.dir = s.orientacion; this.parar(); }
+    } else if (t.key === 'musica') {
+      this.musicaForzada = t.value && t.value !== 'silencio' ? t.value : null;
+      audio.musica.poner(this.musicaForzada);
     } else if (t.key === 'refrescar') {
       this.actualizarVisibilidad();
       // el aspecto del protagonista puede cambiar sin cambiar de escena (las palizas de la celda)
@@ -639,6 +645,8 @@ export class LocationScene extends Phaser.Scene {
     this.colisionesActivas = this.loc.colisiones.filter((c) => cumple(c.condicion, leer));
     const conAccion = (h: Hotspot) => !!(h.mirar || h.usar || h.hablar || h.escondite);
     this.hotspotsVisibles = this.loc.hotspots.filter((h) => conAccion(h) && cumple(h.condicion, leer));
+    const mus = this.loc.musica;
+    audio.musica.poner(this.musicaForzada !== undefined ? this.musicaForzada : mus && cumple(mus.condicion, leer) ? mus.id : null);
     const med = this.loc.medidor;
     mision.medidor = med && cumple(med.condicion, leer) ? { variable: med.variable, etiqueta: med.etiqueta } : null;
     for (const n of this.npcs.values()) {

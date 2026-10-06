@@ -7,10 +7,10 @@
     { "texto": "Los registros de personal del antiguo Ministerio de la Paz mencionan a {un} funcionari{o} llamad{o} {nombre} {apellido}, del Departamento de Partes y Cartografía del Frente. Otros registros de la misma fecha no lo mencionan. Como ocurre con buena parte de la documentación de la época, no es posible decidir cuáles fueron corregidos." },
     { "texto": "Según un testimonio oral de difícil verificación, el autor resistió el interrogatorio durante un día entero, tiempo suficiente para que la primera copia cambiara de manos.", "si": "aguanto_24h" },
     { "texto": "Uno de los primeros copistas, un estibador del puerto de Limehouse, lo transcribía de noche durante los turnos de descarga.", "si": "len_salvado" },
-    { "texto": "El capítulo comienza así:" },
-    { "texto": "«{cap_apertura}»", "cita": true },
-    { "texto": "Y termina con una frase que muchos habitantes de los antiguos distritos proletarios aún saben de memoria:" },
-    { "texto": "«{cap_cierre}»", "cita": true },
+    { "texto": "El capítulo comienza así:", "si": "cap_apertura" },
+    { "texto": "«{cap_apertura}»", "cita": true, "si": "cap_apertura" },
+    { "texto": "Y termina con una frase que muchos habitantes de los antiguos distritos proletarios aún saben de memoria:", "si": "cap_cierre" },
+    { "texto": "«{cap_cierre}»", "cita": true, "si": "cap_cierre" },
     { "texto": "Es habitual leer este texto como un documento de la resistencia. Puede que sea más exacto leerlo como lo que dice ser: el testimonio de alguien que creyó.", "si": "dp_j11_ivy!=aceptar" },
     { "texto": "Es un texto lleno de contradicciones. Su autor parece no estar seguro de nada, salvo de que era necesario escribirlo.", "si": "dp_j11_ivy==aceptar" }
   ]

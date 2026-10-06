@@ -1,4 +1,5 @@
 import Phaser from 'phaser';
+import { audio } from './systems/AudioDirector';
 import '@fontsource/pixelify-sans/400.css';
 import '@fontsource/vt323/400.css';
 import { registerSW } from 'virtual:pwa-register';
@@ -60,6 +61,7 @@ const juego = new Phaser.Game({
 if (import.meta.env.DEV) {
   Object.assign(window, {
     juego,
+    audio,
     narrativa,
     registro,
     mision,

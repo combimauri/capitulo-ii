@@ -23,6 +23,16 @@
    "name": "al_entrar",
    "type": "string",
    "value": "mercado.entrar"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "prole"
+  },
+  {
+   "name": "musica_si",
+   "type": "string",
+   "value": "!cohete_caido"
   }
  ],
  "tilesets": [],

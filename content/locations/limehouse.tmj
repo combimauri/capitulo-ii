@@ -28,6 +28,16 @@
    "name": "fondos_alt",
    "type": "string",
    "value": "loc-limehouse_manana:final_en_curso==D"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "taberna_calle"
+  },
+  {
+   "name": "musica_si",
+   "type": "string",
+   "value": "final_en_curso!=D"
   }
  ],
  "tilesets": [],

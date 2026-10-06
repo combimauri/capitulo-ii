@@ -435,8 +435,12 @@ export class UIScene extends Phaser.Scene {
     if (l.kind !== 'cartel') registro.anotar(l.id, l.kind === 'pensamiento' ? 'PENSAMIENTO' : l.kind === 'telepantalla' ? 'TELEPANTALLA' : l.speaker, l.text);
     if (l.kind === 'pensamiento') {
       this.pensamiento.setVisible(true);
+      // sobre el blanco (fx:blanco), tinta oscura sin franja: la franja gris no deja leer
+      const sobreBlanco = this.velo.alpha > 0.5 && this.velo.fillColor === 0xffffff;
+      this.pensamientoTexto.setColor(sobreBlanco ? '#22252a' : hex(COLOR.papel4)).setStroke('#000000', sobreBlanco ? 0 : 3);
       this.escribir(this.pensamientoTexto, l.text);
       const banda = this.pensamiento.getData('banda') as Phaser.GameObjects.Rectangle;
+      banda.setVisible(!sobreBlanco);
       banda.setSize(960, this.alturaFinal(this.pensamientoTexto, l.text) + 44);
       return;
     }

@@ -19,11 +19,16 @@ PENSAMIENTO: No. Eso no sirve aquí. # id:objetos_no_sirve
 -> DONE
 
 = foto_mirar
-{ inventario ? tarjeta_crane:
+{
+- inventario ? tarjeta_crane:
     PENSAMIENTO: «Le devolveré la cara de su hermana.» # id:objetos_foto_crane_01
     PENSAMIENTO: Ya tengo su cara. Está en el cartel. # id:objetos_foto_crane_02
+- genero == "f":
+    PENSAMIENTO: Dos niños en un parque. La cara de Ivy, casi borrada por el agua. # vineta:vineta-foto_ivy_m # id:objetos_foto_01m
+    PENSAMIENTO: Ya casi no se le ve la cara. # vineta:fin # id:objetos_foto_02m
 - else:
-    PENSAMIENTO: Dos niños en un parque. La cara de Ivy, casi borrada por el agua. # id:objetos_foto_01
+    PENSAMIENTO: Dos niños en un parque. La cara de Ivy, casi borrada por el agua. # vineta:vineta-foto_ivy_h # id:objetos_foto_01
+    PENSAMIENTO: Ya casi no se le ve la cara. # vineta:fin # id:objetos_foto_02
 }
 -> DONE
 
@@ -36,8 +41,12 @@ PENSAMIENTO: Tapas negras. Papel crema. Un pájaro dibujado por dentro. Aquí no
 -> DONE
 
 = foto_restaurada_mirar
-PENSAMIENTO: Ivy sonríe. Le falta un diente. Yo le tiro de una trenza. # id:objetos_foto_restaurada_01
-PENSAMIENTO: En el cartel tiene la boca cerrada. # id:objetos_foto_restaurada_02
+{ genero == "f":
+    PENSAMIENTO: Ivy sonríe. Le falta un diente. Yo le tiro de una trenza. # vineta:vineta-foto_ivy_restaurada_m # id:objetos_foto_restaurada_01m
+- else:
+    PENSAMIENTO: Ivy sonríe. Le falta un diente. Yo le tiro de una trenza. # vineta:vineta-foto_ivy_restaurada_h # id:objetos_foto_restaurada_01
+}
+PENSAMIENTO: En el cartel tiene la boca cerrada. # vineta:fin # id:objetos_foto_restaurada_02
 -> DONE
 
 = llave_mirar

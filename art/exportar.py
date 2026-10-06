@@ -58,6 +58,8 @@ def main():
     vinetas.exportar(DESTINO / "vinetas")
     import vinetas_finales
     vinetas_finales.exportar(DESTINO / "vinetas")
+    import fotos_ivy
+    fotos_ivy.exportar(DESTINO / "vinetas")
     import cripta_anios
     for anio in ("1985", "1987", "1988", "1990", "1993"):
         cripta_anios.dibujar(anio).img.save(DESTINO / "vinetas" / f"cripta_{anio}.png")

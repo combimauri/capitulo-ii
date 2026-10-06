@@ -5,6 +5,7 @@ import { describe, expect, it } from 'vitest';
 import { compileInk } from '../tools/vite-plugin-ink';
 import { NarrativeBridge } from '../src/core/NarrativeBridge';
 import { parseTiled } from '../src/core/Location';
+import { PISTAS } from '../src/systems/Musica';
 
 const RAIZ = path.resolve(__dirname, '..');
 const MAIN = path.join(RAIZ, 'content/ink/main.ink');
@@ -54,6 +55,19 @@ describe('ink', () => {
 });
 
 describe('localizaciones', () => {
+  it('la música de cada mapa existe, y también la de las etiquetas # musica: de ink', () => {
+    for (const loc of localizaciones) if (loc.musica) expect(PISTAS[loc.musica.id], loc.id).toBeTruthy();
+    const ink = fs.readdirSync('content/ink', { recursive: true }).filter((f) => String(f).endsWith('.ink'))
+      .map((f) => fs.readFileSync(path.join('content/ink', String(f)), 'utf8')).join('\n');
+    for (const [, id] of ink.matchAll(/# musica:([a-z_]+)/g)) if (id !== 'silencio') expect(PISTAS[id], id).toBeTruthy();
+  });
+
+  it('las pistas de música cuadran: cada nota cae dentro del bucle', () => {
+    for (const [id, p] of Object.entries(PISTAS)) {
+      for (const n of p.notas) expect(n.b + n.d, `${id} ${n.n}@${n.b}`).toBeLessThanOrEqual(p.pulsos);
+    }
+  });
+
   for (const loc of localizaciones) {
     it(`${loc.id}: cada acción de cada hotspot existe en ink y sus líneas tienen id único`, () => {
       const vistos = new Map<string, string>();

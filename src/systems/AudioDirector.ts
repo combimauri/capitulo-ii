@@ -3,6 +3,8 @@
  * No necesitan archivos: el silbido del cohete, por ejemplo, se adapta a cualquier duración.
  */
 
+import { Musica } from './Musica';
+
 type Sfx = 'silbido' | 'impacto' | 'pitido' | 'silbato' | 'sello' | 'tubo' | 'tecla' | 'plumilla'
   | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos' | 'naranjas' | 'chirrido'
   | 'chapoteo' | 'zumbido' | 'tic' | 'papel' | 'alto' | 'golpes' | 'trampilla' | 'dinamo' | 'goteo' | 'descarga' | 'choque' | 'eco_odio';
@@ -10,6 +12,8 @@ type Sfx = 'silbido' | 'impacto' | 'pitido' | 'silbato' | 'sello' | 'tubo' | 'te
 class Audio {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
+  /** La música (pistas sintetizadas en bucle): la pone cada mapa con su propiedad «musica». */
+  readonly musica = new Musica(() => (this.ctx && this.master ? { ctx: this.ctx, out: this.master } : null));
   volumen = 0.6;
   /** Silbidos largos en curso (la Habitación 101 los corta de golpe). */
   private largos: OscillatorNode[] = [];
@@ -27,6 +31,7 @@ class Audio {
       }
     }
     if (this.ctx.state === 'suspended') void this.ctx.resume();
+    this.musica.reanudar();
   }
 
   play(id: string, dur?: number) {
@@ -34,7 +39,9 @@ class Audio {
     if (!ctx || !out) return;
     const t = ctx.currentTime;
     switch (id as Sfx) {
-      case 'silbido': return this.silbido(ctx, out, t, dur ?? 2.6);
+      case 'silbido':
+        this.musica.poner(null, true);       // el silbido corta la música en seco
+        return this.silbido(ctx, out, t, dur ?? 2.6);
       case 'impacto': return this.impacto(ctx, out, t);
       case 'pitido': return this.tono(ctx, out, t, 5800, dur ?? 3.5, 0.05, 'sine', true);
       case 'silbato':
@@ -50,7 +57,9 @@ class Audio {
       case 'tos':
         this.ruido(ctx, out, t, 0.12, 700, 0.2);
         return this.ruido(ctx, out, t + 0.22, 0.1, 600, 0.15);
-      case 'naranjas': return this.naranjas(ctx, out, t);
+      case 'naranjas':
+        this.musica.agachar(0.15, 7);
+        return this.naranjas(ctx, out, t);
       case 'chirrido':
         this.tono(ctx, out, t, 1900, 1.4, 0.08, 'sawtooth');
         return this.tono(ctx, out, t, 2350, 1.4, 0.06, 'square');
@@ -154,6 +163,7 @@ class Audio {
 
   /** Silencio absoluto: corta los silbidos que estén sonando. */
   cortar() {
+    this.musica.poner(null, true);
     for (const o of this.largos) { try { o.stop(); } catch { /* ya parado */ } }
     this.largos = [];
   }
