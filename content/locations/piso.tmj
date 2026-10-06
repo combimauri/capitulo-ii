@@ -506,6 +506,44 @@
        "value": "izquierda"
       }
      ]
+    },
+    {
+     "id": 20,
+     "name": "silla",
+     "x": 366,
+     "y": 138,
+     "width": 32,
+     "height": 46,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Silla"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "fd_silla"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "360,198"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -519,7 +557,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 20,
+     "id": 21,
      "name": "cama",
      "x": 118,
      "y": 124,
@@ -538,7 +576,7 @@
      ]
     },
     {
-     "id": 21,
+     "id": 22,
      "name": "puerta",
      "x": 240,
      "y": 232,
@@ -574,5 +612,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 22
+ "nextobjectid": 23
 }

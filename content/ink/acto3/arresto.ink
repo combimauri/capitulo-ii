@@ -42,10 +42,7 @@ PENSAMIENTO: Un golpe de porra en la nuca. # fx:destello # id:fc_01_calle_01
 
 = furgoneta
 PENSAMIENTO: Negro. # fx:negro # id:fc_01_negro
-PENSAMIENTO: El sonido de una furgoneta. Una puerta metálica. # sfx:sello # esperar:1.5 # id:fc_01_puerta
-CARTEL: Ministerio del Amor. # id:fc_01_cartel
-CARTEL: FINAL C · HABITACIÓN 101¶Continuará en el Acto IV. # id:fc_01_continuara # final:demo
--> DONE
+-> final_c.llegada
 
 // ==================================================================== FINAL C0 — Vaporización (Sospecha 100 en el Acto I)
 === final_c0 ===

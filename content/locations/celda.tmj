@@ -1,0 +1,458 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Ministerio del Amor · celda"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-celda"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "celda.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/celda.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 92,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf",
+     "x": 0,
+     "y": 244,
+     "width": 480,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "banco",
+     "x": 40,
+     "y": 92,
+     "width": 400,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "banco",
+     "x": 40,
+     "y": 92,
+     "width": 16,
+     "height": 154,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "banco",
+     "x": 424,
+     "y": 92,
+     "width": 16,
+     "height": 154,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "cubo",
+     "x": 60,
+     "y": 214,
+     "width": 16,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 9,
+     "name": "banco",
+     "x": 160,
+     "y": 92,
+     "width": 160,
+     "height": 16,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Banco"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "celda.esperar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,132"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "tele",
+     "x": 220,
+     "y": 30,
+     "width": 40,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantalla"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "celda.tele_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "220,128"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "puerta",
+     "x": 224,
+     "y": 232,
+     "width": 32,
+     "height": 12,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "celda.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,226"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "cubo",
+     "x": 60,
+     "y": 210,
+     "width": 16,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cubo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "celda.cubo_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "90,222"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 16,
+     "name": "banco",
+     "x": 240,
+     "y": 136,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 13,
+     "name": "winston",
+     "x": 330,
+     "y": 112,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "winston_preso"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Winston Smith"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "celda.winston"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "celda.winston_mirar"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "330,132"
+      }
+     ]
+    },
+    {
+     "id": 14,
+     "name": "parsons",
+     "x": 170,
+     "y": 112,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "parsons_preso"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Parsons"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "celda.parsons_mirar"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "170,132"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "celda_evento<1 && final_en_curso!=D"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "esqueleto",
+     "x": 110,
+     "y": 112,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "esqueleto"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Preso"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "celda.esqueleto_mirar"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "110,132"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 17
+}

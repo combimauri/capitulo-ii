@@ -13,6 +13,7 @@ DESTINO = RAIZ / "public" / "assets"
 sys.path.insert(0, str(ART / "lib"))
 sys.path.insert(0, str(ART / "personajes"))
 sys.path.insert(0, str(ART / "ui"))
+sys.path.append(str(ART / "escenarios"))
 
 
 def main():
@@ -27,6 +28,8 @@ def main():
     import protagonista
     protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_h.png")
     protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_m.png", femenina=True)
+    protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_h_preso.png", preso=True)
+    protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_m_preso.png", femenina=True, preso=True)
     print("ok protagonista H y M")
 
     import npcs
@@ -40,6 +43,8 @@ def main():
             rp.retrato(e, fem, agrietada=True).save(DESTINO / "retratos" / f"prot_{g}_{e.lower()}_grieta.png")
     import retrato_amory
     retrato_amory.exportar(DESTINO / "retratos")
+    import retrato_obrien
+    retrato_obrien.exportar(DESTINO / "retratos")
     print("ok retratos")
 
     import iconos as ic
@@ -50,6 +55,11 @@ def main():
     londres.exportar(DESTINO / "minijuegos")
     import vinetas
     vinetas.exportar(DESTINO / "vinetas")
+    import vinetas_finales
+    vinetas_finales.exportar(DESTINO / "vinetas")
+    import cripta_anios
+    for anio in ("1985", "1987", "1988", "1990", "1993"):
+        cripta_anios.dibujar(anio).img.save(DESTINO / "vinetas" / f"cripta_{anio}.png")
     print("ok iconos y minijuegos")
 
     import icono

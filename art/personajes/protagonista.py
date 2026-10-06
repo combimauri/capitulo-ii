@@ -180,6 +180,49 @@ for _vistas in (VISTAS, VISTAS_F):
             assert len(f) == W, (nombre, i, len(f), f)
 
 
+# ---------------------------------------------------------------- versión presa (Minimor)
+# Misma silueta y mismos fotogramas; ropa gris de preso y la cara magullada: un ojo cerrado por la hinchazón,
+# un moratón alrededor y el labio partido. La espalda solo cambia de color.
+ROPA_PRESO = {"n": K("gris", 3), "d": K("gris", 4), "b": K("gris", 5), "B": K("gris", 6), "L": K("gris", 5),
+              "w": K("gris", 1), "W": K("gris", 2)}
+MAGULLADURAS = {"u": K("granate", 4), "U": K("granate", 3), "k": K("piel", 0), "R": K("rojo", 3)}
+
+
+def _magullar(filas, lateral=False):
+    """Cierra el ojo de la derecha de la imagen (en la vista lateral, el único que se ve) y parte el labio."""
+    f = [list(r) for r in filas]
+    ojo = [(r, c) for r in range(6, 13) for c in range(W) if f[r][c] == "e" and (lateral or c >= W // 2)]
+    filas_ojo = sorted({r for r, _ in ojo})
+    cols = sorted({c for _, c in ojo})
+    for r, c in ojo:                                    # párpado hinchado y una raya oscura: el ojo cerrado
+        f[r][c] = "u" if r == filas_ojo[0] and len(filas_ojo) > 1 else "k"
+    piel = set("sSl")
+    abajo = filas_ojo[-1] + 1
+    for c in range(cols[0] - 1, cols[-1] + 2):          # moratón debajo y a los lados
+        if f[abajo][c] in piel:
+            f[abajo][c] = "U" if c in cols else "u"
+    for c in (cols[0] - 1, cols[-1] + 1):
+        for r in filas_ojo:
+            if f[r][c] in piel:
+                f[r][c] = "u"
+    boca = [(r, c) for r in range(11, 17) for c in range(W) if f[r][c] == "m"]
+    if boca:                                            # labio partido: la comisura y una gota debajo
+        r, c = max(boca, key=lambda rc: (rc[1], rc[0])) if not lateral else min(boca, key=lambda rc: rc[1])
+        c = c - 1 if not lateral else c
+        f[r][c] = "R"
+        if f[r + 1][c] in piel:
+            f[r + 1][c] = "U"
+    return ["".join(x) for x in f]
+
+
+VISTAS_P = {"abajo": _magullar(FRENTE), "derecha": _magullar(LADO_DER, lateral=True), "arriba": ESPALDA}
+VISTAS_P["izquierda"] = [r[::-1] for r in VISTAS_P["derecha"]]
+VISTAS_PF = {"abajo": _magullar(FRENTE_F), "derecha": _magullar(LADO_DER_F, lateral=True), "arriba": ESPALDA_F}
+VISTAS_PF["izquierda"] = [r[::-1] for r in VISTAS_PF["derecha"]]
+PALETA_P = {**PALETA, **ROPA_PRESO, **MAGULLADURAS}
+PALETA_PF = {**PALETA_F, **ROPA_PRESO, **MAGULLADURAS}
+
+
 # Piernas por vista: (fila donde empiezan, columnas de la pierna A, columnas de la pierna B)
 PIERNAS = {
     "abajo": (31, range(3, 10), range(10, 17)),
@@ -251,11 +294,14 @@ def mano_lateral(filas, dx):
     return ["".join(r) for r in f]
 
 
-def fotogramas(vista, femenina=False):
+def fotogramas(vista, femenina=False, preso=False):
     """[quieto, paso A, pasando, paso B, pasando]"""
-    vistas = VISTAS_F if femenina else VISTAS
+    if preso:
+        vistas = VISTAS_PF if femenina else VISTAS_P
+    else:
+        vistas = VISTAS_F if femenina else VISTAS
     if vista == "izquierda":
-        return [[r[::-1] for r in fr] for fr in fotogramas("derecha", femenina)]
+        return [[r[::-1] for r in fr] for fr in fotogramas("derecha", femenina, preso)]
     base = vistas[vista]
     desde, a, b = PIERNAS[vista]
     if vista == "derecha":
@@ -271,8 +317,11 @@ def fotogramas(vista, femenina=False):
 ORDEN_HOJA = ["abajo", "izquierda", "derecha", "arriba"]
 
 
-def hoja_sprites(ruta, femenina=False):
-    """Hoja de 5 columnas (quieto + 4 de caminar) x 4 filas (direcciones), fotogramas de 20x40."""
+def hoja_sprites(ruta, femenina=False, preso=False):
+    """Hoja de 5 columnas (quieto + 4 de caminar) x 4 filas (direcciones), fotogramas de 20x40.
+
+    preso=True: la misma hoja (misma disposición) con la ropa gris de preso y la cara magullada.
+    """
     from pixel import Canvas
     cv = Canvas(W * 5, H * len(ORDEN_HOJA), bg=("gris", 0))
     cv.img = cv.img.convert("RGBA")
@@ -280,8 +329,11 @@ def hoja_sprites(ruta, femenina=False):
     from PIL import ImageDraw
     cv.d = ImageDraw.Draw(cv.img)
     for fila, vista in enumerate(ORDEN_HOJA):
-        pal = PALETA_F if femenina else PALETA
-        for col, frame in enumerate(fotogramas(vista, femenina)):
+        if preso:
+            pal = PALETA_PF if femenina else PALETA_P
+        else:
+            pal = PALETA_F if femenina else PALETA
+        for col, frame in enumerate(fotogramas(vista, femenina, preso)):
             for r, row in enumerate(frame):
                 for c, ch in enumerate(row):
                     if ch in pal:

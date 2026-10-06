@@ -20,4 +20,6 @@ export const hex = (c: number) => '#' + c.toString(16).padStart(6, '0');
 export const FUENTE = {
   texto: '"Pixelify Sans", monospace',
   maquina: '"VT323", monospace',
+  /** El epílogo del Final D: un libro académico, fuera de la paleta y la letra del Partido. */
+  libro: 'Georgia, "Iowan Old Style", "Times New Roman", serif',
 };

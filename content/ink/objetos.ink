@@ -89,3 +89,8 @@ PENSAMIENTO: Desde un ángulo bajo. Como a través de un hueco en la pared. # id
 PENSAMIENTO: Pájaros en los márgenes. Pozos de ventilación, salidas, estaciones tapiadas. # id:objetos_dibujos_01
 PENSAMIENTO: Una ciudad debajo de la ciudad. # id:objetos_dibujos_02
 -> DONE
+
+= carta_mirar
+PENSAMIENTO: «…tan dificil salir de ella.» Sin tilde. # documento:carta_ivy # id:objetos_carta_01
+PENSAMIENTO: Su letra. # id:objetos_carta_02
+-> DONE

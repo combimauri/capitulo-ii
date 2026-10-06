@@ -1,0 +1,17 @@
+{
+  "titulo": "Nota sobre el texto conocido como «Capítulo II»",
+  "parrafos": [
+    { "texto": "El documento al que los estudiosos llaman «Capítulo II» circuló de forma clandestina por los distritos proletarios de la antigua Franja Aérea 1 durante los últimos años del régimen del Ingsoc. Se conservan al menos once copias manuscritas, de distintas manos y con variantes menores. Una de ellas se encontró en el fondo de una caja de hojalata, bajo una colección de fragmentos de metralla.", "si": "!libro_delatado" },
+    { "texto": "El documento al que los estudiosos llaman «Capítulo II» circuló de forma clandestina por los distritos proletarios de la antigua Franja Aérea 1 durante los últimos años del régimen del Ingsoc. Se creyó durante mucho tiempo que el texto había sido destruido por la Policía del Pensamiento en una redada en Limehouse. Las copias que circularon después demuestran que alguien lo había memorizado antes.", "si": "libro_delatado" },
+    { "texto": "Tradicionalmente se ha atribuido a Emmanuel Goldstein, autor de los capítulos I y III de la Teoría y práctica del colectivismo oligárquico. Sin embargo, el estilo, la ausencia de aparato teórico y el tono de confesión personal hacen pensar en otro autor. Algunas copias llevan al margen dos iniciales: una I. y una {inicial}." },
+    { "texto": "Los registros de personal del antiguo Ministerio de la Paz mencionan a {un} funcionari{o} llamad{o} {nombre} {apellido}, del Departamento de Partes y Cartografía del Frente. Otros registros de la misma fecha no lo mencionan. Como ocurre con buena parte de la documentación de la época, no es posible decidir cuáles fueron corregidos." },
+    { "texto": "Según un testimonio oral de difícil verificación, el autor resistió el interrogatorio durante un día entero, tiempo suficiente para que la primera copia cambiara de manos.", "si": "aguanto_24h" },
+    { "texto": "Uno de los primeros copistas, un estibador del puerto de Limehouse, lo transcribía de noche durante los turnos de descarga.", "si": "len_salvado" },
+    { "texto": "El capítulo comienza así:" },
+    { "texto": "«{cap_apertura}»", "cita": true },
+    { "texto": "Y termina con una frase que muchos habitantes de los antiguos distritos proletarios aún saben de memoria:" },
+    { "texto": "«{cap_cierre}»", "cita": true },
+    { "texto": "Es habitual leer este texto como un documento de la resistencia. Puede que sea más exacto leerlo como lo que dice ser: el testimonio de alguien que creyó.", "si": "dp_j11_ivy!=aceptar" },
+    { "texto": "Es un texto lleno de contradicciones. Su autor parece no estar seguro de nada, salvo de que era necesario escribirlo.", "si": "dp_j11_ivy==aceptar" }
+  ]
+}

@@ -48,9 +48,10 @@ export class MenuScene extends Phaser.Scene {
     const opciones: [string, () => void][] = [];
     if (partida) opciones.push(['Continuar', () => this.continuar()]);
     opciones.push(['Nueva partida', () => this.nueva()]);
+    if (SaveSystem.capitulos().length) opciones.push(['Capítulos II', () => this.galeria()]);
 
     opciones.forEach(([texto, accion], i) => {
-      const y = 290 + i * 54;
+      const y = 270 + i * 54;
       const fondo = this.add.rectangle(width / 2, y, 300, 40, COLOR.gris2).setStrokeStyle(1, COLOR.gris3)
         .setInteractive({ useHandCursor: true });
       this.add.text(width / 2, y, texto, { fontFamily: FUENTE.texto, fontSize: '22px', color: hex(COLOR.papel3) })
@@ -67,15 +68,51 @@ export class MenuScene extends Phaser.Scene {
       }).setOrigin(0.5);
     }
     // líneas que dejan los finales alcanzados (guion, «Desbloqueos del menú principal»)
-    const LINEAS: Record<string, string> = { A: 'Naranjas y limones…', B: 'Los proles también limpian.' };
-    SaveSystem.finales().filter((f) => LINEAS[f]).forEach((f, i) => {
-      this.add.text(width / 2, 290 + opciones.length * 54 + 10 + i * 24, LINEAS[f], {
-        fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.gris3),
+    const finales = SaveSystem.finales();
+    const cierre = SaveSystem.cierreD();
+    const LINEAS: Record<string, string> = {
+      A: 'Naranjas y limones…', B: 'Los proles también limpian.', C: '¿Qué hora marca?',
+      D: cierre ? `«${cierre}»` : '', E: 'Nunca buscan aquí.',
+    };
+    const lineas = ['A', 'B', 'C', 'D', 'E'].filter((f) => finales.includes(f) && LINEAS[f]).map((f) => LINEAS[f]);
+    if (['A', 'B', 'C', 'D', 'E'].every((f) => finales.includes(f))) lineas.push('Él escribe la verdad. Nosotros decidimos quién la lee.');
+    lineas.forEach((l, i) => {
+      this.add.text(width / 2, 270 + opciones.length * 54 + 6 + i * 24, l, {
+        fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.gris3), align: 'center', wordWrap: { width: 760 },
       }).setOrigin(0.5);
     });
-    this.add.text(width - 12, height - 10, 'v0.1 · demo técnica', {
+    this.add.text(width - 12, height - 10, 'v0.2', {
       fontFamily: FUENTE.maquina, fontSize: '16px', color: hex(COLOR.gris3),
     }).setOrigin(1, 1);
+  }
+
+  /** Galería de los Capítulos II escritos en distintas partidas, de uno en uno. */
+  private galeria() {
+    const { width, height } = this.scale;
+    const caps = SaveSystem.capitulos().slice().reverse();
+    let i = 0;
+    const capa = this.add.container(0, 0).setDepth(10);
+    const pintar = () => {
+      capa.removeAll(true);
+      const c = caps[i];
+      capa.add(this.add.rectangle(0, 0, width, height, 0x0b0c0f, 0.97).setOrigin(0).setInteractive());
+      capa.add(this.add.rectangle(width / 2, 262, 820, 440, 0xe8dfc4).setStrokeStyle(1, 0x8f8a7a));
+      capa.add(this.add.text(width / 2, 58, `${c.autor} · ${new Date(c.fecha).toLocaleDateString('es')}`, {
+        fontFamily: FUENTE.maquina, fontSize: '20px', color: '#6a5c44',
+      }).setOrigin(0.5));
+      capa.add(this.add.text(100, 84, c.texto.split('¶').join('\n'), {
+        fontFamily: FUENTE.maquina, fontSize: '15px', color: '#2a2218', wordWrap: { width: 760 }, lineSpacing: 3,
+      }));
+      const boton = (x: number, texto: string, accion: () => void) => {
+        const f = this.add.rectangle(x, height - 34, 150, 36, COLOR.gris2).setStrokeStyle(1, COLOR.gris3).setInteractive({ useHandCursor: true });
+        capa.add([f, this.add.text(x, height - 34, texto, { fontFamily: FUENTE.texto, fontSize: '18px', color: hex(COLOR.papel3) }).setOrigin(0.5)]);
+        f.on('pointerup', accion);
+      };
+      if (i > 0) boton(width / 2 - 180, '‹ anterior', () => { i--; pintar(); });
+      boton(width / 2, 'cerrar', () => capa.destroy());
+      if (i < caps.length - 1) boton(width / 2 + 180, 'siguiente ›', () => { i++; pintar(); });
+    };
+    pintar();
   }
 
   private nueva() {

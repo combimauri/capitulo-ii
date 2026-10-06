@@ -54,6 +54,8 @@ export interface Npc extends Point {
   huye?: number;
   /** Sigilo: el personaje vigila (ruta y cono de visión). */
   vigia?: Vigia;
+  /** Persigue al protagonista mientras ve su luz (Crane en los túneles): velocidad y variable de ink con la distancia. */
+  persigue?: { velocidad: number; variable: string };
 }
 
 export interface Spawn extends Point { name: string; orientacion: Dir }
@@ -98,6 +100,8 @@ export interface LocationData {
     /** «Sigilo social» (Miniver): con la carpeta abierta y en movimiento, nadie repara en ti. */
     social: boolean;
   };
+  /** Oscuridad total: solo se ve lo que alumbra la linterna de dinamo (túneles). */
+  oscuro: boolean;
 }
 
 interface TiledProp { name: string; value: unknown }
@@ -152,6 +156,7 @@ export function parseTiled(id: string, raw: string): LocationData {
           pausa: Number(p.pausa) || 1200,
           gira: p.gira ? p.gira.split(',') as Dir[] : undefined,
         } : undefined,
+        persigue: p.persigue ? { velocidad: Number(p.persigue) || 30, variable: p.distancia_var ?? '' } : undefined,
       };
     }),
     alEntrar: mp.al_entrar,
@@ -167,6 +172,7 @@ export function parseTiled(id: string, raw: string): LocationData {
     sigilo: mp.sigilo ? {
       alSerVisto: mp.sigilo, checkpoint: mp.checkpoint, condicion: mp.sigilo_si, fijos: poligonos(mp.vigila), ocultos: poligonos(mp.ocultos), social: mp.social === 'true',
     } : undefined,
+    oscuro: mp.oscuro === 'true',
     sigueCamara: map.width * map.tilewidth > 480 || map.height * map.tileheight > 288,   // 270 px = 17 tiles (272)
   };
 }

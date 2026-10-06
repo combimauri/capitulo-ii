@@ -74,7 +74,11 @@ VOSS: De verdad lo creo. # id:fb_01_voss_02
 = caida
 PENSAMIENTO: La Campana: la puerta reventada. La campana de «S. Clem…», arrancada de la barra y tirada en el suelo. # vineta:loc-pub,gris=si # id:fb_02_01
 PENSAMIENTO: En el Minipax, el carrito de la limpieza lo empuja ahora otra limpiadora, más joven, con la cabeza gacha. # vineta:loc-pasillo # id:fb_02_02
-{ fb_variante == "trato":
+{
+- fb_variante == "san_clemente":
+    PENSAMIENTO: La casa de Dot: la puerta verde, abierta. La colección de metralla de Sammy, desparramada por el suelo de la cocina. Unas botas la pisan. # vineta:loc-casa_dot,gris=si # id:fb_02_dot_sc
+    PENSAMIENTO: Parque de la Victoria. El patíbulo. En las cuerdas: Dot.{len_salvado: Len.} Nadie más. # vineta:vineta-patibulo # id:fb_02_03_sc
+- fb_variante != "temprano":
     PENSAMIENTO: La casa de Dot: la puerta verde, abierta. La colección de metralla de Sammy, desparramada por el suelo de la cocina. Unas botas la pisan. # vineta:loc-casa_dot,gris=si # id:fb_02_dot
     PENSAMIENTO: Parque de la Victoria. El patíbulo. En las cuerdas: Nell, con su pañuelo. Barlow.{len_salvado: Len.} Dot. # vineta:vineta-patibulo5 # id:fb_02_03_trato
 - else:
@@ -87,6 +91,9 @@ PENSAMIENTO: Ya no cuesta. # id:fb_02_06
 
 // FB.03 — El reclutamiento
 = reclutamiento
+{ fb_variante == "san_clemente":
+    PENSAMIENTO: Allí abajo no había nadie. El Partido le protege. Lo sé. Y lo entierro. # id:fb_03_entierra
+}
 PENSAMIENTO: El despacho de Voss. Por primera vez se quita los dos guantes delante de mí. Tiene las manos muy blancas. # vineta:loc-despacho_voss # id:fb_03_pens_00
 VOSS: Su expediente. Puede leerlo. Se lo ha ganado. # id:fb_03_voss_01
 CARTEL: FAMILIAR DIRECTO: {apellido}, {nombre}¶Potencial de aprovechamiento: ALTO · CONFIRMADO.¶Reasignación: Policía del Pensamiento. Distrito Sur.¶Bajo supervisión de A. Crane. # id:fb_03_expediente
@@ -99,7 +106,7 @@ CARTEL: FAMILIAR DIRECTO: {apellido}, {nombre}¶Potencial de aprovechamiento: AL
     PENSAMIENTO: Cierro la carpeta. No. No lo he leído. No lo he leído. # id:fb_03_pens_03
 }
 VOSS: Crane le enseñará el oficio. Es el mejor. # id:fb_03_voss_02
-{ fb_variante == "trato":
+{ fb_variante != "temprano":
     VOSS: Tiene usted buen ojo, {apellido}. Su hermana también lo tenía. Lo usó mal. # id:fb_03_voss_03
 }
 CRANE: El Subdirector me ha hablado mucho de usted. Tiene buen ojo. Igual que yo. # vineta:loc-estudio_j6 # id:fb_03_crane_01
@@ -132,4 +139,30 @@ PENSAMIENTO: Hablo mientras la grabadora gira. Dot. {len_salvado:Len, vivo. }San
 PENSAMIENTO: Al terminar, Crane me sirve más té. # fx:aclarar # id:fbt_01_pens_01
 CRANE: ¿Ve? No duele. # esperar:0.8 # id:fbt_01_crane_01
 CRANE: Lo que duele es callar. # id:fbt_01_crane_02
+-> final_b.caida
+
+// J13.00 — Volver con Crane al amanecer (B-arrepentimiento)
+=== final_b_arrepentimiento ===
+PENSAMIENTO: La calle Cable. El estudio. Llamo una vez. # fx:negro # id:fba_00_pens_00
+PENSAMIENTO: Crane abre la puerta sin sorpresa. # fx:aclarar # vineta:loc-estudio_j12 # id:fba_00_pens_01
+CRANE: Sabía que vendría. # esperar:0.8 # id:fba_00_crane_01
+PENSAMIENTO: Se aparta para dejarme pasar. # id:fba_00_pens_02
+CRANE: Siempre vienen. El té está hecho. # id:fba_00_crane_02
+PENSAMIENTO: Lo cuento todo. Los dibujos de Amory. El mensaje de Nell. La despensa de Dot. # fx:negro # id:fba_01_pens_00
+PENSAMIENTO: La grabadora gira. # fx:aclarar # id:fba_01_pens_01
+-> final_b.caida
+
+// J13.08 — Entregar a Goldstein (B-San Clemente)
+=== final_b_san_clemente ===
+PENSAMIENTO: Salgo del metro a la calle. Crane espera en la esquina, apoyado en la farola. # vineta:loc-shadwell # id:fbs_00_pens_00
+PROTAGONISTA: Está abajo. Con el libro. # id:fbs_00_prot_01
+PENSAMIENTO: Crane sonríe y hace sonar el silbato. Botas. Diez hombres de negro bajan por la boca de metro. # sfx:alto # id:fbs_00_pens_01
+PENSAMIENTO: Espero en la calle. Pasa una hora. # fx:negro # esperar:2 # id:fbs_00_pens_02
+PENSAMIENTO: Los hombres suben. No traen a nadie. # fx:aclarar # id:fbs_00_pens_03
+PENSAMIENTO: El oficial al mando habla con Crane en voz baja. A Crane se le borra la sonrisa. # id:fbs_00_pens_04
+CRANE: Allí abajo no hay nadie. # esperar:1 # id:fbs_00_crane_01
+CRANE: Nunca ha habido nadie. # esperar:1 # id:fbs_00_crane_02
+PENSAMIENTO: Me mira con algo nuevo: miedo. # id:fbs_00_pens_05
+CRANE: Hay presas que no se cobran, camarada. # esperar:1 # id:fbs_00_crane_03
+CRANE: Usted y yo cobraremos las otras. # id:fbs_00_crane_04
 -> final_b.caida

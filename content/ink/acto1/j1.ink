@@ -4,6 +4,9 @@
 === piso ===
 
 = entrar
+{ final_en_curso == "D":
+    -> fd_piso
+}
 { jornada == 2:
     -> j2_piso
 }
@@ -63,6 +66,9 @@ PENSAMIENTO: Ivy. Cada mañana te lo prometo. Cada mañana. Eurasia pagará cada
 -> DONE
 
 = cartel_usar
+{ final_en_curso == "D":
+    -> fd_cartel
+}
 PENSAMIENTO: Nunca la dibujaron sonriendo. Ella siempre sonreía. # id:piso_cartel_usar_01
 PENSAMIENTO: Pero así está bien: una mártir no sonríe. # id:piso_cartel_usar_02
 -> DONE
@@ -157,6 +163,9 @@ PENSAMIENTO: Dos monos azules, una camisa, el abrigo de invierno. Todo lo que ne
 === escalera ===
 
 = entrar
+{ final_en_curso == "D":
+    -> fd_escalera
+}
 { jornada == 2:
     -> j2_parsons
 }

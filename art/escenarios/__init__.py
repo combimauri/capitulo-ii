@@ -22,7 +22,8 @@ def exportar(destino):
         hechos.append(nombre)
     for modulo in ("escalera", "avenida", "vestibulo", "departamento", "cantina", "salon_odio", "despacho_voss", "centro", "sueno", "pasillo", "limehouse", "pub", "mercado", "estudio", "archivo", "suministros",
                    "calderas", "planta11", "archivo_restringido", "sotano_pub", "lavabos", "casa_dot",
-                   "miniver", "minimor", "minimor_archivo", "callejones"):
+                   "miniver", "minimor", "minimor_archivo", "callejones",
+                   "celda", "sala_obrien", "cafe", "shadwell", "tunel", "anden_taller", "cripta"):
         try:
             m = __import__(modulo)
         except ModuleNotFoundError:
@@ -38,6 +39,9 @@ def exportar(destino):
                                  ("avenida", "furgoneta"), ("lavabos", "vaho")):
             if modulo == base:
                 m.dibujar(variante).img.save(destino / f"{base}_{variante}.png"); hechos.append(f"{base}_{variante}")
+        if modulo == "tunel":
+            for variante in ("nichos", "derrumbe", "carteles"):
+                m.dibujar(variante).img.save(destino / f"tunel_{variante}.png"); hechos.append(f"tunel_{variante}")
         if modulo == "mercado":
             m.dibujar("ruinas").img.save(destino / "mercado_ruinas.png"); hechos.append("mercado_ruinas")
     return hechos

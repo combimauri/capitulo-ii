@@ -1,0 +1,385 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Túneles · Shadwell → Aldgate Este"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-tunel_nichos"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "tunel1.entrar"
+  },
+  {
+   "name": "oscuro",
+   "type": "string",
+   "value": "true"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/tunel1.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "boveda",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "borde",
+     "x": 0,
+     "y": 230,
+     "width": 960,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "fin_izq",
+     "x": 0,
+     "y": 0,
+     "width": 4,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "fin_der",
+     "x": 956,
+     "y": 0,
+     "width": 4,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 5,
+     "name": "nicho140",
+     "x": 140,
+     "y": 40,
+     "width": 36,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Nicho"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel1.nicho_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "158,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "nicho380",
+     "x": 380,
+     "y": 40,
+     "width": 36,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Nicho"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel1.nicho_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "398,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "nicho620",
+     "x": 620,
+     "y": 40,
+     "width": 36,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Nicho"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel1.nicho_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "638,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "nicho860",
+     "x": 860,
+     "y": 40,
+     "width": 36,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Nicho"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel1.nicho_mirar"
+      },
+      {
+       "name": "escondite",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "878,108"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "silbido_a",
+     "x": 250,
+     "y": 100,
+     "width": 12,
+     "height": 130,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "tunel1.silbido"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!silbido1"
+      }
+     ]
+    },
+    {
+     "id": 10,
+     "name": "silbido_b",
+     "x": 560,
+     "y": 100,
+     "width": 12,
+     "height": 130,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "tunel1.silbido"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "silbido1 && !silbido2 && impactos_esquivados>=1"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "salida",
+     "x": 936,
+     "y": 100,
+     "width": 20,
+     "height": 130,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "tunel1.salir"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 12,
+     "name": "inicio",
+     "x": 30,
+     "y": 170,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 13
+}

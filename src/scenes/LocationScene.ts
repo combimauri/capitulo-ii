@@ -68,6 +68,10 @@ export class LocationScene extends Phaser.Scene {
   private volverAlControl = false;
   private moviendose = false;
   private arrestando = false;
+  /** Oscuridad de los túneles: una imagen negra con un agujero de luz alrededor del protagonista. */
+  private oscuridad: Phaser.GameObjects.Image | null = null;
+  private bordesOscuros: Phaser.GameObjects.Rectangle[] = [];
+  private proximaDistancia = 0;
 
   constructor() { super('Location'); }
 
@@ -91,7 +95,7 @@ export class LocationScene extends Phaser.Scene {
     const spawn = this.loc.spawns.find((s) => s.name === data.spawn) ?? this.loc.spawns[0];
     const x = data.x ?? spawn.x, y = data.y ?? spawn.y;
     this.dir = data.dir ?? spawn.orientacion;
-    this.texturaProta = narrativa.get('genero') === 'f' ? 'prot_m' : 'prot_h';
+    this.texturaProta = (narrativa.get('genero') === 'f' ? 'prot_m' : 'prot_h') + (narrativa.get('prota_preso') ? '_preso' : '');
     this.sombra = this.add.ellipse(x, y, 14, 5, 0x000000, 0.28);
     this.prota = this.add.sprite(x, y, this.texturaProta, this.cuadroQuieto()).setOrigin(0.5, 1);
     if (this.loc.tinteProta !== undefined) this.prota.setTint(this.loc.tinteProta);
@@ -116,6 +120,8 @@ export class LocationScene extends Phaser.Scene {
       this.events.once('shutdown', () => { this.sigilo?.destroy(); this.sigilo = null; });
     }
     if (data.cargado && data.reloj !== undefined) mision.reloj = data.reloj;
+    for (const n of this.npcs.values()) if (n.npc.persigue) n.npc.solido = false;
+    this.crearOscuridad();
     this.actualizarVisibilidad();
 
     const cam = this.cameras.main;
@@ -305,6 +311,12 @@ export class LocationScene extends Phaser.Scene {
       if (mision.carpeta) { this.game.events.emit(EV.foco, null); this.enfocado = null; }
     };
     ev.on(EV.carpeta, carpeta);
+    const dinamo = () => {
+      if (!mision.oscuro) return;
+      mision.carga = Math.min(1, mision.carga + 0.18);
+      audio.play('dinamo');
+    };
+    ev.on(EV.dinamo, dinamo);
     ev.on(EV.dialogoIniciar, inicio);
     ev.on(EV.dialogoFin, fin);
     ev.on(EV.depurar, depurar);
@@ -313,7 +325,7 @@ export class LocationScene extends Phaser.Scene {
     const quitar = narrativa.on('command', (t: Tag) => this.comando(t));
     this.limpiar.push(() => {
       ev.off(EV.dialogoIniciar, inicio); ev.off(EV.dialogoFin, fin); ev.off(EV.depurar, depurar); ev.off(EV.accion, accion); ev.off(EV.pausa, pausa);
-      ev.off(EV.carpeta, carpeta);
+      ev.off(EV.carpeta, carpeta); ev.off(EV.dinamo, dinamo);
       quitar();
     });
   }
@@ -332,6 +344,7 @@ export class LocationScene extends Phaser.Scene {
     } else if (t.key === 'final') {
       this.finalPendiente = true;
       if (t.value && t.value !== 'demo') SaveSystem.registrarFinal(t.value);
+      if (t.value === 'D') SaveSystem.guardarCierreD(String(narrativa.get('cap_cierre') ?? ''));
     } else if (t.key === 'prota') {
       // prota:izquierda → el protagonista se gira (sin moverse)
       this.dir = t.value as Dir;
@@ -343,7 +356,9 @@ export class LocationScene extends Phaser.Scene {
       // reloj:inicio=23:00:00,limite=240,agotar=knot · reloj:mas=90 · reloj:menos=10 · reloj:parar
       const p = t.params;
       if (t.value === 'parar') mision.reloj = null;
-      else if (p.inicio) mision.reloj = { inicio: segundos(p.inicio), transcurrido: 0, limite: Number(p.limite) || 240, agotar: p.agotar ?? '', agotado: false };
+      else if (p.inicio) {
+        mision.reloj = { inicio: segundos(p.inicio), transcurrido: 0, limite: Number(p.limite) || 240, agotar: p.agotar ?? '', agotado: false, oculto: p.oculto === 'si' };
+      }
       else if (mision.reloj && p.mas) { mision.reloj.limite = mision.reloj.transcurrido + Number(p.mas); mision.reloj.agotado = false; }
       else if (mision.reloj && p.menos) mision.reloj.transcurrido += Number(p.menos);
     } else if (t.key === 'npc') {
@@ -380,10 +395,70 @@ export class LocationScene extends Phaser.Scene {
       this.avanzarReloj(dt);
     }
     this.sigilo?.update(dtMs, !this.ocupado);
+    this.alumbrar(dt);
+    if (!this.ocupado) this.perseguir(dt);
     this.alejarPersonajes(dt);
     this.prota.setDepth(this.prota.y);
     this.sombra.setPosition(this.prota.x, this.prota.y - 1).setDepth(this.prota.y - 1);
     this.dibujarDepuracion();
+  }
+
+  /** Los túneles: oscuridad total salvo el círculo de la linterna de dinamo, que se apaga si no se le da a la manivela. */
+  private crearOscuridad() {
+    mision.oscuro = this.loc.oscuro;
+    this.oscuridad = null; this.bordesOscuros = [];
+    if (!this.loc.oscuro) return;
+    mision.carga = Math.max(mision.carga, 0.7);
+    if (!this.textures.exists('luz-hueco')) {
+      const t = this.textures.createCanvas('luz-hueco', 256, 256)!;
+      const ctx = t.getContext();
+      const g = ctx.createRadialGradient(128, 128, 0, 128, 128, 128);
+      g.addColorStop(0, 'rgba(6,5,4,0)');
+      g.addColorStop(0.55, 'rgba(6,5,4,0.15)');
+      g.addColorStop(0.85, 'rgba(6,5,4,0.8)');
+      g.addColorStop(1, 'rgba(6,5,4,0.97)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0, 0, 256, 256);
+      t.refresh();
+    }
+    this.oscuridad = this.add.image(0, 0, 'luz-hueco').setDepth(9500).setTint(0xffe2a8);
+    for (let i = 0; i < 4; i++) this.bordesOscuros.push(this.add.rectangle(0, 0, 1, 1, 0x060504, 0.97).setOrigin(0).setDepth(9500));
+  }
+
+  private alumbrar(dt: number) {
+    const o = this.oscuridad;
+    if (!o) return;
+    if (!this.ocupado) mision.carga = Math.max(0, mision.carga - dt * 0.07);
+    const r = 16 + 76 * mision.carga;
+    const x = this.prota.x, y = this.prota.y - 14;
+    o.setPosition(x, y).setDisplaySize(r * 2, r * 2);
+    const W = this.loc.width, H = this.loc.height, [a, b, c, d] = this.bordesOscuros;
+    a.setPosition(0, 0).setSize(W, Math.max(0, y - r));
+    b.setPosition(0, y + r).setSize(W, Math.max(0, H - y - r));
+    c.setPosition(0, y - r).setSize(Math.max(0, x - r), r * 2);
+    d.setPosition(x + r, y - r).setSize(Math.max(0, W - x - r), r * 2);
+  }
+
+  /** Crane en los túneles: camina detrás del protagonista mientras ve su luz. No corre. */
+  private perseguir(dt: number) {
+    for (const n of this.npcs.values()) {
+      const p = n.npc.persigue;
+      if (!p || !n.visible) continue;
+      const dx = this.prota.x - n.sprite.x, dy = this.prota.y - n.sprite.y, d = Math.hypot(dx, dy);
+      const ve = !mision.oculto && (!this.loc.oscuro || mision.carga > 0.15);
+      if (ve && d > 22) {
+        const paso = Math.min(d - 22, p.velocidad * dt);
+        n.sprite.x += (dx / d) * paso; n.sprite.y += (dy / d) * paso;
+        n.sprite.setFlipX(dx < 0).setDepth(n.sprite.y);
+        const h = n.npc.hotspot;
+        h.x += (dx / d) * paso; h.y += (dy / d) * paso; h.aprox.x += (dx / d) * paso; h.aprox.y += (dy / d) * paso;
+        n.npc.x = n.sprite.x; n.npc.y = n.sprite.y;
+      }
+      if (p.variable && this.time.now > this.proximaDistancia) {
+        this.proximaDistancia = this.time.now + 250;
+        narrativa.set(p.variable, Math.round(d));
+      }
+    }
   }
 
   /** Le han visto: la historia decide (¡Alto!, Sospecha) y después se vuelve al último punto de control. */
@@ -399,6 +474,7 @@ export class LocationScene extends Phaser.Scene {
   private esconderse(h: Hotspot) {
     if (mision.oculto) return this.salirEscondite();
     mision.oculto = true;
+    this.marcarEscondido(true);
     this.colocar(h.aprox.x, h.aprox.y);
     if (h.orientacion) this.dir = h.orientacion;
     this.parar();
@@ -410,8 +486,14 @@ export class LocationScene extends Phaser.Scene {
   private salirEscondite() {
     if (!mision.oculto) return;
     mision.oculto = false;
+    this.marcarEscondido(false);
     this.prota.setAlpha(1);
     this.sombra.setAlpha(1);
+  }
+
+  /** ink puede saber si el protagonista está escondido (los nichos del túnel). */
+  private marcarEscondido(v: boolean) {
+    if (narrativa.story.variablesState.GlobalVariableExistsWithName('escondido')) narrativa.set('escondido', v);
   }
 
   /** La ventana de tiempo de una misión: corre solo mientras se explora. */

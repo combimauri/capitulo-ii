@@ -22,7 +22,7 @@ VAR un = "un"
 VAR del_ = "del"
 VAR lo_ = "lo"
 
-LIST inventario = reloj_ivy, ficha, lapiz_amory, foto_ivy, diario, compas, zonificacion, nota_amory, metralla_sammy, tarjeta_crane, metralla_brillante, parte_alterado, foto_ivy_restaurada, llave_calderas, directiva, copia_planilla, hoja_planilla, libro, tubo, times_falso, sobre_miniver, times_original, chapa, foto_sotano, dibujos_amory, mapa_malabar, parte_original
+LIST inventario = reloj_ivy, ficha, lapiz_amory, foto_ivy, diario, compas, zonificacion, nota_amory, metralla_sammy, tarjeta_crane, metralla_brillante, parte_alterado, foto_ivy_restaurada, llave_calderas, directiva, copia_planilla, hoja_planilla, libro, tubo, times_falso, sobre_miniver, times_original, chapa, foto_sotano, dibujos_amory, mapa_malabar, parte_original, carta
 
 // Prólogo
 VAR ivy_vista = false
@@ -345,3 +345,80 @@ VAR diario_dot_escrita = false
 
 // Finales
 VAR fb_variante = "temprano"           // "temprano" | "trato"
+
+// La frase que se escribió en cada entrada del diario (el Capítulo II la reutiliza)
+VAR diario_amory_frase = ""
+VAR diario_sammy_frase = ""
+VAR diario_cohetes_frase = ""
+VAR diario_parte_frase = ""
+VAR diario_ivy_frase = ""
+VAR diario_chocolate_frase = ""
+VAR diario_nell_frase = ""
+VAR diario_planilla_frase = ""
+VAR diario_libro_guerra_frase = ""
+VAR diario_times_frase = ""
+VAR diario_libro_ignorancia_frase = ""
+VAR diario_amory_confesion_frase = ""
+VAR diario_estasia_frase = ""
+VAR diario_libro_doblepensar_frase = ""
+VAR diario_ivy_verdad_frase = ""
+VAR diario_len_frase = ""
+VAR diario_libro_pasado_frase = ""
+VAR diario_dot_frase = ""
+
+// ==================================================================== ACTO IV
+VAR metralla_cierre = false            // lo calcula el Capítulo II (intentó salvar a Sammy o guarda su metralla)
+VAR cap_apertura = ""
+VAR cap_mov1 = ""
+VAR cap_mov2 = ""
+VAR cap_mov3 = ""
+VAR cap_mov4 = ""
+VAR cap_cierre = ""
+VAR cap_texto = ""
+VAR cap_ivy_corregida = "no"
+VAR cap_voces = 0
+VAR final_en_curso = ""                // "C" | "D" | "E": el desenlace que se está jugando
+VAR fc_variante = "sospecha"           // Final C: "sospecha" | "cripta" | "sin_libro" | "libro_vive"
+VAR mapa_deducido = ""                 // "si": lo dedujo el jugador; "no": lo dedujo el protagonista
+VAR mapa_derrumbes = 0
+VAR san_clemente_deducido = false
+VAR shadwell_visto = false
+VAR tablon_abierto = false
+VAR escondido = false                  // lo escribe el motor: el protagonista está en un nicho o un escondite
+VAR silbido1 = false
+VAR silbido2 = false
+VAR impactos_esquivados = 0
+VAR tunel1_visto = false
+VAR taller_visto = false
+VAR taller_pared = false
+VAR taller_teles = false
+VAR taller_mesa = false
+VAR tunel3_visto = false
+VAR crane_perdido = false
+VAR crane_distancia = 0                // lo escribe el motor: distancia de Crane al protagonista en los túneles
+VAR tunel4_visto = false
+VAR cripta_vista = false
+VAR crane_en_cripta = false
+VAR carta_ivy = false
+VAR pregunta_jaula = false
+VAR crane_humillado = false
+VAR capitulo_escrito = false
+VAR cf_j13_sacar = ""
+// Finales C y D
+VAR prota_preso = false
+VAR celda_vista = false
+VAR celda_evento = 0
+VAR pan_dado = ""                      // "dado" | "comido"
+VAR obrien_visto = false
+VAR dial_respuesta = ""
+VAR traicion_101 = ""                  // "nell" | "dot" | "brooke" | "len" | "ivy"
+VAR cafe_visto = false
+VAR fd_nombre_tiza = false
+VAR fd_dot_vista = false
+VAR cf_fd_dot = ""
+VAR fd_escalera_vista = false
+VAR fd_piso_visto = false
+VAR fd_foto_pegada = false
+VAR resistencia_d = ""                 // "aguanto" | "delatado"
+VAR aguanto_24h = false
+VAR libro_delatado = false

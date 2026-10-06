@@ -34,13 +34,16 @@ export const tactil = { activo: false, x: 0, y: 0, origen: { x: 0, y: 0 } };
  * reloj: ventana de tiempo de una misión; el reloj solo corre mientras se explora (no durante los diálogos).
  */
 export const mision = {
-  reloj: null as null | { inicio: number; transcurrido: number; limite: number; agotar: string; agotado: boolean },
+  reloj: null as null | { inicio: number; transcurrido: number; limite: number; agotar: string; agotado: boolean; oculto?: boolean },
   /** Medidor de detección (0..1) mientras algún cono ve al protagonista. */
   alerta: 0,
   /** Sigilo social: el mapa lo permite y la carpeta está abierta. */
   social: false,
   carpeta: false,
   oculto: false,
+  /** Linterna de dinamo (0..1): se carga a golpes y se descarga sola. Solo en mapas oscuros. */
+  oscuro: false,
+  carga: 0,
 };
 
 /** "23:00:00" → segundos del día; y al revés. */
@@ -60,4 +63,5 @@ export const EV = {
   pausa: 'pausa',                       // (activa: boolean)  paneles que detienen el movimiento
   mano: 'mano',                         // ()  cambió el objeto en la mano
   carpeta: 'carpeta',                   // ()  abrir o cerrar la carpeta (sigilo social)
+  dinamo: 'dinamo',                     // ()  dar vueltas a la manivela de la linterna
 } as const;

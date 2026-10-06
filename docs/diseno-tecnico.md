@@ -676,7 +676,7 @@ interface SaveData {
 | **M2 · Acto I** ✅ | J2 y J3: Dos Minutos de Odio (CF completo), mover el frente, decisión de Amory, doblepensar y registro de diálogos, pancarta y sueño. | Acto I jugable con todas sus ramas. Bot de ink sin errores. |
 | **M3 · Acto II + Final A** ✅ | Registro de impactos (mapa y compás), Limehouse, Sammy (QTE), deducción, diario (escribir y esconder), comparador de documentos, inspección de Hilda, Nell. Final A. | Jugable hasta J7 con las tres ramas. |
 | **M4 · Sistema de sigilo + Acto III** ✅ | Sigilo completo. Las tres misiones. Gran Rectificación. Expediente de Ivy. Lista de Len. Crane. Persecución. Final B. | Jugable hasta J12. |
-| **M5 · Acto IV + finales** | Túneles (mapa de tres capas y cohetes), cripta, conversación, composición del Capítulo II, finales C, C0, D y E, créditos y desbloqueos. | Los cinco finales y C0 se alcanzan. Bot y rutas dirigidas en verde. |
+| **M5 · Acto IV + finales** ✅ | Túneles (mapa de tres capas y cohetes), cripta, conversación, composición del Capítulo II, finales C, C0, D y E, créditos y desbloqueos. | Los cinco finales y C0 se alcanzan. Bot y rutas dirigidas en verde. |
 | **M6 · Arte y audio finales** | Sustitución del arte provisional, música, ambientes y efectos. | — |
 | **M7 · Pulido** | Equilibrio de Duda y Sospecha, accesibilidad, rendimiento móvil, PWA y pruebas con jugadores. | Partida completa sin bloqueos en Chrome, Safari iOS y Android. |
 
@@ -779,7 +779,28 @@ interface SaveData {
 - **Personajes nuevos:** Syme, Charrington, la Policía del Pensamiento, la funcionaria del Minimor, los supervisores del Miniver y Voss en mangas de camisa.
 - **157 pruebas**, con cada decisión del acto, las misiones y el Final B «trato» recorridos.
 
-**Pendiente para M5:** el Final C completo (celda, O'Brien, «¿Qué hora marca?», Habitación 101, el café), que ahora se corta tras el arresto.
+### Estado de M5 (Acto IV y todos los finales)
+
+- **Jornada 13 jugable:** Shadwell, el mapa de los pájaros, cuatro tramos de túnel, la cripta de San Clemente, la conversación con Goldstein, el Capítulo II y la decisión final. Con poca Duda, la jornada termina antes, en el Final B (arrepentimiento).
+- **Túneles:**
+  - Oscuridad con linterna de dinamo (`oscuro=true` en el mapa; `F` o el botón DINAMO). La luz se apaga si no se le da a la manivela.
+  - Cohetes que caen sobre el túnel: tres segundos para meterse en un nicho. Con el reloj de Ivy en marcha, la hora se ve y se puede anticipar. Aquí abajo no hay Sospecha.
+  - Crane como perseguidor (`persigue=velocidad` en un NPC, con `distancia_var`): camina detrás mientras ve tu luz. Se le despista tirando el puntal o perdiéndose a oscuras.
+- **Minijuegos nuevos:**
+  - El mapa de los pájaros: tres capas, la deducción de San Clemente y la ruta entre derrumbes (`content/tuneles.json`).
+  - La composición del Capítulo II, con las frases que se escribieron en el diario (`<entrada>_frase`). La voz de Goldstein va en cursiva cuando no hay entrada. Lleva conectores según la Duda y un cierre condicionado.
+  - «¿Qué hora marca?», con el reloj de Ivy y el dial de O'Brien.
+  - La Habitación 101: escombros, toser para respirar y traiciones que flotan; si no se elige, Ivy se elige sola.
+  - La declaración, firmada como la Ficha del prólogo.
+  - Aguantar veinticuatro horas.
+  - El epílogo académico (`content/finales/nota.json`) y los créditos.
+- **Finales:**
+  - **C:** las cuatro variantes de entrada, la celda (Parsons, Winston, el pan y las palizas), O'Brien, la 101 y el Café del Castaño, cuya noticia depende de la traición.
+  - **D:** el regreso, la caja de metralla, las últimas horas, las 24 horas, el café, la nota y el patio.
+  - **E:** los años en la cripta, los Dos Minutos con la cara del protagonista y el despacho de la «válvula».
+  - **B:** se añaden las variantes «arrepentimiento» y «San Clemente».
+- **Menú:** líneas de los finales C, D (la frase de cierre de esa partida) y E, la línea de todos los finales y la galería «Capítulos II».
+- **186 pruebas**, con cada final recorrido.
 
 ---
 

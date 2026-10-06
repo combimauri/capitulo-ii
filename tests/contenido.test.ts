@@ -905,7 +905,7 @@ describe('Acto III', () => {
     const b = nueva(12);
     expect(jugar(b, 'estudio.crane', { elecciones: [1] }).comandos).toContain('escena:callejones');
     expect(b.get('crane_sigue')).toBe(true);
-    const c = nueva(12, { crane_decision: 'fingir', dot_confianza: 3, dp_j11_ivy: 'recordar' });
+    const c = nueva(12, { crane_decision: 'fingir', dot_confianza: 3, dp_j11_ivy: 'recordar', duda: 60 });
     const { texto, comandos } = jugar(c, 'casa_dot.entrar');
     expect(texto).toContain('Bonita colección');
     expect(texto).toContain('Tú corriste hacia mi niño');
@@ -913,7 +913,8 @@ describe('Acto III', () => {
     expect(c.get('reloj_en_marcha')).toBe(true);
     expect(c.get('mensaje_nell')).toBe(true);
     expect(inv(c)).toEqual(expect.arrayContaining(['dibujos_amory', 'metralla_brillante']));
-    expect(comandos).toContain('final:demo');
+    expect(comandos).toContain('escena:shadwell');
+    expect(c.get('jornada')).toBe(13);
   });
 
   it('J12: el atajo prole solo se abre a quien trató a los proles como personas', () => {
@@ -950,5 +951,157 @@ describe('Acto III', () => {
     expect(porId.get('departamento_noche')!.sigilo?.condicion).toBe('cargando_prueba');
     expect(porId.get('callejones')!.hotspots.filter((h) => h.ruido).length).toBe(5);
     expect(porId.get('callejones')!.hotspots.filter((h) => h.escondite).length).toBe(6);
+  });
+});
+
+describe('Acto IV y los finales C, D y E', () => {
+  const nueva = (vars: Record<string, unknown> = {}) => {
+    const b = new NarrativeBridge(resultado.json!);
+    b.set('jornada', 13);
+    b.set('amory_borrado', true);
+    b.set('nombre', 'Ada'); b.set('apellido', 'Moss');
+    for (const [k, v] of Object.entries(vars)) b.set(k, v);
+    return b;
+  };
+
+  it('J13.00: con poca Duda, vuelve con Crane al amanecer (Final B, arrepentimiento)', () => {
+    const b = nueva({ duda: 20 });
+    const { texto, comandos } = jugar(b, 'j13_entrada');
+    expect(texto).toContain('Sabía que vendría');
+    expect(texto).toContain('La casa de Dot');
+    expect(comandos).toContain('final:B');
+    const c = nueva({ duda: 50 });
+    expect(jugar(c, 'j13_entrada').comandos).toContain('escena:shadwell');
+  });
+
+  it('Shadwell: el tablón suelto y el mapa de los pájaros llevan a los túneles', () => {
+    const b = nueva({ duda: 60 });
+    const { texto, comandos } = jugar(b, 'shadwell.tablones', { minijuegos: { mapa_deducido: 'si' } });
+    expect(texto).toContain('a la sombra del Miniver');
+    expect(texto).toContain('¿O es que el Partido le protege a él?');
+    expect(b.get('san_clemente_deducido')).toBe(true);
+    expect(comandos).toContain('escena:tunel1');
+  });
+
+  it('Tramo 1: el cohete; en el nicho se esquiva, fuera se vuelve a empezar (sin Sospecha)', () => {
+    const b = nueva();
+    expect(jugar(b, 'tunel1.silbido').comandos.some((c) => c.startsWith('reloj:inicio=05:09:57'))).toBe(true);
+    b.set('escondido', true);
+    expect(jugar(b, 'tunel1.impacto').texto).toContain('Whitechapel');
+    expect(b.get('impactos_esquivados')).toBe(1);
+    b.set('escondido', false);
+    jugar(b, 'tunel1.silbido');
+    expect(jugar(b, 'tunel1.impacto').comandos).toContain('pos:inicio');
+    expect([b.get('impactos_esquivados'), b.get('silbido1'), b.get('sospecha')]).toEqual([0, false, 0]);
+    const c = nueva({ reloj_en_marcha: true });
+    expect(jugar(c, 'tunel1.silbido').comandos.some((x) => x.includes('limite=5'))).toBe(true);
+  });
+
+  it('Tramo 3: tirar el puntal o perderse a oscuras despista a Crane', () => {
+    const b = nueva({ crane_sigue: true });
+    expect(jugar(b, 'tunel3.puntal').texto).toContain('Siempre hay más túneles');
+    expect(b.get('crane_perdido')).toBe(true);
+    const c = nueva({ crane_sigue: true, crane_distancia: 200 });
+    jugar(c, 'tunel3.salir');
+    expect(c.get('crane_perdido')).toBe(true);
+    const d = nueva({ crane_sigue: true, crane_distancia: 40 });
+    expect(jugar(d, 'tunel3.salir').texto).toContain('Sigue ahí');
+    expect(d.get('crane_perdido')).toBe(false);
+  });
+
+  it('La cripta: Ivy empezó el capítulo (la carta rompe el doblepensar); el capítulo y sacar el libro llevan al Final D', () => {
+    const b = nueva({ ivy_revelada: true, dp_j11_ivy: 'aceptar', planilla_vista: true });
+    // conversación: el tema de Ivy (segunda opción disponible) y luego el capítulo
+    const { texto } = jugar(b, 'cripta.entrar', { elecciones: [2, 7, 0], minijuegos: { cap_cierre: 'Fui libre catorce días.' } });
+    expect(texto).toContain('Mi cara le odia sola');
+    expect(texto).toContain('El capítulo que yo no sé escribir');
+    expect(b.get('carta_ivy')).toBe(true);
+    expect(b.get('dp_j11_ivy')).toBe('roto');
+    expect(texto).toContain('Ahora está entero');
+    expect(texto).toContain('Nunca buscan aquí');
+    expect(b.get('final_en_curso')).toBe('D');
+  });
+
+  it('Quedarse en la cripta lleva al Final E; entregar a Goldstein solo es posible si se fingió', () => {
+    const b = nueva();
+    const { texto, comandos } = jugar(b, 'j13_final', { elecciones: [1] });
+    expect(texto).toContain('Es una válvula');
+    expect(texto).toContain('¿O fuiste útil?');
+    expect(comandos).toContain('final:E');
+    const c = nueva({ crane_decision: 'fingir' });
+    const r = jugar(c, 'j13_final', { elecciones: [2] });
+    expect(r.texto).toContain('Allí abajo no hay nadie');
+    expect(r.comandos).toContain('final:B');
+  });
+
+  it('Crane en la cripta: llama a sus superiores; dejar el libro lleva al Final C («el libro vive»)', () => {
+    const b = nueva({ crane_sigue: true });
+    const { texto, comandos } = jugar(b, 'j13_copias', { elecciones: [1] });
+    expect(texto).toContain('Pregunte a sus superiores');
+    expect(b.get('crane_humillado')).toBe(true);
+    expect(b.get('fc_variante')).toBe('libro_vive');
+    expect(comandos).toContain('escena:celda');
+    expect(b.get('prota_preso')).toBe(true);
+  });
+
+  it('Final C: la celda, O\'Brien, «¿Qué hora marca?», la 101 y el café (la traición tiene consecuencias)', () => {
+    const b = nueva({ jornada: 9, escena_actual: 'piso', iniciacion_vida: 'Sí', iniciacion_matar: 'No', iniciacion_ivy: 'Sí' });
+    expect(jugar(b, 'arresto').comandos).toContain('escena:celda');
+    jugar(b, 'celda.entrar');
+    jugar(b, 'celda.esperar');
+    jugar(b, 'celda.esperar', { elecciones: [0] });
+    expect(b.get('pan_dado')).toBe('dado');
+    jugar(b, 'celda.esperar');
+    expect(jugar(b, 'celda.esperar').comandos).toContain('escena:sala_obrien');
+    const o = jugar(b, 'sala_obrien.entrar', { minijuegos: { dial_respuesta: 'nueve', traicion_101: 'nell' } });
+    expect(o.texto).toContain('«No.»'.slice(1, 3));
+    expect(o.texto).toContain('Todos lo dicen todo al duodécimo día');
+    expect(o.texto).toContain('¿Las ve? ¿De verdad las ve?');
+    expect(o.comandos).toContain('escena:cafe');
+    expect(jugar(b, 'cafe.entrar').texto).toContain('N. Hask');
+    const fin = jugar(b, 'cafe.mesa');
+    expect(fin.texto).toContain('Amaba al Gran Hermano');
+    expect(fin.comandos).toContain('final:C');
+  });
+
+  it('Final D: el libro va a la caja de metralla; aguantar 24 horas; el epílogo y la niña que canta', () => {
+    const b = nueva({ len_salvado: true, reloj_en_marcha: true, cap_mov4: 'Nadie mira a quien limpia.' });
+    expect(jugar(b, 'final_d', { elecciones: [0] }).comandos).toContain('escena:casa_dot');
+    expect(b.get('fd_nombre_tiza')).toBe(true);
+    const dot = jugar(b, 'casa_dot.entrar');
+    expect(dot.texto).toContain('Había un chico en mi lugar');
+    expect(dot.texto).toContain('Nadie busca en las cosas de un niño muerto');
+    expect(dot.comandos).toContain('escena:escalera');
+    expect(jugar(b, 'escalera.entrar').comandos).toContain('escena:piso');
+    expect(jugar(b, 'fd_silla').comandos).toContain('escena:celda');
+    expect(jugar(b, 'celda.winston').texto).toContain('Ahora no me acuerdo de qué era');
+    const o = jugar(b, 'sala_obrien.entrar', { minijuegos: { resistencia_d: 'aguanto', traicion_101: 'ivy' } });
+    expect(o.texto).toContain('Veinticuatro horas');
+    expect(b.get('aguanto_24h')).toBe(true);
+    const fin = jugar(b, 'cafe.mesa');
+    expect(fin.texto).toContain('Nadie mira a quien limpia.');
+    expect(fin.comandos).toContain('final:D');
+  });
+
+  it('cada entrada del diario guarda su frase para el Capítulo II', () => {
+    const entradas = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/diario/entradas.json'), 'utf8')).entradas as { id: string }[];
+    const b = new NarrativeBridge(resultado.json!);
+    for (const e of entradas) expect(b.story.variablesState.GlobalVariableExistsWithName(`${e.id}_frase`), e.id).toBe(true);
+    for (const v of ['cap_apertura', 'cap_mov1', 'cap_mov4', 'cap_cierre', 'cap_texto']) expect(b.story.variablesState.GlobalVariableExistsWithName(v), v).toBe(true);
+  });
+
+  it('el grafo de los túneles une Shadwell con San Clemente sin derrumbes', () => {
+    const red = JSON.parse(fs.readFileSync(path.join(RAIZ, 'content/tuneles.json'), 'utf8')) as { tramos: { a: string; b: string; derrumbe: boolean }[]; inicio: string; fin: string };
+    const visitados = new Set([red.inicio]);
+    const cola = [red.inicio];
+    while (cola.length) {
+      const n = cola.shift()!;
+      for (const t of red.tramos.filter((x) => !x.derrumbe && (x.a === n || x.b === n))) {
+        const m = t.a === n ? t.b : t.a;
+        if (!visitados.has(m)) { visitados.add(m); cola.push(m); }
+      }
+    }
+    expect(visitados.has(red.fin)).toBe(true);
+    expect(red.tramos.some((t) => t.derrumbe)).toBe(true);
   });
 });

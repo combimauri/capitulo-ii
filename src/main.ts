@@ -27,6 +27,13 @@ import { LlavesScene } from './scenes/minijuegos/LlavesScene';
 import { CombinacionScene } from './scenes/minijuegos/CombinacionScene';
 import { RectificacionScene } from './scenes/minijuegos/RectificacionScene';
 import { ListaScene } from './scenes/minijuegos/ListaScene';
+import { TunelesScene } from './scenes/minijuegos/TunelesScene';
+import { CapituloScene } from './scenes/minijuegos/CapituloScene';
+import { DialScene } from './scenes/minijuegos/DialScene';
+import { Habitacion101Scene } from './scenes/minijuegos/Habitacion101Scene';
+import { DeclaracionScene } from './scenes/minijuegos/DeclaracionScene';
+import { ResistenciaScene } from './scenes/minijuegos/ResistenciaScene';
+import { EpilogoScene, CreditosScene } from './scenes/minijuegos/EpilogoScene';
 import { RESOLUCION, narrativa, registro, mision, EV } from './core/juego';
 
 registerSW({ immediate: true });
@@ -43,7 +50,8 @@ const juego = new Phaser.Game({
   input: { activePointers: 2 },
   dom: { createContainer: true },
   scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene,
-    DocumentoScene, LibroScene, CopiarScene, PalancaScene, LlavesScene, CombinacionScene, RectificacionScene, ListaScene, RegistroScene],
+    DocumentoScene, LibroScene, CopiarScene, PalancaScene, LlavesScene, CombinacionScene, RectificacionScene, ListaScene,
+    TunelesScene, CapituloScene, DialScene, Habitacion101Scene, DeclaracionScene, ResistenciaScene, EpilogoScene, CreditosScene, RegistroScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):

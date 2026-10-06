@@ -120,6 +120,43 @@ CUERPOS["uniforme"] = [  # Policía del Pensamiento: guerrera de hombros rectos,
     "...nnnnnn.",
 ]
 
+# --- Acto IV y finales -----------------------------------------------------------------------
+CABEZAS["melena_blanca"] = [  # Goldstein: frente alta, pelo blanco y largo que cae por detrás de la cara flaca
+    "..........", "......oooo", ".....ohhhh", "....ohhHHh", "...ohhHhhh", "..ohhhhhhh", "..ohhOssss",
+    "..ohOsssss", "..ohOsoooo", "..ohOseess", "..ohOseess", "..ohOsssss", "..ohOSlsss", "..ohOSssSS",
+    "..ohhOsssm", "..ohhOSsss", "..ohhhOSSS", "..ohhh.OSS",
+]
+CABEZAS["calavera"] = [  # preso esquelético: rapado, cuencas hundidas, dientes a la vista
+    "..........", "......oooo", ".....ohhhh", "....ohhhhh", "...ohhhhhh", "...ohhhhhh", "...Ohhssss",
+    "...Ossssss", "...OSSSsss", "...OSeeSss", "..OSSeeSss", "..OSsSSsss", "...OSssSsm", "...OSSsssS",
+    "....OSmqmq", "....OSsSSS", ".....OOSSS", ".......OSS",
+]
+CUERPOS["manta"] = [  # una manta sobre los hombros, sujeta por delante con las dos manos; piernas muy flacas
+    "....kKKKnd", "...kKKKKnd", "..kKjKKKnb", "..kKjKKKnb", ".kKKjKKKnb", ".kKKjKKKnd", ".kKKjKKKnb",
+    ".kKKjKKssb", ".kKKjKKssb", ".kKKjKKKnb", ".kKKjKKKnd", ".kKKjKKKnb", ".kkkkkkknb", ".a.a.a.anb",
+    ".....nppn.", ".....nppn.", ".....nppn.", ".....nppn.", ".....nppn.", "....nwWwn.", "....nwwwn.",
+    "....nnnn..",
+]
+CUERPOS["preso"] = [  # ropa gris de preso, sin cinturón; brazos y piernas de palo
+    ".....nddbb", "....ndbbbb", "...ndbbbbb", "..ndbbbbbb", "..nbnbbbbb", "..nbnbbbbb", "..nbndbbbb",
+    "..nbndbbbb", "..nbndbbbb", "..nbndbbbb", "..nsndbbbb", "..nsnbbbbb", "...nndbbbb", "....ndbbbn",
+    "....ndbbbn", "....ndbbbn", "....ndbbbn", "....ndbbbn", "....ndbbbn", "....nwWwwn", "....nwwwwn",
+    "....nnnnn.",
+]
+CUERPOS["fornido"] = [  # estibador: hombros anchos, jersey con las mangas remangadas, antebrazos enormes
+    "...nnSssss", "..ndbbSsss", ".ndbbbbSss", "ndbBbbbbbb", "ndbBbbbbbb", "ndbbbbbbbb", "ndbbnbbbbb",
+    "nSssnbbbbb", "nSssnbbbbb", "nSssnbbbbb", "nsssnbbbbb", "nsssnzzzzz", ".nnndppppp", "...ndppppn",
+    "...ndppppn", "...ndppppn", "...ndppppn", "...ndppppn", "...ndppppn", "...nwWwwwn", "...nwwwwwn",
+    "...nnnnnn.",
+]
+CUERPOS["camarero"] = [  # chaleco negro, camisa blanca, pajarita y delantal largo hasta las rodillas
+    "....nccccc", "...ncvvctt", "..ncvvvvcc", ".nccvvvvvc", ".nccvvvvvc", ".nccvvvVvc", ".nccvvvvvL",
+    ".ncnvvvvvc", ".ncnvvvvvL", ".ncnvvvvvc", ".nssnAAAAA", ".nssnaaaaa", "..nnaaaaaa", "...naaaaaa",
+    "...naaaaaa", "...naaaaaa", "...nAaaaaa", "....nnnnn.", "....ndpn..", "....nwWn..", "....nwwn..",
+    "....nnnn..",
+]
+
+
 NINO = espejo([
     "....cccc", "...cCCCC", "..cCCCCC", "..cCCCCC", ".ccccccc", "..ohssss", "..Osssss", "..Ossess",
     "..Ossess", ".OSslSss", "..Osssmm", "...OSsss", "....OOSS", "...nddbg", "..ndbbbb", ".ndbbbbb",
@@ -157,6 +194,11 @@ PIEL = lambda tono=0: {"O": K("piel", 1 + tono), "S": K("piel", 2 + tono), "s": 
 PELO = lambda rampa, i=0: {"o": K(rampa, i), "h": K(rampa, i + 1), "H": K(rampa, i + 3)}
 BOTAS = {"w": K("gris", 2), "W": K("gris", 4)}
 
+# gafas pequeñas y redondas para una cara flaca (Goldstein), con el puente remendado con esparadrapo
+GAFAS_PEQ = ([(r, c, "g") for r in (8, 11) for c in (5, 6, 7, 8, 11, 12, 13, 14)]
+             + [(r, c, "g") for r in (9, 10) for c in (5, 8, 11, 14)]
+             + [(9, 4, "g"), (9, 15, "g"), (9, 9, "T"), (9, 10, "T"), (10, 9, "T"), (10, 10, "T")]
+             + [(9, 6, "G"), (9, 12, "G")])
 # gafas redondas (filas 8-11): montura fina, cristal claro y los ojos visibles
 GAFAS = ([(r, c, "g") for r in (8, 11) for c in (4, 5, 6, 7, 8, 11, 12, 13, 14, 15)]
          + [(r, c, "g") for r in (9, 10) for c in (4, 8, 11, 15)]

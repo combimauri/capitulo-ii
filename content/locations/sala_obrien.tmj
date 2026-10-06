@@ -1,0 +1,200 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Ministerio del Amor · sala blanca"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-sala_obrien"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "sala_obrien.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/sala_obrien.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf",
+     "x": 0,
+     "y": 244,
+     "width": 480,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "camilla",
+     "x": 180,
+     "y": 120,
+     "width": 120,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "mesa",
+     "x": 330,
+     "y": 150,
+     "width": 90,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 8,
+     "name": "camilla",
+     "x": 240,
+     "y": 190,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 7,
+     "name": "obrien",
+     "x": 316,
+     "y": 142,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "obrien"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "O'Brien"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 9
+}

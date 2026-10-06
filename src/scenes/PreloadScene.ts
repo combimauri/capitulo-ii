@@ -22,7 +22,10 @@ export class PreloadScene extends Phaser.Scene {
     for (const clave of fondos) this.load.image(clave, `assets/locations/${clave.replace(/^loc-/, '')}.png`);
 
     // protagonista (H y M) y personajes de los mapas
-    for (const g of ['h', 'm']) this.load.spritesheet(`prot_${g}`, `assets/sprites/protagonista_${g}.png`, { frameWidth: 20, frameHeight: 40 });
+    for (const g of ['h', 'm']) {
+      this.load.spritesheet(`prot_${g}`, `assets/sprites/protagonista_${g}.png`, { frameWidth: 20, frameHeight: 40 });
+      this.load.spritesheet(`prot_${g}_preso`, `assets/sprites/protagonista_${g}_preso.png`, { frameWidth: 20, frameHeight: 40 });
+    }
     const npcs = new Set(Object.values(LOCALIZACIONES).flatMap((l) => l.npcs.map((n) => n.sprite)));
     for (const n of npcs) this.load.spritesheet(`npc-${n}`, `assets/sprites/npc/${n}.png`, { frameWidth: 20, frameHeight: 40 });
 
@@ -34,13 +37,20 @@ export class PreloadScene extends Phaser.Scene {
       }
     }
     for (const f of ['neutral', 'grita', 'grita2', 'gafas']) this.load.image(`retrato-amory_${f}`, `assets/retratos/amory_${f}.png`);
+    for (const f of ['neutral', 'sonrisa']) this.load.image(`retrato-obrien_${f}`, `assets/retratos/obrien_${f}.png`);
 
     // minijuegos e iconos
     this.load.image('cascotes-fondo', 'assets/minijuegos/cascotes-fondo.png');
     this.load.image('mapa-frente', 'assets/minijuegos/mapa-frente.png');
     this.load.image('londres', 'assets/minijuegos/londres.png');
     this.load.image('londres-zonas', 'assets/minijuegos/londres-zonas.png');
-    for (const v of ['plaza', 'plaza_gris', 'patibulo', 'patibulo5', 'foto_sotano', 'foto_iniciacion']) this.load.image(`vineta-${v}`, `assets/vinetas/${v}.png`);
+    for (const v of ['plaza', 'plaza_gris', 'patibulo', 'patibulo5', 'foto_sotano', 'foto_iniciacion',
+      'cripta_1985', 'cripta_1987', 'cripta_1988', 'cripta_1990', 'cripta_1993', 'pasillo_suelo', 'habitacion101',
+      'despacho_obrien', 'despacho_obrien_crane', 'patio_limehouse', 'patio_limehouse_len', 'salon_odio_h', 'salon_odio_m', 'limehouse_manana']) {
+      this.load.image(`vineta-${v}`, `assets/vinetas/${v}.png`);
+    }
+    this.load.image('reloj-ivy-grande', 'assets/minijuegos/reloj-ivy-grande.png');
+    this.load.image('londres-tuneles', 'assets/minijuegos/londres-tuneles.png');
     for (const p of ['goldstein', 'oveja', 'soldado', 'diccionario', 'gran_hermano', 'amory', 'estasia']) this.load.image(`cf-${p}`, `assets/minijuegos/cf-${p}.png`);
     this.load.image('mapa-estasia', 'assets/minijuegos/mapa-estasia.png');
     this.load.spritesheet('fichas-presos', 'assets/minijuegos/fichas-presos.png', { frameWidth: 24, frameHeight: 28 });
@@ -50,7 +60,7 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    for (const g of ['prot_h', 'prot_m']) {
+    for (const g of ['prot_h', 'prot_m', 'prot_h_preso', 'prot_m_preso']) {
       DIRS.forEach((dir, fila) => {
         this.anims.create({
           key: `${g}-${dir}-andar`,

@@ -286,6 +286,81 @@ def icono_parte_original():
     return _rgba(cv)
 
 
+# ---------------------------------------------------------------- Acto IV
+
+
+def icono_carta_ivy():
+    """Un trozo de papel cuadriculado, arrancado de un cuaderno escolar y doblado muchas veces."""
+    cv = Canvas(16, 16)
+    cv.rect(2, 3, 14, 14, K("papel", 4))
+    cv.rect(8, 3, 14, 14, K("papel", 3))                                              # la mitad doblada, en sombra
+    for x in (4, 7, 10, 13):                                                          # cuadrícula azul pálido
+        cv.vline(x, 3, 14, K("cielo", 6))
+    for y in (5, 8, 11):
+        cv.hline(2, 14, y, K("cielo", 6))
+    cv.vline(8, 3, 14, K("papel", 1))                                                 # pliegue central
+    cv.hline(2, 14, 13, K("papel", 2))
+    cv.frame(2, 3, 14, 14, K("papel", 1))
+    for x in range(2, 14, 2):                                                         # borde arrancado del cuaderno
+        cv.px(x, 3, K("gris", 0))
+    for y, tramos in ((6, ((3, 6), (9, 13))), (9, ((3, 7), (9, 12))), (12, ((3, 5),))):   # letra a lápiz de una niña
+        for x0, x1 in tramos:
+            for x in range(x0, x1):
+                cv.px(x, y - (x % 3 == 1), K("gris", 5))
+    cv.poly([(11, 13), (13, 11), (13, 13)], K("papel", 2))                            # esquina doblada
+    cv.px(13, 13, K("gris", 0)); cv.px(13, 12, K("papel", 1))
+    return _rgba(cv)
+
+
+def icono_linterna():
+    """Linterna de dinamo: cuerpo de baquelita, cristal ámbar y la manivela plegada a un lado."""
+    cv = Canvas(16, 16)
+    cv.rect(2, 5, 12, 14, K("gris", 5)); cv.frame(2, 5, 12, 14, K("gris", 2))
+    cv.hline(3, 11, 6, K("gris", 7)); cv.vline(3, 6, 13, K("gris", 6))               # brillo del borde
+    cv.hline(3, 12, 13, K("gris", 4))
+    cv.rect(11, 4, 15, 15, K("gris", 6)); cv.frame(11, 4, 15, 15, K("gris", 2))      # aro del cristal
+    cv.rect(12, 6, 14, 13, K("ocre", 3)); cv.px(12, 7, K("ocre", 4)); cv.px(12, 8, K("ocre", 4))
+    cv.vline(13, 7, 13, K("ocre", 2))
+    cv.ellipse(5, 8, 10, 13, K("gris", 4), outline=K("gris", 2))                       # tapa de la dinamo
+    cv.d.line([(7, 10), (4, 3)], fill=K("gris", 2))                                    # la manivela
+    cv.px(7, 10, K("gris", 8))
+    cv.rect(3, 1, 5, 3, K("madera", 4)); cv.px(3, 1, K("madera", 6))                  # pomo de madera
+    return _rgba(cv)
+
+
+def icono_tiza():
+    """Un cabo de tiza, gastado por una punta, y el polvo que deja."""
+    cv = Canvas(16, 16)
+    cv.d.line([(3, 12), (11, 4)], fill=K("gris", 9), width=3)
+    cv.d.line([(3, 11), (10, 4)], fill=K("gris", 10))
+    cv.d.line([(4, 13), (12, 5)], fill=K("gris", 7))
+    cv.px(12, 4, K("gris", 8)); cv.px(11, 3, K("gris", 9))                            # punta gastada
+    cv.px(2, 12, K("gris", 8)); cv.px(3, 13, K("gris", 7))
+    for (x, y) in ((11, 11), (13, 9), (12, 13), (14, 12)):                            # polvo
+        cv.px(x, y, K("gris", 6))
+    return _rgba(cv)
+
+
+def icono_libro_completo():
+    """El libro entero: un fajo grueso cosido con hilo; el capítulo nuevo, en medio, en papel más claro."""
+    cv = Canvas(16, 16)
+    cv.poly([(1, 7), (4, 2), (15, 2), (12, 7)], K("papel", 3))                       # hoja de arriba
+    for y, x0, x1 in ((3, 7, 13), (5, 5, 11)):
+        cv.hline(x0, x1, y, K("papel", 1))
+    cv.d.line([(1, 7), (4, 2), (15, 2)], fill=K("papel", 1))
+    cv.rect(1, 7, 13, 15, K("papel", 1))                                              # canto grueso de las hojas
+    cv.poly([(12, 7), (15, 2), (15, 10), (12, 15)], K("papel", 0))                    # lado en sombra
+    for y in (8, 10, 13):
+        cv.hline(1, 13, y, K("papel", 2))
+    cv.rect(1, 11, 13, 13, K("papel", 4))                                             # el capítulo nuevo: más claro
+    cv.hline(1, 13, 14, K("papel", 0))
+    for x in (3, 7):                                                                  # cosido con hilo por el lomo
+        cv.d.line([(x + 2, 3), (x, 7)], fill=K("granate", 4))
+        cv.vline(x, 7, 15, K("granate", 3))
+    cv.px(9, 15, K("granate", 3)); cv.px(10, 15, K("granate", 2))                     # cabo del hilo
+    return _rgba(cv)
+
+
 ICONOS = {"icono-reloj": icono_reloj, "icono-ficha": icono_ficha, "icono-lapiz": icono_lapiz,
           "icono-foto": icono_foto, "icono-diario": icono_diario, "icono-compas": icono_compas,
           "icono-zonificacion": icono_zonificacion, "icono-nota": icono_nota, "icono-metralla": icono_metralla,
@@ -297,7 +372,9 @@ ICONOS = {"icono-reloj": icono_reloj, "icono-ficha": icono_ficha, "icono-lapiz":
           "icono-sobre_encerado": icono_sobre_encerado, "icono-chapa": icono_chapa,
           "icono-foto_sotano": icono_foto_sotano, "icono-dibujos_amory": icono_dibujos_amory,
           "icono-carpeta": icono_carpeta, "icono-tubo": icono_tubo, "icono-mapa_malabar": icono_mapa_malabar,
-          "icono-parte_original": icono_parte_original}
+          "icono-parte_original": icono_parte_original,
+          "icono-carta_ivy": icono_carta_ivy, "icono-linterna": icono_linterna, "icono-tiza": icono_tiza,
+          "icono-libro_completo": icono_libro_completo}
 
 
 def cascotes_fondo():
@@ -350,6 +427,92 @@ def cascote(i):
     return _rgba(cv)
 
 
+# cifras de esfera, más redondas que las de la fuente 3x5 (se pintan a doble tamaño)
+CIFRAS = {"0": "111101101101111", "1": "010110010010111", "2": "111001111100111", "3": "111001011001111",
+          "4": "101101111001001", "5": "111100111001111", "6": "111100111101111", "7": "111001001010010",
+          "8": "111101111101111", "9": "111101111001111"}
+
+
+def _texto2x(cv, x, y, s, col):
+    """Cifras de 3x5 a doble tamaño (6x10)."""
+    for ch in s:
+        for i, b in enumerate(CIFRAS[ch]):
+            if b == "1":
+                cv.rect(x + (i % 3) * 2, y + (i // 3) * 2, x + (i % 3) * 2 + 2, y + (i // 3) * 2 + 2, col)
+        x += 8
+
+
+def reloj_ivy_grande():
+    """La esfera del reloj de Ivy vista de cerca (160x160), sin agujas: el juego las dibuja encima.
+
+    Centro en (80, 80) y esfera de radio 64. Caja de acero barato, números pintados, el cristal roto en
+    diagonal (como en el icono) y la correa de cuero asomando arriba y abajo.
+    """
+    import math
+    cv = Canvas(160, 160)
+    C = 80
+    # correa: arriba y abajo, cortada por el borde
+    for y0, y1 in ((0, 30), (130, 160)):
+        cv.rect(54, y0, 107, y1, K("madera", 3))
+        cv.vline(54, y0, y1, K("madera", 1)); cv.vline(106, y0, y1, K("madera", 1))
+        cv.vline(55, y0, y1, K("madera", 4)); cv.vline(105, y0, y1, K("madera", 2))
+        for y in range(y0 + 1, y1, 4):                                                     # pespunte
+            cv.vline(59, y, y + 2, K("madera", 5)); cv.vline(101, y, y + 2, K("madera", 5))
+        for y in range(y0, y1, 9):                                                         # grano del cuero
+            cv.hline(66, 72, y + 3, K("madera", 2)); cv.hline(84, 92, y + 7, K("madera", 2))
+    cv.ellipse(76, 150, 85, 156, K("madera", 1)); cv.ellipse(77, 151, 84, 155, K("madera", 0))    # agujero de la hebilla
+    cv.hline(77, 84, 155, K("madera", 4))
+    # asas de la caja
+    for x0 in (56, 94):
+        for y0, y1 in ((20, 34), (126, 140)):
+            cv.rect(x0, y0, x0 + 11, y1, K("gris", 6)); cv.vline(x0, y0, y1, K("gris", 8)); cv.vline(x0 + 10, y0, y1, K("gris", 4))
+            cv.rect(x0 + 3, y0 + 2, x0 + 8, y1 - 2, K("gris", 5))
+    # caja de acero
+    cv.ellipse(10, 10, 150, 150, K("gris", 5), outline=K("gris", 2))
+    cv.d.arc([12, 12, 148, 148], 150, 300, fill=K("gris", 8), width=3)                      # luz arriba a la izquierda
+    cv.d.arc([12, 12, 148, 148], 330, 120, fill=K("gris", 3), width=3)                      # sombra abajo a la derecha
+    # corona
+    cv.rect(149, 72, 157, 89, K("gris", 6)); cv.frame(149, 72, 157, 89, K("gris", 2))
+    for y in range(74, 88, 2):
+        cv.hline(150, 156, y, K("gris", 4))
+    cv.vline(149, 72, 89, K("gris", 3))
+    # bisel y esfera
+    cv.ellipse(15, 15, 145, 145, K("gris", 3))
+    cv.ellipse(16, 16, 144, 144, K("papel", 3))
+    cv.ellipse(19, 19, 141, 141, K("papel", 4))
+    cv.d.arc([19, 19, 141, 141], 20, 110, fill=K("papel", 3), width=2)                      # la esfera, amarilleada
+    # marcas de minutos y de horas
+    for i in range(60):
+        a = i / 60 * 2 * math.pi
+        if i % 5 == 0:
+            cv.d.line([(C + math.sin(a) * 51, C - math.cos(a) * 51), (C + math.sin(a) * 60, C - math.cos(a) * 60)],
+                      fill=K("gris", 2), width=2)
+        else:
+            for r in range(57, 61):
+                cv.px(int(C + math.sin(a) * r), int(C - math.cos(a) * r), K("gris", 5))
+    # números
+    for h in range(1, 13):
+        a = h / 12 * 2 * math.pi
+        t = str(h)
+        w = len(t) * 8 - 2
+        x, y = C + math.sin(a) * 42, C - math.cos(a) * 42
+        _texto2x(cv, int(round(x - w / 2)), int(round(y - 5)), t, K("gris", 1))
+    # cristal roto en diagonal (de arriba a la izquierda abajo a la derecha), con el punto del golpe y sus astillas
+    grieta = [(22, 32), (31, 41), (38, 44), (47, 52), (55, 57), (63, 64), (71, 69), (80, 78), (89, 84), (98, 93),
+              (106, 101), (114, 106), (122, 115), (130, 124), (137, 129)]
+    cv.d.line(grieta, fill=K("gris", 3))
+    cv.d.line([(x + 1, y - 1) for x, y in grieta], fill=K("gris", 10))                       # filo que brilla
+    for rama in ([(55, 57), (50, 66)], [(55, 57), (60, 48)], [(55, 57), (46, 55)], [(55, 57), (64, 60)],
+                 [(89, 84), (97, 80)], [(89, 84), (86, 92)], [(114, 106), (119, 101)], [(31, 41), (28, 48)]):
+        cv.d.line(rama, fill=K("gris", 5))
+        cv.d.line([(x + 1, y - 1) for x, y in rama[1:]] + [(rama[0][0] + 1, rama[0][1] - 1)], fill=K("gris", 10))
+    cv.ellipse(52, 54, 59, 61, None, outline=K("gris", 6))                                  # el punto del golpe
+    # reflejo del cristal
+    cv.d.arc([24, 24, 136, 136], 205, 245, fill=K("gris", 10), width=2)
+    cv.d.arc([30, 30, 130, 130], 215, 232, fill=K("gris", 10))
+    return _rgba(cv)
+
+
 def exportar(iconos_dir, minijuegos_dir):
     iconos_dir, minijuegos_dir = Path(iconos_dir), Path(minijuegos_dir)
     iconos_dir.mkdir(parents=True, exist_ok=True)
@@ -359,3 +522,4 @@ def exportar(iconos_dir, minijuegos_dir):
     cascotes_fondo().save(minijuegos_dir / "cascotes-fondo.png")
     for i in (1, 2, 3):
         cascote(i).save(minijuegos_dir / f"cascote-{i}.png")
+    reloj_ivy_grande().save(minijuegos_dir / "reloj-ivy-grande.png")

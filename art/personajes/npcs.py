@@ -81,6 +81,48 @@ NPCS = {
                     {**PELO("gris", 0), "H": K("gris", 4), **PIEL(1), "n": K("gris", 5), "d": K("gris", 3),
                      "c": K("papel", 4), "v": K("papel", 4), "V": K("papel", 3), "t": K("gris", 1), "L": K("papel", 2),
                      "p": K("gris", 4), "g": K("gris", 0), **BOTAS}),
+    # --- Acto IV y finales ----------------------------------------------------------------------
+    # Goldstein en la cripta: muy flaco, pelo blanco y largo, perilla, gafas remendadas con esparadrapo y una manta
+    "goldstein": (E.construir("melena_blanca", "manta", E.GAFAS_PEQ + E.PERILLA + [(14, 7, "y"), (14, 12, "y")]
+                              + [(r, c, "h") for r in (18, 19, 20) for c in (2, 3, 16, 17)]
+                              + [(r, c, "o") for r in (18, 19, 20, 21) for c in (1, 18)] + [(21, 2, "o"), (21, 17, "o")]),
+                  {"o": K("papel", 0), "h": K("papel", 3), "H": K("papel", 4), **PIEL(1), "S": K("piel", 2),
+                   "n": K("madera", 0), "d": K("madera", 1), "b": K("madera", 2), "p": K("madera", 1),
+                   "k": K("granate", 1), "K": K("granate", 4), "j": K("ocre", 2), "a": K("granate", 3),
+                   "g": K("gris", 4), "G": K("cielo", 6), "T": K("papel", 3), "y": K("papel", 4), **BOTAS}),
+    # Len Pike: estibador fornido, venda en la cabeza (con una mancha) y un ancla tatuada en el cuello
+    "len": (E.construir("corto", "fornido", [(r, c, "v") for r in (4, 5) for c in range(3, 17)]
+                        + [(3, c, "V") for c in range(4, 16)] + [(4, 13, "R"), (5, 13, "R"), (4, 14, "R")]
+                        + [(6, 3, "v"), (6, 16, "v"), (7, 2, "V")]
+                        + [(r, c, "y") for r in (15,) for c in (5, 14)] + [(16, c, "y") for c in (6, 7, 12, 13)]
+                        + [(17, 12, "A"), (18, 11, "A"), (18, 12, "A"), (18, 13, "A"), (19, 12, "A"),
+                           (20, 11, "A"), (20, 13, "A"), (21, 12, "A")]),
+            {**PELO("pelo", 0), **PIEL(0), "n": K("tela", 0), "d": K("tela", 1), "b": K("tela", 2), "B": K("tela", 3),
+             "z": K("madera", 1), "p": K("madera", 2), "v": K("papel", 4), "V": K("papel", 2), "R": K("rojo", 2),
+             "y": K("piel", 2), "A": K("azul", 1), **BOTAS}),
+    # un preso esquelético del Minimor: la cara es ya una calavera
+    "esqueleto": (E.construir("calavera", "preso", [(22, 12, "L"), (22, 13, "L"), (23, 12, "L"), (23, 13, "L")]),
+                  {"o": K("gris", 3), "h": K("gris", 4), "H": K("gris", 5), "O": K("papel", 0), "S": K("papel", 1),
+                   "s": K("papel", 2), "l": K("papel", 3), "e": K("gris", 0), "m": K("gris", 1), "q": K("papel", 3),
+                   **ropa("gris", 5), "L": K("papel", 3), "w": K("gris", 2), "W": K("gris", 3)}),
+    # Winston en el Minimor: consumido, la cara amarillenta y el pelo ralo
+    "winston_preso": (E.construir("corto", "preso", [(11, c, "S") for c in (6, 7, 12, 13)]
+                                  + [(12, 4, "S"), (12, 15, "S"), (13, 5, "S"), (13, 14, "S")]
+                                  + [(22, 12, "L"), (22, 13, "L"), (23, 12, "L"), (23, 13, "L")]),
+                      {**PELO("madera", 1), "O": K("madera", 3), "S": K("ocre", 2), "s": K("papel", 3),
+                       "l": K("ocre", 4), "e": K("gris", 1), "m": K("ocre", 1), **ropa("gris", 5), "L": K("papel", 3),
+                       "w": K("gris", 2), "W": K("gris", 3)}),
+    # Parsons en la celda: el mismo cuerpo, sin cinturón (se lo han quitado) y con la ropa gris
+    "parsons_preso": (E.construir("corto", "mono", [(29, c, "b") for c in range(5, 15)]
+                                  + [(r, c, "B") for r in (26, 27, 28) for c in (8, 9, 10, 11)]
+                                  + [(22, 12, "L"), (22, 13, "L"), (23, 12, "L"), (23, 13, "L")]),
+                      {**PELO("ocre", 0), **PIEL(1), **ropa("gris", 5), "L": K("papel", 3), "w": K("gris", 2),
+                       "W": K("gris", 3)}),
+    # el camarero del Café del Nogal: no habla; rellena los vasos de ginebra sin que se lo pidan
+    "camarero": (E.construir("repeinado", "camarero", [(13, c, "y") for c in range(8, 12)]),
+                 {**PELO("pelo", 0), "H": K("pelo", 2), **PIEL(1), "n": K("gris", 0), "d": K("gris", 1),
+                  "v": K("gris", 2), "V": K("gris", 3), "c": K("papel", 4), "t": K("gris", 0), "L": K("gris", 4),
+                  "a": K("papel", 3), "A": K("papel", 2), "p": K("gris", 1), "y": K("pelo", 0), **BOTAS}),
 }
 
 

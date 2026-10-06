@@ -257,6 +257,9 @@ PENSAMIENTO: Se abre antes de que llame. # fx:negro # id:j12_06_verde_02 # escen
 === casa_dot ===
 
 = entrar
+{ final_en_curso == "D":
+    -> fd_dot
+}
 { casa_dot_vista:
     -> DONE
 }
@@ -373,9 +376,11 @@ PENSAMIENTO: El cuaderno, en las rodillas. # fx:aclarar # id:j12_08_diario_00
     PENSAMIENTO: El reloj anda. # sfx:tic # id:j12_08_recordar_06
 }
 CARTEL: FIN DEL ACTO III # fx:negro # id:j12_08_fin_acto
+~ jornada = 13
 CARTEL: ACTO IV¶CAPÍTULO II # id:j12_08_acto4
-CARTEL: Continuará. El Acto IV está en preparación. # id:j12_08_continuara # final:demo
--> DONE
+CARTEL: JORNADA 13 # id:j12_08_jornada13
+CARTEL: Bajo las campanas. # id:j12_08_bajo
+-> j13_entrada
 
 = despensa_mirar
 PENSAMIENTO: La despensa. Una puerta con rendijas. # id:j12_07_despensa

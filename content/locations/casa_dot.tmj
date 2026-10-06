@@ -285,7 +285,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 16,
+     "id": 17,
      "name": "puerta",
      "x": 240,
      "y": 226,
@@ -347,6 +347,35 @@
        "value": "286,216"
       }
      ]
+    },
+    {
+     "id": 16,
+     "name": "len",
+     "x": 214,
+     "y": 204,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "len"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Len Pike"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D && len_salvado"
+      }
+     ]
     }
    ],
    "opacity": 1,
@@ -356,5 +385,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 17
+ "nextobjectid": 18
 }

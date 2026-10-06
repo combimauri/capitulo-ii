@@ -5,12 +5,14 @@
 
 type Sfx = 'silbido' | 'impacto' | 'pitido' | 'silbato' | 'sello' | 'tubo' | 'tecla' | 'plumilla'
   | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos' | 'naranjas' | 'chirrido'
-  | 'chapoteo' | 'zumbido' | 'tic' | 'papel' | 'alto' | 'golpes' | 'trampilla';
+  | 'chapoteo' | 'zumbido' | 'tic' | 'papel' | 'alto' | 'golpes' | 'trampilla' | 'dinamo' | 'goteo' | 'descarga';
 
 class Audio {
   private ctx: AudioContext | null = null;
   private master: GainNode | null = null;
   volumen = 0.6;
+  /** Silbidos largos en curso (la Habitación 101 los corta de golpe). */
+  private largos: OscillatorNode[] = [];
 
   /** Debe llamarse dentro de un gesto del usuario (toque o tecla) para desbloquear el audio en móvil. */
   desbloquear() {
@@ -52,6 +54,13 @@ class Audio {
       case 'chirrido':
         this.tono(ctx, out, t, 1900, 1.4, 0.08, 'sawtooth');
         return this.tono(ctx, out, t, 2350, 1.4, 0.06, 'square');
+      case 'dinamo':
+        this.tono(ctx, out, t, 180, 0.18, 0.06, 'sawtooth');
+        return this.tono(ctx, out, t + 0.05, 240, 0.15, 0.05, 'sawtooth');
+      case 'goteo': return this.golpe(ctx, out, t, 1800, 0.06, 0.08);
+      case 'descarga':
+        this.tono(ctx, out, t, 1200, dur ?? 0.8, 0.12, 'square');
+        return this.ruido(ctx, out, t, dur ?? 0.8, 6000, 0.2);
       case 'chapoteo': return this.ruido(ctx, out, t, 0.35, 900, 0.35, true);
       case 'zumbido': return this.tono(ctx, out, t, 58, 0.7, 0.18, 'sawtooth', true);
       case 'tic': return this.golpe(ctx, out, t, 2400, 0.02, 0.18);
@@ -129,6 +138,14 @@ class Audio {
     osc.connect(g).connect(out);
     osc.start(t);
     osc.stop(t + dur + 0.05);
+    this.largos.push(osc);
+    osc.onended = () => { this.largos = this.largos.filter((o) => o !== osc); };
+  }
+
+  /** Silencio absoluto: corta los silbidos que estén sonando. */
+  cortar() {
+    for (const o of this.largos) { try { o.stop(); } catch { /* ya parado */ } }
+    this.largos = [];
   }
 
   private impacto(ctx: AudioContext, out: AudioNode, t: number) {

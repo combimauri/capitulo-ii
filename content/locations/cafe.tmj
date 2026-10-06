@@ -1,0 +1,393 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Café del Castaño"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-cafe"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "cafe.entrar"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/cafe.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared_fondo",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 96,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "muro_izq",
+     "x": 0,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "muro_der",
+     "x": 436,
+     "y": 0,
+     "width": 44,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "muro_inf_izq",
+     "x": 0,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "muro_inf_der",
+     "x": 256,
+     "y": 244,
+     "width": 224,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "umbral",
+     "x": 224,
+     "y": 254,
+     "width": 32,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 7,
+     "name": "mesa",
+     "x": 100,
+     "y": 140,
+     "width": 50,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 8,
+     "name": "mesa",
+     "x": 220,
+     "y": 170,
+     "width": 50,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 9,
+     "name": "mesa",
+     "x": 330,
+     "y": 130,
+     "width": 50,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 10,
+     "name": "barra",
+     "x": 400,
+     "y": 100,
+     "width": 36,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 11,
+     "name": "mesa",
+     "x": 220,
+     "y": 160,
+     "width": 50,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mi mesa"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "cafe.mesa"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "245,214"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 12,
+     "name": "cartel",
+     "x": 150,
+     "y": 26,
+     "width": 40,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cartel de Ivy"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "cafe.cartel_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "170,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 13,
+     "name": "ventana",
+     "x": 60,
+     "y": 30,
+     "width": 70,
+     "height": 50,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ventana"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "cafe.ventana_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "95,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 16,
+     "name": "mesa",
+     "x": 245,
+     "y": 216,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 14,
+     "name": "amory",
+     "x": 355,
+     "y": 166,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "amory"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Amory"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "cafe.amory"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "cafe.amory_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "355,186"
+      }
+     ]
+    },
+    {
+     "id": 15,
+     "name": "camarero",
+     "x": 384,
+     "y": 126,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "camarero"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Camarero"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "cafe.camarero_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "380,196"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 17
+}

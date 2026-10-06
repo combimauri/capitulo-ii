@@ -1,0 +1,333 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 60,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Túneles · Liverpool Street → Bank"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-tunel_derrumbe"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "tunel3.entrar"
+  },
+  {
+   "name": "oscuro",
+   "type": "string",
+   "value": "true"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/tunel3.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "boveda",
+     "x": 0,
+     "y": 0,
+     "width": 960,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "borde",
+     "x": 0,
+     "y": 230,
+     "width": 960,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "fin_izq",
+     "x": 0,
+     "y": 0,
+     "width": 4,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "fin_der",
+     "x": 956,
+     "y": 0,
+     "width": 4,
+     "height": 270,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 5,
+     "name": "derrumbe",
+     "x": 600,
+     "y": 100,
+     "width": 100,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 6,
+     "name": "derrumbe_nuevo",
+     "x": 600,
+     "y": 200,
+     "width": 100,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_perdido"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "puntal",
+     "x": 710,
+     "y": 100,
+     "width": 14,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 8,
+     "name": "derrumbe",
+     "x": 600,
+     "y": 100,
+     "width": 100,
+     "height": 100,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Derrumbe"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel3.derrumbe_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "586,150"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    },
+    {
+     "id": 9,
+     "name": "puntal",
+     "x": 710,
+     "y": 40,
+     "width": 14,
+     "height": 70,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puntal podrido"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel3.puntal_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "tunel3.puntal"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "742,114"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "izquierda"
+      }
+     ]
+    },
+    {
+     "id": 11,
+     "name": "salida",
+     "x": 936,
+     "y": 100,
+     "width": 20,
+     "height": 130,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "tunel3.salir"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 12,
+     "name": "inicio",
+     "x": 120,
+     "y": 170,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 10,
+     "name": "crane",
+     "x": 40,
+     "y": 170,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "crane"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Crane"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "tunel3.crane_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "!crane_perdido"
+      },
+      {
+       "name": "persigue",
+       "type": "string",
+       "value": "26"
+      },
+      {
+       "name": "distancia_var",
+       "type": "string",
+       "value": "crane_distancia"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 13
+}

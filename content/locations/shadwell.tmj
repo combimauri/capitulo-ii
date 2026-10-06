@@ -1,0 +1,292 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Estación de Shadwell"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-shadwell"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "shadwell.entrar"
+  },
+  {
+   "name": "prota_tinte",
+   "type": "string",
+   "value": "#b4bccc"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/shadwell.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "fachadas",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 92,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "borde",
+     "x": 0,
+     "y": 250,
+     "width": 480,
+     "height": 20,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "farola",
+     "x": 416,
+     "y": 92,
+     "width": 8,
+     "height": 8,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 4,
+     "name": "tablones",
+     "x": 200,
+     "y": 30,
+     "width": 80,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Tablones"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "shadwell.tablones_mirar"
+      },
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "shadwell.tablones"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "240,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 5,
+     "name": "cartel",
+     "x": 186,
+     "y": 14,
+     "width": 108,
+     "height": 14,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Cartel"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "shadwell.cartel_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "190,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "pintada",
+     "x": 50,
+     "y": 40,
+     "width": 120,
+     "height": 36,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Pintada"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "shadwell.pintada_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "110,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 8,
+     "name": "inicio",
+     "x": 60,
+     "y": 200,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 7,
+     "name": "crane",
+     "x": 440,
+     "y": 112,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "crane"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Un sombrero"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "shadwell.crane_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "crane_sigue"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "420,130"
+      },
+      {
+       "name": "orientacion_jugador",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 9
+}

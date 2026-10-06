@@ -25,5 +25,6 @@
   "foto_sotano": {"nombre": "Foto del sótano", "icono": "icono-foto_sotano", "descripcion": "Ivy, a la luz de una vela, con Nell y Barlow. Tomada desde un ángulo bajo.", "mirar": "objetos.foto_sotano_mirar"},
   "dibujos_amory": {"nombre": "Dibujos de Amory", "icono": "icono-dibujos_amory", "descripcion": "No son mapas de Malabar. Son las líneas de metro cerradas. Los pájaros marcan salidas.", "mirar": "objetos.dibujos_mirar"},
   "mapa_malabar": {"nombre": "Mapa sin corregir", "icono": "icono-mapa_malabar", "descripcion": "Malabar, con las banderitas negras de Eurasia. Ayer era la verdad."},
-  "parte_original": {"nombre": "Parte sin rectificar", "icono": "icono-parte_original", "descripcion": "«Las fuerzas euroasiáticas han sido rechazadas…» Con sello y fecha."}
+  "parte_original": {"nombre": "Parte sin rectificar", "icono": "icono-parte_original", "descripcion": "«Las fuerzas euroasiáticas han sido rechazadas…» Con sello y fecha."},
+  "carta": {"nombre": "Carta de Ivy", "icono": "icono-carta_ivy", "descripcion": "Papel cuadriculado de un cuaderno escolar, doblado muchas veces. Su letra.", "mirar": "objetos.carta_mirar"}
 }

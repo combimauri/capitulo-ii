@@ -26,6 +26,8 @@ function storage(): Storage | null {
   }
 }
 
+export interface Capitulo { fecha: string; autor: string; texto: string; cierre: string }
+
 export const SaveSystem = {
   disponible(): boolean {
     return storage() !== null;
@@ -66,6 +68,27 @@ export const SaveSystem = {
     const lista = new Set(this.finales());
     lista.add(id);
     try { s.setItem(PREFIJO + 'finales', JSON.stringify([...lista])); } catch { /* nada */ }
+  },
+
+  /** Galería de Capítulos II escritos en distintas partidas (guion, desbloqueo del Final D). */
+  capitulos(): Capitulo[] {
+    try { return JSON.parse(storage()?.getItem(PREFIJO + 'capitulos') ?? '[]') as Capitulo[]; } catch { return []; }
+  },
+
+  guardarCapitulo(c: Omit<Capitulo, 'fecha'>) {
+    const s = storage();
+    if (!s) return;
+    const lista = [...this.capitulos(), { ...c, fecha: new Date().toISOString() }].slice(-30);
+    try { s.setItem(PREFIJO + 'capitulos', JSON.stringify(lista)); } catch { /* nada */ }
+  },
+
+  /** La frase de cierre del Capítulo II de la última partida que llegó al Final D (cita del menú). */
+  cierreD(): string {
+    try { return storage()?.getItem(PREFIJO + 'cierre_d') ?? ''; } catch { return ''; }
+  },
+
+  guardarCierreD(texto: string) {
+    try { storage()?.setItem(PREFIJO + 'cierre_d', texto); } catch { /* nada */ }
   },
 
   borrar(ranura: string) {

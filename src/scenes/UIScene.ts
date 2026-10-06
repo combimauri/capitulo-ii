@@ -10,6 +10,7 @@ import type { Tag } from '../core/tags';
 import type { ResultadoMinijuego } from './minijuegos/Minijuego';
 import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
+import { SaveSystem } from '../core/SaveSystem';
 
 const VELOCIDAD_TEXTO = 55;          // caracteres por segundo
 const CAJA = { x: 40, y: 386, w: 880, h: 132 };
@@ -18,6 +19,7 @@ const CAJA = { x: 40, y: 386, w: 880, h: 132 };
 const MINIJUEGOS: Record<string, string> = {
   cf: 'Facecrime', dp: 'Registro', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta', impactos: 'Impactos', sammy: 'Sammy', diario: 'Diario', comparar: 'Comparar', esconder: 'Esconder',
   documento: 'Documento', libro: 'Libro', copiar: 'Copiar', palanca: 'Palanca', llaves: 'Llaves', combinacion: 'Combinacion', rectificacion: 'Rectificacion', lista: 'Lista',
+  tuneles: 'Tuneles', capitulo: 'Capitulo', dial: 'Dial', h101: 'Habitacion101', declaracion: 'Declaracion', resistencia: 'Resistencia', epilogo: 'Epilogo', creditos: 'Creditos',
 };
 
 interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
@@ -61,6 +63,8 @@ export class UIScene extends Phaser.Scene {
   private aviso!: Phaser.GameObjects.Container;
   private reloj!: Phaser.GameObjects.Text;
   private carpeta!: Phaser.GameObjects.Container;
+  private dinamo!: Phaser.GameObjects.Container;
+  private cargaDinamo!: Phaser.GameObjects.Rectangle;
 
   constructor() { super('UI'); }
 
@@ -114,6 +118,7 @@ export class UIScene extends Phaser.Scene {
     });
     kb.on('keydown-L', () => this.abrirRegistro());
     kb.on('keydown-C', () => { if (!this.activo) this.game.events.emit(EV.carpeta); });
+    kb.on('keydown-F', () => { if (!this.activo) this.game.events.emit(EV.dinamo); });
     kb.on('keydown', (e: KeyboardEvent) => {
       audio.desbloquear();
       const n = Number(e.key);
@@ -135,12 +140,14 @@ export class UIScene extends Phaser.Scene {
     this.botones.setVisible(this.esTactil && !this.activo && !this.inventario.visible && !this.consultando);
     this.enMano.setVisible(!!mano.item && !this.activo && !this.consultando);
     const r = mision.reloj;
-    this.reloj.setVisible(!!r && !this.consultando);
+    this.reloj.setVisible(!!r && !r.oculto && !this.consultando);
     if (r) {
       const queda = r.limite - r.transcurrido;
       this.reloj.setText(hora(r.inicio + r.transcurrido)).setColor(hex(queda < 30 ? COLOR.rojo4 : COLOR.papel4));
     }
     this.carpeta.setVisible(mision.social && !this.activo && !this.consultando);
+    this.dinamo.setVisible(mision.oscuro && !this.consultando);
+    this.cargaDinamo.setSize(176 * mision.carga, 6).setFillStyle(mision.carga < 0.2 ? COLOR.rojo4 : COLOR.ocre4);
     (this.carpeta.getData('fondo') as Phaser.GameObjects.Rectangle).setFillStyle(mision.carpeta ? COLOR.ocre4 : COLOR.gris1, 0.85);
     (this.carpeta.getData('texto') as Phaser.GameObjects.Text).setColor(hex(mision.carpeta ? COLOR.gris1 : COLOR.papel4));
     if (this.depurando) {
@@ -220,6 +227,12 @@ export class UIScene extends Phaser.Scene {
     fondo.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); this.game.events.emit(EV.carpeta); });
     this.carpeta = this.add.container(this.esTactil ? 760 : 840, this.esTactil ? 92 : 510, [fondo, texto]).setDepth(21).setVisible(false);
     this.carpeta.setData('fondo', fondo).setData('texto', texto);
+    // la linterna de dinamo: cada toque es una vuelta de manivela
+    const fd = this.add.rectangle(0, 0, 190, 46, COLOR.gris1, 0.85).setStrokeStyle(2, COLOR.ocre4).setInteractive({ useHandCursor: true });
+    const td = this.add.text(0, -6, this.esTactil ? 'DINAMO' : 'F · DINAMO', { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel4) }).setOrigin(0.5);
+    this.cargaDinamo = this.add.rectangle(-88, 14, 176, 6, COLOR.ocre4).setOrigin(0, 0.5);
+    fd.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); this.game.events.emit(EV.dinamo); });
+    this.dinamo = this.add.container(this.esTactil ? 760 : 840, this.esTactil ? 92 : 506, [fd, td, this.add.rectangle(-88, 14, 176, 6, 0x000000, 0.6).setOrigin(0, 0.5), this.cargaDinamo]).setDepth(21).setVisible(false);
   }
 
   // ------------------------------------------------------------------ flujo de diálogo
@@ -322,11 +335,16 @@ export class UIScene extends Phaser.Scene {
       // la frase queda guardada para el Capítulo II; la entrada ya no se vuelve a ofrecer
       if (r.resultado && r.datos?.entrada) {
         narrativa.set(`${r.datos.entrada}_escrita`, true);
+        if (narrativa.story.variablesState.GlobalVariableExistsWithName(`${r.datos.entrada}_frase`)) narrativa.set(`${r.datos.entrada}_frase`, r.resultado);
         narrativa.set('diario_ultima', r.resultado);
         narrativa.set('diario_texto', `${narrativa.get('diario_texto') || ''}¶${r.resultado}`);
         narrativa.set('diario_entradas', (Number(narrativa.get('diario_entradas')) || 0) + 1);
       }
     } else {
+      if (tipo === 'capitulo' && r.datos) {
+        // queda para siempre en la galería de Capítulos II
+        SaveSystem.guardarCapitulo({ autor: `${narrativa.get('nombre')} ${narrativa.get('apellido')}`, texto: String(r.datos.texto), cierre: String(r.datos.cierre) });
+      }
       if (params.resultado) narrativa.set(params.resultado, r.resultado);   // p. ej. # minijuego:pancarta,resultado=pancarta_j2
       if (params.vars && r.datos) for (const [k, v] of Object.entries(r.datos)) narrativa.set(`${params.vars}_${k}`, v);
     }

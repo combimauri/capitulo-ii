@@ -102,6 +102,7 @@ for h in [("cartel_ivy", 192, 24, 40, 50, "Cartel de Ivy", "piso.cartel_mirar", 
           ("cajon", 400, 150, 18, 14, "Cajón de la mesa", "piso.cajon_mirar", "piso.cajon_usar", (424, 180), "izquierda")]:
     n, x, y, w, hh, nom, mi, us, ap, ori = h
     m.hot(n, x, y, w, hh, nombre_visible=nom, mirar=mi, usar=us, aprox=a(*ap), orientacion=ori)
+m.hot("silla", 366, 138, 32, 46, nombre_visible="Silla", usar="fd_silla", aprox=a(360, 198), orientacion="arriba", condicion="final_en_curso==D")
 m.spawn("cama", 118, 124, "abajo").spawn("puerta", 240, 232, "arriba")
 MAPAS.append(m)
 
@@ -597,7 +598,100 @@ m.hot("despensa", 132, 40, 30, 52, nombre_visible="Despensa", mirar="casa_dot.de
 m.hot("metralla", 172, 40, 64, 16, nombre_visible="La colección de Sammy", mirar="casa_dot.metralla_mirar", aprox=a(204, 110), orientacion="arriba")
 m.hot("estufa", 300, 60, 44, 60, nombre_visible="Estufa", mirar="casa_dot.estufa_mirar", aprox=a(322, 134), orientacion="arriba")
 m.npc("dot", 286, 196, sprite="dot", nombre_visible="Dot", mirar="casa_dot.dot_mirar", aprox=a(286, 216))
+m.npc("len", 214, 204, sprite="len", nombre_visible="Len Pike", condicion="final_en_curso==D && len_salvado")
 m.spawn("puerta", 240, 226, "arriba")
+MAPAS.append(m)
+
+# ------------------------------------------------------------------ JORNADA 13
+m = Mapa("shadwell", "Estación de Shadwell", al_entrar="shadwell.entrar", prota_tinte="#b4bccc")
+m.col(0, 0, 480, 92, "fachadas").col(0, 250, 480, 20, "borde").col(416, 92, 8, 8, "farola")
+m.hot("tablones", 200, 30, 80, 62, nombre_visible="Tablones", mirar="shadwell.tablones_mirar", usar="shadwell.tablones", aprox=a(240, 110), orientacion="arriba")
+m.hot("cartel", 186, 14, 108, 14, nombre_visible="Cartel", mirar="shadwell.cartel_mirar", aprox=a(190, 110), orientacion="arriba")
+m.hot("pintada", 50, 40, 120, 36, nombre_visible="Pintada", mirar="shadwell.pintada_mirar", aprox=a(110, 110), orientacion="arriba")
+m.npc("crane", 440, 112, sprite="crane", nombre_visible="Un sombrero", mirar="shadwell.crane_mirar", condicion="crane_sigue", aprox=a(420, 130), orientacion_jugador="derecha")
+m.spawn("inicio", 60, 200, "derecha")
+MAPAS.append(m)
+
+def tunel(m):
+    m.col(0, 0, 960, 100, "boveda").col(0, 230, 960, 40, "borde").col(0, 0, 4, 270, "fin_izq").col(956, 0, 4, 270, "fin_der")
+    return m
+
+m = tunel(Mapa("tunel1", "Túneles · Shadwell → Aldgate Este", ancho=960, al_entrar="tunel1.entrar", fondo="loc-tunel_nichos", oscuro="true"))
+for x in (140, 380, 620, 860):
+    m.hot(f"nicho{x}", x, 40, 36, 60, nombre_visible="Nicho", mirar="tunel1.nicho_mirar", escondite="true", aprox=a(x + 18, 108), orientacion="arriba")
+m.hot("silbido_a", 250, 100, 12, 130, usar="tunel1.silbido", auto="true", condicion="!silbido1")
+m.hot("silbido_b", 560, 100, 12, 130, usar="tunel1.silbido", auto="true", condicion="silbido1 && !silbido2 && impactos_esquivados>=1")
+m.hot("salida", 936, 100, 20, 130, usar="tunel1.salir", auto="true")
+m.spawn("inicio", 30, 170, "derecha")
+MAPAS.append(m)
+
+m = Mapa("anden_taller", "Túneles · un andén tapiado", al_entrar="taller.entrar", oscuro="true")
+m.col(0, 0, 480, 92, "pared").col(0, 200, 480, 70, "foso").col(60, 92, 140, 18, "telepantallas").col(300, 110, 80, 30, "mesa")
+m.hot("teles", 60, 30, 140, 62, nombre_visible="Telepantallas desmontadas", mirar="taller.teles_mirar", aprox=a(130, 120), orientacion="arriba")
+m.hot("mesa", 300, 100, 80, 40, nombre_visible="Mesa de trabajo", mirar="taller.mesa_mirar", aprox=a(340, 154), orientacion="arriba")
+m.hot("pared", 390, 30, 76, 60, nombre_visible="Nombres en tiza", mirar="taller.pared_mirar", aprox=a(428, 110), orientacion="arriba")
+m.hot("salida", 460, 96, 20, 104, usar="taller.salir", auto="true")
+m.spawn("entrada", 24, 150, "derecha")
+MAPAS.append(m)
+
+m = tunel(Mapa("tunel3", "Túneles · Liverpool Street → Bank", ancho=960, al_entrar="tunel3.entrar", fondo="loc-tunel_derrumbe", oscuro="true"))
+m.col(600, 100, 100, 100, "derrumbe").col(600, 200, 100, 30, "derrumbe_nuevo", condicion="crane_perdido").col(710, 100, 14, 8, "puntal")
+m.hot("derrumbe", 600, 100, 100, 100, nombre_visible="Derrumbe", mirar="tunel3.derrumbe_mirar", aprox=a(586, 150), orientacion="derecha")
+m.hot("puntal", 710, 40, 14, 70, nombre_visible="Puntal podrido", mirar="tunel3.puntal_mirar", usar="tunel3.puntal", aprox=a(742, 114), orientacion="izquierda")
+m.npc("crane", 40, 170, sprite="crane", nombre_visible="Crane", mirar="tunel3.crane_mirar", condicion="!crane_perdido", persigue=26, distancia_var="crane_distancia")
+m.hot("salida", 936, 100, 20, 130, usar="tunel3.salir", auto="true")
+m.spawn("inicio", 120, 170, "derecha")
+MAPAS.append(m)
+
+m = tunel(Mapa("tunel4", "Túneles · Bank → Temple", ancho=960, al_entrar="tunel4.entrar", fondo="loc-tunel_carteles", oscuro="true"))
+m.hot("carteles", 120, 30, 460, 60, nombre_visible="Carteles viejos", mirar="tunel4.carteles_mirar", aprox=a(340, 110), orientacion="arriba")
+m.hot("nina", 700, 28, 60, 64, nombre_visible="Cartel de la niña", mirar="tunel4.nina_mirar", aprox=a(730, 110), orientacion="arriba")
+m.hot("plano", 850, 30, 90, 60, nombre_visible="Plano del metro", mirar="tunel4.plano_mirar", aprox=a(895, 110), orientacion="arriba")
+m.hot("salida", 936, 100, 20, 130, usar="tunel4.salir", auto="true")
+m.spawn("inicio", 30, 170, "derecha")
+MAPAS.append(m)
+
+m = Mapa("cripta", "Cripta de San Clemente", al_entrar="cripta.entrar")
+m.muros(fondo=96)
+m.col(100, 92, 100, 12, "estanteria").col(300, 92, 130, 12, "estanteria").col(150, 140, 80, 30, "mesa").col(340, 180, 80, 30, "camastro").col(52, 200, 16, 16, "telefono")
+m.hot("libros", 100, 28, 100, 64, nombre_visible="Libros", mirar="cripta.libros_mirar", aprox=a(150, 112), orientacion="arriba")
+m.hot("campanas", 214, 22, 72, 70, nombre_visible="Estructura de las campanas", mirar="cripta.campanas_mirar", aprox=a(250, 112), orientacion="arriba")
+m.hot("telefono", 52, 196, 16, 20, nombre_visible="Teléfono de campaña", mirar="cripta.telefono_mirar", aprox=a(82, 212), orientacion="izquierda")
+m.npc("goldstein", 246, 168, sprite="goldstein", nombre_visible="Emmanuel Goldstein", mirar="cripta.goldstein_mirar", aprox=a(266, 180), orientacion_jugador="izquierda")
+m.npc("crane", 92, 132, sprite="crane", nombre_visible="Crane", condicion="crane_en_cripta")
+m.spawn("escalera", 64, 114, "abajo")
+MAPAS.append(m)
+
+# ------------------------------------------------------------------ FINALES C y D
+m = Mapa("celda", "Ministerio del Amor · celda", al_entrar="celda.entrar")
+m.muros(fondo=92)
+m.col(40, 92, 400, 16, "banco").col(40, 92, 16, 154, "banco").col(424, 92, 16, 154, "banco").col(60, 214, 16, 16, "cubo")
+m.hot("banco", 160, 92, 160, 16, nombre_visible="Banco", usar="celda.esperar", aprox=a(240, 132), orientacion="arriba")
+m.hot("tele", 220, 30, 40, 30, nombre_visible="Telepantalla", mirar="celda.tele_mirar", aprox=a(220, 128), orientacion="arriba")
+m.hot("puerta", 224, 232, 32, 12, nombre_visible="Puerta", mirar="celda.puerta_mirar", aprox=a(240, 226), orientacion="abajo")
+m.hot("cubo", 60, 210, 16, 20, nombre_visible="Cubo", mirar="celda.cubo_mirar", aprox=a(90, 222), orientacion="izquierda")
+m.npc("winston", 330, 112, sprite="winston_preso", nombre_visible="Winston Smith", hablar="celda.winston", mirar="celda.winston_mirar", solido="false", aprox=a(330, 132))
+m.npc("parsons", 170, 112, sprite="parsons_preso", nombre_visible="Parsons", mirar="celda.parsons_mirar", solido="false", aprox=a(170, 132), condicion="celda_evento<1 && final_en_curso!=D")
+m.npc("esqueleto", 110, 112, sprite="esqueleto", nombre_visible="Preso", mirar="celda.esqueleto_mirar", solido="false", aprox=a(110, 132), condicion="final_en_curso!=D")
+m.spawn("banco", 240, 136, "abajo")
+MAPAS.append(m)
+
+m = Mapa("sala_obrien", "Ministerio del Amor · sala blanca", al_entrar="sala_obrien.entrar")
+m.muros(fondo=96)
+m.col(180, 120, 120, 50, "camilla").col(330, 150, 90, 30, "mesa")
+m.npc("obrien", 316, 142, sprite="obrien", nombre_visible="O'Brien", solido="false")
+m.spawn("camilla", 240, 190, "arriba")
+MAPAS.append(m)
+
+m = Mapa("cafe", "Café del Castaño", al_entrar="cafe.entrar")
+m.muros(fondo=96, puerta=(224, 256))
+m.col(100, 140, 50, 30, "mesa").col(220, 170, 50, 30, "mesa").col(330, 130, 50, 30, "mesa").col(400, 100, 36, 100, "barra")
+m.hot("mesa", 220, 160, 50, 40, nombre_visible="Mi mesa", usar="cafe.mesa", aprox=a(245, 214), orientacion="arriba")
+m.hot("cartel", 150, 26, 40, 50, nombre_visible="Cartel de Ivy", mirar="cafe.cartel_mirar", aprox=a(170, 110), orientacion="arriba")
+m.hot("ventana", 60, 30, 70, 50, nombre_visible="Ventana", mirar="cafe.ventana_mirar", aprox=a(95, 110), orientacion="arriba")
+m.npc("amory", 355, 166, sprite="amory", nombre_visible="Amory", hablar="cafe.amory", mirar="cafe.amory_mirar", aprox=a(355, 186))
+m.npc("camarero", 384, 126, sprite="camarero", nombre_visible="Camarero", mirar="cafe.camarero_mirar", aprox=a(380, 196), orientacion_jugador="arriba")
+m.spawn("mesa", 245, 216, "arriba")
 MAPAS.append(m)
 
 if __name__ == "__main__":

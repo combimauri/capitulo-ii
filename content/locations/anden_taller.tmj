@@ -1,0 +1,276 @@
+{
+ "type": "map",
+ "version": "1.10",
+ "orientation": "orthogonal",
+ "renderorder": "right-down",
+ "width": 30,
+ "height": 17,
+ "tilewidth": 16,
+ "tileheight": 16,
+ "infinite": false,
+ "properties": [
+  {
+   "name": "nombre",
+   "type": "string",
+   "value": "Túneles · un andén tapiado"
+  },
+  {
+   "name": "fondo",
+   "type": "string",
+   "value": "loc-anden_taller"
+  },
+  {
+   "name": "al_entrar",
+   "type": "string",
+   "value": "taller.entrar"
+  },
+  {
+   "name": "oscuro",
+   "type": "string",
+   "value": "true"
+  }
+ ],
+ "tilesets": [],
+ "layers": [
+  {
+   "id": 1,
+   "name": "fondo",
+   "type": "imagelayer",
+   "image": "../../public/assets/locations/anden_taller.png",
+   "x": 0,
+   "y": 0,
+   "opacity": 1,
+   "visible": true
+  },
+  {
+   "id": 2,
+   "name": "colisiones",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 1,
+     "name": "pared",
+     "x": 0,
+     "y": 0,
+     "width": 480,
+     "height": 92,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 2,
+     "name": "foso",
+     "x": 0,
+     "y": 200,
+     "width": 480,
+     "height": 70,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 3,
+     "name": "telepantallas",
+     "x": 60,
+     "y": 92,
+     "width": 140,
+     "height": 18,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    },
+    {
+     "id": 4,
+     "name": "mesa",
+     "x": 300,
+     "y": 110,
+     "width": 80,
+     "height": 30,
+     "visible": true,
+     "rotation": 0,
+     "type": ""
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 3,
+   "name": "hotspots",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 5,
+     "name": "teles",
+     "x": 60,
+     "y": 30,
+     "width": 140,
+     "height": 62,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Telepantallas desmontadas"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "taller.teles_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "130,120"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 6,
+     "name": "mesa",
+     "x": 300,
+     "y": 100,
+     "width": 80,
+     "height": 40,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mesa de trabajo"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "taller.mesa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "340,154"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 7,
+     "name": "pared",
+     "x": 390,
+     "y": 30,
+     "width": 76,
+     "height": 60,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Nombres en tiza"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "taller.pared_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "428,110"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      }
+     ]
+    },
+    {
+     "id": 8,
+     "name": "salida",
+     "x": 460,
+     "y": 96,
+     "width": 20,
+     "height": 104,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "taller.salir"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 4,
+   "name": "spawns",
+   "type": "objectgroup",
+   "objects": [
+    {
+     "id": 9,
+     "name": "entrada",
+     "x": 24,
+     "y": 150,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      }
+     ]
+    }
+   ],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  },
+  {
+   "id": 5,
+   "name": "npcs",
+   "type": "objectgroup",
+   "objects": [],
+   "opacity": 1,
+   "visible": true,
+   "x": 0,
+   "y": 0
+  }
+ ],
+ "nextlayerid": 6,
+ "nextobjectid": 10
+}
