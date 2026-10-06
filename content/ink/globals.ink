@@ -405,7 +405,13 @@ VAR crane_humillado = false
 VAR capitulo_escrito = false
 VAR cf_j13_sacar = ""
 // Finales C y D
-VAR prota_preso = false
+// Aspecto del protagonista en los finales: "" · "preso" · "golpeado" · "cafe" (cada uno, una hoja de sprites)
+VAR prota_aspecto = ""
+VAR choques = 0
+VAR crane_alcanza = false
+VAR hambre = 100
+VAR palizas = 0
+VAR fd_limehouse_visto = false
 VAR celda_vista = false
 VAR celda_evento = 0
 VAR pan_dado = ""                      // "dado" | "comido"

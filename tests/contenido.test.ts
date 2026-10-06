@@ -1041,7 +1041,7 @@ describe('Acto IV y los finales C, D y E', () => {
     expect(b.get('crane_humillado')).toBe(true);
     expect(b.get('fc_variante')).toBe('libro_vive');
     expect(comandos).toContain('escena:celda');
-    expect(b.get('prota_preso')).toBe(true);
+    expect(b.get('prota_aspecto')).toBe('preso');
   });
 
   it('Final C: la celda, O\'Brien, «¿Qué hora marca?», la 101 y el café (la traición tiene consecuencias)', () => {
@@ -1049,19 +1049,55 @@ describe('Acto IV y los finales C, D y E', () => {
     expect(jugar(b, 'arresto').comandos).toContain('escena:celda');
     jugar(b, 'celda.entrar');
     jugar(b, 'celda.esperar');
+    expect(b.get('prota_aspecto')).toBe('preso');
+    expect(jugar(b, 'celda.esperar').comandos).toContain('refrescar:');
+    expect(b.get('prota_aspecto')).toBe('golpeado');
     jugar(b, 'celda.esperar', { elecciones: [0] });
     expect(b.get('pan_dado')).toBe('dado');
     jugar(b, 'celda.esperar');
-    expect(jugar(b, 'celda.esperar').comandos).toContain('escena:sala_obrien');
+    expect(b.get('palizas')).toBe(2);
+    const ultima = jugar(b, 'celda.esperar');
+    expect(ultima.comandos).toContain('escena:sala_obrien');
+    expect(b.get('palizas')).toBe(3);
+    expect(b.get('hambre')).toBe(10);
+    expect(ultima.texto).not.toContain('Ya no tengo hambre');
     const o = jugar(b, 'sala_obrien.entrar', { minijuegos: { dial_respuesta: 'nueve', traicion_101: 'nell' } });
     expect(o.texto).toContain('«No.»'.slice(1, 3));
     expect(o.texto).toContain('Todos lo dicen todo al duodécimo día');
     expect(o.texto).toContain('¿Las ve? ¿De verdad las ve?');
     expect(o.comandos).toContain('escena:cafe');
+    expect(b.get('prota_aspecto')).toBe('cafe');
     expect(jugar(b, 'cafe.entrar').texto).toContain('N. Hask');
     const fin = jugar(b, 'cafe.mesa');
     expect(fin.texto).toContain('Amaba al Gran Hermano');
     expect(fin.comandos).toContain('final:C');
+  });
+
+  it('Tramo 3 a oscuras: más de tres choques y Crane le oye; con menos, se le pierde', () => {
+    const b = nueva({ crane_sigue: true });
+    for (let i = 1; i <= 3; i++) { b.set('choques', i); jugar(b, 'tunel3.choque'); }
+    expect(b.get('crane_alcanza')).toBe(false);
+    b.set('choques', 4);
+    expect(jugar(b, 'tunel3.choque').texto).toContain('Hace usted mucho ruido');
+    expect(b.get('crane_alcanza')).toBe(true);
+    expect(jugar(b, 'tunel3.puntal').texto).toContain('nos cae a los dos');
+    b.set('crane_distancia', 300);
+    jugar(b, 'tunel3.salir');
+    expect(b.get('crane_perdido')).toBe(false);
+
+    const c = nueva({ crane_sigue: true, choques: 2, crane_distancia: 300 });
+    expect(jugar(c, 'tunel3.salir').texto).toContain('me ha perdido');
+    expect(c.get('crane_perdido')).toBe(true);
+  });
+
+  it('Final C: el hambre baja al esperar y comerse el pan la sube', () => {
+    const b = nueva({ jornada: 9, escena_actual: 'piso' });
+    jugar(b, 'arresto');
+    jugar(b, 'celda.esperar');
+    jugar(b, 'celda.esperar');
+    expect(b.get('hambre')).toBe(64);
+    expect(jugar(b, 'celda.esperar', { elecciones: [1] }).texto).toContain('Me lo como');
+    expect(b.get('hambre')).toBe(81);
   });
 
   it('Final D: el libro va a la caja de metralla; aguantar 24 horas; el epílogo y la niña que canta', () => {
@@ -1071,7 +1107,12 @@ describe('Acto IV y los finales C, D y E', () => {
     const dot = jugar(b, 'casa_dot.entrar');
     expect(dot.texto).toContain('Había un chico en mi lugar');
     expect(dot.texto).toContain('Nadie busca en las cosas de un niño muerto');
-    expect(dot.comandos).toContain('escena:escalera');
+    expect(dot.comandos).toContain('escena:limehouse');
+    expect(jugar(b, 'limehouse.entrar').texto).toContain('No huyo');
+    expect(jugar(b, 'fd_limehouse.cantante').texto).toContain('Siga cantando');
+    const sale = jugar(b, 'fd_limehouse.salir');
+    expect(sale.texto).toContain('Hoy todavía sé quién soy');
+    expect(sale.comandos).toContain('escena:escalera');
     expect(jugar(b, 'escalera.entrar').comandos).toContain('escena:piso');
     expect(jugar(b, 'fd_silla').comandos).toContain('escena:celda');
     expect(jugar(b, 'celda.winston').texto).toContain('Ahora no me acuerdo de qué era');

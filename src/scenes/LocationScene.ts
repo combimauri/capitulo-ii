@@ -4,7 +4,7 @@
  * puntos interactivos, personajes, transiciones pedidas desde ink y depuración.
  */
 import Phaser from 'phaser';
-import { narrativa, registro, mano, mision, segundos, LOCALIZACIONES, RESOLUCION, EV, tactil } from '../core/juego';
+import { narrativa, registro, mano, mision, segundos, LOCALIZACIONES, RESOLUCION, EV, tactil, texturaProta } from '../core/juego';
 import { contains, cumple, overlaps, type Dir, type Hotspot, type LocationData, type Npc, type Point, type Rect } from '../core/Location';
 import { NavGrid } from '../systems/Pathfinding';
 import { Sigilo } from '../systems/Sigilo';
@@ -72,6 +72,11 @@ export class LocationScene extends Phaser.Scene {
   private oscuridad: Phaser.GameObjects.Image | null = null;
   private bordesOscuros: Phaser.GameObjects.Rectangle[] = [];
   private proximaDistancia = 0;
+  /** A oscuras: el protagonista ya está pegado a algo (un choque cuenta al tocarlo, no mientras se empuja). */
+  private contraAlgo = false;
+  /** La linterna de otro (Crane, cuando te ha oído): se ve aunque todo esté a oscuras. */
+  private luzAjena: Phaser.GameObjects.Image | null = null;
+  private ultimoChoque = 0;
 
   constructor() { super('Location'); }
 
@@ -95,7 +100,7 @@ export class LocationScene extends Phaser.Scene {
     const spawn = this.loc.spawns.find((s) => s.name === data.spawn) ?? this.loc.spawns[0];
     const x = data.x ?? spawn.x, y = data.y ?? spawn.y;
     this.dir = data.dir ?? spawn.orientacion;
-    this.texturaProta = (narrativa.get('genero') === 'f' ? 'prot_m' : 'prot_h') + (narrativa.get('prota_preso') ? '_preso' : '');
+    this.texturaProta = texturaProta();
     this.sombra = this.add.ellipse(x, y, 14, 5, 0x000000, 0.28);
     this.prota = this.add.sprite(x, y, this.texturaProta, this.cuadroQuieto()).setOrigin(0.5, 1);
     if (this.loc.tinteProta !== undefined) this.prota.setTint(this.loc.tinteProta);
@@ -341,6 +346,12 @@ export class LocationScene extends Phaser.Scene {
       if (s) { this.colocar(s.x, s.y); this.dir = s.orientacion; this.parar(); }
     } else if (t.key === 'refrescar') {
       this.actualizarVisibilidad();
+      // el aspecto del protagonista puede cambiar sin cambiar de escena (las palizas de la celda)
+      if (texturaProta() !== this.texturaProta) {
+        this.texturaProta = texturaProta();
+        this.prota.anims.stop();
+        this.prota.setTexture(this.texturaProta, this.cuadroQuieto());
+      }
     } else if (t.key === 'final') {
       this.finalPendiente = true;
       if (t.value && t.value !== 'demo') SaveSystem.registrarFinal(t.value);
@@ -406,7 +417,7 @@ export class LocationScene extends Phaser.Scene {
   /** Los túneles: oscuridad total salvo el círculo de la linterna de dinamo, que se apaga si no se le da a la manivela. */
   private crearOscuridad() {
     mision.oscuro = this.loc.oscuro;
-    this.oscuridad = null; this.bordesOscuros = [];
+    this.oscuridad = null; this.bordesOscuros = []; this.luzAjena = null;
     if (!this.loc.oscuro) return;
     mision.carga = Math.max(mision.carga, 0.7);
     if (!this.textures.exists('luz-hueco')) {
@@ -433,6 +444,10 @@ export class LocationScene extends Phaser.Scene {
     const x = this.prota.x, y = this.prota.y - 14;
     o.setPosition(x, y).setDisplaySize(r * 2, r * 2);
     const W = this.loc.width, H = this.loc.height, [a, b, c, d] = this.bordesOscuros;
+    // con la linterna apagada, los ojos se acostumbran: siluetas tenues
+    const tenue = this.aOscuras() ? 0.9 : 0.97;
+    for (const r of this.bordesOscuros) r.setFillStyle(0x060504, tenue);
+    o.setAlpha(this.aOscuras() ? 0.92 : 1);
     a.setPosition(0, 0).setSize(W, Math.max(0, y - r));
     b.setPosition(0, y + r).setSize(W, Math.max(0, H - y - r));
     c.setPosition(0, y - r).setSize(Math.max(0, x - r), r * 2);
@@ -445,14 +460,33 @@ export class LocationScene extends Phaser.Scene {
       const p = n.npc.persigue;
       if (!p || !n.visible) continue;
       const dx = this.prota.x - n.sprite.x, dy = this.prota.y - n.sprite.y, d = Math.hypot(dx, dy);
-      const ve = !mision.oculto && (!this.loc.oscuro || mision.carga > 0.15);
+      const siempre = !!p.siempre && cumple(p.siempre, (v) => narrativa.get(v));
+      const ve = siempre || (!mision.oculto && (!this.loc.oscuro || mision.carga > 0.15));
       if (ve && d > 22) {
-        const paso = Math.min(d - 22, p.velocidad * dt);
+        const paso = Math.min(d - 22, p.velocidad * (siempre ? 2 : 1) * dt);
         n.sprite.x += (dx / d) * paso; n.sprite.y += (dy / d) * paso;
         n.sprite.setFlipX(dx < 0).setDepth(n.sprite.y);
         const h = n.npc.hotspot;
         h.x += (dx / d) * paso; h.y += (dy / d) * paso; h.aprox.x += (dx / d) * paso; h.aprox.y += (dy / d) * paso;
         n.npc.x = n.sprite.x; n.npc.y = n.sprite.y;
+      }
+      if (siempre && this.loc.oscuro) {
+        if (!this.luzAjena) {
+          if (!this.textures.exists('luz-ajena')) {
+            const t = this.textures.createCanvas('luz-ajena', 128, 128)!;
+            const ctx = t.getContext();
+            const g = ctx.createRadialGradient(64, 64, 0, 64, 64, 64);
+            g.addColorStop(0, 'rgba(255,226,168,0.55)');
+            g.addColorStop(0.5, 'rgba(255,226,168,0.18)');
+            g.addColorStop(1, 'rgba(255,226,168,0)');
+            ctx.fillStyle = g;
+            ctx.fillRect(0, 0, 128, 128);
+            t.refresh();
+          }
+          this.luzAjena = this.add.image(0, 0, 'luz-ajena').setDisplaySize(84, 84).setBlendMode(Phaser.BlendModes.ADD).setDepth(9601);
+        }
+        this.luzAjena.setPosition(n.sprite.x, n.sprite.y - 16);
+        n.sprite.setDepth(9600);
       }
       if (p.variable && this.time.now > this.proximaDistancia) {
         this.proximaDistancia = this.time.now + 250;
@@ -557,9 +591,13 @@ export class LocationScene extends Phaser.Scene {
 
   /** Mueve con colisión por ejes. Devuelve false si no pudo avanzar nada. */
   private mover(dx: number, dy: number): boolean {
-    let movido = false;
-    if (dx && !this.bloqueado({ x: this.prota.x + dx, y: this.prota.y })) { this.prota.x += dx; movido = true; }
-    if (dy && !this.bloqueado({ x: this.prota.x, y: this.prota.y + dy })) { this.prota.y += dy; movido = true; }
+    let movido = false, choca = false;
+    if (dx) { if (!this.bloqueado({ x: this.prota.x + dx, y: this.prota.y })) { this.prota.x += dx; movido = true; } else choca = true; }
+    if (dy) { if (!this.bloqueado({ x: this.prota.x, y: this.prota.y + dy })) { this.prota.y += dy; movido = true; } else choca = true; }
+    if (this.aOscuras()) {
+      if (choca && !this.contraAlgo) this.chocar();
+      this.contraAlgo = choca;
+    }
     if (Math.abs(dx) > Math.abs(dy)) this.dir = dx < 0 ? 'izquierda' : 'derecha';
     else if (dy) this.dir = dy < 0 ? 'arriba' : 'abajo';
     if (movido) this.prota.anims.play(`${this.texturaProta}-${this.dir}-andar`, true);
@@ -601,6 +639,8 @@ export class LocationScene extends Phaser.Scene {
     this.colisionesActivas = this.loc.colisiones.filter((c) => cumple(c.condicion, leer));
     const conAccion = (h: Hotspot) => !!(h.mirar || h.usar || h.hablar || h.escondite);
     this.hotspotsVisibles = this.loc.hotspots.filter((h) => conAccion(h) && cumple(h.condicion, leer));
+    const med = this.loc.medidor;
+    mision.medidor = med && cumple(med.condicion, leer) ? { variable: med.variable, etiqueta: med.etiqueta } : null;
     for (const n of this.npcs.values()) {
       n.visible = cumple(n.npc.hotspot.condicion, leer);
       n.sprite.setVisible(n.visible);
@@ -695,8 +735,21 @@ export class LocationScene extends Phaser.Scene {
     this.game.events.emit(EV.dialogoIniciar, ruta);
   }
 
+  /** Linterna apagada en un mapa que cuenta los choques: no se ve el camino, así que se va en línea recta. */
+  private aOscuras() { return this.loc.oscuro && !!this.loc.alChocar && mision.carga <= 0.15; }
+
+  private chocar() {
+    if (this.time.now - this.ultimoChoque < 700) return;
+    this.ultimoChoque = this.time.now;
+    audio.play('choque');
+    this.cameras.main.shake(120, 0.004);
+    if (narrativa.story.variablesState.GlobalVariableExistsWithName('choques')) narrativa.set('choques', Number(narrativa.get('choques')) + 1);
+    const knot = this.loc.alChocar;
+    if (knot && narrativa.hasPath(knot)) { this.ruta = []; this.alLlegar = null; this.parar(); this.game.events.emit(EV.dialogoIniciar, knot); }
+  }
+
   private caminarA(destino: Point, alLlegar?: () => void) {
-    const ruta = this.nav.findPath({ x: this.prota.x, y: this.prota.y }, destino);
+    const ruta = this.aOscuras() ? [destino] : this.nav.findPath({ x: this.prota.x, y: this.prota.y }, destino);
     if (!ruta) return;
     this.ruta = ruta;
     this.alLlegar = alLlegar ?? null;

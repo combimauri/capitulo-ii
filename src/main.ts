@@ -31,6 +31,7 @@ import { TunelesScene } from './scenes/minijuegos/TunelesScene';
 import { CapituloScene } from './scenes/minijuegos/CapituloScene';
 import { DialScene } from './scenes/minijuegos/DialScene';
 import { Habitacion101Scene } from './scenes/minijuegos/Habitacion101Scene';
+import { CFAutomaticoScene } from './scenes/minijuegos/CFAutomaticoScene';
 import { DeclaracionScene } from './scenes/minijuegos/DeclaracionScene';
 import { ResistenciaScene } from './scenes/minijuegos/ResistenciaScene';
 import { EpilogoScene, CreditosScene } from './scenes/minijuegos/EpilogoScene';
@@ -51,7 +52,7 @@ const juego = new Phaser.Game({
   dom: { createContainer: true },
   scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene,
     DocumentoScene, LibroScene, CopiarScene, PalancaScene, LlavesScene, CombinacionScene, RectificacionScene, ListaScene,
-    TunelesScene, CapituloScene, DialScene, Habitacion101Scene, DeclaracionScene, ResistenciaScene, EpilogoScene, CreditosScene, RegistroScene],
+    TunelesScene, CapituloScene, DialScene, Habitacion101Scene, DeclaracionScene, ResistenciaScene, EpilogoScene, CreditosScene, CFAutomaticoScene, RegistroScene],
 });
 
 // Atajos de depuración en la consola del navegador (solo en desarrollo):

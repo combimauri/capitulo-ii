@@ -28,8 +28,9 @@ def main():
     import protagonista
     protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_h.png")
     protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_m.png", femenina=True)
-    protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_h_preso.png", preso=True)
-    protagonista.hoja_sprites(DESTINO / "sprites" / "protagonista_m_preso.png", femenina=True, preso=True)
+    for g, fem in (("h", False), ("m", True)):
+        for aspecto in protagonista.ASPECTOS:      # preso · golpeado · cafe (los finales C y D)
+            protagonista.hoja_sprites(DESTINO / "sprites" / f"protagonista_{g}_{aspecto}.png", femenina=fem, aspecto=aspecto)
     print("ok protagonista H y M")
 
     import npcs

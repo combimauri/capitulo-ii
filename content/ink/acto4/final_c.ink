@@ -17,7 +17,7 @@ PENSAMIENTO: Negro. # fx:negro # id:fcc_00_negro
 { final_en_curso == "":
     ~ final_en_curso = "C"
 }
-~ prota_preso = true
+~ prota_aspecto = "preso"
 PENSAMIENTO: El sonido de una furgoneta. Una puerta metálica. # sfx:sello # esperar:1.5 # id:fc_01_puerta
 CARTEL: ? # id:fc_02_cartel # escena:celda # pos:banco
 -> DONE
@@ -83,29 +83,43 @@ PENSAMIENTO: Cuatro telepantallas. No hay ningún ángulo muerto. # id:fc_02_tel
 PENSAMIENTO: Un cubo. # id:fc_02_cubo
 -> DONE
 
-// El tiempo pasa: cada vez que el protagonista se sienta a esperar, ocurre algo
+// El tiempo pasa: cada vez que el protagonista se sienta a esperar, ocurre algo. El hambre baja.
 = esperar
 { final_en_curso == "D":
     PENSAMIENTO: Espero. # id:fd_04_esperar
     -> DONE
 }
 ~ celda_evento += 1
+~ hambre -= 18
+{ hambre < 0:
+    ~ hambre = 0
+}
 { celda_evento:
 - 1:
     PENSAMIENTO: Me siento en el banco de acero. No sé cuánto tiempo pasa. # id:fc_02_e1_00
     PENSAMIENTO: Entra un guardia y se lleva a Parsons. # sfx:sello # refrescar # id:fc_02_e1_01
     PARSONS: ¡Gracias! ¡Gracias! # id:fc_02_e1_parsons
 - 2:
-    -> pan
-- 3:
     -> paliza
+- 3:
+    -> pan
 - 4:
-    PENSAMIENTO: Dos veces más. El pasillo, las botas. Pierdo la cuenta. # vineta:vineta-pasillo_suelo # sfx:golpes # fx:temblor # id:fc_02_e4_00
-    PENSAMIENTO: Ya no hay días ni noches. # vineta:fin # id:fc_02_e4_01
-    CARTEL: ? # id:fc_02_e4_cartel
-    PENSAMIENTO: La puerta se abre. Esta vez me llevan a otra sala. # id:fc_02_e4_02 # escena:sala_obrien # pos:camilla
+    -> paliza
+- 5:
+    -> paliza
 - else:
     PENSAMIENTO: Espero. # id:fc_02_espero
+}
+-> hambre_notar
+
+= hambre_notar
+{
+- hambre <= 10:
+    PENSAMIENTO: Ya no tengo hambre. Eso es peor. # id:fc_02_hambre_3
+- hambre < 30:
+    PENSAMIENTO: Me tiemblan las manos. # id:fc_02_hambre_2
+- hambre < 60:
+    PENSAMIENTO: El estómago se me cierra como un puño. # id:fc_02_hambre_1
 }
 -> DONE
 
@@ -119,16 +133,44 @@ PENSAMIENTO: El hombre de la cara de calavera lo mira. # id:fc_02_pan_01
     PENSAMIENTO: Nadie se mueve. # id:fc_02_pan_dar_03
 * [Comérmelo.]
     ~ pan_dado = "comido"
+    ~ hambre += 35
+    { hambre > 100:
+        ~ hambre = 100
+    }
     PENSAMIENTO: Me lo como. # id:fc_02_pan_comer_01
     PENSAMIENTO: El hombre llora en silencio. # id:fc_02_pan_comer_02
-- -> DONE
+- -> hambre_notar
 
+// Tres veces: el pasillo, las botas, la vista desde el suelo. El protagonista vuelve con la cara deformada.
 = paliza
-PENSAMIENTO: Dos guardias me sacan al pasillo. # sfx:sello # id:fc_02_paliza_00
+~ palizas += 1
+{ palizas:
+- 1:
+    PENSAMIENTO: Dos guardias me sacan al pasillo. # sfx:sello # id:fc_02_paliza_00
+- 2:
+    PENSAMIENTO: Otra vez la puerta. Otra vez los dos guardias. # sfx:sello # id:fc_02_paliza2_00
+- else:
+    PENSAMIENTO: La puerta. Ya no me levanto sol{o}. Me levantan. # sfx:sello # id:fc_02_paliza3_00
+}
 PENSAMIENTO: El linóleo blanco. Las botas. # vineta:vineta-pasillo_suelo # id:fc_02_paliza_01
 PENSAMIENTO: Un golpe. # sfx:golpes # fx:temblor # id:fc_02_paliza_02
 PENSAMIENTO: Otro. # sfx:golpes # fx:temblor # id:fc_02_paliza_03
-PENSAMIENTO: Vuelvo a la celda. No veo por un ojo. # vineta:fin # id:fc_02_paliza_04
+{ palizas >= 2:
+    PENSAMIENTO: Otro. Pierdo la cuenta. # sfx:golpes # fx:temblor # id:fc_02_paliza2_01
+}
+~ prota_aspecto = "golpeado"
+{ palizas:
+- 1:
+    PENSAMIENTO: Vuelvo a la celda. No veo por un ojo. # vineta:fin # refrescar # id:fc_02_paliza_04
+    -> hambre_notar
+- 2:
+    PENSAMIENTO: Vuelvo a la celda. Me paso la lengua por los dientes. Falta uno. # vineta:fin # refrescar # id:fc_02_paliza2_02
+    -> hambre_notar
+}
+PENSAMIENTO: Vuelvo a la celda. O me traen. # vineta:fin # refrescar # id:fc_02_paliza3_01
+PENSAMIENTO: Ya no hay días ni noches. # id:fc_02_e4_01
+CARTEL: ? # id:fc_02_e4_cartel
+PENSAMIENTO: La puerta se abre. Esta vez me llevan a otra sala. # id:fc_02_e4_02 # escena:sala_obrien # pos:camilla
 -> DONE
 
 // ==================================================================== FC.03 — O'Brien
@@ -260,7 +302,7 @@ PENSAMIENTO: El silbido se corta. Los cascotes dejan de caer. # id:fc_04_pens_02
 O'BRIEN: Ya está. # id:fc_04_obrien_05
 PENSAMIENTO: Me desatan. O'Brien me pone delante un papel y una pluma. # id:fc_04_pens_03
 PENSAMIENTO: La misma pluma. El mismo sonido. # minijuego:declaracion # id:fc_04_pens_04
-~ prota_preso = false
+~ prota_aspecto = "cafe"
 CARTEL: Algún tiempo después. # fx:negro # id:fc_05_cartel # escena:cafe # pos:mesa
 -> DONE
 

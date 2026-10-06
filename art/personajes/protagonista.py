@@ -180,12 +180,31 @@ for _vistas in (VISTAS, VISTAS_F):
             assert len(f) == W, (nombre, i, len(f), f)
 
 
-# ---------------------------------------------------------------- versión presa (Minimor)
-# Misma silueta y mismos fotogramas; ropa gris de preso y la cara magullada: un ojo cerrado por la hinchazón,
-# un moratón alrededor y el labio partido. La espalda solo cambia de color.
+# ---------------------------------------------------------------- aspectos (Minimor y después)
+# Misma silueta, mismos fotogramas y misma hoja que la versión normal. Tres aspectos:
+#   "preso":    ropa gris de preso, la cara intacta (llegada a la celda).
+#   "golpeado": ropa gris de preso y la cara magullada: un ojo cerrado por la hinchazón, un moratón alrededor,
+#               el labio partido y una costra en la frente. La espalda solo cambia de color.
+#   "cafe":     el Final C, «algún tiempo después»: el mono azul de siempre sobre un cuerpo consumido (brazos y
+#               torso 1 px más estrechos, cuello flaco, el pantalón le cae sobre los zapatos), el pelo ralo y canoso
+#               y la cara recompuesta a medias: el ojo que estuvo cerrado ahora caído, una cicatriz que le parte
+#               la ceja, la nariz torcida y la boca que ya no cierra recta.
+ASPECTOS = ("preso", "golpeado", "cafe")
+
 ROPA_PRESO = {"n": K("gris", 3), "d": K("gris", 4), "b": K("gris", 5), "B": K("gris", 6), "L": K("gris", 5),
               "w": K("gris", 1), "W": K("gris", 2)}
-MAGULLADURAS = {"u": K("granate", 4), "U": K("granate", 3), "k": K("piel", 0), "R": K("rojo", 3)}
+MAGULLADURAS = {"u": K("granate", 4), "U": K("granate", 3), "k": K("piel", 0), "R": K("rojo", 3),
+                "q": K("granate", 2), "Q": K("rojo", 1)}
+# canas: el contorno del pelo baja a gris medio y los mechones a gris claro; la cicatriz es rosada y lisa
+CANAS = {"o": K("gris", 4), "h": K("gris", 7), "H": K("gris", 9), "c": K("granate", 5), "k": K("piel", 1)}
+CANAS_F = {"o": K("gris", 4), "h": K("gris", 6), "H": K("gris", 8), "c": K("granate", 5), "k": K("piel", 1)}
+
+
+def _pon(filas, cambios):
+    f = [list(r) for r in filas]
+    for r, c, ch in cambios:
+        f[r][c] = ch
+    return ["".join(x) for x in f]
 
 
 def _magullar(filas, lateral=False):
@@ -215,12 +234,226 @@ def _magullar(filas, lateral=False):
     return ["".join(x) for x in f]
 
 
-VISTAS_P = {"abajo": _magullar(FRENTE), "derecha": _magullar(LADO_DER, lateral=True), "arriba": ESPALDA}
-VISTAS_P["izquierda"] = [r[::-1] for r in VISTAS_P["derecha"]]
-VISTAS_PF = {"abajo": _magullar(FRENTE_F), "derecha": _magullar(LADO_DER_F, lateral=True), "arriba": ESPALDA_F}
-VISTAS_PF["izquierda"] = [r[::-1] for r in VISTAS_PF["derecha"]]
-PALETA_P = {**PALETA, **ROPA_PRESO, **MAGULLADURAS}
-PALETA_PF = {**PALETA_F, **ROPA_PRESO, **MAGULLADURAS}
+def _golpear(filas, lateral=False):
+    """_magullar y, además, una costra de sangre seca en la frente, en el lado del ojo sano."""
+    f = _magullar(filas, lateral)
+    if lateral:
+        return _pon(f, [(7, 13, "q"), (7, 14, "Q")])
+    return _pon(f, [(7, 6, "Q"), (7, 7, "q")])
+
+
+# --- cafe: cuerpo consumido. Media fila frontal (se refleja); filas 18-39.
+CUERPO_CAFE = [
+    "....nndbOS",          # cuello del mono abierto: se le ve la clavícula
+    "...ndbbbbO",
+    "...ndbbbbL",          # hombros caídos
+    "..ndnbbbbL",          # brazo de 1 px menos
+    "..ndnBbbbL",
+    "..ndnBbbbL",
+    "..ndnbdbbL",          # el mono hace bolsa: un pliegue
+    "..ndnbdbbL",
+    "..ndnbbbbL",
+    "..nnnbbbbL",          # puño de la manga, que le queda largo
+    "..nsnbbdbL",          # mano huesuda
+    "..nsnddddd",          # cinturón apretado, la tela fruncida debajo
+    "..nndbdbdL",
+    "...ndbbbbn",
+    "...ndbbbbn",
+    "...ndbbbbn",
+    "...ndbbbbn",
+    "...ndbbbbn",
+    "...ndbbbbn",
+    "...ndbbbbn",          # el pantalón le cae sobre los zapatos
+    "...nwWwwwn",
+    "...nnnnnn.",
+]
+
+
+# Cabeza calva por arriba (frente y espalda, media fila reflejada): coronilla de piel con brillo, canas a los
+# lados y algún mechón suelto peinado por encima.
+CRANEO_CAFE = [
+    "......oOOO",
+    ".....Oslll",
+    "....ohslls",
+    "...ohhssss",
+    "...ohhssss",
+    "...ohhhsss",
+    "...ohhssss",
+    "...ohsssss",
+]
+NUCA_CAFE = [
+    "......oOOO",
+    ".....Oslll",
+    "....Ossllh",
+    "...ohssshs",
+    "...ohhssss",
+    "...ohhhshs",
+    "...ohhhhhh",
+]
+MECHONES = [(2, 12, "h"), (3, 9, "h"), (3, 10, "h"), (1, 13, "h"), (4, 13, "h")]
+
+
+def _canas_mujer(filas, raya):
+    """Melena canosa que clarea: la raya del pelo se abre y asoma el cuero cabelludo alrededor."""
+    f = _pon(filas, [(r, c, "h") for r in range(0, 6) for c in range(W) if filas[r][c] == "H"])   # pelo sin brillo
+    return _pon(f, [(r, c, "s") for r, c in raya if f[r][c] in "hH"])
+
+
+def _cara_cafe_frente(filas, femenina):
+    """Cara recompuesta torpemente (frente): la asimetría cae a la derecha de la imagen, el ojo que estuvo cerrado."""
+    f = [list(r) for r in filas]
+    for r in range(11, 13):                              # sin colorete
+        for c in range(W):
+            if f[r][c] == "l":
+                f[r][c] = "s"
+    cambios = [
+        (11, 4, "l"), (12, 4, "S"), (12, 5, "S"),       # pómulo marcado y mejilla hundida (lado sano)
+        (11, 6, "S"),                                    # ojera
+        (8, 12, "o"), (8, 13, "o"), (8, 14, "c"), (8, 15, "s"), (9, 15, "o"),   # ceja partida que cae hacia fuera
+        (7, 14, "c"),
+        (9, 13, "S"), (9, 14, "S"), (10, 13, "e"), (10, 14, "e"),   # ojo caído: párpado pesado, una fila más abajo
+        (11, 14, "c"), (12, 14, "c"), (12, 15, "S"),    # la cicatriz sigue por la mejilla
+        (12, 9, "S"), (13, 8, "s"), (13, 9, "s"), (13, 10, "S"), (13, 11, "S"), (13, 12, "S"),   # nariz torcida
+        (14, 11, "s"), (15, 11, "m"),                   # la boca cae por un lado
+    ]
+    if not femenina:
+        cambios += [(14, 3, "."), (14, 4, "O"), (15, 4, "."), (15, 5, "O")]   # mandíbula hundida de un lado
+    for r, c, ch in cambios:
+        if f[r][c] != ".":
+            f[r][c] = ch
+    return ["".join(x) for x in f]
+
+
+def _cuerpo_cafe(filas, cuello):
+    return filas[:17] + [cuello] + espejo(CUERPO_CAFE)
+
+
+def _frente_cafe(base, femenina):
+    f = _cara_cafe_frente(base, femenina)
+    if femenina:
+        f = _cuerpo_cafe(f, "....oohhOSSOhhoo....")
+        f = _canas_mujer(f, [(1, 9), (1, 10), (2, 9), (2, 10), (3, 9), (4, 9), (5, 9)])
+        return _pon(f, [(r, c, ".") for r, c in ((16, 3), (17, 4), (15, 2), (14, 2), (16, 16), (17, 15), (15, 17))])
+    f = espejo(CRANEO_CAFE) + f[8:]
+    f = _cuerpo_cafe(f, "........OSSO........")
+    return _pon(f, [(16, 5, "."), (16, 6, "O"), (16, 13, "O"), (16, 14, ".")] + MECHONES)   # cuello flaco
+
+
+def _espalda_cafe(base, femenina):
+    cuerpo = [r.replace("L", "b").replace("B", "b") for r in espejo(CUERPO_CAFE)[:-9]] + espejo(CUERPO_CAFE)[-9:]
+    cuerpo = [r[:9] + ("d" if r[9] == "b" else r[9]) + r[10:] for r in cuerpo]
+    cuerpo = _pon(cuerpo, [(0, 8, "O"), (0, 9, "S"), (0, 10, "S"), (0, 11, "O"), (1, 9, "d"), (1, 10, "b")])
+    if femenina:
+        f = _canas_mujer(base[:18], [(r, 9) for r in range(1, 7)] + [(1, 10), (2, 10)]) + cuerpo
+        return _pon(f, [(r, c, ".") for r, c in ((19, 3), (20, 3), (19, 16), (20, 16), (17, 4), (17, 15))])
+    f = espejo(NUCA_CAFE) + base[7:16] + ["........OSSO........", "........OSSO........"] + cuerpo
+    f = _pon(f, [(15, 5, "."), (15, 6, "o"), (15, 13, "o"), (15, 14, "."), (2, 11, "h"), (1, 12, "h")])
+    return _pon(f, [(13, 7, "o"), (13, 12, "o"), (14, 9, "S"), (14, 10, "S")])   # la nuca clarea
+
+
+LADO_CAFE_CUERPO = [
+    "........OSSOO.......",
+    "........OSO.........",
+    "......ndbOSn........",   # cuello del mono abierto
+    ".....ndbbbbLn.......",
+    ".....ndbbbbbLn......",
+    ".....ndbbbbbbn......",
+    ".....ndbnBbbbn......",
+    ".....ndbnBbbbn......",
+    ".....ndbnBdbbn......",
+    ".....ndbnBdbbn......",
+    ".....ndbnBbbbn......",
+    ".....ndbnssbbn......",   # mano huesuda
+    ".....ndbnssdbn......",
+    ".....ndddddddn......",   # cinturón apretado
+    "......ndbdbbbn......",
+    "......ndbbnbbn......",
+    "......ndbbnbbn......",
+    "......ndbbnbbn......",
+    "......ndbbnbbn......",
+    "......ndbbnbbn......",
+    "......ndbbnbbn......",
+    "......ndbbnbbn......",   # el pantalón le cae sobre los zapatos
+    "......nwWwnwWwn.....",
+    "......nnnn.nnnnn....",
+]
+
+
+LADO_CAFE_CRANEO = [
+    ".......OOOOOO.......",
+    "......OslllssO......",
+    ".....OsllllhssO.....",
+    "....ohsllsshsssO....",
+    "....ohhsssshssssO...",
+    "....ohhhssssssssO...",
+    "....ohhhhsssssssO...",
+    "....ohhhhhhsssssO...",
+]
+
+
+def _lado_cafe(base, femenina):
+    f = base[:16] + LADO_CAFE_CUERPO
+    if not femenina:
+        f = LADO_CAFE_CRANEO + f[8:]
+    f = _pon(f, [
+        (8, 11, "s"), (8, 12, "o"), (8, 13, "c"), (9, 14, "o"),   # ceja partida y caída hacia fuera
+        (7, 13, "c"),
+        (9, 12, "S"), (9, 13, "S"), (10, 12, "e"), (10, 13, "S"),  # ojo caído bajo un párpado pesado
+        (11, 13, "c"), (12, 13, "c"),                             # la cicatriz sigue por la mejilla
+        (12, 14, "s"), (12, 15, "s"), (11, 10, "S"),              # mejilla hundida, sin colorete
+        (13, 13, "s"), (13, 14, "m"), (13, 15, "S"), (14, 14, "m"),   # boca que cae
+        (14, 13, "s"), (15, 13, "O"), (14, 15, "O"),               # mandíbula flaca
+    ])
+    if femenina:
+        f = _melena_lado(f)
+        f = _canas_mujer(f, [(1, 8), (2, 9), (3, 10), (2, 10), (4, 11), (1, 9)])
+        return _pon(f, [(r, 3, ".") for r in (15, 16, 17, 18, 19, 20)] + [(19, 4, "."), (20, 4, "."), (20, 5, "."),
+                                                                      (18, 6, "d"), (19, 6, "d"), (20, 6, "n")])
+    return f
+
+
+def _con_izquierda(v):
+    v["izquierda"] = [r[::-1] for r in v["derecha"]]
+    return v
+
+
+VISTAS_PRESO = {False: _con_izquierda({"abajo": FRENTE, "derecha": LADO_DER, "arriba": ESPALDA}),
+                True: _con_izquierda({"abajo": FRENTE_F, "derecha": LADO_DER_F, "arriba": ESPALDA_F})}
+VISTAS_GOLPEADO = {False: _con_izquierda({"abajo": _golpear(FRENTE), "derecha": _golpear(LADO_DER, lateral=True),
+                                          "arriba": ESPALDA}),
+                   True: _con_izquierda({"abajo": _golpear(FRENTE_F), "derecha": _golpear(LADO_DER_F, lateral=True),
+                                         "arriba": ESPALDA_F})}
+VISTAS_CAFE = {fem: _con_izquierda({"abajo": _frente_cafe(FRENTE_F if fem else FRENTE, fem),
+                                    "derecha": _lado_cafe(LADO_DER, fem),
+                                    "arriba": _espalda_cafe(ESPALDA_F if fem else ESPALDA, fem)})
+               for fem in (False, True)}
+
+# (femenina, aspecto) -> (vistas, paleta)
+_TABLA = {
+    (False, None): (VISTAS, PALETA),
+    (True, None): (VISTAS_F, PALETA_F),
+    (False, "preso"): (VISTAS_PRESO[False], {**PALETA, **ROPA_PRESO}),
+    (True, "preso"): (VISTAS_PRESO[True], {**PALETA_F, **ROPA_PRESO}),
+    (False, "golpeado"): (VISTAS_GOLPEADO[False], {**PALETA, **ROPA_PRESO, **MAGULLADURAS}),
+    (True, "golpeado"): (VISTAS_GOLPEADO[True], {**PALETA_F, **ROPA_PRESO, **MAGULLADURAS}),
+    (False, "cafe"): (VISTAS_CAFE[False], {**PALETA, **CANAS}),
+    (True, "cafe"): (VISTAS_CAFE[True], {**PALETA_F, **CANAS_F}),
+}
+
+for (_fem, _asp), (_vistas, _pal) in _TABLA.items():
+    for nombre, filas in _vistas.items():
+        assert len(filas) == H, (_fem, _asp, nombre, len(filas))
+        for i, f in enumerate(filas):
+            assert len(f) == W, (_fem, _asp, nombre, i, len(f), f)
+            assert all(ch == "." or ch in _pal for ch in f), (_fem, _asp, nombre, i, f)
+
+
+def _aspecto(aspecto, preso):
+    if preso and aspecto is None:                       # alias heredado: preso=True era la versión magullada
+        aspecto = "golpeado"
+    if aspecto not in (None,) + ASPECTOS:
+        raise ValueError(f"aspecto desconocido: {aspecto!r} (usa None, {', '.join(ASPECTOS)})")
+    return aspecto
 
 
 # Piernas por vista: (fila donde empiezan, columnas de la pierna A, columnas de la pierna B)
@@ -294,14 +527,12 @@ def mano_lateral(filas, dx):
     return ["".join(r) for r in f]
 
 
-def fotogramas(vista, femenina=False, preso=False):
+def fotogramas(vista, femenina=False, aspecto=None, preso=False):
     """[quieto, paso A, pasando, paso B, pasando]"""
-    if preso:
-        vistas = VISTAS_PF if femenina else VISTAS_P
-    else:
-        vistas = VISTAS_F if femenina else VISTAS
+    aspecto = _aspecto(aspecto, preso)
+    vistas = _TABLA[(femenina, aspecto)][0]
     if vista == "izquierda":
-        return [[r[::-1] for r in fr] for fr in fotogramas("derecha", femenina, preso)]
+        return [[r[::-1] for r in fr] for fr in fotogramas("derecha", femenina, aspecto)]
     base = vistas[vista]
     desde, a, b = PIERNAS[vista]
     if vista == "derecha":
@@ -317,11 +548,15 @@ def fotogramas(vista, femenina=False, preso=False):
 ORDEN_HOJA = ["abajo", "izquierda", "derecha", "arriba"]
 
 
-def hoja_sprites(ruta, femenina=False, preso=False):
+def hoja_sprites(ruta, femenina=False, aspecto=None, preso=False):
     """Hoja de 5 columnas (quieto + 4 de caminar) x 4 filas (direcciones), fotogramas de 20x40.
 
-    preso=True: la misma hoja (misma disposición) con la ropa gris de preso y la cara magullada.
+    aspecto: None (el normal), "preso" (ropa gris, cara intacta), "golpeado" (ropa gris y cara magullada)
+    o "cafe" (Final C: mono azul sobre un cuerpo consumido, canas y la cara recompuesta).
+    Misma disposición en todos. preso=True se mantiene como alias de aspecto="golpeado".
     """
+    aspecto = _aspecto(aspecto, preso)
+    pal = _TABLA[(femenina, aspecto)][1]
     from pixel import Canvas
     cv = Canvas(W * 5, H * len(ORDEN_HOJA), bg=("gris", 0))
     cv.img = cv.img.convert("RGBA")
@@ -329,11 +564,7 @@ def hoja_sprites(ruta, femenina=False, preso=False):
     from PIL import ImageDraw
     cv.d = ImageDraw.Draw(cv.img)
     for fila, vista in enumerate(ORDEN_HOJA):
-        if preso:
-            pal = PALETA_PF if femenina else PALETA_P
-        else:
-            pal = PALETA_F if femenina else PALETA
-        for col, frame in enumerate(fotogramas(vista, femenina, preso)):
+        for col, frame in enumerate(fotogramas(vista, femenina, aspecto)):
             for r, row in enumerate(frame):
                 for c, ch in enumerate(row):
                     if ch in pal:

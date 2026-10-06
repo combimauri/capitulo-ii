@@ -218,6 +218,10 @@ PENSAMIENTO: Un puntal de madera podrida. Sostiene lo que queda del techo. # id:
     PENSAMIENTO: Ya no hay nada que tirar. # id:j13_02_t3_puntal_ya
     -> DONE
 }
+{ crane_alcanza:
+    PENSAMIENTO: Está demasiado cerca. Si tiro el techo, nos cae a los dos. # id:j13_02_t3_puntal_cerca
+    -> DONE
+}
 ~ crane_perdido = true
 PENSAMIENTO: Le doy una patada al puntal. Otra. Cruje. # sfx:golpes # id:j13_02_t3_puntal_01
 PENSAMIENTO: El techo cede detrás de mí. # fx:temblor # sfx:impacto # refrescar # id:j13_02_t3_puntal_02
@@ -225,8 +229,27 @@ PENSAMIENTO: Al otro lado, alguien tose. # sfx:tos # esperar:1 # id:j13_02_t3_pu
 CRANE: Hay más túneles, camarada. Siempre hay más túneles. # id:j13_02_t3_crane_01
 -> DONE
 
+// Linterna apagada: cada choque cuenta. Más de tres y Crane le oye (guion: «Apagar la linterna»).
+= choque
+{ crane_perdido or crane_alcanza:
+    -> DONE
+}
+{ choques:
+- 1:
+    PENSAMIENTO: Ladrillo mojado. Me guío por el agua: corre hacia donde voy yo. # id:j13_02_t3_choque_1
+- 2:
+    PENSAMIENTO: Otra vez la pared. No respiro. # id:j13_02_t3_choque_2
+- 3:
+    PENSAMIENTO: Un hierro. Suena como una campana. # sfx:goteo # id:j13_02_t3_choque_3
+- else:
+    ~ crane_alcanza = true
+    PENSAMIENTO: Detrás, una luz se enciende. Se acerca. # sfx:chapoteo # id:j13_02_t3_alcanza_00
+    CRANE: Hace usted mucho ruido para ser alguien que no quiere que le encuentren. # id:j13_02_t3_alcanza_01
+}
+-> DONE
+
 = salir
-{ not crane_perdido and crane_distancia > 140:
+{ not crane_perdido and not crane_alcanza and choques <= 3 and crane_distancia > 140:
     ~ crane_perdido = true
     PENSAMIENTO: Ya no oigo sus pasos. En la oscuridad, me ha perdido. # id:j13_02_t3_perdido
 }
@@ -286,7 +309,7 @@ VOZ: Sube. Llevo dos días con el té preparado. Ya estará frío. # id:j13_02_t
 PENSAMIENTO: Una cripta bajo una iglesia en ruinas. Velas por todas partes. Libros. Libros de verdad. # fx:aclarar # id:j13_03_pens_00
 PENSAMIENTO: Junto a una máquina de escribir, un anciano muy delgado, con una manta sobre los hombros. Pelo blanco y largo. Gafas remendadas con hilo. # id:j13_03_pens_01
 PENSAMIENTO: La cara de los Dos Minutos de Odio. Treinta años más vieja. Más pequeña. # id:j13_03_pens_02
-PENSAMIENTO: Mi cara se crispa sola. El puño se cierra. # fx:temblor # sfx:grieta # id:j13_03_cf_00
+PENSAMIENTO: Mi cara se ha crispado sola. El puño se ha cerrado solo. # minijuego:cf_auto,expr=odio # id:j13_03_cf_00
 PENSAMIENTO: Mi cara le odia sola. Cinco años de entrenamiento. # esperar:1 # id:j13_03_cf_01
 PENSAMIENTO: Es un viejo con una manta. # id:j13_03_cf_02
 GOLDSTEIN: Lo sé. A todos os pasa. # id:j13_03_gold_01

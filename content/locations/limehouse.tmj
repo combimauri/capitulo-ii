@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "limehouse.entrar"
+  },
+  {
+   "name": "fondos_alt",
+   "type": "string",
+   "value": "loc-limehouse_manana:final_en_curso==D"
   }
  ],
  "tilesets": [],
@@ -77,6 +82,24 @@
     },
     {
      "id": 4,
+     "name": "puesto",
+     "x": 420,
+     "y": 112,
+     "width": 80,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 5,
      "name": "farola",
      "x": 146,
      "y": 162,
@@ -87,7 +110,7 @@
      "type": ""
     },
     {
-     "id": 5,
+     "id": 6,
      "name": "farola",
      "x": 466,
      "y": 162,
@@ -98,7 +121,7 @@
      "type": ""
     },
     {
-     "id": 6,
+     "id": 7,
      "name": "farola",
      "x": 636,
      "y": 162,
@@ -120,7 +143,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 7,
+     "id": 8,
      "name": "altavoz",
      "x": 552,
      "y": 4,
@@ -153,7 +176,7 @@
      ]
     },
     {
-     "id": 8,
+     "id": 9,
      "name": "ropa",
      "x": 380,
      "y": 22,
@@ -176,17 +199,22 @@
       {
        "name": "aprox",
        "type": "string",
-       "value": "450,122"
+       "value": "450,146"
       },
       {
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 9,
+     "id": 10,
      "name": "pub",
      "x": 288,
      "y": 54,
@@ -220,11 +248,16 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 10,
+     "id": 11,
      "name": "casa",
      "x": 690,
      "y": 20,
@@ -258,11 +291,16 @@
        "name": "orientacion",
        "type": "string",
        "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 11,
+     "id": 12,
      "name": "llegar",
      "x": 650,
      "y": 108,
@@ -285,12 +323,12 @@
       {
        "name": "condicion",
        "type": "string",
-       "value": "!casa_vista"
+       "value": "!casa_vista && final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 12,
+     "id": 13,
      "name": "volver",
      "x": 0,
      "y": 108,
@@ -309,6 +347,191 @@
        "name": "auto",
        "type": "string",
        "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
+      }
+     ]
+    },
+    {
+     "id": 20,
+     "name": "ropa_manana",
+     "x": 20,
+     "y": 18,
+     "width": 660,
+     "height": 26,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Ropa tendida"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.ropa_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "300,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 21,
+     "name": "puesto",
+     "x": 420,
+     "y": 80,
+     "width": 80,
+     "height": 58,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puesto del mercado"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.puesto_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "460,150"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 22,
+     "name": "obra",
+     "x": 716,
+     "y": 20,
+     "width": 210,
+     "height": 122,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "La casa, a medio levantar"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.obra_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "700,160"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "derecha"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 23,
+     "name": "puerta_verde",
+     "x": 265,
+     "y": 72,
+     "width": 18,
+     "height": 32,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Puerta verde"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.puerta_mirar"
+      },
+      {
+       "name": "aprox",
+       "type": "string",
+       "value": "274,122"
+      },
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "arriba"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 28,
+     "name": "irse",
+     "x": 0,
+     "y": 108,
+     "width": 10,
+     "height": 124,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "properties": [
+      {
+       "name": "usar",
+       "type": "string",
+       "value": "fd_limehouse.salir"
+      },
+      {
+       "name": "auto",
+       "type": "string",
+       "value": "true"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
       }
      ]
     }
@@ -324,7 +547,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 19,
+     "id": 29,
      "name": "entrada",
      "x": 28,
      "y": 172,
@@ -343,9 +566,28 @@
      ]
     },
     {
-     "id": 20,
+     "id": 30,
      "name": "pub",
      "x": 325,
+     "y": 122,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "orientacion",
+       "type": "string",
+       "value": "abajo"
+      }
+     ]
+    },
+    {
+     "id": 31,
+     "name": "casa_dot",
+     "x": 274,
      "y": 122,
      "width": 0,
      "height": 0,
@@ -373,7 +615,7 @@
    "type": "objectgroup",
    "objects": [
     {
-     "id": 13,
+     "id": 14,
      "name": "sammy",
      "x": 744,
      "y": 202,
@@ -403,11 +645,16 @@
        "name": "mirar",
        "type": "string",
        "value": "limehouse.sammy_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 14,
+     "id": 15,
      "name": "dot",
      "x": 806,
      "y": 196,
@@ -437,11 +684,16 @@
        "name": "mirar",
        "type": "string",
        "value": "limehouse.dot_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 15,
+     "id": 16,
      "name": "prole1",
      "x": 872,
      "y": 176,
@@ -466,11 +718,16 @@
        "name": "mirar",
        "type": "string",
        "value": "limehouse.proles_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 16,
+     "id": 17,
      "name": "prole2",
      "x": 900,
      "y": 196,
@@ -495,11 +752,16 @@
        "name": "mirar",
        "type": "string",
        "value": "limehouse.proles_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 17,
+     "id": 18,
      "name": "crane",
      "x": 600,
      "y": 204,
@@ -533,12 +795,12 @@
       {
        "name": "condicion",
        "type": "string",
-       "value": "crane_aparece"
+       "value": "crane_aparece && final_en_curso!=D"
       }
      ]
     },
     {
-     "id": 18,
+     "id": 19,
      "name": "tripode",
      "x": 622,
      "y": 200,
@@ -562,7 +824,148 @@
       {
        "name": "condicion",
        "type": "string",
-       "value": "crane_aparece"
+       "value": "crane_aparece && final_en_curso!=D"
+      }
+     ]
+    },
+    {
+     "id": 24,
+     "name": "cantante",
+     "x": 572,
+     "y": 150,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "prole1"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Mujer que tiende"
+      },
+      {
+       "name": "hablar",
+       "type": "string",
+       "value": "fd_limehouse.cantante"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.cantante_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 25,
+     "name": "sabana",
+     "x": 600,
+     "y": 148,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "sabana"
+      },
+      {
+       "name": "solido",
+       "type": "string",
+       "value": "false"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 26,
+     "name": "nino_a",
+     "x": 214,
+     "y": 214,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nino"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Niños"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.ninos_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
+      }
+     ]
+    },
+    {
+     "id": 27,
+     "name": "nino_b",
+     "x": 276,
+     "y": 200,
+     "width": 0,
+     "height": 0,
+     "visible": true,
+     "rotation": 0,
+     "type": "",
+     "point": true,
+     "properties": [
+      {
+       "name": "sprite",
+       "type": "string",
+       "value": "nino"
+      },
+      {
+       "name": "dir",
+       "type": "string",
+       "value": "izquierda"
+      },
+      {
+       "name": "nombre_visible",
+       "type": "string",
+       "value": "Niños"
+      },
+      {
+       "name": "mirar",
+       "type": "string",
+       "value": "fd_limehouse.ninos_mirar"
+      },
+      {
+       "name": "condicion",
+       "type": "string",
+       "value": "final_en_curso==D"
       }
      ]
     }
@@ -574,5 +977,5 @@
   }
  ],
  "nextlayerid": 6,
- "nextobjectid": 21
+ "nextobjectid": 32
 }

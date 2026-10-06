@@ -28,6 +28,11 @@
    "name": "oscuro",
    "type": "string",
    "value": "true"
+  },
+  {
+   "name": "al_chocar",
+   "type": "string",
+   "value": "tunel3.choque"
   }
  ],
  "tilesets": [],
@@ -318,6 +323,11 @@
        "name": "distancia_var",
        "type": "string",
        "value": "crane_distancia"
+      },
+      {
+       "name": "persigue_si",
+       "type": "string",
+       "value": "crane_alcanza"
       }
      ]
     }

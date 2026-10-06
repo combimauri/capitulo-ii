@@ -55,7 +55,8 @@ export interface Npc extends Point {
   /** Sigilo: el personaje vigila (ruta y cono de visión). */
   vigia?: Vigia;
   /** Persigue al protagonista mientras ve su luz (Crane en los túneles): velocidad y variable de ink con la distancia. */
-  persigue?: { velocidad: number; variable: string };
+  /** siempre: condición con la que persigue aunque no vea la linterna (Crane, cuando te ha oído chocar). */
+  persigue?: { velocidad: number; variable: string; siempre?: string };
 }
 
 export interface Spawn extends Point { name: string; orientacion: Dir }
@@ -102,6 +103,10 @@ export interface LocationData {
   };
   /** Oscuridad total: solo se ve lo que alumbra la linterna de dinamo (túneles). */
   oscuro: boolean;
+  /** Knot que se lanza cada vez que el protagonista choca con algo a oscuras, con la linterna apagada. */
+  alChocar?: string;
+  /** Un medidor en pantalla que lee una variable de ink de 0 a 100 (el hambre de la celda). */
+  medidor?: { variable: string; etiqueta: string; condicion?: string };
 }
 
 interface TiledProp { name: string; value: unknown }
@@ -156,7 +161,7 @@ export function parseTiled(id: string, raw: string): LocationData {
           pausa: Number(p.pausa) || 1200,
           gira: p.gira ? p.gira.split(',') as Dir[] : undefined,
         } : undefined,
-        persigue: p.persigue ? { velocidad: Number(p.persigue) || 30, variable: p.distancia_var ?? '' } : undefined,
+        persigue: p.persigue ? { velocidad: Number(p.persigue) || 30, variable: p.distancia_var ?? '', siempre: p.persigue_si } : undefined,
       };
     }),
     alEntrar: mp.al_entrar,
@@ -173,6 +178,9 @@ export function parseTiled(id: string, raw: string): LocationData {
       alSerVisto: mp.sigilo, checkpoint: mp.checkpoint, condicion: mp.sigilo_si, fijos: poligonos(mp.vigila), ocultos: poligonos(mp.ocultos), social: mp.social === 'true',
     } : undefined,
     oscuro: mp.oscuro === 'true',
+    alChocar: mp.al_chocar,
+    // medidor="hambre,Hambre" (+ medidor_si="cond")
+    medidor: mp.medidor ? { variable: mp.medidor.split(',')[0], etiqueta: mp.medidor.split(',')[1] ?? mp.medidor, condicion: mp.medidor_si } : undefined,
     sigueCamara: map.width * map.tilewidth > 480 || map.height * map.tileheight > 288,   // 270 px = 17 tiles (272)
   };
 }

@@ -19,7 +19,7 @@ const CAJA = { x: 40, y: 386, w: 880, h: 132 };
 const MINIJUEGOS: Record<string, string> = {
   cf: 'Facecrime', dp: 'Registro', cascotes: 'Cascotes', ficha: 'Ficha', parte: 'Parte', frente: 'Frente', pancarta: 'Pancarta', impactos: 'Impactos', sammy: 'Sammy', diario: 'Diario', comparar: 'Comparar', esconder: 'Esconder',
   documento: 'Documento', libro: 'Libro', copiar: 'Copiar', palanca: 'Palanca', llaves: 'Llaves', combinacion: 'Combinacion', rectificacion: 'Rectificacion', lista: 'Lista',
-  tuneles: 'Tuneles', capitulo: 'Capitulo', dial: 'Dial', h101: 'Habitacion101', declaracion: 'Declaracion', resistencia: 'Resistencia', epilogo: 'Epilogo', creditos: 'Creditos',
+  tuneles: 'Tuneles', capitulo: 'Capitulo', dial: 'Dial', h101: 'Habitacion101', declaracion: 'Declaracion', resistencia: 'Resistencia', epilogo: 'Epilogo', creditos: 'Creditos', cf_auto: 'CFAutomatico',
 };
 
 interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
@@ -64,6 +64,9 @@ export class UIScene extends Phaser.Scene {
   private reloj!: Phaser.GameObjects.Text;
   private carpeta!: Phaser.GameObjects.Container;
   private dinamo!: Phaser.GameObjects.Container;
+  private medidor!: Phaser.GameObjects.Container;
+  private medidorBarra!: Phaser.GameObjects.Rectangle;
+  private medidorTexto!: Phaser.GameObjects.Text;
   private cargaDinamo!: Phaser.GameObjects.Rectangle;
 
   constructor() { super('UI'); }
@@ -147,6 +150,13 @@ export class UIScene extends Phaser.Scene {
     }
     this.carpeta.setVisible(mision.social && !this.activo && !this.consultando);
     this.dinamo.setVisible(mision.oscuro && !this.consultando);
+    const m = mision.medidor;
+    this.medidor.setVisible(!!m && !this.activo && !this.consultando);
+    if (m) {
+      const v = Phaser.Math.Clamp(Number(narrativa.get(m.variable)) || 0, 0, 100) / 100;
+      this.medidorTexto.setText(m.etiqueta.toUpperCase());
+      this.medidorBarra.setSize(176 * v, 6).setFillStyle(v < 0.3 ? COLOR.rojo4 : COLOR.papel3);
+    }
     this.cargaDinamo.setSize(176 * mision.carga, 6).setFillStyle(mision.carga < 0.2 ? COLOR.rojo4 : COLOR.ocre4);
     (this.carpeta.getData('fondo') as Phaser.GameObjects.Rectangle).setFillStyle(mision.carpeta ? COLOR.ocre4 : COLOR.gris1, 0.85);
     (this.carpeta.getData('texto') as Phaser.GameObjects.Text).setColor(hex(mision.carpeta ? COLOR.gris1 : COLOR.papel4));
@@ -233,6 +243,13 @@ export class UIScene extends Phaser.Scene {
     this.cargaDinamo = this.add.rectangle(-88, 14, 176, 6, COLOR.ocre4).setOrigin(0, 0.5);
     fd.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); this.game.events.emit(EV.dinamo); });
     this.dinamo = this.add.container(this.esTactil ? 760 : 840, this.esTactil ? 92 : 506, [fd, td, this.add.rectangle(-88, 14, 176, 6, 0x000000, 0.6).setOrigin(0, 0.5), this.cargaDinamo]).setDepth(21).setVisible(false);
+    // un medidor que lee una variable de ink (el hambre de la celda): solo informa, no se toca
+    this.medidorTexto = this.add.text(0, 0, '', { fontFamily: FUENTE.maquina, fontSize: '20px', color: hex(COLOR.papel4) });
+    this.medidorBarra = this.add.rectangle(2, 26, 176, 6, COLOR.papel3).setOrigin(0, 0.5);
+    this.medidor = this.add.container(24, 18, [
+      this.add.rectangle(-8, -4, 196, 42, COLOR.gris1, 0.75).setOrigin(0),
+      this.medidorTexto, this.add.rectangle(2, 26, 176, 6, 0x000000, 0.6).setOrigin(0, 0.5), this.medidorBarra,
+    ]).setDepth(21).setVisible(false);
   }
 
   // ------------------------------------------------------------------ flujo de diálogo

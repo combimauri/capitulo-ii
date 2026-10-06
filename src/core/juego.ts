@@ -33,6 +33,15 @@ export const tactil = { activo: false, x: 0, y: 0, origen: { x: 0, y: 0 } };
  * Estado de las misiones de sigilo, compartido entre LocationScene (lo actualiza) y UIScene (lo dibuja).
  * reloj: ventana de tiempo de una misión; el reloj solo corre mientras se explora (no durante los diálogos).
  */
+/** Aspectos del protagonista en los finales (variable de ink prota_aspecto): cada uno es una hoja de sprites. */
+export const ASPECTOS = ['preso', 'golpeado', 'cafe'] as const;
+
+export function texturaProta(): string {
+  const base = narrativa.get('genero') === 'f' ? 'prot_m' : 'prot_h';
+  const aspecto = String(narrativa.get('prota_aspecto') ?? '');
+  return (ASPECTOS as readonly string[]).includes(aspecto) ? `${base}_${aspecto}` : base;
+}
+
 export const mision = {
   reloj: null as null | { inicio: number; transcurrido: number; limite: number; agotar: string; agotado: boolean; oculto?: boolean },
   /** Medidor de detección (0..1) mientras algún cono ve al protagonista. */
@@ -44,6 +53,8 @@ export const mision = {
   /** Linterna de dinamo (0..1): se carga a golpes y se descarga sola. Solo en mapas oscuros. */
   oscuro: false,
   carga: 0,
+  /** El medidor del mapa actual (propiedad "medidor"), si lo hay y se cumple su condición. */
+  medidor: null as null | { variable: string; etiqueta: string },
 };
 
 /** "23:00:00" → segundos del día; y al revés. */

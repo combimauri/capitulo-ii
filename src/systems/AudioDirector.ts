@@ -5,7 +5,7 @@
 
 type Sfx = 'silbido' | 'impacto' | 'pitido' | 'silbato' | 'sello' | 'tubo' | 'tecla' | 'plumilla'
   | 'acierto' | 'fallo' | 'grieta' | 'fanfarria' | 'tos' | 'naranjas' | 'chirrido'
-  | 'chapoteo' | 'zumbido' | 'tic' | 'papel' | 'alto' | 'golpes' | 'trampilla' | 'dinamo' | 'goteo' | 'descarga';
+  | 'chapoteo' | 'zumbido' | 'tic' | 'papel' | 'alto' | 'golpes' | 'trampilla' | 'dinamo' | 'goteo' | 'descarga' | 'choque' | 'eco_odio';
 
 class Audio {
   private ctx: AudioContext | null = null;
@@ -58,6 +58,16 @@ class Audio {
         this.tono(ctx, out, t, 180, 0.18, 0.06, 'sawtooth');
         return this.tono(ctx, out, t + 0.05, 240, 0.15, 0.05, 'sawtooth');
       case 'goteo': return this.golpe(ctx, out, t, 1800, 0.06, 0.08);
+      case 'eco_odio':                     // los Dos Minutos de Odio, lejos y deformados, en la cabeza
+        [0, 0.38, 0.76, 1.14].forEach((d, i) => {
+          const v = 0.09 / (i + 1);
+          this.tono(ctx, out, t + d, 1900 - i * 260, 0.5, v, 'sawtooth');
+          this.ruido(ctx, out, t + d, 0.45, 1400 - i * 250, v * 2.2);
+        });
+        return;
+      case 'choque':                       // el hombro contra el ladrillo mojado, a oscuras
+        this.golpe(ctx, out, t, 85, 0.2, 0.7);
+        return this.ruido(ctx, out, t, 0.18, 700, 0.18);
       case 'descarga':
         this.tono(ctx, out, t, 1200, dur ?? 0.8, 0.12, 'square');
         return this.ruido(ctx, out, t, dur ?? 0.8, 6000, 0.2);

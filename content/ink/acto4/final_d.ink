@@ -69,10 +69,55 @@ DOT: Aquí no lo buscará nadie. Nadie busca en las cosas de un niño muerto. # 
     ~ inventario -= reloj_ivy
 }
 // FD.03 — Las últimas horas
-PENSAMIENTO: Salgo. No huyo. Limehouse por la mañana: el mercado reconstruido a medias, los niños, la ropa tendida, alguien que canta. # vineta:vineta-limehouse_manana # fx:negro # id:fd_03_pens_00
-PENSAMIENTO: Podría correr. # fx:aclarar # esperar:1 # id:fd_03_pens_01
+PENSAMIENTO: Salgo. # fx:negro # id:fd_03_salgo # escena:limehouse # pos:casa_dot
+-> DONE
+
+// FD.03 — Limehouse por la mañana. Se puede pasear; la salida, a la izquierda, lleva a las Mansiones Victoria.
+=== fd_limehouse ===
+
+= entrar
+{ fd_limehouse_visto:
+    -> DONE
+}
+~ fd_limehouse_visto = true
+PENSAMIENTO: No huyo. Limehouse por la mañana: el mercado reconstruido a medias, los niños, la ropa tendida, alguien que canta. # fx:aclarar # sfx:naranjas # id:fd_03_pens_00
+-> DONE
+
+= ropa_mirar
+PENSAMIENTO: Sábanas, camisas, un vestido amarillo. Se secan al sol como si no hubiera pasado nada. # id:fd_03_ropa
+-> DONE
+
+= puesto_mirar
+PENSAMIENTO: Tablas nuevas clavadas sobre las viejas. Coles, nabos, tres manzanas arrugadas. Alguien ha vuelto a montar el mercado. # id:fd_03_puesto
+-> DONE
+
+= obra_mirar
+PENSAMIENTO: La casa de la cama colgando. Ladrillos nuevos, más claros, sobre los viejos. Un andamio. La están levantando otra vez. # id:fd_03_obra
+-> DONE
+
+= puerta_mirar
+PENSAMIENTO: La puerta verde. El once. Detrás, una caja de metralla. # id:fd_03_puerta
+-> DONE
+
+= ninos_mirar
+PENSAMIENTO: Dos niños juegan a algo que tiene reglas que solo conocen ellos. Uno lleva una lata. # id:fd_03_ninos
+-> DONE
+
+= cantante_mirar
+PENSAMIENTO: Una mujer tiende sábanas y canta. No sabe la letra entera. Se la inventa. # id:fd_03_cantante_mirar
+-> DONE
+
+= cantante
+PENSAMIENTO: Me paro a escucharla. Ella no deja de tender. # sfx:naranjas # id:fd_03_cantante_00
+MUJER: ¿Quiere algo, camarada? # id:fd_03_cantante_01
+PROTAGONISTA: No. Siga cantando. # id:fd_03_cantante_02
+PENSAMIENTO: Se encoge de hombros. Sigue. # id:fd_03_cantante_03
+-> DONE
+
+= salir
+PENSAMIENTO: Podría correr. # esperar:1 # id:fd_03_pens_01
 PENSAMIENTO: ¿Adónde? # esperar:1 # id:fd_03_pens_02
-PENSAMIENTO: Me cogerán hoy o dentro de un mes. Prefiero hoy. Hoy todavía sé quién soy. # vineta:fin # id:fd_03_pens_03 # escena:escalera # pos:abajo
+PENSAMIENTO: Me cogerán hoy o dentro de un mes. Prefiero hoy. Hoy todavía sé quién soy. # fx:negro # id:fd_03_pens_03 # escena:escalera # pos:abajo
 -> DONE
 
 === fd_escalera ===

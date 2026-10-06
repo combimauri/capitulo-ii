@@ -23,6 +23,16 @@
    "name": "al_entrar",
    "type": "string",
    "value": "celda.entrar"
+  },
+  {
+   "name": "medidor",
+   "type": "string",
+   "value": "hambre,Hambre"
+  },
+  {
+   "name": "medidor_si",
+   "type": "string",
+   "value": "final_en_curso!=D"
   }
  ],
  "tilesets": [],

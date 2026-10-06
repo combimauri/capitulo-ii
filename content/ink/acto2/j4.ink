@@ -237,6 +237,9 @@ PENSAMIENTO: Limehouse está a veinte minutos andando. Si voy yo mism{o}… # id
 === limehouse ===
 
 = entrar
+{ final_en_curso == "D":
+    -> fd_limehouse.entrar
+}
 { limehouse_visto:
     -> DONE
 }

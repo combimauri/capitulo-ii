@@ -1,5 +1,5 @@
 import Phaser from 'phaser';
-import { LOCALIZACIONES, ITEMS } from '../core/juego';
+import { LOCALIZACIONES, ITEMS, ASPECTOS } from '../core/juego';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
 
 export const DIRS = ['abajo', 'izquierda', 'derecha', 'arriba'] as const;
@@ -24,7 +24,9 @@ export class PreloadScene extends Phaser.Scene {
     // protagonista (H y M) y personajes de los mapas
     for (const g of ['h', 'm']) {
       this.load.spritesheet(`prot_${g}`, `assets/sprites/protagonista_${g}.png`, { frameWidth: 20, frameHeight: 40 });
-      this.load.spritesheet(`prot_${g}_preso`, `assets/sprites/protagonista_${g}_preso.png`, { frameWidth: 20, frameHeight: 40 });
+      for (const aspecto of ASPECTOS) {
+        this.load.spritesheet(`prot_${g}_${aspecto}`, `assets/sprites/protagonista_${g}_${aspecto}.png`, { frameWidth: 20, frameHeight: 40 });
+      }
     }
     const npcs = new Set(Object.values(LOCALIZACIONES).flatMap((l) => l.npcs.map((n) => n.sprite)));
     for (const n of npcs) this.load.spritesheet(`npc-${n}`, `assets/sprites/npc/${n}.png`, { frameWidth: 20, frameHeight: 40 });
@@ -60,7 +62,7 @@ export class PreloadScene extends Phaser.Scene {
   }
 
   create() {
-    for (const g of ['prot_h', 'prot_m', 'prot_h_preso', 'prot_m_preso']) {
+    for (const g of ['prot_h', 'prot_m', ...ASPECTOS.flatMap((a) => [`prot_h_${a}`, `prot_m_${a}`])]) {
       DIRS.forEach((dir, fila) => {
         this.anims.create({
           key: `${g}-${dir}-andar`,

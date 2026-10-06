@@ -36,7 +36,7 @@ def exportar(destino):
             m.dibujar("j6").img.save(destino / "estudio_j6.png"); hechos.append("estudio_j6")
             m.dibujar("j12").img.save(destino / "estudio_j12.png"); hechos.append("estudio_j12")
         for (base, variante) in (("cantina", "miniver"), ("escalera", "odio"), ("departamento", "noche"),
-                                 ("avenida", "furgoneta"), ("lavabos", "vaho")):
+                                 ("avenida", "furgoneta"), ("lavabos", "vaho"), ("limehouse", "manana")):
             if modulo == base:
                 m.dibujar(variante).img.save(destino / f"{base}_{variante}.png"); hechos.append(f"{base}_{variante}")
         if modulo == "tunel":
