@@ -4,6 +4,7 @@ import { SaveSystem } from '../core/SaveSystem';
 import { audio } from '../systems/AudioDirector';
 import { COLOR, FUENTE, hex } from '../ui/estilo';
 import { pwa } from '../core/pwa';
+import { alternarPantallaCompleta, botonPantallaCompleta } from '../ui/pantalla';
 
 let avisoVisto = false;
 
@@ -36,7 +37,7 @@ export class MenuScene extends Phaser.Scene {
     const seguir = () => { audio.desbloquear(); avisoVisto = true; this.scene.restart(); };
     // en móvil, el primer toque pone la pantalla completa (en iOS no se puede: se instala como app).
     // Al soltar el dedo: es el gesto que los navegadores aceptan para pedirla.
-    this.input.once('pointerup', (p: Phaser.Input.Pointer) => { if (p.wasTouch) this.pantallaCompleta(); seguir(); });
+    this.input.once('pointerup', (p: Phaser.Input.Pointer) => { if (p.wasTouch) alternarPantallaCompleta(this, true); seguir(); });
     this.input.keyboard?.once('keydown', seguir);
   }
 
@@ -45,15 +46,6 @@ export class MenuScene extends Phaser.Scene {
     const nav = navigator as Navigator & { standalone?: boolean };
     const ios = /iP(hone|ad|od)/.test(nav.userAgent) || (nav.platform === 'MacIntel' && nav.maxTouchPoints > 1);
     return ios && !nav.standalone;
-  }
-
-  private pantallaCompleta() {
-    const standalone = window.matchMedia?.('(display-mode: fullscreen), (display-mode: standalone)').matches;
-    if (standalone || this.scale.isFullscreen || !this.scale.fullscreen.available) return;
-    try {
-      this.scale.startFullscreen();
-      void (screen.orientation as ScreenOrientation & { lock?: (o: string) => Promise<void> }).lock?.('landscape').catch(() => {});
-    } catch { /* el navegador no lo permite */ }
   }
 
   private menu() {
@@ -110,6 +102,7 @@ export class MenuScene extends Phaser.Scene {
     this.add.text(width - 12, height - 10, 'v0.4', {
       fontFamily: FUENTE.maquina, fontSize: '16px', color: hex(COLOR.gris3),
     }).setOrigin(1, 1);
+    botonPantallaCompleta(this, width - 36, 36);
     // una versión nueva de la app: se instala solo si el jugador quiere, desde aquí
     const version = () => {
       if (!pwa.actualizar || !this.scene.isActive()) return;

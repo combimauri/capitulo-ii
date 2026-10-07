@@ -51,7 +51,8 @@ const juego = new Phaser.Game({
   backgroundColor: '#0b0c0f',
   pixelArt: true,
   roundPixels: true,
-  scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH },
+  // pantalla completa sobre #juego (canvas + campos de texto HTML), no solo sobre el canvas: si no, en Android no sale el teclado
+  scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH, fullscreenTarget: 'juego' },
   input: { activePointers: 2 },
   dom: { createContainer: true },
   scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene,
