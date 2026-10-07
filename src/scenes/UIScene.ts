@@ -4,7 +4,7 @@
  * controles táctiles, inventario, ojo de la Sospecha y depuración.
  */
 import Phaser from 'phaser';
-import { narrativa, registro, mano, mision, hora, EV, ITEMS, tactil } from '../core/juego';
+import { narrativa, registro, mano, mision, hora, EV, ITEMS, tactil, texturaProta } from '../core/juego';
 import type { ChoiceOption, Line } from '../core/NarrativeBridge';
 import type { Tag } from '../core/tags';
 import type { ResultadoMinijuego } from './minijuegos/Minijuego';
@@ -15,7 +15,21 @@ import { destello, suave } from '../ui/destellos';
 import { opciones as opc, CPS, alCambiarOpcion } from '../core/Opciones';
 
 /** La caja de diálogo; con la interfaz al 125 % crece hacia arriba (diseño técnico §9). */
-const caja = () => { const h = Math.round(132 * escala()); return { x: 40, y: 518 - h, w: 880, h }; };
+const caja = () => { const h = Math.round(140 * escala()); return { x: 40, y: 518 - h, w: 880, h }; };
+/** El retrato de quien habla, a la izquierda de la caja (cuadrado, en píxeles de pantalla). */
+const retratoLado = () => Math.round(108 * escala());
+
+/** Retratos dibujados (los del crimen facial); el resto sale de la cabeza del sprite de cada personaje. */
+const RETRATOS: Record<string, string> = { AMORY: 'retrato-amory_neutral', "O'BRIEN": 'retrato-obrien_neutral' };
+/** Hablante de ink → sprite del personaje (assets/sprites/npc). */
+const SPRITE_HABLANTE: Record<string, string> = {
+  VOSS: 'voss', NELL: 'nell', HILDA: 'hilda', CRANE: 'crane', DOT: 'dot', BROOKE: 'brooke', WINSTON: 'winston', PARSONS: 'parsons',
+  PELL: 'pell', SYME: 'syme', OFICIAL: 'oficial', 'HIJA PARSONS': 'hija_parsons', SAMMY: 'nino', VIEJO: 'viejo', LEN: 'len',
+  BARLOW: 'tabernero', GOLDSTEIN: 'goldstein', JULIA: 'julia', CHARRINGTON: 'charrington', GUARDIA: 'guardia', FUNCIONARIA: 'funcionaria_minimor',
+  CAMARERO: 'camarero', SUPERVISOR: 'supervisor', AGENTE: 'agente',
+};
+/** En la celda, los presos tienen otra cara. */
+const SPRITE_CELDA: Record<string, string> = { winston: 'winston_preso', parsons: 'parsons_preso' };
 const escala = () => opc.ui / 100;
 const px = (n: number) => `${Math.round(n * escala())}px`;
 
@@ -44,8 +58,8 @@ export class UIScene extends Phaser.Scene {
   private nombreFondo!: Phaser.GameObjects.Rectangle;
   private texto!: Phaser.GameObjects.Text;
   private indicador!: Phaser.GameObjects.Text;
-  private pensamiento!: Phaser.GameObjects.Container;
-  private pensamientoTexto!: Phaser.GameObjects.Text;
+  private retrato!: Phaser.GameObjects.Image;
+  private retratoMarco!: Phaser.GameObjects.Rectangle;
   private cartel!: Phaser.GameObjects.Container;
   private cartelTexto!: Phaser.GameObjects.Text;
   private velo!: Phaser.GameObjects.Rectangle;
@@ -80,7 +94,6 @@ export class UIScene extends Phaser.Scene {
     this.esTactil = this.sys.game.device.input.touch;
     this.velo = this.add.rectangle(0, 0, 960, 540, 0x000000, 1).setOrigin(0).setAlpha(0).setDepth(28);   // bajo el texto: se narra a oscuras
     this.crearCaja();
-    this.crearPensamiento();
     this.crearCartel();
     this.opciones = this.add.container(0, 0).setVisible(false).setDepth(30);
     this.crearFoco();
@@ -136,6 +149,7 @@ export class UIScene extends Phaser.Scene {
       else this.pausar();
     });
     kb.on('keydown-L', () => this.abrirRegistro());
+    kb.on('keydown-N', () => this.abrirApuntes());
     kb.on('keydown-C', () => { if (!this.activo) this.game.events.emit(EV.carpeta); });
     kb.on('keydown-F', () => { if (!this.activo) this.game.events.emit(EV.dinamo); });
     kb.on('keydown', (e: KeyboardEvent) => {
@@ -192,6 +206,8 @@ export class UIScene extends Phaser.Scene {
     const CAJA = caja();
     this.cajaFondo = this.add.rectangle(0, 0, CAJA.w, CAJA.h, COLOR.papel3).setOrigin(0).setStrokeStyle(2, COLOR.gris2);
     this.cajaFranja = this.add.rectangle(0, 0, 8, CAJA.h, COLOR.rojo3).setOrigin(0);
+    this.retratoMarco = this.add.rectangle(0, 0, 10, 10, COLOR.gris2).setOrigin(0).setStrokeStyle(2, COLOR.gris3);
+    this.retrato = this.add.image(0, 0, '__DEFAULT').setOrigin(0);
     this.texto = this.add.text(28, 22, '', {
       fontFamily: FUENTE.texto, fontSize: '22px', color: hex(COLOR.gris2), lineSpacing: 6,
       wordWrap: { width: CAJA.w - 56, useAdvancedWrap: true },
@@ -200,11 +216,11 @@ export class UIScene extends Phaser.Scene {
     this.nombre = this.add.text(32, -10, '', { fontFamily: FUENTE.maquina, fontSize: '22px', color: hex(COLOR.papel4) });
     this.indicador = this.add.text(CAJA.w - 26, CAJA.h - 26, '▼', { fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.rojo3) });
     this.tweens.add({ targets: this.indicador, alpha: 0.2, duration: 450, yoyo: true, repeat: -1 });
-    this.caja = this.add.container(CAJA.x, CAJA.y,
-      [this.cajaFondo, this.cajaFranja, this.texto, this.nombreFondo, this.nombre, this.indicador]).setVisible(false).setDepth(30);
+    this.caja = this.add.container(CAJA.x, CAJA.y, [this.cajaFondo, this.cajaFranja, this.retratoMarco, this.retrato, this.texto,
+      this.nombreFondo, this.nombre, this.indicador]).setVisible(false).setDepth(30);
   }
 
-  /** Tamaño de la interfaz (100 % o 125 %): la caja, el pensamiento, el cartel y el foco. */
+  /** Tamaño de la interfaz (100 % o 125 %): la caja, el cartel y el foco. */
   private ajustarTamano() {
     const CAJA = caja();
     this.cajaFondo.setSize(CAJA.w, CAJA.h);
@@ -214,19 +230,45 @@ export class UIScene extends Phaser.Scene {
     this.nombre.setFontSize(px(22));
     this.nombreFondo.setPosition(20, -10 - Math.round(4 * escala())).setSize(this.nombre.width + 24, Math.round(28 * escala()));
     this.nombre.setY(-6 - Math.round(4 * escala()));
-    this.pensamientoTexto.setFontSize(px(22));
     this.cartelTexto.setFontSize(px(30));
     this.focoTexto.setFontSize(px(16));
   }
 
-  private crearPensamiento() {
-    const banda = this.add.rectangle(480, 0, 960, 10, 0x000000, 0.55).setOrigin(0.5, 0);
-    this.pensamientoTexto = this.add.text(480, 24, '', {
-      fontFamily: FUENTE.texto, fontSize: '22px', color: hex(COLOR.papel4), align: 'center', lineSpacing: 6,
-      wordWrap: { width: 820, useAdvancedWrap: true }, stroke: '#000000', strokeThickness: 3,
-    }).setOrigin(0.5, 0);
-    this.pensamiento = this.add.container(0, 0, [banda, this.pensamientoTexto]).setVisible(false).setDepth(30);
-    this.pensamiento.setData('banda', banda);
+  /**
+   * El retrato de quien habla: los dibujados, o la cabeza de su sprite ampliada (se hace una vez y se guarda).
+   * Sin retrato (telepantalla, voces, gente sin cara): null.
+   */
+  private retratoDe(hablante: string | null): string | null {
+    if (!hablante) return null;
+    if (hablante === 'PROTAGONISTA') return `retrato-${texturaProta().split('_').slice(0, 2).join('_')}_neutral`;
+    if (RETRATOS[hablante]) return RETRATOS[hablante];
+    let sprite = SPRITE_HABLANTE[hablante];
+    if (!sprite) return null;
+    if (narrativa.get('escena_actual') === 'celda' && SPRITE_CELDA[sprite]) sprite = SPRITE_CELDA[sprite];
+    const clave = `retrato-npc-${sprite}`;
+    if (this.textures.exists(clave)) return clave;
+    if (!this.textures.exists(`npc-${sprite}`)) return null;
+    const img = this.textures.get(`npc-${sprite}`).getSourceImage() as HTMLImageElement | HTMLCanvasElement;
+    // la cabeza: desde la primera fila con algo dibujado, un cuadrado de 18 píxeles centrado en ella
+    const lector = document.createElement('canvas');
+    lector.width = 20; lector.height = 40;
+    const lc = lector.getContext('2d')!;
+    lc.drawImage(img, 0, 0, 20, 40, 0, 0, 20, 40);
+    const datos = lc.getImageData(0, 0, 20, 40).data;
+    const lleno = (x: number, y: number) => datos[(y * 20 + x) * 4 + 3] > 0;
+    let arriba = 0;
+    while (arriba < 39 && ![...Array(20).keys()].some((x) => lleno(x, arriba))) arriba++;
+    const ALTO = 18, ANCHO = 18, ESCALA = 6;
+    const y0 = Math.max(0, arriba - 1);
+    const cols = [...Array(20).keys()].filter((x) => [...Array(ALTO).keys()].some((k) => y0 + k < 40 && lleno(x, y0 + k)));
+    const centro = cols.length ? (cols[0] + cols[cols.length - 1] + 1) / 2 : 10;
+    const x0 = Math.round(Math.max(0, Math.min(20 - ANCHO, centro - ANCHO / 2)));
+    const lienzo = this.textures.createCanvas(clave, ANCHO * ESCALA, ALTO * ESCALA)!;
+    const ctx = lienzo.getContext();
+    ctx.imageSmoothingEnabled = false;
+    ctx.drawImage(lector, x0, y0, ANCHO, ALTO, 0, 0, ANCHO * ESCALA, ALTO * ESCALA);
+    lienzo.refresh();
+    return clave;
   }
 
   private crearCartel() {
@@ -276,6 +318,7 @@ export class UIScene extends Phaser.Scene {
     boton(900, 92, 30, 'OBJ.', 'Objetos · I', () => this.alternarInventario());
     boton(900, 160, 30, 'REG.', 'Registro · L', () => this.abrirRegistro());
     boton(900, 228, 30, 'MENÚ', 'Pausa y opciones · Esc', () => this.pausar());
+    boton(900, 296, 30, 'NOTAS', 'Apuntes: qué hacer, a quién conozco · N', () => this.abrirApuntes());
     this.botones.add(ayuda);
   }
 
@@ -348,7 +391,6 @@ export class UIScene extends Phaser.Scene {
 
   private ocultarTodo() {
     this.caja.setVisible(false);
-    this.pensamiento.setVisible(false);
     this.cartel.setVisible(false);
     this.opciones.setVisible(false).removeAll(true);
     this.opcionesLista = [];
@@ -514,38 +556,41 @@ export class UIScene extends Phaser.Scene {
   private mostrarLinea(l: Line) {
     this.ocultarTodo();
     if (l.kind !== 'cartel') registro.anotar(l.id, l.kind === 'pensamiento' ? 'PENSAMIENTO' : l.kind === 'telepantalla' ? 'TELEPANTALLA' : l.speaker, l.text);
-    if (l.kind === 'pensamiento') {
-      this.pensamiento.setVisible(true);
-      // sobre el blanco (fx:blanco), tinta oscura sin franja: la franja gris no deja leer
-      const sobreBlanco = this.velo.alpha > 0.5 && this.velo.fillColor === 0xffffff;
-      this.pensamientoTexto.setColor(sobreBlanco ? '#22252a' : hex(COLOR.papel4)).setStroke('#000000', sobreBlanco ? 0 : 3);
-      this.escribir(this.pensamientoTexto, l.text);
-      const banda = this.pensamiento.getData('banda') as Phaser.GameObjects.Rectangle;
-      banda.setVisible(!sobreBlanco);
-      banda.setSize(960, this.alturaFinal(this.pensamientoTexto, l.text) + 44);
-      return;
-    }
     if (l.kind === 'cartel') {
       this.cartel.setVisible(true).setAlpha(0);
       this.tweens.add({ targets: this.cartel, alpha: 1, duration: 300 });
       this.cartelTexto.setText(l.text.replace(/¶/g, '\n'));   // ¶ = salto de línea (ink no deja escribir otro)
       return;
     }
+    // tres cajas en el mismo sitio, abajo: lo que se piensa o se mira (tinta clara sobre oscuro, sin nombre),
+    // la telepantalla (verde) y lo que dice alguien (papel, con su nombre y su cara)
     const tele = l.kind === 'telepantalla';
+    const piensa = !tele && l.kind !== 'dialogo';
     if (tele) audio.agachar(1.5 + l.text.length * 0.045);   // cuando habla la telepantalla, lo demás baja
-    this.cajaFondo.setFillStyle(tele ? COLOR.tele1 : COLOR.papel3).setStrokeStyle(2, tele ? COLOR.tele4 : COLOR.gris2);
-    this.cajaFranja.setFillStyle(tele ? COLOR.tele4 : COLOR.rojo3);
+    const CAJA = caja();
+    this.cajaFondo.setFillStyle(tele ? COLOR.tele1 : piensa ? COLOR.negro : COLOR.papel3, piensa ? 0.9 : 1)
+      .setStrokeStyle(2, tele ? COLOR.tele4 : piensa ? COLOR.gris3 : COLOR.gris2);
+    this.cajaFranja.setFillStyle(tele ? COLOR.tele4 : piensa ? COLOR.gris3 : COLOR.rojo3);
+    this.indicador.setColor(hex(piensa ? COLOR.papel3 : COLOR.rojo3));
+    const retrato = piensa || tele ? null : this.retratoDe(l.speaker);
+    const lado = retratoLado(), margen = Math.round((CAJA.h - lado) / 2);
+    this.retratoMarco.setVisible(!!retrato);
+    this.retrato.setVisible(!!retrato);
+    if (retrato) {
+      this.retratoMarco.setPosition(margen + 6, margen).setSize(lado, lado);
+      this.retrato.setTexture(retrato).setPosition(margen + 8, margen + 2).setDisplaySize(lado - 4, lado - 4);
+    }
+    const x = retrato ? margen + lado + 26 : 28;
+    this.texto.setPosition(x, 22).setWordWrapWidth(CAJA.w - x - 28, true);
     this.texto.setStyle({ fontFamily: tele ? FUENTE.maquina : FUENTE.texto, fontSize: px(tele ? 28 : 22),
-      color: hex(tele ? COLOR.tele5 : COLOR.gris2) });
-    const quien = tele ? 'TELEPANTALLA' : l.speaker === 'PROTAGONISTA' ? String(narrativa.get('nombre')).toUpperCase() : (l.speaker ?? '');
+      color: hex(tele ? COLOR.tele5 : piensa ? COLOR.papel4 : COLOR.gris2) });
+    const quien = tele ? 'TELEPANTALLA' : piensa ? '' : l.speaker === 'PROTAGONISTA' ? String(narrativa.get('nombre')).toUpperCase() : (l.speaker ?? '');
     this.nombre.setText(quien).setColor(hex(tele ? COLOR.tele5 : COLOR.papel4));
     this.nombreFondo.setVisible(!!quien).setSize(this.nombre.width + 24, Math.round(28 * escala())).setFillStyle(tele ? COLOR.tele0 : COLOR.gris2);
+    this.nombre.setX(retrato ? x : 32);
+    this.nombreFondo.setX(retrato ? x - 12 : 20);
     this.caja.setVisible(true);
     this.escribir(this.texto, l.text);
-  }
-
-  private alturaFinal(t: Phaser.GameObjects.Text, s: string) {
-    const prev = t.text; t.setText(s); const h = t.height; t.setText(prev); return h;
   }
 
   private escribir(destino: Phaser.GameObjects.Text, texto: string) {
@@ -702,13 +747,19 @@ export class UIScene extends Phaser.Scene {
   }
 
   /** Abre el registro de diálogos para consultarlo (fuera de los diálogos). */
-  private abrirRegistro() {
+  private abrirRegistro() { this.consultar('Registro'); }
+
+  /** Abre los apuntes: qué hay que hacer ahora, la gente y lo que se sabe. */
+  private abrirApuntes() { this.consultar('Apuntes'); }
+
+  /** Un panel que se consulta fuera de los diálogos y detiene el mundo mientras está abierto. */
+  private consultar(panel: 'Registro' | 'Apuntes') {
     if (this.activo || this.enAccion || this.consultando) return;
     if (this.inventario.visible) this.alternarInventario();
     this.consultando = true;
     this.foco.setVisible(false);
     this.game.events.emit(EV.pausa, true);
-    void this.lanzarMinijuego('Registro', {}).then(() => {
+    void this.lanzarMinijuego(panel, {}).then(() => {
       this.consultando = false;
       this.game.events.emit(EV.pausa, false);
     });

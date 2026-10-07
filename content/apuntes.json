@@ -1,0 +1,1072 @@
+{
+  "objetivos": [
+    {
+      "si": "final_en_curso==E",
+      "texto": "Quedarme en la cripta. Escribir frente a él. Servir el té, aunque nunca esté caliente."
+    },
+    {
+      "si": "final_en_curso==D && cafe_visto",
+      "texto": "Siéntate en Mi mesa, frente al tablero. Mueve una pieza. No sé por qué."
+    },
+    {
+      "si": "final_en_curso==D && celda_vista",
+      "texto": "Smith está en la celda. Habla con él. Veinticuatro horas: es todo lo que me pidió Nell."
+    },
+    {
+      "si": "final_en_curso==D && fd_piso_visto",
+      "texto": "Siéntate en la silla, frente a la telepantalla, y espera. Antes, si quiero, el cartel de Ivy."
+    },
+    {
+      "si": "final_en_curso==D && fd_limehouse_visto",
+      "texto": "No huyo. Sal de Limehouse por la izquierda: lleva a las Mansiones Victoria. A casa."
+    },
+    {
+      "si": "final_en_curso==D",
+      "texto": "Lleva el libro a Limehouse, a la puerta verde del once. A Dot."
+    },
+    {
+      "si": "final_en_curso==C && cafe_visto",
+      "texto": "Siéntate en Mi mesa, frente al tablero. Ya pasó todo."
+    },
+    {
+      "si": "final_en_curso==C && celda_vista",
+      "texto": "Siéntate en el banco y espera. Cada espera trae algo. El hambre baja. Smith mira la pared."
+    },
+    {
+      "si": "final_en_curso==C",
+      "texto": "No sé dónde estoy. No sé qué hora es. Esperar."
+    },
+    {
+      "si": "jornada==13 && cripta_vista",
+      "texto": "Habla con Goldstein. Pregúntale lo que necesite saber; cuando esté list{o}, háblale del capítulo."
+    },
+    {
+      "si": "jornada==13 && tunel4_visto",
+      "texto": "Sigue el túnel seco hacia Temple, a la derecha. Al final, una escalera de caracol sube a San Clemente."
+    },
+    {
+      "si": "jornada==13 && tunel3_visto && crane_perdido",
+      "texto": "Ya no oigo sus pasos. Sigue hacia la derecha, hasta Bank."
+    },
+    {
+      "si": "jornada==13 && tunel3_visto",
+      "texto": "Crane sigue mi luz. Apaga la linterna o derriba el puntal podrido para cortarle el paso. Bank, a la derecha."
+    },
+    {
+      "si": "jornada==13 && taller_visto",
+      "texto": "Un andén tapiado. Mira lo que hay, si quiero. La salida sigue a la derecha, hacia Liverpool Street."
+    },
+    {
+      "si": "jornada==13 && impactos_esquivados>=2",
+      "texto": "Ya han caído los dos. Sigue el agua hasta Aldgate Este, al fondo del túnel."
+    },
+    {
+      "si": "jornada==13 && tunel1_visto && reloj_en_marcha",
+      "texto": "El reloj de Ivy anda: a las 5:10 y a las 5:18 caen sobre Whitechapel. Al silbido, a un nicho de franja blanca."
+    },
+    {
+      "si": "jornada==13 && tunel1_visto",
+      "texto": "Dale a la manivela de la linterna. Si silba un cohete, métete en un nicho de franja blanca. Dos veces."
+    },
+    {
+      "si": "jornada==13 && shadwell_visto",
+      "texto": "Los tablones de la boca de metro: el tercero gira. Con los dibujos de Amory, busca dónde nunca caen los cohetes."
+    },
+    {
+      "si": "jornada==13",
+      "texto": "Amanecer. A la estación de Shadwell, tapiada «por reformas»."
+    },
+    {
+      "si": "jornada==12 && casa_dot_vista",
+      "texto": "En la despensa de Dot. Esperar al amanecer. Mañana, bajo las campanas."
+    },
+    {
+      "si": "jornada==12 && persecucion_vista && crane_decision==fingir",
+      "texto": "El sombrero me sigue. Sábanas y portales para esconderme, ni un charco. Al fondo, a la derecha, la puerta verde."
+    },
+    {
+      "si": "jornada==12 && persecucion_vista",
+      "texto": "Cruza los callejones sin que me vea la patrulla: sábanas y portales, ni un charco. Al fondo, la puerta verde."
+    },
+    {
+      "si": "jornada==12 && estudio_j12_visto",
+      "texto": "Crane sirve té, como siempre. Habla con él. El cuarto oscuro, por fin, está abierto."
+    },
+    {
+      "si": "jornada==12 && ejecucion_vista && !nell_aviso",
+      "texto": "El carrito de Nell, abandonado junto al cuarto de suministros. Míralo. Luego, a mi mesa: la puerta de Cartografía."
+    },
+    {
+      "si": "jornada==12 && ejecucion_vista",
+      "texto": "A mi mesa: la puerta de Cartografía, al principio del pasillo. Que nadie note nada."
+    },
+    {
+      "si": "jornada==12",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Hoy, el Parque de la Victoria: asistencia obligatoria."
+    },
+    {
+      "si": "jornada==11 && noche_j11_vista && diario_encontrado && !diario_confiscado",
+      "texto": "Antes de dormir, si me atrevo: usa el cuaderno en el hueco junto al armario. Luego, a la cama."
+    },
+    {
+      "si": "jornada==11 && noche_j11_vista",
+      "texto": "Ivy, en la pared. Mírala. Luego, a la cama."
+    },
+    {
+      "si": "jornada==11 && charrington_visto",
+      "texto": "Entra en las Mansiones Victoria por el portal, a la izquierda."
+    },
+    {
+      "si": "jornada==11 && archivo_b_visto",
+      "texto": "Pasillo cuatro: la puerta B-4. Rápido. Las telepantallas están dentro de la pared: si zumban, me ven."
+    },
+    {
+      "si": "jornada==11 && funcionaria_fuera",
+      "texto": "Tres minutos. La puerta de servicio, con la chapa de Brooke. Archivo B, pasillo cuatro."
+    },
+    {
+      "si": "jornada==11 && minimor_visto",
+      "texto": "Siéntate en el banco mientras sellan la lista."
+    },
+    {
+      "si": "jornada==11",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Al Departamento."
+    },
+    {
+      "si": "jornada==10 && noche_j10_vista && diario_encontrado && !diario_confiscado",
+      "texto": "Antes de dormir, si me atrevo: usa el cuaderno en el hueco junto al armario. Luego, a la cama."
+    },
+    {
+      "si": "jornada==10 && noche_j10_vista",
+      "texto": "Cuarenta y ocho horas sin dormir. A la cama."
+    },
+    {
+      "si": "jornada==10 && nota_nell_j10 && !mision_j10",
+      "texto": "Antes de las tres: un mapa sin corregir (Mi mesa) y un parte sin rectificar (Archivador del personal), al carrito."
+    },
+    {
+      "si": "jornada==10 && hilda_j10",
+      "texto": "Baja por la escalera. Antes del mitin, la cantina del Minipax."
+    },
+    {
+      "si": "jornada==10",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Hoy empieza la Semana del Odio."
+    },
+    {
+      "si": "jornada==9 && noche_j9_vista && diario_encontrado && !diario_confiscado",
+      "texto": "Antes de dormir, si me atrevo: usa el cuaderno en el hueco junto al armario. Luego, a la cama."
+    },
+    {
+      "si": "jornada==9 && noche_j9_vista",
+      "texto": "El Times de 1979 y el reloj de Ivy dicen lo mismo. A la cama."
+    },
+    {
+      "si": "jornada==9 && panel_abierto",
+      "texto": "Ya lo tengo. Sal de los lavabos por la puerta, sin prisa."
+    },
+    {
+      "si": "jornada==9 && vaho",
+      "texto": "El vaho ciega la telepantalla. Abre el panel del lavamanos del fondo: con la uña, despacio, o con el compás."
+    },
+    {
+      "si": "jornada==9 && abrigo_colgado",
+      "texto": "El abrigo tapa la pantalla. Abre el panel del lavamanos del fondo: con la uña, despacio, o con el compás."
+    },
+    {
+      "si": "jornada==9 && lavabos_vistos",
+      "texto": "La telepantalla mira los lavamanos. Empáñala con agua caliente o tápala con el abrigo en la percha."
+    },
+    {
+      "si": "jornada==9 && syme_hablado",
+      "texto": "Sube por la escalera de la cantina a la planta tres: los lavabos. «Lavabo del fondo.»"
+    },
+    {
+      "si": "jornada==9 && tubo_entregado",
+      "texto": "Cruza la sala hasta la escalera del fondo, a la derecha. Sin pararme: quien se para, busca algo."
+    },
+    {
+      "si": "jornada==9 && miniver_visto",
+      "texto": "Entrega el tubo en el Mostrador de entregas, a la izquierda. Con la carpeta abierta y en marcha, nadie me mira."
+    },
+    {
+      "si": "jornada==9",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Al Ministerio."
+    },
+    {
+      "si": "jornada==8 && noche_j8_vista",
+      "texto": "Las tres de la mañana. A la cama."
+    },
+    {
+      "si": "jornada==8 && planta11_vuelta",
+      "texto": "Si me llevé la llave, cuélgala en el Panel de llaves. Luego, al montacargas, sin que me vea el guardia nuevo."
+    },
+    {
+      "si": "jornada==8 && planilla_vista",
+      "texto": "Sal por la puerta. No puedo irme con las manos vacías: copia lo que pueda."
+    },
+    {
+      "si": "jornada==8 && archivo_r_visto",
+      "texto": "Busca la semana en curso: la carpeta Semana 18/84."
+    },
+    {
+      "si": "jornada==8 && cerrojo_llave",
+      "texto": "Quedan las cuatro ruedas: «última rectificación vigente». La directiva de esta mañana lo lleva escrito."
+    },
+    {
+      "si": "jornada==8 && llave_ar",
+      "texto": "A la puerta del Archivo Restringido. Primero, la llave; luego, la combinación."
+    },
+    {
+      "si": "jornada==8 && planta11_vista",
+      "texto": "Cuatro minutos. Coge la llave del Panel de llaves de la garita. Que no me vea la telepantalla que barre."
+    },
+    {
+      "si": "jornada==8 && calderas_vistas",
+      "texto": "Sube en el montacargas viejo, al fondo. La palanca, despacio, sin soltarla."
+    },
+    {
+      "si": "jornada==8 && registro_j8_hecho",
+      "texto": "Sal por la puerta del Departamento. Esta noche, la planta once."
+    },
+    {
+      "si": "jornada==8 && depto_j8_visto",
+      "texto": "Dos impactos esta noche: anótalos en el Libro de Registro."
+    },
+    {
+      "si": "jornada==8",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Esta noche, la Planilla Azul."
+    },
+    {
+      "si": "jornada==7 && noche_j7_vista && nell_respuesta==dudar",
+      "texto": "«Si no vienes, no volverás a verme.» Lo decidiré en la cama."
+    },
+    {
+      "si": "jornada==7 && noche_j7_vista && diario_encontrado && !diario_confiscado",
+      "texto": "Antes de dormir, si me atrevo: usa el cuaderno en el hueco junto al armario. Luego, a la cama."
+    },
+    {
+      "si": "jornada==7 && noche_j7_vista",
+      "texto": "Mañana por la noche, la planta once. A la cama."
+    },
+    {
+      "si": "jornada==7 && nell_respuesta",
+      "texto": "Vete a casa: sal del cuarto y toma la escalera, al fondo del pasillo."
+    },
+    {
+      "si": "jornada==7 && suministros_visto",
+      "texto": "Las cintas de máquina están en la tercera balda."
+    },
+    {
+      "si": "jornada==7 && cinta_rota",
+      "texto": "Se ha roto la cinta. Cuarto de suministros: sal al pasillo, la puerta del fondo, a la derecha."
+    },
+    {
+      "si": "jornada==7",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Al Ministerio."
+    },
+    {
+      "si": "jornada==6 && inspeccion_hecha && diario_encontrado && !diario_confiscado",
+      "texto": "Antes de dormir, si me atrevo: usa el cuaderno en el hueco junto al armario. Luego, a la cama."
+    },
+    {
+      "si": "jornada==6 && inspeccion_hecha",
+      "texto": "Hilda se ha ido. A la cama."
+    },
+    {
+      "si": "jornada==6 && estudio_j6_visto",
+      "texto": "Sal del estudio por la puerta. Hilda dijo que esta tarde inspeccionaría mi piso."
+    },
+    {
+      "si": "jornada==6 && parte_en_mesa && !parte_cogido",
+      "texto": "Mi parte sigue en la mesa de consulta. Podría llevármelo cuando la telepantalla del techo mire a la puerta. O salir."
+    },
+    {
+      "si": "jornada==6 && archivo_revisado",
+      "texto": "Lleva el resumen a Voss: sal del archivo por la puerta."
+    },
+    {
+      "si": "jornada==6 && archivo_visto",
+      "texto": "En las estanterías, la caja de los partes de abril de Malabar. Fíjate bien en el número."
+    },
+    {
+      "si": "jornada==6 && hilda_j6",
+      "texto": "Baja por la escalera. Al Ministerio. Esta tarde, la inspección de Hilda."
+    },
+    {
+      "si": "jornada==6",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Al Ministerio."
+    },
+    {
+      "si": "jornada==5 && diario_escondite",
+      "texto": "El cuaderno, detrás del cartel de Ivy. A la cama."
+    },
+    {
+      "si": "jornada==5 && diario_encontrado",
+      "texto": "Aquí la telepantalla me ve. Usa el cuaderno en el hueco junto al armario, donde no llega."
+    },
+    {
+      "si": "jornada==5 && noche_j5_vista",
+      "texto": "Algo pesa en el bolsillo interior del abrigo. Míralo."
+    },
+    {
+      "si": "jornada==5 && registro_j5_hecho",
+      "texto": "Fin de la jornada. Sal por la puerta del Departamento."
+    },
+    {
+      "si": "jornada==5 && depto_j5_visto",
+      "texto": "Partes pendientes en la Mesa del Registro: abre el Libro de Registro. Uno me resultará familiar."
+    },
+    {
+      "si": "jornada==5 && cohete_caido",
+      "texto": "Llego tarde. Sal del mercado por la izquierda, hacia el Ministerio."
+    },
+    {
+      "si": "jornada==5 && estudio_visto",
+      "texto": "Vuelve por el mercado, hacia la izquierda. Llego tarde al Minipax."
+    },
+    {
+      "si": "jornada==5 && mercado_visto",
+      "texto": "El Estudio Crane está al final de la calle, a la derecha."
+    },
+    {
+      "si": "jornada==5 && foto_cogida",
+      "texto": "Desayuna y sal por la puerta. El estudio de Crane abre a las siete: me da tiempo de llevarle la foto de Ivy."
+    },
+    {
+      "si": "jornada==5",
+      "texto": "No he dormido. Desayuna en el hornillo y sal por la puerta."
+    },
+    {
+      "si": "jornada==4 && noche_j4_vista",
+      "texto": "Mi piso. La telepantalla, en voz baja. A la cama."
+    },
+    {
+      "si": "jornada==4 && crane_aparece && !crane_visto",
+      "texto": "Un hombre fotografía las ruinas con una cámara de fuelle. Habla con él. Luego, a casa, por la izquierda."
+    },
+    {
+      "si": "jornada==4 && dot_hablado",
+      "texto": "El parte ya no es ilegible. Vuelve a casa: la calle sigue hacia la izquierda. La Campana está de camino."
+    },
+    {
+      "si": "jornada==4 && casa_vista",
+      "texto": "El parte sigue ilegible. Pregunta a la mujer del pañuelo o al niño de la lata."
+    },
+    {
+      "si": "jornada==4 && limehouse_visto",
+      "texto": "Busca el impacto: la columna de humo, al fondo de la calle, a la derecha."
+    },
+    {
+      "si": "jornada==4 && cantina_j4_vista",
+      "texto": "Vuelve al Departamento por la puerta. Queda el último cilindro del día."
+    },
+    {
+      "si": "jornada==4 && registro_j4_hecho",
+      "texto": "Hora de comer. Sal del Departamento por la puerta, a la cantina."
+    },
+    {
+      "si": "jornada==4 && registro_asignado",
+      "texto": "Abre el Libro de Registro y clava las chinchetas de la noche. Mira también en el Cajón del Registro."
+    },
+    {
+      "si": "jornada==4 && !foto_cogida",
+      "texto": "Desayuna en el hornillo. Antes de salir, el cajón de la mesa: ahí guardo lo que saqué de la calle Stepney."
+    },
+    {
+      "si": "jornada==4",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Al Ministerio."
+    },
+    {
+      "si": "jornada==3 && noche_j3_vista",
+      "texto": "Un día largo. Un día raro. A la cama."
+    },
+    {
+      "si": "jornada==3 && nell_se_fue",
+      "texto": "Se ha esfumado. Vete a casa: la escalera, al fondo del pasillo."
+    },
+    {
+      "si": "jornada==3 && pasillo_visto",
+      "texto": "La limpiadora, al fondo, junto al cuarto de suministros. Acércate."
+    },
+    {
+      "si": "jornada==3 && dp_j3_amory",
+      "texto": "Fin de la jornada. Sal del Departamento por la puerta."
+    },
+    {
+      "si": "jornada==3 && pell_hablado && brooke_hablado",
+      "texto": "Nadie se acuerda de Amory. Llama al Despacho del Subdirector."
+    },
+    {
+      "si": "jornada==3 && depto_j3_visto",
+      "texto": "Hay otro hombre en la mesa de Amory. Pregúntale a él, y a la camarada Brooke, dónde está Amory."
+    },
+    {
+      "si": "jornada==3",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Al Ministerio."
+    },
+    {
+      "si": "jornada==2 && sueno_visto",
+      "texto": "Ivy salta a la comba, calle adelante. Síguela hacia la derecha."
+    },
+    {
+      "si": "jornada==2 && centro_visto",
+      "texto": "Echa una mano a Hilda con la pancarta, si quiero. Cuando acabe, sal por la puerta."
+    },
+    {
+      "si": "jornada==2 && frente_j2",
+      "texto": "Sal por la puerta del Departamento. Esta noche, ensayo en el Centro de la Comunidad."
+    },
+    {
+      "si": "jornada==2 && depto_j2_visto",
+      "texto": "La directiva ha llegado por el tubo. Siéntate en Mi mesa y mueve las banderitas del frente."
+    },
+    {
+      "si": "jornada==2 && escena_actual==salon_odio",
+      "texto": "Mi asiento: tercera fila, junto a Amory. Siéntate: a las once, los Dos Minutos de Odio."
+    },
+    {
+      "si": "jornada==2 && parsons_j2",
+      "texto": "Baja por la escalera. Sesión conjunta de los cuatro ministerios en el Miniver."
+    },
+    {
+      "si": "jornada==2",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Hoy hay sesión especial de Odio."
+    },
+    {
+      "si": "jornada==1 && noche_vista",
+      "texto": "Mis palabras, en todas las telepantallas. A la cama: mañana, a las siete y cuarto, el silbato."
+    },
+    {
+      "si": "jornada==1 && parte_j1_enviado",
+      "texto": "El parte ya va camino de las telepantallas. Sal por la puerta del Departamento: a la cantina."
+    },
+    {
+      "si": "jornada==1 && depto_visto",
+      "texto": "Siéntate en Mi mesa: el parte urgente de Malabar espera en el tubo."
+    },
+    {
+      "si": "jornada==1 && ficha_revisada",
+      "texto": "Toma el ascensor de la izquierda. Planta catorce: Partes y Cartografía."
+    },
+    {
+      "si": "jornada==1 && avenida_vista",
+      "texto": "Al fondo de la avenida, a la derecha, el Ministerio de la Paz. Entra y enséñale la ficha al guardia."
+    },
+    {
+      "si": "jornada==1 && hilda_j1",
+      "texto": "Baja por la escalera hasta la calle."
+    },
+    {
+      "si": "jornada==1 && escalera_vista",
+      "texto": "Hilda Grubb espera en el rellano con la lata de la colecta. Nadie baja sin pasar por la lata."
+    },
+    {
+      "si": "jornada==1",
+      "texto": "Desayuna en el hornillo y sal por la puerta. Un estómago vacío es un estómago desleal."
+    },
+    {
+      "si": "jornada==0 && ivy_vista",
+      "texto": "Su reloj. Cógelo de su muñeca."
+    },
+    {
+      "si": "jornada==0",
+      "texto": "Algo se mueve bajo el montón de cascotes. Apártalos."
+    },
+    {
+      "si": "",
+      "texto": "Sigue la rutina. Lo que haya que hacer estará a la vista: mira a tu alrededor."
+    }
+  ],
+  "personas": [
+    {
+      "id": "ivy",
+      "nombre": "Ivy",
+      "si": "ivy_vista",
+      "texto": "Mi hermana pequeña. Murió en 1979 en la calle Stepney, bajo un cohete euroasiático. Cantaba «Naranjas y limones». Me dijo: «No les creas». Hablaba de Eurasia. Ahora es una mártir del Partido.",
+      "variantes": [
+        {
+          "si": "jornada>=1",
+          "texto": "Mi hermana pequeña. Murió en 1979 en la calle Stepney, bajo un cohete euroasiático. Su cara, en el cartel nuevo de los mártires, preside mi piso. Cada mañana le prometo que Eurasia pagará."
+        },
+        {
+          "si": "foto_restaurada",
+          "texto": "Mi hermana pequeña, muerta en Stepney en 1979. Crane me devolvió su cara: sonríe, con el uniforme de los Espías y un diente mellado. En el cartel no sonríe. Le cambiaron la nariz."
+        },
+        {
+          "si": "times_original_visto",
+          "texto": "Murió a las 21:40, como marca su reloj. Cambiaron la fecha del periódico. La Policía del Pensamiento llegó minutos después y se llevó papeles de casa. ¿Qué guardabas, Ivy?"
+        },
+        {
+          "si": "ivy_revelada && dp_j11_ivy==aceptar",
+          "texto": "Su expediente dice que era de la Hermandad. Una traidora. El Partido me protegió de ella. Eso me repito. Las manos no dejan de temblar."
+        },
+        {
+          "si": "ivy_revelada && dp_j11_ivy==recordar",
+          "texto": "Era de la Hermandad desde 1977. El Partido ordenó el cohete de Stepney para que no fuera su mártir, y luego la hizo suya. «No les creas» no hablaba de Eurasia. Hablaba de ellos."
+        },
+        {
+          "si": "taller_pared",
+          "texto": "Su nombre, en tiza, en un andén donde no pasan trenes, entre los de la Hermandad. Era de ellos. El Partido la mató y la colgó en mi pared. Es más que un cartel."
+        },
+        {
+          "si": "carta_ivy",
+          "texto": "Escribía para Goldstein el capítulo que él no sabía escribir. Me queda su primera frase, con su letra: «dificil», sin tilde, como siempre. Lo que ella empezó, lo termino yo."
+        }
+      ]
+    },
+    {
+      "id": "hilda",
+      "nombre": "Hilda Grubb",
+      "si": "hilda_j1",
+      "texto": "Delegada del Comité de la Casa en las Mansiones Victoria. Colectas, cánticos, la efigie de Goldstein más grande del distrito. Lo apunta todo. Le tiene ojeriza a Smith, el del séptimo.",
+      "variantes": [
+        {
+          "si": "inspeccion_hecha",
+          "texto": "Inspeccionó mi piso «por la colecta». Le han dicho que me vieron en Limehouse. Dos veces. «La gente habla. Y yo apunto.»"
+        },
+        {
+          "si": "inspeccion_hecha && diario_confiscado",
+          "texto": "Inspeccionó mi piso y se llevó el cuaderno para el Comité. Le han dicho que me vieron en Limehouse. «La gente habla. Y yo apunto.»"
+        },
+        {
+          "si": "hilda_en_minipax",
+          "texto": "La vi salir del despacho de Voss, en el Minipax. Me sonrió sin enseñar los dientes. Tiene mi cuaderno, o lo tuvo."
+        },
+        {
+          "si": "hilda_j10 && hilda_aprecio<=0",
+          "texto": "Habla con Voss. Él le pidió que le avisara de «cualquier cosa», por la Semana del Odio. Por seguridad. Lo apunta todo."
+        },
+        {
+          "si": "parsons_detenido",
+          "texto": "Cuando se llevaron a Parsons, le acariciaba el pelo a su hija. «Qué niña tan valiente. Le van a dar una mención.»"
+        },
+        {
+          "si": "charrington_visto",
+          "texto": "Celebra la detención de Smith en la escalera: «¡Yo lo sabía! ¡Lo apunté! ¡Tercera ausencia del mes!». Cada detención, una victoria."
+        }
+      ]
+    },
+    {
+      "id": "winston",
+      "nombre": "Winston Smith",
+      "si": "hilda_j1",
+      "texto": "Vecino del séptimo. Trabaja en el Miniver. Tose, nunca canta, siempre tiene «trabajo atrasado». Dice «quizá». Un miembro del Partido no dice «quizá».",
+      "variantes": [
+        {
+          "si": "winston_j9",
+          "texto": "Le vi en el Departamento de Registro del Miniver: dicta en su habla-escribe y tira papeles al agujero de la memoria. Una chica tropezó junto a él. Creo que le dio algo."
+        },
+        {
+          "si": "charrington_visto",
+          "texto": "Lo detuvieron en un cuarto encima de una tienda de antigüedades, en el barrio prole, con una chica. Hilda dice que llevaban meses."
+        },
+        {
+          "si": "celda_vista",
+          "texto": "Comparte celda conmigo en el Minimor. Muy delgado, la cara amarilla, dos dientes menos. Mira la pared."
+        }
+      ]
+    },
+    {
+      "id": "voss",
+      "nombre": "Subdirector Voss",
+      "si": "depto_visto",
+      "texto": "Mi jefe en Partes y Cartografía. Partido Interior. Abrigo largo y guantes, incluso dentro. Me habló de Ivy: «El Partido no olvida a los suyos». Educado y frío.",
+      "variantes": [
+        {
+          "si": "amory_reaccion==denuncia && despacho_visto",
+          "texto": "Mi jefe. Partido Interior. Le hablé de la broma de Amory. «El Partido valora la vigilancia. No comente esto con nadie. Por su propio bien.»"
+        },
+        {
+          "si": "voss_j3_visto",
+          "texto": "Mi jefe. Partido Interior. Dice que no hay ningún Amory en la sección. Que el cansancio produce recuerdos que no existen. Me mira como se mira un expediente."
+        },
+        {
+          "si": "registro_asignado",
+          "texto": "Mi jefe. Partido Interior. Me dio el Registro de Impactos: estaba «vacante». Exactitud, dice. El Partido necesita saber dónde golpea el enemigo."
+        },
+        {
+          "si": "hilda_j10 && hilda_aprecio<=0",
+          "texto": "Mi jefe. Partido Interior. Le pidió a Hilda que le avisara de cualquier cosa. Me vigila desde mi propia escalera."
+        },
+        {
+          "si": "ivy_revelada",
+          "texto": "Firmó el expediente de Ivy y la orden de 1979: impacto programado en la calle Stepney 14. Era el hombre del abrigo: «Esta camarada es ahora una mártir». Y me sentó a mí en su planta."
+        }
+      ]
+    },
+    {
+      "id": "amory",
+      "nombre": "Felix Amory",
+      "si": "depto_visto",
+      "texto": "Mi compañero de mesa. Cartógrafo brillante, habla demasiado rápido. Dibuja pájaros minúsculos en los márgenes de los mapas. Dice que un buen mapa es poesía. De los que creen.",
+      "variantes": [
+        {
+          "si": "amory_reaccion==risa",
+          "texto": "Mi compañero de mesa. Dibuja pájaros en los márgenes. Bromeó con que el frente de Malabar lleva tres años en el mismo río. Me reí. Me prestó su lápiz."
+        },
+        {
+          "si": "amory_reaccion==reprimenda",
+          "texto": "Mi compañero de mesa. Dibuja pájaros en los márgenes. Bromeó con que el frente de Malabar lleva tres años en el mismo río. Le reprendí. Me prestó su lápiz."
+        },
+        {
+          "si": "amory_reaccion==denuncia",
+          "texto": "Mi compañero de mesa. Dibuja pájaros en los márgenes. Bromeó con que el frente de Malabar no se mueve. Le denuncié ante Voss. Hice lo correcto. Me prestó su lápiz."
+        },
+        {
+          "si": "depto_j3_visto",
+          "texto": "Hoy hay otro hombre en su mesa. Los pájaros han desaparecido. La silla es la misma. ¿Se ha cambiado de sitio?"
+        },
+        {
+          "si": "dp_j3_amory==aceptar",
+          "texto": "Pell dice que la mesa de al lado siempre ha sido suya. Voss dice que no hay ningún Amory. Me habré confundido. El cansancio.",
+          "nombre": "—"
+        },
+        {
+          "si": "dp_j3_amory==recordar",
+          "texto": "Desapareció. Pell ocupa su silla, nadie le recuerda y Voss dice que nunca existió. Yo sí le recuerdo: ojos de pájaro, mordía los lápices. Felix Amory existía."
+        },
+        {
+          "si": "zonificacion_encontrada && dp_j3_amory==recordar",
+          "texto": "Desapareció y nadie le recuerda. Dejó una nota bajo el fieltro del cajón del Registro, con un pájaro: «¿Por qué nunca en el centro?». Es su letra."
+        },
+        {
+          "si": "diario_encontrado",
+          "texto": "Felix. Se llamaba Felix. El cuaderno de mi abrigo era suyo: un pájaro en la tapa. Alguien lo sacó de su papelera antes de que lo quemaran."
+        },
+        {
+          "si": "diario_amory_confesion",
+          "texto": "Reapareció en la telepantalla de la cantina: sin gafas, sin dientes. Confesó ser espía de Eurasia desde 1976. Los pájaros eran «señales». Pidió morir."
+        },
+        {
+          "si": "mensaje_nell",
+          "texto": "Sus pájaros eran señales, pero no para Eurasia: marcan pozos, salidas y estaciones del metro cerrado. Dibujaba la ciudad de debajo. Para nadie. Para mí."
+        },
+        {
+          "si": "cafe_visto",
+          "texto": "En el Café del Castaño, solo, jugando al ajedrez. Sin gafas, sin dientes. No me reconoce. No hay nada que decirle."
+        }
+      ]
+    },
+    {
+      "id": "parsons",
+      "nombre": "Parsons",
+      "si": "parsons_j2",
+      "texto": "Vecino de rellano. Sudoroso y radiante: «¡Magnífico, magnífico!». Comité de banderines. Sus hijos juegan a los espías y piden ir a ver ahorcamientos.",
+      "variantes": [
+        {
+          "si": "parsons_detenido",
+          "texto": "Se lo llevaron de la escalera en plena Semana del Odio. Le denunció su hija: habló en sueños. Gritaba que estaba orgulloso de ella."
+        }
+      ]
+    },
+    {
+      "id": "hija_parsons",
+      "nombre": "La hija de Parsons",
+      "si": "parsons_j2",
+      "texto": "Pañuelo rojo de los Espías y una libretita. Apunta cosas. Dice que hablo en sueños, a través de la pared. Que digo un nombre.",
+      "variantes": [
+        {
+          "si": "parsons_detenido",
+          "texto": "Denunció a su padre. Le van a dar una mención. A mí me dijo: «Usted también dice un nombre por las noches. Ahora dice dos»."
+        }
+      ]
+    },
+    {
+      "id": "julia",
+      "nombre": "La chica de la faja escarlata",
+      "si": "odio_hecho",
+      "texto": "Liga Anti-Sex. Estaba en los Dos Minutos de Odio, en el Gran Salón del Miniver. Esas chicas son las más ortodoxas de todas.",
+      "variantes": [
+        {
+          "si": "julia_j9",
+          "texto": "Liga Anti-Sex. En el Miniver, con un brazo en cabestrillo, tropezó junto al cubículo de Smith. Él la ayudó a levantarse. Creo que le dio un papel."
+        },
+        {
+          "si": "charrington_visto",
+          "texto": "Liga Anti-Sex. Hilda dice que cogieron a Smith con una chica de la Liga Anti-Sex, en un cuarto encima de una tienda. ¿Ella?"
+        }
+      ]
+    },
+    {
+      "id": "obrien",
+      "nombre": "El hombre del Partido Interior",
+      "si": "odio_hecho",
+      "texto": "En los Dos Minutos de Odio. Corpulento, con gafas. Se las ajusta de una forma casi amable, como un aristócrata de los libros de historia.",
+      "variantes": [
+        {
+          "si": "obrien_visto",
+          "texto": "Se llama O'Brien. Me interrogó en el Minimor, con un dial en la pared y el reloj de Ivy en la mano: «¿Qué hora marca?». Me vio gritar en los Dos Minutos."
+        }
+      ]
+    },
+    {
+      "id": "goldstein",
+      "nombre": "Emmanuel Goldstein",
+      "si": "odio_hecho",
+      "texto": "El Enemigo del Pueblo. Su cara, en los Dos Minutos de Odio: la libertad de expresión, la paz con Eurasia. Le odio desde que murió Ivy.",
+      "variantes": [
+        {
+          "si": "libro_fragmentos>=1",
+          "texto": "Existe, dice Nell. Y escribió un libro: Teoría y práctica del colectivismo oligárquico. Nadie lo tiene entero; cada célula guarda unas páginas."
+        },
+        {
+          "si": "cripta_vista",
+          "texto": "Un viejo con una manta, gafas remendadas con hilo y té frío, en la cripta de San Clemente. Mi cara le odió sola. Treinta años sin poder escribir el capítulo II."
+        },
+        {
+          "si": "crane_humillado",
+          "texto": "El Partido siempre supo dónde estaba. Crane llamó desde el teléfono de campaña y le ordenaron irse. «No cambia nada. El libro sigue siendo verdad.»"
+        }
+      ]
+    },
+    {
+      "id": "pell",
+      "nombre": "Camarada Pell",
+      "si": "depto_j3_visto",
+      "texto": "Un hombre gris que escribe a máquina con dos dedos, muy despacio. Hoy ocupa la mesa de Amory.",
+      "variantes": [
+        {
+          "si": "pell_hablado",
+          "texto": "Un hombre gris que escribe con dos dedos en la mesa de Amory. Dice que esa mesa es suya, que siempre ha sido suya. Que lleva aquí «siempre»."
+        },
+        {
+          "si": "pell_j10==verdad",
+          "texto": "Ocupa la mesa de Amory. Le dije que Amory se sentaba en su silla. Dejó de masticar, con algo parecido al miedo: «Mi silla siempre ha sido mía»."
+        }
+      ]
+    },
+    {
+      "id": "brooke",
+      "nombre": "Camarada Brooke",
+      "si": "brooke_hablado",
+      "texto": "La que más años lleva en la sección. Comíamos los tres juntos los martes. Dice que no conoce a ningún Amory. «Y usted tampoco.»",
+      "variantes": [
+        {
+          "si": "pista_combinacion",
+          "texto": "En el ascensor, a solas: «Las combinaciones de la planta once cambian cada vez que cambia el frente». Y luego: «Yo no sé nada»."
+        },
+        {
+          "si": "brooke_distrae",
+          "texto": "En la Gran Rectificación tiró una pila de carpetas justo cuando Voss se giraba hacia mí. «El cansancio», dijo. No me miró."
+        },
+        {
+          "si": "brooke_revelada",
+          "texto": "Me dio una chapa para el Archivo B del Minimor: tres minutos mientras sellan la lista. Su hermano está en esa lista. No es solo una compañera de mesa."
+        },
+        {
+          "si": "brooke_j12 && len_salvado",
+          "texto": "Su hermano no subió al patíbulo; sabe lo que hice. Me avisó: Nell y Barlow, detenidos. «No hable con nadie amable.»"
+        },
+        {
+          "si": "brooke_j12 && !len_salvado",
+          "texto": "Su hermano subió al patíbulo. No me culpa. Me avisó: Nell y Barlow, detenidos. «No hable con nadie amable.»"
+        }
+      ]
+    },
+    {
+      "id": "nell",
+      "nombre": "La limpiadora",
+      "si": "pasillo_visto",
+      "texto": "Una prole de la limpieza del Minipax. Vacía papeleras con su carrito. Nunca la miro. Nadie la mira.",
+      "variantes": [
+        {
+          "si": "nell_se_fue",
+          "texto": "Sacó de la papelera de Amory unos papeles con pájaros y los escondió bajo los trapos del carrito. Me miró a los ojos. Me giré un instante y ya no estaba."
+        },
+        {
+          "si": "diario_nell",
+          "texto": "Se llama Nell. Estaba en la calle Stepney: sacó tres piedras de encima de Ivy. Sabe «Naranjas y limones». Dice que Amory no fue el primero. Ivy tampoco."
+        },
+        {
+          "si": "iniciacion_traicion",
+          "texto": "Nell es de la Hermandad. Me hizo las preguntas en el sótano de La Campana. «Aguanta veinticuatro horas. Es todo lo que te pido.»"
+        },
+        {
+          "si": "expediente_visto",
+          "texto": "Nell Hask: «contacto conocido» de Ivy, según su expediente. Conocía a mi hermana. Es de la Hermandad. Me hizo las preguntas en el sótano."
+        },
+        {
+          "si": "brooke_j12",
+          "texto": "Nell Hask. Se la llevaron anoche, con Barlow. Su carrito, volcado en el pasillo. Alguien más estaba en aquel sótano."
+        },
+        {
+          "si": "mensaje_nell",
+          "texto": "Antes de caer dejó a Dot un mensaje para mí: «San Clemente. Bajo las campanas. Usa lo que sabes». Le dijo a él que yo era como Ivy."
+        }
+      ]
+    },
+    {
+      "id": "dot",
+      "nombre": "Dot",
+      "si": "dot_hablado",
+      "texto": "La mujer del pañuelo, en Limehouse. Nadie aparta un ladrillo sin que ella lo diga. Me dictó lo que había que apuntar: calle Narrow, 11, los Hennessy. La madre de Sammy.",
+      "variantes": [
+        {
+          "si": "cohete_caido && sammy_intento",
+          "texto": "Vende retales en el mercado de Watney Street. El cohete del mercado mató a Sammy. Me vio correr hacia él. Asintió una vez."
+        },
+        {
+          "si": "cohete_caido && !sammy_intento",
+          "texto": "Vende retales en el mercado de Watney Street. El cohete del mercado mató a Sammy. Me vio de pie, detrás del puesto de patatas. Apartó la vista."
+        },
+        {
+          "si": "casa_dot_vista",
+          "texto": "Me escondió en su despensa, tras la puerta verde del once. Me dio el mensaje de Nell y el trozo de metralla brillante de Sammy, para que me diera suerte."
+        },
+        {
+          "si": "fd_dot_vista",
+          "texto": "Guarda el libro entero en el fondo de la caja de metralla de Sammy. «Aquí no lo buscará nadie. Nadie busca en las cosas de un niño muerto.»"
+        }
+      ]
+    },
+    {
+      "id": "sammy",
+      "nombre": "Sammy",
+      "si": "dot_hablado",
+      "texto": "El niño de la lata, el de la avenida. Siete años. Colecciona metralla: más de ochenta trozos. «Nunca te cae un cohete donde ya tienes uno.»",
+      "variantes": [
+        {
+          "si": "cohete_caido",
+          "texto": "Murió en el mercado de Watney Street, agachado a recoger un trozo de metralla brillante. «Parece plata.» A Ivy le hicieron un cartel. A él le llamaron «eso»."
+        },
+        {
+          "si": "mercado_planilla",
+          "texto": "Murió en el mercado de Watney Street. Su cohete estaba escrito en la Planilla Azul dos días antes: «Hora punta de mercado. Impacto de alta visibilidad»."
+        }
+      ]
+    },
+    {
+      "id": "crane",
+      "nombre": "Abel Crane",
+      "si": "crane_visto",
+      "texto": "Fotógrafo del barrio prole. Estudio en la calle Cable, junto al mercado. Fotografía las ruinas «para el recuerdo». Restaura fotos viejas. Un prole amable.",
+      "variantes": [
+        {
+          "si": "foto_restaurada",
+          "texto": "Me devolvió la cara de Ivy. Sirve té de verdad; en su estudio no hay telepantalla. Su trastienda, dice, siempre está abierta. Hace preguntas cálidas."
+        },
+        {
+          "si": "crane_sospechado",
+          "texto": "Un viejo amable con una tienda en el barrio prole, como el del arresto de Smith. Una tienda. Un estudio. No. No puede ser."
+        },
+        {
+          "si": "crane_revelado",
+          "texto": "Policía del Pensamiento. Me fotografió en el sótano de La Campana por un hueco de la pared. Ya estaba ahí hace cinco años, con Ivy. Firma «A. C.»."
+        },
+        {
+          "si": "estudio_j12_visto",
+          "texto": "Policía del Pensamiento. Graba La Campana, el mercado y mi piso. Me ofreció un trato: Dot, su marido y el viejo de San Clemente a cambio de borrar mi expediente."
+        },
+        {
+          "si": "crane_humillado",
+          "texto": "Me siguió hasta la cripta con una pistola. Llamó a sus superiores y le ordenaron dejarlo estar. «Usted no está aquí. Usted nunca ha estado aquí.»"
+        }
+      ]
+    },
+    {
+      "id": "barlow",
+      "nombre": "Tom Barlow",
+      "si": "iniciacion_traicion",
+      "texto": "El tabernero de La Campana. Manos de estibador. De la célula de Nell: estaba en el sótano, con la vela, mientras ella me hacía las preguntas.",
+      "variantes": [
+        {
+          "si": "brooke_j12",
+          "texto": "El tabernero de La Campana, de la célula de Nell. Se lo llevaron anoche, con ella."
+        },
+        {
+          "si": "taller_mesa",
+          "texto": "El tabernero de La Campana. Entraba en los ministerios a «reparar» telepantallas y las arreglaba para que no vieran. Ahora está en el Minimor."
+        }
+      ]
+    },
+    {
+      "id": "syme",
+      "nombre": "Syme",
+      "si": "syme_hablado",
+      "texto": "Del Diccionario de Neolengua, en la cantina del Miniver. Destruye palabras, cientos al día: «Si no existe la palabra, no existe la idea». Habla demasiado. Como Amory.",
+      "variantes": [
+        {
+          "si": "hilda_j10",
+          "texto": "Ya no va a los ensayos, dice Hilda. «Será que lo han trasladado.» Hablaba demasiado. Como Amory."
+        }
+      ]
+    },
+    {
+      "id": "len",
+      "nombre": "Pike, L.",
+      "si": "lista_proles_vista",
+      "texto": "En la lista de «prisioneros estasiáticos» para el parque. Un estibador fornido con un ancla de Limehouse tatuada en el cuello. Pike, como Dot.",
+      "variantes": [
+        {
+          "si": "dot_confianza>=1",
+          "texto": "Len Pike, el marido de Dot: turno de noche en el muelle. En la lista de «prisioneros estasiáticos», con su ancla de Limehouse en el cuello."
+        },
+        {
+          "si": "len_salvado",
+          "texto": "Cambié su nombre por otro de la lista de reserva. He salvado a un hombre y he matado a otro con la misma máquina de escribir."
+        },
+        {
+          "si": "ejecucion_vista && !len_salvado",
+          "texto": "Lo ahorcaron en el Parque de la Victoria. Buscaba algo entre la multitud con los ojos. Dot gritaba."
+        },
+        {
+          "si": "fd_dot_vista && len_salvado",
+          "texto": "Vivo, en la cocina de Dot, con una venda en la cabeza. «Había un chico en mi lugar. No sé si darle las gracias.»"
+        }
+      ]
+    },
+    {
+      "id": "charrington",
+      "nombre": "El anciano de uniforme negro",
+      "si": "charrington_visto",
+      "texto": "Dirigía el arresto de Smith delante de las Mansiones Victoria. Pelo blanco, espalda recta, voz joven. Parece un anticuario amable de barrio. Da órdenes como Voss.",
+      "variantes": []
+    }
+  ],
+  "pistas": [
+    {
+      "id": "reloj",
+      "titulo": "El reloj de Ivy",
+      "si": "reloj_cogido",
+      "texto": "Lo saqué de su muñeca en la calle Stepney. Cristal roto, parado a las 21:40. Nunca le he dado cuerda. No quiero que vuelva a andar."
+    },
+    {
+      "id": "naranjas",
+      "titulo": "Naranjas y limones",
+      "si": "sueno_visto",
+      "texto": "La canción de Ivy: «Naranjas y limones, dicen las campanas de San Clemente». La cantaba bajo los escombros. La he soñado: me preguntaba la hora. Las 21:40."
+    },
+    {
+      "id": "malabar",
+      "titulo": "El río de Malabar",
+      "si": "frente_j2",
+      "texto": "Amory: el frente de Malabar lleva tres años en el mismo río. Avanzamos doce, «rectificamos» doce. Sumando los partes del año, estaríamos desayunando en Pekín."
+    },
+    {
+      "id": "borrado",
+      "titulo": "La mesa de al lado",
+      "si": "voss_j3_visto",
+      "texto": "Pell dice que la silla de Amory siempre fue suya. Brooke no conoce a ningún Amory. Voss: «No hay ningún Amory en esta sección». Una persona puede borrarse en una noche."
+    },
+    {
+      "id": "lapiz",
+      "titulo": "El lápiz de Amory",
+      "si": "dp_j3_amory && !lapiz_destruido",
+      "texto": "Me lo prestó porque el mío no tenía punta. Mordido, con sus iniciales. Apareció en mi bolsillo el día que dejó de existir. Es la prueba de que existió."
+    },
+    {
+      "id": "foto",
+      "titulo": "La foto del cajón",
+      "si": "foto_cogida",
+      "texto": "Ivy y yo de niños, en un parque. Quemada por un borde; una mancha de agua le borra la cara. Lo que se ve no es la cara del cartel."
+    },
+    {
+      "id": "centro",
+      "titulo": "¿Por qué nunca en el centro?",
+      "si": "zonificacion_encontrada",
+      "texto": "Bajo el fieltro del cajón del Registro: una lámina de zonificación urbana (distritos del Partido, distritos proletarios) y una nota con un pájaro diminuto."
+    },
+    {
+      "id": "patron",
+      "titulo": "El patrón de los cohetes",
+      "si": "registro_j5_hecho",
+      "texto": "Todos los impactos del Registro caen en barrios proles. Ninguno en un distrito del Partido. Ninguno a menos de dos kilómetros de un ministerio. Stepney estaba en el borde."
+    },
+    {
+      "id": "cuaderno",
+      "titulo": "El cuaderno",
+      "si": "diario_encontrado",
+      "texto": "Apareció en el bolsillo de mi abrigo: tapas negras, papel de antes, las primeras páginas arrancadas. La telepantalla del piso no ve el hueco entre el armario y la pared."
+    },
+    {
+      "id": "chocolate",
+      "titulo": "Veinte gramos",
+      "si": "chocolate_visto",
+      "texto": "Un recorte del Times en el estudio de Crane: en marzo la ración de chocolate era de 30 gramos. Días después, la telepantalla dijo que «aumentaba» a 20. Y dimos las gracias."
+    },
+    {
+      "id": "parte",
+      "titulo": "El parte alterado",
+      "si": "archivo_revisado",
+      "texto": "Mi parte de Malabar, en el archivo: otra fecha, otro frente (Mysore), «resistido con firmeza», cero kilómetros. Toda Oceanía oyó lo que escribí. Sigue llevando mi firma."
+    },
+    {
+      "id": "cancion",
+      "titulo": "La canción de ellos",
+      "si": "diario_nell",
+      "texto": "La limpiadora conoce «Naranjas y limones». Ivy la cantaba porque era «la nuestra», dice. Amory no fue el primero. Ivy tampoco."
+    },
+    {
+      "id": "planilla",
+      "titulo": "La Planilla Azul",
+      "si": "nell_respuesta",
+      "texto": "Según Nell, en el Archivo Restringido del Minipax (planta once, sala de los cerrojos dobles) hay un papel azul que dice dónde caerá el próximo cohete. Antes de que caiga."
+    },
+    {
+      "id": "kent",
+      "titulo": "Kent está en Oceanía",
+      "si": "planilla_vista",
+      "texto": "Planilla Azul, semana 18: Bermondsey y Poplar, con su hora, antes de caer. Baterías en Folkestone, Dover y Hythe. «Excluir radio 2 km de edificios ministeriales.» Autoriza: H.V."
+    },
+    {
+      "id": "mercado",
+      "titulo": "Hora punta de mercado",
+      "si": "mercado_planilla",
+      "texto": "Semana 16: Limehouse, mercado de Watney Street, J-8, 08:12. «Impacto de alta visibilidad.» Alguien lo escribió a máquina dos días antes y se fue a comer."
+    },
+    {
+      "id": "libro",
+      "titulo": "El libro",
+      "si": "libro_fragmentos>=1",
+      "texto": "Goldstein existe y escribió un libro: Teoría y práctica del colectivismo oligárquico. Nadie lo tiene entero: cada célula guarda unas páginas. Si cae una célula, cae un trozo."
+    },
+    {
+      "id": "times",
+      "titulo": "El Times de 1979",
+      "si": "times_original_visto",
+      "texto": "El original: calle Stepney 14, a las 21:40, como su reloj. La versión vigente dice un día después, a las 23:15, para que coincidiera con la ofensiva. La Policía del Pensamiento se llevó documentos."
+    },
+    {
+      "id": "estasia",
+      "titulo": "Estasia",
+      "si": "diario_estasia",
+      "texto": "En el mitin, a mitad de discurso, el orador leyó un papel y siguió: estamos en guerra con Estasia. Siempre lo hemos estado. Esa noche rehicimos cuatro años de mapas y partes."
+    },
+    {
+      "id": "prisioneros",
+      "titulo": "Los prisioneros",
+      "si": "lista_proles_vista",
+      "texto": "La lista de «prisioneros estasiáticos» para el parque: Pike, L., estibador de Limehouse. Hogan, T. Hace tres días eran euroasiáticos. Hace un mes eran estibadores."
+    },
+    {
+      "id": "expediente",
+      "titulo": "El expediente de Ivy",
+      "si": "expediente_visto",
+      "texto": "79/0412: Ivy, de la Hermandad desde 1977; contacto, Hask, N. «Eliminación sin proceso.» Impacto programado: calle Stepney 14, 21:40. Autoriza: H. Voss. A mí, por mi odio, me destinaron al Minipax."
+    },
+    {
+      "id": "sotano",
+      "titulo": "La foto del sótano",
+      "si": "crane_revelado",
+      "texto": "Por el tubo, un sobre: yo en el sótano de La Campana, fotografiad{o} por un hueco de la pared. El mismo ángulo que la foto del expediente de Ivy. Firmado: «A. C.»."
+    },
+    {
+      "id": "campanas",
+      "titulo": "Bajo las campanas",
+      "si": "mensaje_nell",
+      "texto": "Nota de Nell: «San Clemente. Bajo las campanas. Los cohetes no caen donde no quieren que caigan. Usa lo que sabes». Dot: al amanecer, el metro de Shadwell está sin vigilancia."
+    },
+    {
+      "id": "pajaros",
+      "titulo": "Los pájaros de Amory",
+      "si": "mensaje_nell",
+      "texto": "Sus dibujos no son mapas de Malabar: son planos del metro cerrado bajo Londres. Los pájaros marcan pozos de ventilación, salidas y estaciones tapiadas."
+    },
+    {
+      "id": "san_clemente",
+      "titulo": "El único sitio",
+      "si": "san_clemente_deducido",
+      "texto": "San Clemente, a la sombra del Miniver: el único sitio de Londres donde nunca cae un cohete. El viejo vive en el único lugar que el Partido protege."
+    }
+  ]
+}

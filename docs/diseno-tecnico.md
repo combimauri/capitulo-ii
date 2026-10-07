@@ -917,6 +917,12 @@ Todo el audio se **sintetiza en tiempo real** con Web Audio: no hay archivos de 
 
 - **Banda sonora completa:** 31 de los 43 mapas y el menú estaban en silencio. Ahora cada mapa tiene música según la jornada y la historia (24 pistas nuevas, todas originales salvo *Naranjas y limones*), y más de 70 etiquetas `# musica:` cambian la emoción en los momentos clave: la mano de Ivy, «Eurasia. Eurasia. Eurasia.», el cohete del mercado, «Retiren eso», la Planilla Azul, la firma de Voss, Crane sin máscara, la casa de Dot, Goldstein. Ver §12.
 
+- **Primeras pruebas con jugadores** (no sabían si alguien tenía algo nuevo que decir, ni por dónde salir, ni dónde estaba «su mesa»; leían los pensamientos arriba y los diálogos abajo; en el crimen facial se ganaba manteniendo pulsado el espacio):
+  - **Pistas visuales** (`src/ui/marcas.ts`, opción *Pistas visuales*): cada acción de cada hotspot se juega en seco en una copia aislada de ink (`NarrativeBridge.simular`, sin eventos ni observadores) y se compara con las líneas ya leídas del registro. Quien tiene algo sin leer lleva un bocadillo; un objeto, un destello (un punto tenue si solo es mirarlo); una salida que de verdad lleva a otra escena y se llama como una salida, una flecha. Lo que nombra el objetivo de los apuntes lleva una flecha ocre grande. El cálculo se reparte entre fotogramas (4 ms por fotograma) y las marcas quedan bajo la oscuridad de los túneles.
+  - **Apuntes** (tecla `N` o botón NOTAS, `content/apuntes.json`): lo que hay que hacer ahora (119 objetivos, de más concreto a más general), las personas (con lo último que se sabe; el doblepensar borra a Amory) y lo que se ha averiguado. Todo se desbloquea con variables de ink. El bot comprueba que en ningún sitio de ninguna jornada cae en el objetivo genérico.
+  - **Una sola caja, abajo:** lo que se piensa o se mira, en tinta clara sobre oscuro y sin nombre; la telepantalla, en verde; lo que dice alguien, en papel, con su nombre y su cara (los retratos dibujados o la cabeza de su sprite ampliada).
+  - **Crimen facial:** las repeticiones de tecla no cuentan y una pulsación a destiempo cerca de una marca agrieta la cara. Mantener pulsado o machacar la tecla da 0 aciertos; pulsar a tiempo sigue dando «impecable».
+
 **Pendiente:** probar en un iPhone y un Android reales (audio, joystick, pantalla completa, rendimiento) y pruebas con jugadores.
 
 ---

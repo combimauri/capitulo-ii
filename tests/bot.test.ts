@@ -11,6 +11,7 @@ import { compileInk } from '../tools/vite-plugin-ink';
 import { NarrativeBridge } from '../src/core/NarrativeBridge';
 import { parseTiled } from '../src/core/Location';
 import { azar, jugarPartida, PERFILES, type Partida } from '../tools/bot';
+import apuntes from '../content/apuntes.json';
 
 const RAIZ = path.resolve(__dirname, '..');
 const json = compileInk(path.join(RAIZ, 'content/ink/main.ink')).json!;
@@ -91,6 +92,13 @@ describe('bot de recorrido', () => {
     expect(oye('estudio@J12', 'crane_oscuro')).toBe(true);
     expect(oye('tunel1@J13', 'tuneles')).toBe(true);
     expect(oye('celda@J13', 'celda') || [...oidas.keys()].some((k) => k.startsWith('celda@') && oidas.get(k)!.has('celda'))).toBe(true);
+  });
+
+  it('los apuntes siempre dicen qué hacer: ningún sitio cae en el objetivo genérico', () => {
+    const generico = apuntes.objetivos[apuntes.objetivos.length - 1].texto;
+    const perdidos = new Set<string>();
+    for (const p of partidas) for (const [donde, xs] of p.objetivos) if (xs.has(generico) || xs.has('')) perdidos.add(donde);
+    expect([...perdidos].sort()).toEqual([]);
   });
 
   it('los momentos clave cambian la música: el prólogo, Sammy, la firma de Voss, Goldstein', () => {

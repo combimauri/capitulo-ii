@@ -240,6 +240,8 @@ export class FacecrimeScene extends Minijuego {
     });
     const kb = this.input.keyboard!;
     kb.on('keydown', (ev: KeyboardEvent) => {
+      // mantener la tecla pulsada no vale: el teclado repite la pulsación y acertaría todas las marcas
+      if (ev.repeat) return;
       if (ev.code === 'Space' || ev.code === 'Enter') return this.pulsar(unica ? this.exprs[0] : this.exprActual);
       const n = Number(ev.key);
       if (n >= 1 && n <= this.exprs.length) this.pulsar(this.exprs[n - 1]);
@@ -376,8 +378,15 @@ export class FacecrimeScene extends Minijuego {
   private pulsar(e: Expr) {
     if (!this.empezado || this.inicio < 0) return;
     const ahora = this.ahora() - this.inicio;
+    if (this.automatico) return;
     const m = this.marcas.find((x) => !x.resuelta && Math.abs(x.t - ahora) <= this.ventana);
-    if (!m || this.automatico) return;   // pulsar fuera de tiempo no penaliza: la cara se mantiene
+    if (!m) {
+      // una mueca a destiempo, con una marca cerca, agrieta la cara: así no se gana pulsando sin parar.
+      // Lejos de cualquier marca no pasa nada (un toque perdido no castiga).
+      const cerca = this.marcas.find((x) => !x.resuelta && Math.abs(x.t - ahora) <= this.ventana * 3);
+      if (cerca) this.fallo(cerca);
+      return;
+    }
     if (m.expr !== e) return this.fallo(m);
     this.acertar(m);
   }

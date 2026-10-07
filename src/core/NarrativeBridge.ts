@@ -30,11 +30,16 @@ const COMANDOS = new Set(['escena', 'pos', 'jornada', 'musica', 'ambiente', 'fin
 /** Etiquetas que detienen el diálogo hasta que el motor termina (minijuegos, pausas, efectos). */
 const ACCIONES = new Set(['cf', 'dp', 'minijuego', 'sigilo', 'documento', 'comparar', 'fx', 'esperar', 'bloquear_input', 'sfx', 'recuerdo', 'vineta']);
 
+/** Lo que haría una ruta si se jugara ahora: las líneas que saldrían y si cambia de escena. */
+export interface Simulacion { ids: string[]; escena: string | null }
+
 export class NarrativeBridge {
   readonly story: Story;
   private listeners = new Map<string, Set<Listener>>();
+  /** Una segunda historia, aislada, para jugar en seco (sin eventos, sin observadores, sin tocar la partida). */
+  private sombra: Story | null = null;
 
-  constructor(json: string) {
+  constructor(private readonly json: string) {
     this.story = new Story(json);
     this.story.onError = (msg) => console.error('[ink]', msg);
   }
@@ -93,6 +98,44 @@ export class NarrativeBridge {
 
   choose(index: number) {
     this.story.ChooseChoiceIndex(index);
+  }
+
+  /**
+   * Juega en seco una ruta sobre una copia del estado (`estado`, de saveState(); se calcula una vez para
+   * varias rutas): qué líneas saldrían (sin carteles) y a qué escena llevaría. Si se para en unas opciones,
+   * prueba también cada opción, un nivel. No emite nada ni cambia la partida.
+   */
+  simular(ruta: string, estado: string, maxOpciones = 6): Simulacion {
+    const r: Simulacion = { ids: [], escena: null };
+    if (!this.hasPath(ruta)) return r;
+    if (!this.sombra) {
+      this.sombra = new Story(this.json);
+      this.sombra.onError = () => {};
+    }
+    const h = this.sombra;
+    const correr = () => {
+      for (let i = 0; i < 300 && h.canContinue; i++) {
+        const text = h.Continue() ?? '';
+        const tags = (h.currentTags ?? []).map(parseTag);
+        const escena = tags.find((t) => t.key === 'escena');
+        if (escena && !r.escena) r.escena = escena.value;
+        const id = tags.find((t) => t.key === 'id')?.value;
+        if (id && text.trim() && parseLine(text).kind !== 'cartel') r.ids.push(id);
+      }
+      return h.currentChoices.length;
+    };
+    try {
+      h.state.LoadJson(estado);
+      h.ChoosePathString(ruta);
+      const opciones = correr();
+      for (let i = 0; i < Math.min(opciones, maxOpciones); i++) {
+        h.state.LoadJson(estado);
+        h.ChoosePathString(ruta);
+        correr();
+        if (h.currentChoices.length > i) { h.ChooseChoiceIndex(i); correr(); }
+      }
+    } catch { /* una rama que falla en seco: lo que se haya visto hasta ahí */ }
+    return r;
   }
 
   // ---------------------------------------------------------------- variables

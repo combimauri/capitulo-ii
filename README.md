@@ -24,6 +24,7 @@ python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/location
 | Mirar | `Q` · clic derecho | Botón MIRAR o mantener pulsado el objeto |
 | Objetos (mirar, o «usar con…» algo del escenario) | `I` o botón OBJ. · `Esc` suelta el objeto | Botón OBJ. |
 | Registro de diálogos | `L` o botón REG. | Botón REG. |
+| Apuntes (qué hacer ahora, la gente, lo que sé) | `N` o botón NOTAS | Botón NOTAS |
 | Esconderse (sábanas, portales, carritos) | `E` junto al escondite; moverse para salir | Botón USAR |
 | Abrir o cerrar la carpeta (sigilo social, Miniver) | `C` | Botón CARPETA |
 | Dar a la manivela de la linterna (túneles) | `F` | Botón DINAMO |
@@ -33,6 +34,8 @@ python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/location
 | Depuración | `F1` | — |
 
 Con el ratón, al pasar por encima de algo con lo que se puede hacer algo, el cursor cambia a una mano y aparece su nombre con lo que hace cada clic. Los botones de la derecha dicen su tecla al pasar el ratón. El ojo de arriba a la derecha es la Sospecha: se abre a medida que sube; al pasar el ratón o tocarlo, lo explica.
+
+Pistas visuales en los escenarios (se pueden quitar en *Opciones → Juego*): una flecha ocre grande sobre lo que pide el objetivo de los apuntes, un bocadillo sobre quien tiene algo nuevo que decir, un destello en lo que aún no se ha mirado y una flecha pequeña en las salidas que llevan a otro sitio. Lo que se piensa o se mira sale abajo, en una caja oscura; lo que dice alguien, en una caja de papel con su nombre y su cara.
 
 En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.entrar')` para ir directamente a cualquier escena, y `audio` para probar música (`audio.musica.poner('himno')`), ambientes (`audio.ambiente.poner(['tunel'])`) y efectos (`audio.play('sirena')`).
 

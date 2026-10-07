@@ -1,7 +1,7 @@
 /**
  * Opciones (diseño técnico §9), desde el menú principal o desde la pausa:
  *   SONIDO   los cuatro volúmenes (mientras está abierto desde el menú, suena algo para oírlos).
- *   JUEGO    velocidad del texto, crimen facial, sigilo, destellos, tamaño de la interfaz y mano dominante.
+ *   JUEGO    velocidad del texto, crimen facial, sigilo, destellos, tamaño de la interfaz, mano dominante y pistas visuales.
  *   PARTIDA  exportar la partida a un archivo e importarla (diseño técnico §10.2).
  */
 import Phaser from 'phaser';
@@ -40,6 +40,12 @@ const ETIQUETAS: { [K in keyof OpcionesJuego]: { nombre: string; valores: string
   mano: {
     nombre: 'Mano dominante', valores: ['Derecha', 'Izquierda'],
     ayuda: ['En pantallas táctiles, los botones de acción van a la derecha.', 'En pantallas táctiles, los botones de acción van a la izquierda.'],
+  },
+  pistas: {
+    nombre: 'Pistas visuales', valores: ['Todas', 'Novedades', 'Ninguna'],
+    ayuda: ['Flechas en las salidas, un bocadillo si alguien tiene algo nuevo que decir y un destello en lo que aún no has visto.',
+      'Solo el bocadillo y el destello de lo que tiene algo nuevo; sin flechas en las salidas.',
+      'Sin marcas en los escenarios.'],
   },
 };
 
@@ -147,7 +153,7 @@ export class OpcionesScene extends Phaser.Scene {
     const claves = Object.keys(ETIQUETAS) as (keyof OpcionesJuego)[];
     const X0 = width / 2 - 150, ANCHO = 520;
     claves.forEach((k, i) => {
-      const y = 160 + i * 46;
+      const y = 150 + i * 40;
       const e = ETIQUETAS[k];
       this.contenido.add(this.add.text(X0 - 20, y, e.nombre, { fontFamily: FUENTE.texto, fontSize: '19px', color: hex(COLOR.papel3) }).setOrigin(1, 0.5));
       const valores = VALORES[k] as readonly OpcionesJuego[typeof k][];
@@ -156,7 +162,7 @@ export class OpcionesScene extends Phaser.Scene {
       const pintar = () => botones.forEach((b, j) => b.setFillStyle(valores[j] === opciones[k] ? COLOR.rojo3 : COLOR.gris2));
       valores.forEach((v, j) => {
         const x = X0 + w * j + w / 2;
-        const b = this.add.rectangle(x, y, w - 6, 38, COLOR.gris2).setStrokeStyle(1, COLOR.gris3).setInteractive({ useHandCursor: true });
+        const b = this.add.rectangle(x, y, w - 6, 34, COLOR.gris2).setStrokeStyle(1, COLOR.gris3).setInteractive({ useHandCursor: true });
         const t = this.add.text(x, y, e.valores[j], { fontFamily: FUENTE.texto, fontSize: '17px', color: hex(COLOR.papel4) }).setOrigin(0.5);
         b.on('pointerover', () => this.ayuda.setText(`${e.nombre}: ${e.ayuda[j]}`));
         b.on('pointerup', () => {

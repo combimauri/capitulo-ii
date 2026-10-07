@@ -6,6 +6,8 @@
 import Phaser from 'phaser';
 import { narrativa, registro, mano, mision, segundos, LOCALIZACIONES, RESOLUCION, EV, tactil, texturaProta } from '../core/juego';
 import { contains, cumple, musicaDe, overlaps, type Dir, type Hotspot, type LocationData, type Npc, type Point, type Rect } from '../core/Location';
+import { Marcas } from '../ui/marcas';
+import { alCambiarOpcion } from '../core/Opciones';
 import { NavGrid } from '../systems/Pathfinding';
 import { Sigilo } from '../systems/Sigilo';
 import { audio } from '../systems/AudioDirector';
@@ -62,6 +64,8 @@ export class LocationScene extends Phaser.Scene {
   private pulsacion: Pulsacion | null = null;
   private npcs = new Map<string, { npc: Npc; sprite: Phaser.GameObjects.Sprite; visible: boolean }>();
   private hotspotsVisibles: Hotspot[] = [];
+  /** Pistas visuales: bocadillos, destellos y flechas de salida (src/ui/marcas.ts). */
+  private marcas: Marcas | null = null;
   private zonasPisadas = new Set<string>();
   private cambioPendiente: { escena?: string; spawn?: string } = {};
   private finalPendiente = false;
@@ -139,6 +143,13 @@ export class LocationScene extends Phaser.Scene {
     if (data.cargado && data.reloj !== undefined) mision.reloj = data.reloj;
     for (const n of this.npcs.values()) if (n.npc.persigue) n.npc.solido = false;
     this.crearOscuridad();
+    this.marcas = new Marcas(this, this.loc, (h) => {
+      for (const n of this.npcs.values()) if (n.npc.hotspot === h) return n.sprite;
+      return null;
+    });
+    this.events.once('shutdown', () => { this.marcas?.destroy(); this.marcas = null; });
+    const quitarOyente = alCambiarOpcion((k) => { if (k === 'pistas') this.marcas?.actualizar(this.hotspotsVisibles); });
+    this.events.once('shutdown', quitarOyente);
     this.actualizarVisibilidad();
 
     const cam = this.cameras.main;
@@ -311,7 +322,7 @@ export class LocationScene extends Phaser.Scene {
 
   private configurarNarrativa() {
     const ev = this.game.events;
-    const inicio = () => { this.ocupado = true; this.ruta = []; this.parar(); this.limpiarFoco(); };
+    const inicio = () => { this.ocupado = true; this.ruta = []; this.parar(); this.limpiarFoco(); this.marcas?.mostrar(false); };
     const fin = () => {
       this.ocupado = false;
       // Si el diálogo se cerró con un clic o toque, ese mismo gesto se ignora hasta soltarlo.
@@ -319,6 +330,7 @@ export class LocationScene extends Phaser.Scene {
       this.finDialogo = this.time.now;
       this.actualizarVisibilidad();
       this.limpiarFoco();
+      this.marcas?.mostrar(true);
       if (this.volverAlControl && !this.cambioPendiente.escena) {
         const s = this.loc.spawns.find((sp) => sp.name === this.checkpoint);
         if (s) { this.colocar(s.x, s.y); this.dir = s.orientacion; this.parar(); }
@@ -337,7 +349,7 @@ export class LocationScene extends Phaser.Scene {
     };
     const depurar = (activo: boolean) => { this.depurando = activo; };
     // paneles (registro) que detienen el mundo sin ser un diálogo
-    const pausa = (activa: boolean) => { if (activa) inicio(); else { this.ocupado = false; this.finDialogo = this.time.now; } };
+    const pausa = (activa: boolean) => { if (activa) inicio(); else { this.ocupado = false; this.finDialogo = this.time.now; this.marcas?.mostrar(true); } };
     const accion = (modo: 'principal' | 'mirar') => this.actuarEnfocado(modo);
     const carpeta = () => {
       if (!mision.social || this.ocupado) return;
@@ -444,6 +456,7 @@ export class LocationScene extends Phaser.Scene {
       this.avanzarReloj(dt);
     }
     this.sigilo?.update(dtMs, !this.ocupado);
+    this.marcas?.seguir();
     this.alumbrar(dt);
     if (!this.ocupado) this.perseguir(dt);
     this.alejarPersonajes(dt);
@@ -687,6 +700,7 @@ export class LocationScene extends Phaser.Scene {
       if (n.visible && conAccion(n.npc.hotspot)) this.hotspotsVisibles.push(n.npc.hotspot);
     }
     this.reconstruirNav();
+    this.marcas?.actualizar(this.hotspotsVisibles);
   }
 
   // ------------------------------------------------------------------ interacción

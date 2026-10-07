@@ -16,10 +16,12 @@ export interface OpcionesJuego {
   ui: 100 | 125;
   /** Mano dominante (móvil): los botones de acción van de su lado. */
   mano: 'derecha' | 'izquierda';
+  /** Pistas visuales en los escenarios: las salidas y lo que tiene algo nuevo, solo lo nuevo, o nada. */
+  pistas: 'todas' | 'novedades' | 'ninguna';
 }
 
 const CLAVE = 'capitulo2.opciones.juego';
-const INICIAL: OpcionesJuego = { texto: 'normal', cf: 'normal', sigilo: 'normal', destellos: false, ui: 100, mano: 'derecha' };
+const INICIAL: OpcionesJuego = { texto: 'normal', cf: 'normal', sigilo: 'normal', destellos: false, ui: 100, mano: 'derecha', pistas: 'todas' };
 
 /** Valores válidos de cada opción, en el orden en que se ofrecen. */
 export const VALORES: { [K in keyof OpcionesJuego]: readonly OpcionesJuego[K][] } = {
@@ -29,6 +31,7 @@ export const VALORES: { [K in keyof OpcionesJuego]: readonly OpcionesJuego[K][] 
   destellos: [false, true],
   ui: [100, 125],
   mano: ['derecha', 'izquierda'],
+  pistas: ['todas', 'novedades', 'ninguna'],
 };
 
 /** Caracteres por segundo de la máquina de escribir de los diálogos. */

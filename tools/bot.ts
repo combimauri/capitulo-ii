@@ -9,6 +9,8 @@ import { cumple, musicaDe, type Hotspot, type LocationData } from '../src/core/L
 import type { Tag } from '../src/core/tags';
 import items from '../content/items.json';
 import diario from '../content/diario/entradas.json';
+import apuntes from '../content/apuntes.json';
+import { objetivo, type Apuntes } from '../src/core/apuntes';
 
 // ------------------------------------------------------------------ azar
 
@@ -133,6 +135,8 @@ export interface Partida {
   musica: Map<string, Set<string | null>>;
   /** Las pistas pedidas con # musica: desde ink (y dónde), en orden. */
   cues: { pista: string; escena: string; jornada: number; knot: string }[];
+  /** El objetivo de los apuntes que se veía al explorar cada sitio, por «escena@Jjornada». */
+  objetivos: Map<string, Set<string>>;
 }
 
 /** Límites de la partida. */
@@ -285,7 +289,7 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
   const p: Partida = {
     perfil: perfil.nombre, resultado: 'limite', jornadas: {}, maxDuda: 0, maxSospecha: 0, arrestos: 0,
     errores: [], avisos: [], fueraDeRango: [], lineas: new Set(), origen: {}, decisiones: {}, acciones: 0, ultimaEscena: '',
-    musica: new Map(), cues: [],
+    musica: new Map(), cues: [], objetivos: new Map(),
   };
 
   // estado del motor (LocationScene + mision)
@@ -623,6 +627,8 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
       const clave = `${loc.id}@J${num('jornada')}`;
       if (!p.musica.has(clave)) p.musica.set(clave, new Set());
       p.musica.get(clave)!.add(musicaForzada !== undefined ? musicaForzada : musicaDe(loc, leer));
+      if (!p.objetivos.has(clave)) p.objetivos.set(clave, new Set());
+      p.objetivos.get(clave)!.add(objetivo(apuntes as Apuntes, leer));
       const a = lista[ponderado(rng, lista.map((x) => x.peso))];
       hechas.set(a.clave, (hechas.get(a.clave) ?? 0) + 1);
       p.acciones++; sinNovedad++;
