@@ -47,6 +47,10 @@ export class LocationScene extends Phaser.Scene {
   private ruta: Point[] = [];
   private alLlegar: (() => void) | null = null;
   private enfocado: Hotspot | null = null;
+  /** Lo que está bajo el ratón (escritorio): se señala con la mano y su nombre, aunque esté lejos. */
+  private bajoRaton: Hotspot | null = null;
+  /** Lo que muestra ahora la etiqueta de foco (y si es por el ratón), para no repetir el aviso en cada fotograma. */
+  private focoMostrado: { h: Hotspot | null; raton: boolean } = { h: null, raton: false };
   private ocupado = false;
   /** La pulsación que cerró un diálogo no debe convertirse en una orden de caminar. */
   private ignorarPulsacion = false;
@@ -90,6 +94,7 @@ export class LocationScene extends Phaser.Scene {
     if (!this.loc) throw new Error(`Localización desconocida: ${data.escena}`);
     this.ocupado = false;
     this.ruta = []; this.alLlegar = null; this.enfocado = null; this.pulsacion = null;
+    this.bajoRaton = null; this.focoMostrado = { h: null, raton: false };
     this.npcs.clear(); this.zonasPisadas.clear(); this.cambioPendiente = {}; this.limpiar = [];
     this.musicaForzada = undefined;
     this.ambienteForzado = undefined;
@@ -196,6 +201,15 @@ export class LocationScene extends Phaser.Scene {
       }
     });
 
+    // escritorio: el ratón sobre algo con lo que se puede hacer algo pone la mano y su nombre
+    this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
+      if (p.wasTouch) return;
+      this.bajoRaton = this.ocupado || mision.carpeta ? null : this.hotspotEn({ x: p.worldX, y: p.worldY });
+      this.input.setDefaultCursor(this.bajoRaton ? 'pointer' : 'default');
+    });
+    this.input.on('gameout', () => { this.bajoRaton = null; this.input.setDefaultCursor('default'); });
+    this.events.once(Phaser.Scenes.Events.SHUTDOWN, () => this.input.setDefaultCursor('default'));
+
     this.input.on('pointermove', (p: Phaser.Input.Pointer) => {
       const pul = this.pulsacion;
       if (!pul || pul.id !== p.id || pul.consumida || this.ocupado || !p.isDown) return;
@@ -297,14 +311,14 @@ export class LocationScene extends Phaser.Scene {
 
   private configurarNarrativa() {
     const ev = this.game.events;
-    const inicio = () => { this.ocupado = true; this.ruta = []; this.parar(); };
+    const inicio = () => { this.ocupado = true; this.ruta = []; this.parar(); this.limpiarFoco(); };
     const fin = () => {
       this.ocupado = false;
       // Si el diálogo se cerró con un clic o toque, ese mismo gesto se ignora hasta soltarlo.
       this.ignorarPulsacion = this.input.activePointer.isDown;
       this.finDialogo = this.time.now;
       this.actualizarVisibilidad();
-      this.enfocado = null;
+      this.limpiarFoco();
       if (this.volverAlControl && !this.cambioPendiente.escena) {
         const s = this.loc.spawns.find((sp) => sp.name === this.checkpoint);
         if (s) { this.colocar(s.x, s.y); this.dir = s.orientacion; this.parar(); }
@@ -329,7 +343,7 @@ export class LocationScene extends Phaser.Scene {
       if (!mision.social || this.ocupado) return;
       mision.carpeta = !mision.carpeta;
       audio.play('papel');
-      if (mision.carpeta) { this.game.events.emit(EV.foco, null); this.enfocado = null; }
+      if (mision.carpeta) this.limpiarFoco();
     };
     ev.on(EV.carpeta, carpeta);
     const dinamo = () => {
@@ -682,6 +696,7 @@ export class LocationScene extends Phaser.Scene {
     return [...this.hotspotsVisibles].reverse().find((h) => !h.auto && contains(h, p)) ?? null;
   }
 
+  /** El foco por cercanía (lo que usan E y Q) y la etiqueta: manda lo que está bajo el ratón, si hay algo. */
   private actualizarFoco() {
     const pos = { x: this.prota.x, y: this.prota.y };
     let mejor: Hotspot | null = null, dmin = RADIO_INTERACCION;
@@ -690,19 +705,30 @@ export class LocationScene extends Phaser.Scene {
       const d = Math.hypot(h.aprox.x - pos.x, h.aprox.y - pos.y);
       if (d < dmin) { dmin = d; mejor = h; }
     }
-    if (mejor !== this.enfocado) {
-      this.enfocado = mejor;
-      const cam = this.cameras.main;
-      const z = RESOLUCION.zoom;
-      this.game.events.emit(EV.foco, mejor && {
-        nombre: mejor.nombre,
-        x: (mejor.x + mejor.w / 2 - cam.worldView.x) * z,
-        y: (mejor.y - cam.worldView.y) * z,
-        mirar: !!mejor.mirar,
-        usar: !!(mejor.usar || mejor.hablar),
-        hablar: !!mejor.hablar,
-      });
-    }
+    this.enfocado = mejor;
+    if (this.bajoRaton && !this.hotspotsVisibles.includes(this.bajoRaton)) this.bajoRaton = null;
+    const h = this.bajoRaton ?? mejor, raton = !!this.bajoRaton;
+    if (h === this.focoMostrado.h && raton === this.focoMostrado.raton) return;
+    this.focoMostrado = { h, raton };
+    const cam = this.cameras.main;
+    const z = RESOLUCION.zoom;
+    this.game.events.emit(EV.foco, h && {
+      nombre: h.nombre,
+      x: (h.x + h.w / 2 - cam.worldView.x) * z,
+      y: (h.y - cam.worldView.y) * z,
+      mirar: !!h.mirar,
+      usar: !!(h.usar || h.hablar),
+      hablar: !!h.hablar,
+      raton,
+    });
+  }
+
+  private limpiarFoco() {
+    this.enfocado = null;
+    this.bajoRaton = null;
+    this.focoMostrado = { h: null, raton: false };
+    this.input.setDefaultCursor('default');
+    this.game.events.emit(EV.foco, null);
   }
 
   /** Zonas automáticas: se disparan una vez al entrar en ellas. */
@@ -757,8 +783,7 @@ export class LocationScene extends Phaser.Scene {
     // el NPC se gira hacia el jugador al hablarle
     const npc = [...this.npcs.values()].find((n) => n.npc.hotspot === h);
     if (npc && modo !== 'mirar') npc.sprite.setFlipX(this.prota.x < npc.npc.x && npc.npc.dir !== 'abajo');
-    this.game.events.emit(EV.foco, null);
-    this.enfocado = null;
+    this.limpiarFoco();
     this.game.events.emit(EV.dialogoIniciar, ruta);
   }
 

@@ -26,7 +26,7 @@ const MINIJUEGOS: Record<string, string> = {
   tuneles: 'Tuneles', capitulo: 'Capitulo', dial: 'Dial', h101: 'Habitacion101', declaracion: 'Declaracion', resistencia: 'Resistencia', epilogo: 'Epilogo', creditos: 'Creditos', cf_auto: 'CFAutomatico',
 };
 
-interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean }
+interface FocoInfo { nombre: string; x: number; y: number; mirar: boolean; usar: boolean; hablar: boolean; raton?: boolean }
 
 export class UIScene extends Phaser.Scene {
   private activo = false;
@@ -88,6 +88,7 @@ export class UIScene extends Phaser.Scene {
     this.joystick = this.add.graphics().setDepth(25);
     this.inventario = this.add.container(0, 0).setVisible(false).setDepth(60);
     this.ojo = this.add.graphics().setDepth(20);
+    this.crearAyudaOjo();
     this.enMano = this.add.container(0, 0).setDepth(22).setVisible(false);
     this.aviso = this.add.container(0, 0).setDepth(45).setVisible(false);
     this.crearMision();
@@ -143,8 +144,9 @@ export class UIScene extends Phaser.Scene {
       if (n >= 1 && n <= this.opcionesLista.length) this.elegir(n - 1);
     });
     kb.on('keydown-F1', () => this.alternarDepuracion());
-    this.input.on('pointerdown', () => {
+    this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
       audio.desbloquear();
+      if (this.registry.get('uiCapturo') === p.downTime) return;   // tocar el ojo no pasa la línea
       if (this.activo && !this.enAccion && !this.opciones.visible) this.confirmar();
     });
 
@@ -155,7 +157,7 @@ export class UIScene extends Phaser.Scene {
   }
 
   update() {
-    this.botones.setVisible(this.esTactil && !this.activo && !this.inventario.visible && !this.consultando);
+    this.botones.setVisible(!this.activo && !this.inventario.visible && !this.consultando);
     this.enMano.setVisible(!!mano.item && !this.activo && !this.consultando);
     const r = mision.reloj;
     this.reloj.setVisible(!!r && !r.oculto && !this.consultando);
@@ -243,23 +245,38 @@ export class UIScene extends Phaser.Scene {
     this.foco.setData('fondo', fondo);
   }
 
-  /** Botones táctiles: solo en dispositivos con pantalla táctil (diseño técnico §8), del lado de la mano dominante. */
+  /**
+   * Botones en pantalla (diseño técnico §8). En táctil, todos y del lado de la mano dominante; en escritorio,
+   * objetos, registro y menú (usar y mirar ya son el clic), con su tecla al pasar el ratón.
+   */
   private crearBotonesTactiles() {
     this.botones?.destroy();
     this.botones = this.add.container(0, 0).setDepth(20).setVisible(false);
-    const zurdo = opc.mano === 'izquierda';
-    const boton = (x0: number, y: number, r: number, etiqueta: string, alPulsar: () => void) => {
+    const zurdo = this.esTactil && opc.mano === 'izquierda';
+    const ayuda = this.add.text(0, 0, '', {
+      fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.papel4), backgroundColor: '#16181cdd', padding: { x: 6, y: 3 },
+    }).setOrigin(1, 0.5).setVisible(false);
+    const boton = (x0: number, y: number, r: number, etiqueta: string, tecla: string, alPulsar: () => void) => {
       const x = zurdo ? 960 - x0 : x0;
-      const c = this.add.circle(x, y, r, COLOR.gris1, 0.55).setStrokeStyle(2, COLOR.papel3, 0.7).setInteractive();
+      const c = this.add.circle(x, y, r, COLOR.gris1, 0.55).setStrokeStyle(2, COLOR.papel3, 0.7).setInteractive({ useHandCursor: true });
       const t = this.add.text(x, y, etiqueta, { fontFamily: FUENTE.maquina, fontSize: '20px', color: hex(COLOR.papel4) }).setOrigin(0.5);
       c.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); alPulsar(); });
+      c.on('pointerover', (p: Phaser.Input.Pointer) => {
+        if (p.wasTouch) return;
+        c.setFillStyle(COLOR.rojo3, 0.85);
+        ayuda.setText(tecla).setPosition(x - r - 8, y).setVisible(true);
+      });
+      c.on('pointerout', () => { c.setFillStyle(COLOR.gris1, 0.55); ayuda.setVisible(false); });
       this.botones.add([c, t]);
     };
-    boton(880, 450, 44, 'USAR', () => this.game.events.emit(EV.accion, 'principal'));
-    boton(790, 488, 34, 'MIRAR', () => this.game.events.emit(EV.accion, 'mirar'));
-    boton(900, 92, 30, 'OBJ.', () => this.alternarInventario());
-    boton(900, 160, 30, 'REG.', () => this.abrirRegistro());
-    boton(900, 228, 30, 'MENÚ', () => this.pausar());
+    if (this.esTactil) {
+      boton(880, 450, 44, 'USAR', 'E · Espacio', () => this.game.events.emit(EV.accion, 'principal'));
+      boton(790, 488, 34, 'MIRAR', 'Q', () => this.game.events.emit(EV.accion, 'mirar'));
+    }
+    boton(900, 92, 30, 'OBJ.', 'Objetos · I', () => this.alternarInventario());
+    boton(900, 160, 30, 'REG.', 'Registro · L', () => this.abrirRegistro());
+    boton(900, 228, 30, 'MENÚ', 'Pausa y opciones · Esc', () => this.pausar());
+    this.botones.add(ayuda);
   }
 
   /** Abre la pausa (Esc, botón MENÚ o la app en segundo plano). No en mitad de un minijuego. */
@@ -605,11 +622,16 @@ export class UIScene extends Phaser.Scene {
   // ------------------------------------------------------------------ foco, joystick, inventario
   private mostrarFoco(info: FocoInfo | null) {
     if (!info || this.activo) { this.foco.setVisible(false); return; }
-    const acciones = this.esTactil ? '' : [info.usar ? (info.hablar ? 'E hablar' : 'E usar') : '', info.mirar ? 'Q mirar' : ''].filter(Boolean).join(' · ');
+    // con el ratón encima, el clic; si no, las teclas del que está al lado
+    const acciones = this.esTactil && !info.raton ? '' : info.raton
+      ? [info.usar ? `clic: ${info.hablar ? 'hablar' : 'usar'}` : '', info.mirar ? `${info.usar ? 'clic dcho.' : 'clic'}: mirar` : ''].filter(Boolean).join(' · ')
+      : [info.usar ? (info.hablar ? 'E hablar' : 'E usar') : '', info.mirar ? 'Q mirar' : ''].filter(Boolean).join(' · ');
     this.focoTexto.setText(`${info.nombre}${acciones ? '   ' + acciones : ''}`);
     const fondo = this.foco.getData('fondo') as Phaser.GameObjects.Rectangle;
     fondo.setSize(this.focoTexto.width + 20, Math.round(24 * escala()));
-    const x = Phaser.Math.Clamp(info.x, fondo.width / 2 + 4, 960 - fondo.width / 2 - 4);
+    // a la derecha está la columna de botones (OBJ., REG., MENÚ): la etiqueta no se mete debajo
+    const derecha = info.y < 270 ? 860 : 960;
+    const x = Phaser.Math.Clamp(info.x, fondo.width / 2 + 4, derecha - fondo.width / 2 - 4);
     this.foco.setPosition(x, Phaser.Math.Clamp(info.y - 4, 30, 520)).setVisible(true);
   }
 
@@ -731,6 +753,32 @@ export class UIScene extends Phaser.Scene {
   private soltarObjeto() {
     mano.item = null;
     this.game.events.emit(EV.mano);
+  }
+
+  /**
+   * Qué es el ojo: al pasar el ratón o al tocarlo, una línea que lo explica y dice cómo está ahora
+   * (sin números: la Sospecha no se ve, se intuye).
+   */
+  private crearAyudaOjo() {
+    const ayuda = this.add.text(892, 30, '', {
+      fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.papel4), backgroundColor: '#16181cee',
+      padding: { x: 8, y: 5 }, align: 'right', lineSpacing: 2,
+    }).setOrigin(1, 0.5).setDepth(46).setVisible(false);
+    const texto = () => {
+      const s = Number(narrativa.get('sospecha')) || 0;
+      const ahora = s < 25 ? 'Ahora nadie se fija en ti.' : s < 50 ? 'Alguien ha tomado nota.' : s < 75 ? 'Te vigilan.' : 'Están a punto de venir a por ti.';
+      return `El ojo del Partido: se abre a medida que sube la Sospecha.\n${ahora}`;
+    };
+    let ocultar: Phaser.Time.TimerEvent | null = null;
+    const mostrar = (ms: number) => {
+      ayuda.setText(texto()).setVisible(true);
+      ocultar?.remove();
+      ocultar = ms ? this.time.delayedCall(ms, () => ayuda.setVisible(false)) : null;
+    };
+    const zona = this.add.circle(920, 30, 22, 0x000000, 0.001).setDepth(21).setInteractive({ useHandCursor: true });
+    zona.on('pointerover', (p: Phaser.Input.Pointer) => { if (!p.wasTouch) mostrar(0); });
+    zona.on('pointerout', (p: Phaser.Input.Pointer) => { if (!p.wasTouch) ayuda.setVisible(false); });
+    zona.on('pointerdown', (p: Phaser.Input.Pointer) => { this.registry.set('uiCapturo', p.downTime); mostrar(3500); });
   }
 
   /** El ojo se abre a medida que sube la Sospecha (biblia visual §8). */
