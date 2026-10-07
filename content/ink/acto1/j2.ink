@@ -88,7 +88,7 @@ AMORY: ¡Siéntate, que empieza! Hoy dicen que sale Goldstein en persona. Bueno,
     -> DONE
 }
 ~ odio_hecho = true
-PENSAMIENTO: Las luces bajan. # sfx:chirrido # fx:negro # id:j2_03_pens_01
+PENSAMIENTO: Las luces bajan. # sfx:chirrido # fx:negro # musica:odio # id:j2_03_pens_01
 TELEPANTALLA: …la libertad de expresión… la paz con Eurasia… la libertad de prensa… # fx:aclarar # id:j2_03_tp_01
 PENSAMIENTO: Goldstein. # id:j2_03_pens_02
 PENSAMIENTO: Las luces vuelven. El público, agotado y sudoroso, se dispersa. # cf:id=CF-J2-ODIO # id:j2_03_pens_03
@@ -101,7 +101,7 @@ PENSAMIENTO: Las luces vuelven. El público, agotado y sudoroso, se dispersa. # 
 { cf_j2_odio == "perfecto":
     PENSAMIENTO: El hombre del Partido Interior me mira de reojo. Un instante. # id:j2_03_obrien_mira
 }
-AMORY: Uf. Siempre me deja como si hubiera corrido diez kilómetros. Tú gritabas de verdad, ¿eh? Te vi. Daba miedo. # id:j2_03_amory_01
+AMORY: Uf. Siempre me deja como si hubiera corrido diez kilómetros. Tú gritabas de verdad, ¿eh? Te vi. Daba miedo. # musica:himno_altavoz # id:j2_03_amory_01
 PROTAGONISTA: Es lo mínimo que le debo a Ivy. # id:j2_03_prot_01
 AMORY: Claro. Claro que sí. # id:j2_03_amory_02
 { cf_j2_odio_amory == "visto":

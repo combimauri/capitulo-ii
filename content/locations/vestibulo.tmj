@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "tele,oficina"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "rutina"
   }
  ],
  "tilesets": [],

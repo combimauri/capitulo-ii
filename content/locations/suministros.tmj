@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "neon"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "hermandad:jornada>=8 | misterio"
   }
  ],
  "tilesets": [],

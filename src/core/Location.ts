@@ -107,8 +107,11 @@ export interface LocationData {
   alChocar?: string;
   /** Capas de ambiente del lugar (src/systems/Ambiente.ts): ambiente="tele,oficina". */
   ambiente: string[];
-  /** La música del lugar (src/systems/Musica.ts), con condición opcional. */
-  musica?: { id: string; condicion?: string };
+  /**
+   * La música del lugar (src/systems/Musica.ts): la primera de la lista cuya condición se cumple.
+   * musica="crane_oscuro:jornada==12 | crane" (o musica="crane" + musica_si="cond"). «silencio» es no poner nada.
+   */
+  musica: { id: string; condicion?: string }[];
   /** Un medidor en pantalla que lee una variable de ink de 0 a 100 (el hambre de la celda). */
   medidor?: { variable: string; etiqueta: string; condicion?: string };
 }
@@ -183,12 +186,21 @@ export function parseTiled(id: string, raw: string): LocationData {
     } : undefined,
     oscuro: mp.oscuro === 'true',
     alChocar: mp.al_chocar,
-    musica: mp.musica ? { id: mp.musica, condicion: mp.musica_si } : undefined,
+    musica: mp.musica ? mp.musica.split('|').map((x) => x.trim()).filter(Boolean).map((x) => {
+      const i = x.indexOf(':');
+      return i < 0 ? { id: x, condicion: mp.musica_si } : { id: x.slice(0, i).trim(), condicion: x.slice(i + 1).trim() };
+    }) : [],
     ambiente: mp.ambiente ? mp.ambiente.split(',').map((x) => x.trim()).filter(Boolean) : [],
     // medidor="hambre,Hambre" (+ medidor_si="cond")
     medidor: mp.medidor ? { variable: mp.medidor.split(',')[0], etiqueta: mp.medidor.split(',')[1] ?? mp.medidor, condicion: mp.medidor_si } : undefined,
     sigueCamara: map.width * map.tilewidth > 480 || map.height * map.tileheight > 288,   // 270 px = 17 tiles (272)
   };
+}
+
+/** La música que toca en un lugar según la historia (null: silencio). */
+export function musicaDe(loc: Pick<LocationData, 'musica'>, leer: (v: string) => unknown): string | null {
+  const m = loc.musica.find((x) => cumple(x.condicion, leer));
+  return m && m.id !== 'silencio' ? m.id : null;
 }
 
 /** Evalúa una condición simple de hotspot/NPC contra un lector de variables: "var", "!var", "var==v", "var>=3"… */

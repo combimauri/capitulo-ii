@@ -5,7 +5,7 @@
 
 // FC.01 — En la cripta, con Crane
 === final_c_cripta ===
-PENSAMIENTO: Crane me pone las esposas despacio. Con cuidado. Casi con ternura. # id:fcc_00_pens_00
+PENSAMIENTO: Crane me pone las esposas despacio. Con cuidado. Casi con ternura. # musica:crane_oscuro # id:fcc_00_pens_00
 CRANE: Ya se lo dije. Sobre usted tengo todas las órdenes del mundo. # id:fcc_00_crane_01
 PENSAMIENTO: Goldstein no levanta la vista de la máquina de escribir. # esperar:1 # id:fcc_00_pens_01
 PENSAMIENTO: Negro. # fx:negro # id:fcc_00_negro
@@ -370,7 +370,7 @@ PENSAMIENTO: Levanto la vista hacia la telepantalla. Hacia el cartel de la pared
 PENSAMIENTO: Ivy. # esperar:1.2 # id:fc_05_ivy_01
 PENSAMIENTO: Mi pobre Ivy. Tan equivocada. # esperar:1.2 # id:fc_05_ivy_02
 PENSAMIENTO: Ya está. Ya pasó todo. # id:fc_05_ivy_03
-PENSAMIENTO: Me cae una lágrima. Sonrío. # id:fc_05_lagrima
+PENSAMIENTO: Me cae una lágrima. Sonrío. # musica:himno # id:fc_05_lagrima
 CARTEL: Había vencido sobre sí mism{o}. # id:fc_05_cartel_01
 { final_en_curso == "D":
     CARTEL: Amaba al Gran Hermano. # id:fd_06_cartel

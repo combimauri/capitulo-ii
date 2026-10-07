@@ -32,12 +32,7 @@
   {
    "name": "musica",
    "type": "string",
-   "value": "taberna_calle"
-  },
-  {
-   "name": "musica_si",
-   "type": "string",
-   "value": "final_en_curso!=D"
+   "value": "prole:final_en_curso==D | taberna_calle"
   }
  ],
  "tilesets": [],

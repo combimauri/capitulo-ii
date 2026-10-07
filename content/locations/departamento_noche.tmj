@@ -43,6 +43,11 @@
    "name": "checkpoint",
    "type": "string",
    "value": "mesa"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "frenesi"
   }
  ],
  "tilesets": [],

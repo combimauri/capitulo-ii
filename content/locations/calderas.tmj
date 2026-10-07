@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "calderas"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "hermandad:j8_salida | sigilo"
   }
  ],
  "tilesets": [],

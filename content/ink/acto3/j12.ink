@@ -17,7 +17,7 @@ PENSAMIENTO: Asistencia obligatoria. Toda la plantilla del Minipax. # id:j12_00_
 }
 ~ ejecucion_vista = true
 CARTEL: Parque de la Victoria. # fx:negro # id:j12_01_cartel
-PENSAMIENTO: El parque, lleno. Familias con niños, vendedores de cacahuetes. Los Espías en primera fila, con Hilda. Un patíbulo con cinco cuerdas. # vineta:vineta-patibulo5 # fx:aclarar # id:j12_01_pens_00
+PENSAMIENTO: El parque, lleno. Familias con niños, vendedores de cacahuetes. Los Espías en primera fila, con Hilda. Un patíbulo con cinco cuerdas. # vineta:vineta-patibulo5 # fx:aclarar # musica:odio_altavoz # id:j12_01_pens_00
 { len_salvado:
     PENSAMIENTO: Suben los prisioneros. Los reconozco de la lista: Chen, Koval, Hogan… y en el lugar de Pike, {len_sustituto}. # id:j12_01_salvado_01
     { len_chico:
@@ -37,7 +37,7 @@ PENSAMIENTO: La multitud ruge. # cf:id=CF-J12-EJECUCION # id:j12_01_pens_01
 { cf_j12_ejecucion == "fallo":
     ~ sube_sospecha(10)
 }
-PENSAMIENTO: Las trampillas se abren. # fx:negro # id:j12_01_pens_02
+PENSAMIENTO: Las trampillas se abren. # fx:negro # musica:silencio # id:j12_01_pens_02
 PENSAMIENTO: La madera. La multitud que ruge. # sfx:trampilla # sfx:multitud # esperar:1.5 # id:j12_01_pens_03
 PENSAMIENTO: Y, después, un niño que aplaude. # vineta:fin # id:j12_01_pens_04
 CARTEL: Ministerio de la Paz. # id:j12_02_cartel # escena:pasillo # pos:escalera
@@ -93,7 +93,7 @@ BROOKE: Váyase a casa por la ruta de siempre. No se pare en ningún sitio. Y no
 === j12_sobre ===
 PENSAMIENTO: Vuelvo a mi mesa. El tubo neumático silba. # sfx:tubo # id:j12_03_pens_00
 PENSAMIENTO: Dentro del cilindro no hay una directiva. Hay un sobre de papel marrón. Como el de la foto de Ivy. # id:j12_03_pens_01
-PENSAMIENTO: Una fotografía. # documento:sobre_crane # id:j12_03_pens_02
+PENSAMIENTO: Una fotografía. # documento:sobre_crane # musica:crane_oscuro # id:j12_03_pens_02
 PENSAMIENTO: El sótano de La Campana. La vela, Nell, Barlow… y yo, de perfil, contestando a sus preguntas. # id:j12_03_pens_03
 PENSAMIENTO: Tomada desde un ángulo bajo. A través del hueco de la pared. # esperar:1 # id:j12_03_pens_04
 { inventario ? foto_sotano:
@@ -179,7 +179,7 @@ CRANE: Lleva cinco años esperándolo. # id:j12_04_crane_09
     PENSAMIENTO: Deja la taza, despacio. # id:j12_05n_pens_00
     CRANE: No. La mató un cohete. Yo solo hice una foto. # id:j12_05n_crane_01
     CRANE: Siempre hago solo una foto. # id:j12_05n_crane_02
-    PENSAMIENTO: Saca un silbato del bolsillo del chaleco. Lo hace sonar. Fuera, botas. Gritos. # sfx:alto # id:j12_05n_pens_01
+    PENSAMIENTO: Saca un silbato del bolsillo del chaleco. Lo hace sonar. Fuera, botas. Gritos. # sfx:alto # musica:persecucion # id:j12_05n_pens_01
     PENSAMIENTO: Corro. # fx:negro # id:j12_05n_pens_02 # escena:callejones # pos:inicio
     -> DONE
 
@@ -266,7 +266,7 @@ PENSAMIENTO: Se abre antes de que llame. # fx:negro # id:j12_06_verde_02 # escen
 ~ casa_dot_vista = true
 PENSAMIENTO: Una cocina pequeña y abarrotada. La estufa encendida, ropa secándose. Huele a té y a carbón. # fx:aclarar # id:j12_07_pens_00
 PENSAMIENTO: En una repisa, la colección de metralla de Sammy. Intacta. # id:j12_07_pens_01
-PENSAMIENTO: Dot cierra la puerta y echa el cerrojo. Me empuja hacia la despensa. # sfx:cerrojo # id:j12_07_pens_02
+PENSAMIENTO: Dot cierra la puerta y echa el cerrojo. Me empuja hacia la despensa. # sfx:cerrojo # musica:sigilo # id:j12_07_pens_02
 {
 - dot_confianza >= 3:
     DOT: Dentro. Ni un ruido. # id:j12_07_dot_3_01
@@ -306,7 +306,7 @@ DOT: A mi niño ya lo contaron. # id:j12_07_dot_02
 
 // J12.08 — El mensaje de Nell
 = mensaje
-PENSAMIENTO: Dot abre la despensa. Me da un vaso de agua. Se sienta frente a mí, a la luz de la estufa. # fx:aclarar # id:j12_08_pens_00
+PENSAMIENTO: Dot abre la despensa. Me da un vaso de agua. Se sienta frente a mí, a la luz de la estufa. # fx:aclarar # musica:refugio # id:j12_08_pens_00
 DOT: Nell vino hace tres noches. Me dejó esto. # id:j12_08_dot_01
 DOT: Dijo que si alguna vez venías a mi puerta, era porque ella ya no podía venir a la tuya. # id:j12_08_dot_02
 PENSAMIENTO: Un paquete envuelto en tela de flores. # id:j12_08_pens_01
@@ -375,7 +375,7 @@ PENSAMIENTO: El cuaderno, en las rodillas. # fx:aclarar # id:j12_08_diario_00
     PENSAMIENTO: Tic. Tic. # sfx:tic # esperar:0.6 # id:j12_08_recordar_05
     PENSAMIENTO: El reloj anda. # sfx:tic # id:j12_08_recordar_06
 }
-CARTEL: FIN DEL ACTO III # fx:negro # id:j12_08_fin_acto
+CARTEL: FIN DEL ACTO III # fx:negro # musica:silencio # id:j12_08_fin_acto
 ~ nueva_jornada(13)
 CARTEL: ACTO IV¶CAPÍTULO II # id:j12_08_acto4
 CARTEL: JORNADA 13 # id:j12_08_jornada13

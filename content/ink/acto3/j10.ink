@@ -48,7 +48,7 @@ CARTEL: Cantina del Minipax. Antes del mitin. # fx:negro # id:j10_02_cartel # es
 ~ cantina_j10 = true
 PENSAMIENTO: Toda la cantina mira la telepantalla grande. El ambiente es eléctrico. # id:j10_02_pens_00
 TELEPANTALLA: …y a continuación, la confesión del traidor, que ha pedido voluntariamente hablar a su pueblo antes de recibir su justo castigo. # id:j10_02_tp_01
-PENSAMIENTO: Amory. Irreconocible: delgadísimo, sin gafas, la cara hinchada, el pelo rapado. Huecos donde había dientes. # id:j10_02_pens_01
+PENSAMIENTO: Amory. Irreconocible: delgadísimo, sin gafas, la cara hinchada, el pelo rapado. Huecos donde había dientes. # musica:celda # id:j10_02_pens_01
 AMORY: Yo, Felix Amory, confieso haber trabajado al servicio de Eurasia desde mil novecientos setenta y seis. # id:j10_02_amory_01
 AMORY: Confieso haber saboteado los mapas del frente de Malabar. Confieso haber dibujado señales para el enemigo en los márgenes de documentos oficiales. # id:j10_02_amory_02
 AMORY: Pájaros. Dibujé pájaros. Eran señales. # esperar:1 # id:j10_02_amory_03
@@ -79,7 +79,7 @@ PELL: ¿Usted lo conocía? # id:j10_02_pell_02
 // ==================================================================== J10.03 — Plaza de la Victoria · El mitin
 === j10_mitin ===
 CARTEL: Plaza de la Victoria. Las doce. # fx:negro # id:j10_03_cartel
-PENSAMIENTO: La plaza, abarrotada. Banderas, efigies de Goldstein, helicópteros. Estoy entre la multitud, junto a Hilda y los Parsons. # vineta:vineta-plaza # fx:aclarar # id:j10_03_pens_00
+PENSAMIENTO: La plaza, abarrotada. Banderas, efigies de Goldstein, helicópteros. Estoy entre la multitud, junto a Hilda y los Parsons. # vineta:vineta-plaza # fx:aclarar # musica:odio # id:j10_03_pens_00
 { pancarta_j2 != "":
     PENSAMIENTO: Entre las pancartas de ¡MUERTE A EURASIA!, la mía. La que pinté en el Centro. # id:j10_03_pancarta
 }
@@ -127,7 +127,7 @@ PENSAMIENTO: Pasada la medianoche, la limpiadora entra con su carrito. Recoge pa
 PENSAMIENTO: Al pasar junto a mi mesa deja caer un trapo. Bajo el trapo, una nota. # sfx:papel # id:j10_04_pens_03
 ~ nota_nell_j10 = true
 PENSAMIENTO: Deja el carrito aparcado al fondo de la sala y sigue con las papeleras. # documento:nota_nell_j10 # refrescar # id:j10_04_pens_04
-PENSAMIENTO: Un mapa sin corregir. Un parte sin rectificar. Y Voss dando vueltas por la sala. # reloj:inicio=02:40:00,limite=300,agotar=j10_depto.tarde # id:j10_04_pens_05
+PENSAMIENTO: Un mapa sin corregir. Un parte sin rectificar. Y Voss dando vueltas por la sala. # reloj:inicio=02:40:00,limite=300,agotar=j10_depto.tarde # musica:sigilo # id:j10_04_pens_05
 -> DONE
 
 = mesa
@@ -183,7 +183,7 @@ PENSAMIENTO: El carrito de la limpieza. El doble fondo está bajo el cubo. # id:
 ~ cargando_prueba = false
 ~ mision_j10 = "hecha"
 ~ prueba_rectificacion = true
-PENSAMIENTO: Levanto el cubo. El doble fondo. El mapa y el parte, dentro. El cubo, en su sitio. # sfx:papel # reloj:parar # id:j10_04_entregar_01
+PENSAMIENTO: Levanto el cubo. El doble fondo. El mapa y el parte, dentro. El cubo, en su sitio. # sfx:papel # reloj:parar # musica:frenesi # id:j10_04_entregar_01
 PENSAMIENTO: Al rato, la limpiadora vuelve a por su carro. Al recogerlo, toca el borde dos veces. # esperar:1.2 # id:j10_04_entregar_02
 PENSAMIENTO: Recibido. # id:j10_04_entregar_03
 -> fase2
@@ -199,7 +199,7 @@ PENSAMIENTO: Recibido. # id:j10_04_entregar_03
     PENSAMIENTO: Brooke recoge las carpetas sin mirarme. # id:j10_04_brooke_02
     -> DONE
 }
-VOSS: ¿Qué hace con ese mapa, camarada? # id:j10_04_visto_01
+VOSS: ¿Qué hace con ese mapa, camarada? # musica:minimor # id:j10_04_visto_01
 PROTAGONISTA: Lo llevaba al agujero de la memoria. # id:j10_04_visto_02
 VOSS: El agujero está aquí. # esperar:0.8 # id:j10_04_visto_03
 VOSS: Úselo. # id:j10_04_visto_04
@@ -214,7 +214,7 @@ PENSAMIENTO: Voss sigue su ronda. No ha anotado nada. No le hace falta. # id:j10
 
 // Dan las tres sin haber llegado al carro
 = tarde
-PENSAMIENTO: Las tres. La limpiadora se lleva el carrito sin mirar atrás. # reloj:parar # id:j10_04_tarde_01
+PENSAMIENTO: Las tres. La limpiadora se lleva el carrito sin mirar atrás. # reloj:parar # musica:frenesi # id:j10_04_tarde_01
 { cargando_prueba:
     PENSAMIENTO: Vuelvo a dejar lo que había apartado donde estaba. Nadie lo ha visto. # id:j10_04_tarde_02
 }
@@ -239,8 +239,8 @@ PENSAMIENTO: El Libro de Registro. «Impactos euroasiáticos.» En cada página.
 
 // J10.05 — Madrugada · Fragmento III
 = fragmento
-PENSAMIENTO: Las cuatro. La sala, casi vacía. Me quedo dormid{o} sobre la mesa. # fx:negro # id:j10_05_pens_00
-PENSAMIENTO: Al despertar, entre mis papeles, unas hojas mecanografiadas cosidas con hilo. Bajo un mapa nuevo de Estasia. # fx:aclarar # id:j10_05_pens_01
+PENSAMIENTO: Las cuatro. La sala, casi vacía. Me quedo dormid{o} sobre la mesa. # fx:negro # musica:silencio # id:j10_05_pens_00
+PENSAMIENTO: Al despertar, entre mis papeles, unas hojas mecanografiadas cosidas con hilo. Bajo un mapa nuevo de Estasia. # fx:aclarar # musica:hermandad # id:j10_05_pens_01
 PENSAMIENTO: «Sabe que está mintiendo.» # minijuego:libro,fragmento=3 # id:j10_05_pens_02
 ~ libro_fragmentos = 3
 ~ diario_libro_doblepensar = true

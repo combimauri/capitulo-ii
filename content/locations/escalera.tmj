@@ -33,6 +33,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "edificio"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "soledad:final_en_curso==D | odio_altavoz:jornada==10 && !rectificacion_hecha | minimor:jornada>=10 | himno_pared"
   }
  ],
  "tilesets": [],

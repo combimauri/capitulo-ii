@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "tele,cantina"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "rutina:jornada<=2 | odio_altavoz:jornada==10 | grieta"
   }
  ],
  "tilesets": [],

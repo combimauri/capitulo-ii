@@ -365,7 +365,7 @@ PENSAMIENTO: Una mesa de lectura. Un tampón, una lupa. Una silla. Alguien se si
     PENSAMIENTO: Ya la he leído. Ojalá no. # id:j8_06_ya
     -> DONE
 }
-PENSAMIENTO: Dentro, hojas de papel azul pálido, mecanografiadas. # sfx:papel # id:j8_06_pens_00
+PENSAMIENTO: Dentro, hojas de papel azul pálido, mecanografiadas. # sfx:papel # musica:minimor # id:j8_06_pens_00
 PENSAMIENTO: Las dos primeras líneas. # documento:planilla_s18 # id:j8_06_pens_01
 PENSAMIENTO: Bermondsey, H-10, 01:30. Poplar, K-7, 03:50. Los dos impactos que he registrado esta mañana. # id:j8_06_pens_02
 PENSAMIENTO: «Batería cuatro. Folkestone. Kent.» # esperar:0.8 # id:j8_06_pens_03
@@ -396,7 +396,7 @@ PENSAMIENTO: Nos bombardeamos. Nosotros. A nosotros. # id:j8_06_pens_08
 }
 PENSAMIENTO: Semana dieciséis. La del mercado. # documento:planilla_s16 # id:j8_06b_pens_00
 PENSAMIENTO: «Hora punta de mercado.» # esperar:1 # id:j8_06b_pens_01
-PENSAMIENTO: Sammy. # esperar:1.2 # id:j8_06b_pens_02
+PENSAMIENTO: Sammy. # esperar:1.2 # musica:ruinas # id:j8_06b_pens_02
 PENSAMIENTO: Lo escribieron dos días antes. Alguien escribió a máquina «alta visibilidad» y se fue a comer. # id:j8_06b_pens_03
 ~ sube_duda(5)
 ~ mercado_planilla = true
@@ -413,7 +413,7 @@ PENSAMIENTO: Lo escribieron dos días antes. Alguien escribió a máquina «alta
 }
 ~ estante_1979 = true
 PENSAMIENTO: 1979. Alargo la mano. # id:j8_05_1979_01
-PENSAMIENTO: Pasos en el pasillo. # sfx:botas # id:j8_05_1979_02
+PENSAMIENTO: Pasos en el pasillo. # sfx:botas # musica:sigilo # id:j8_05_1979_02
 PENSAMIENTO: Alguien prueba el picaporte. # esperar:2 # id:j8_05_1979_03
 PENSAMIENTO: Un segundo eterno. # esperar:1.5 # id:j8_05_1979_04
 PENSAMIENTO: Los pasos se alejan. # id:j8_05_1979_05
@@ -432,7 +432,7 @@ PENSAMIENTO: 1979. Otro día. # id:j8_05_1979_06
 
 // ◆ D-J8-PLANILLA · ¿Cómo sacar la prueba?
 = decidir
-PENSAMIENTO: No puedo salir con las manos vacías. Nadie me creería. Yo no me creería. # id:j8_06_decidir
+PENSAMIENTO: No puedo salir con las manos vacías. Nadie me creería. Yo no me creería. # musica:sigilo # id:j8_06_decidir
 * [Copiar a mano lo que me dé tiempo.] # decision:D-J8-PLANILLA
     -> copiar
 * {mercado_planilla} [Llevarme la hoja del mercado.]
@@ -502,7 +502,7 @@ NELL: Ponla en la mesa. # id:j8_08_nell_01
     NELL: Has traído tu propia mentira. Bien. Eso dice más de ti que cualquier juramento. # id:j8_08_nell_parte_02
     ~ nell_confianza += 1
 }
-NELL: Ahora escúchame. Lo que viene no es una ceremonia. Es una advertencia. # id:j8_08_nell_02
+NELL: Ahora escúchame. Lo que viene no es una ceremonia. Es una advertencia. # musica:hermandad # id:j8_08_nell_02
 NELL: Te voy a hacer unas preguntas. Contesta la verdad. No a mí: a ti. # id:j8_08_nell_03
 -> iniciacion
 
@@ -566,7 +566,7 @@ PENSAMIENTO: «Basta con que el pueblo crea que lo hizo.» # minijuego:libro,fra
 ~ diario_libro_guerra = true
 PENSAMIENTO: Yo lo creí. Cinco años. Cada mañana. # id:j8_09_pens_01
 NELL: El resto, otro día. Si hay otro día. # id:j8_09_nell_01
-PENSAMIENTO: Recoge las hojas. Barlow abre la trampilla. Es casi de madrugada. # sfx:trampilla # id:j8_09_pens_02
+PENSAMIENTO: Recoge las hojas. Barlow abre la trampilla. Es casi de madrugada. # sfx:trampilla # musica:taberna_lejos # id:j8_09_pens_02
 CARTEL: Las tres de la mañana. # fx:negro # id:j8_10_cartel # escena:piso_noche # pos:puerta
 -> DONE
 

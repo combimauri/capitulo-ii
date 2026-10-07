@@ -268,7 +268,7 @@ PENSAMIENTO: Lo ha dicho sin girarse. # id:j6_04_recorte_usar_2
     -> DONE
 }
 ~ inspeccion_hecha = true
-PENSAMIENTO: Apenas cierro la puerta, llaman. Tres golpes secos. # sfx:golpes # id:j6_05_pens_00
+PENSAMIENTO: Apenas cierro la puerta, llaman. Tres golpes secos. # sfx:golpes # musica:sigilo # id:j6_05_pens_00
 HILDA: ¡Inspección del Comité, {nombre}! ¡Abre, que vengo cargada! # id:j6_05_hilda_01
 { inventario ? diario or inventario ? parte_alterado:
     -> esconder
@@ -361,7 +361,7 @@ HILDA: Me han dicho que te vieron en Limehouse. Dos veces. No es asunto mío, cl
 { visita_prole_j4 and foto_a_crane:
     ~ sube_sospecha(5)
 }
-PENSAMIENTO: Se va. Me quedo apoyad{o} en la puerta. # id:j6_05_pens_06
+PENSAMIENTO: Se va. Me quedo apoyad{o} en la puerta. # musica:himno_tele # id:j6_05_pens_06
 -> DONE
 
 // El diario, otra noche (J6 y J7): desde el hueco, una entrada por noche

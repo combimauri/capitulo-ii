@@ -38,6 +38,11 @@
    "name": "cono_var",
    "type": "string",
    "value": "archivo_vigilado"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "grieta"
   }
  ],
  "tilesets": [],

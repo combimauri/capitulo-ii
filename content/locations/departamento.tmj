@@ -38,6 +38,11 @@
    "name": "fondo_alt_si",
    "type": "string",
    "value": "amory_borrado"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "rutina:jornada<=2 | minimor:jornada>=11 | grieta"
   }
  ],
  "tilesets": [],

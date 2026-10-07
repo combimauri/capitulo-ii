@@ -304,7 +304,7 @@ PENSAMIENTO: Dentro, un sobre de papel encerado. Dejo el Times en su lugar y vue
 
 // ==================================================================== J9.06 — El Times original
 === j9_times ===
-CARTEL: Un banco, en un parque pequeño. De espaldas a la telepantalla. # fx:negro # id:j9_06_cartel
+CARTEL: Un banco, en un parque pequeño. De espaldas a la telepantalla. # fx:negro # musica:ivy # id:j9_06_cartel
 PENSAMIENTO: Abro el sobre con cuidado. Dentro hay dos cosas. # sfx:papel # id:j9_06_pens_00
 ~ inventario -= sobre_miniver
 ~ inventario += times_original

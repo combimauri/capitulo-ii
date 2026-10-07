@@ -38,6 +38,11 @@
    "name": "checkpoint",
    "type": "string",
    "value": "servicio"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "sigilo"
   }
  ],
  "tilesets": [],

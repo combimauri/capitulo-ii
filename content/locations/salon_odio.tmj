@@ -23,6 +23,11 @@
    "name": "al_entrar",
    "type": "string",
    "value": "odio.entrar"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "himno_altavoz"
   }
  ],
  "tilesets": [],

@@ -33,6 +33,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "tunel"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "hermandad"
   }
  ],
  "tilesets": [],

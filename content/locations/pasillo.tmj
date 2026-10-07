@@ -33,6 +33,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "neon,tele"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "misterio:jornada<=3 | minimor:jornada>=12 | sigilo:jornada==7 | grieta"
   }
  ],
  "tilesets": [],

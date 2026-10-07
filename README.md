@@ -9,6 +9,7 @@ npm install        # dependencias
 npm run dev        # servidor de desarrollo (http://localhost:5173)
 npm test           # pruebas: compilación de ink, linter de contenido, estado
 BOT_PARTIDAS=300 npx vitest run tests/bot.test.ts   # bot de recorrido: informe de equilibrio de Duda y Sospecha
+npx tsx tools/sonido.ts /tmp/sonido 40           # renderiza cada pista de música a WAV y mide su sonoridad y su emoción
 npm run build      # comprobación de tipos + compilación de producción (dist/)
 npm run art        # regenera el arte (Python + Pillow) y lo exporta a public/assets
 python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/locations)

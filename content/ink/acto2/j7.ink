@@ -95,13 +95,13 @@ PENSAMIENTO: La limpiadora. La mujer de la calle Stepney. La misma mirada. # id:
 -> DONE
 
 === j7_nell ===
-PENSAMIENTO: Busco en la tercera balda. Detrás de mí, la puerta se cierra con un clic. # sfx:cerrojo # id:j7_03_pens_01
+PENSAMIENTO: Busco en la tercera balda. Detrás de mí, la puerta se cierra con un clic. # sfx:cerrojo # musica:sigilo # id:j7_03_pens_01
 ~ nell_suministros = true
 PENSAMIENTO: Me giro. # refrescar # prota:abajo # id:j7_03_pens_02
 PENSAMIENTO: La limpiadora, delante de la puerta. El carrito bloquea la salida. # id:j7_03_pens_03
 NELL: No grites. Aquí no te oye nadie. Pero los pasillos tienen orejas. # id:j7_03_nell_01
 PROTAGONISTA: ¿Qué…? Déjeme salir. # id:j7_03_prot_01
-NELL: Naranjas y limones, dicen las campanas de San Clemente. # sfx:naranjas # id:j7_03_nell_02
+NELL: Naranjas y limones, dicen las campanas de San Clemente. # sfx:naranjas # musica:hermandad # id:j7_03_nell_02
 // el destello de la calle Stepney: Ivy cantando, la mujer del pañuelo apartando cascotes
 PENSAMIENTO: La calle Stepney. La mano de Ivy. La mujer del pañuelo apartando cascotes. La misma mirada. # recuerdo:loc-stepney_ivy # id:j7_03_pens_04
 PROTAGONISTA: …Usted. Usted estaba allí. # id:j7_03_prot_02
@@ -197,7 +197,7 @@ PENSAMIENTO: Cojo una cinta de la tercera balda. # id:j7_04a_pens_04
     -> DONE
 }
 ~ nell_respuesta = "negar"
-PENSAMIENTO: Me mira largo. Algo se le apaga en la cara. # id:j7_04n_pens_00
+PENSAMIENTO: Me mira largo. Algo se le apaga en la cara. # musica:soledad # id:j7_04n_pens_00
 NELL: Como tu hermana no. Ella habría dicho que sí. # id:j7_04n_nell_01
 NELL: Que vivas mucho, camarada. # id:j7_04n_nell_02
 ~ nell_suministros = false
@@ -209,7 +209,7 @@ CARTEL: Esa noche. # fx:negro # id:j7_04n_cartel # escena:piso_noche # pos:puert
 === j7_denunciar ===
 ~ nell_respuesta = "denunciar"
 ~ nell_suministros = false
-PENSAMIENTO: Aparto el carrito de un empujón y salgo al pasillo. # refrescar # id:j7_04b_pens_00
+PENSAMIENTO: Aparto el carrito de un empujón y salgo al pasillo. # refrescar # musica:voss # id:j7_04b_pens_00
 PENSAMIENTO: Camino hacia el despacho de Voss. A cada paso, el pasillo se alarga, como en el sueño de Ivy. # fx:negro # id:j7_04b_pens_01 # escena:despacho_voss # pos:puerta
 -> DONE
 

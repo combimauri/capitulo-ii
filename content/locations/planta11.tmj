@@ -53,6 +53,11 @@
    "name": "vigila",
    "type": "string",
    "value": "700,150;812,150;812,196;700,196"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "minimor:j8_salida | sigilo"
   }
  ],
  "tilesets": [],

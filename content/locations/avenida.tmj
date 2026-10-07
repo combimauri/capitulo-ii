@@ -37,7 +37,7 @@
   {
    "name": "musica",
    "type": "string",
-   "value": "himno_altavoz"
+   "value": "minimor:jornada==11 | himno_altavoz"
   }
  ],
  "tilesets": [],

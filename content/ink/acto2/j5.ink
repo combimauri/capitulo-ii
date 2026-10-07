@@ -109,7 +109,7 @@ PENSAMIENTO: El escaparate del Estudio Crane. Fotos de bodas, de niños, de viej
 // ==================================================================== J5.04 — El cohete
 = cohete
 ~ cohete_caido = true
-PENSAMIENTO: Un silbido. Lejano al principio. Agudo. Creciente. # id:j5_04_pens_01
+PENSAMIENTO: Un silbido. Lejano al principio. Agudo. Creciente. # musica:silencio # id:j5_04_pens_01
 PENSAMIENTO: El mismo silbido de la calle Stepney. # id:j5_04_pens_02
 PENSAMIENTO: La gente se tira al suelo. Alguien grita: «¡Al suelo!». Dot levanta la cabeza buscando a Sammy. # id:j5_04_pens_03
 PENSAMIENTO: Sammy, en mitad de la calzada, se ha agachado a recoger un trozo de metralla brillante. Está de espaldas. No oye nada. # id:j5_04_pens_04
@@ -261,12 +261,12 @@ DOT: Sammy. Sammy. Sammy. Sammy. # id:j5_05_dot_01
 PENSAMIENTO: Llega una patrulla del Partido: hombres de uniforme negro y un oficial. # refrescar # id:j5_05_pens_07
 OFICIAL: Despejen la zona. Circulen. # id:j5_05_oficial_01
 PENSAMIENTO: Ve a Dot. Hace un gesto a sus hombres, sin mirar. # id:j5_05_pens_08
-OFICIAL: Retiren eso. # id:j5_05_oficial_02
+OFICIAL: Retiren eso. # musica:rabia # id:j5_05_oficial_02
 PROTAGONISTA: Es un niño. # id:j5_05_prot_01
 OFICIAL: ¿Es usted del Partido, camarada? Entonces no tiene nada que hacer aquí. Circule. # id:j5_05_oficial_03
 ~ diario_sammy = true
 PENSAMIENTO: A Ivy le hicieron un cartel. «Esta camarada es ahora una mártir del Partido.» # id:j5_05_pens_09
-PENSAMIENTO: A Sammy le han dicho «eso». «Retiren eso.» # esperar:1.2 # id:j5_05_pens_10
+PENSAMIENTO: A Sammy le han dicho «eso». «Retiren eso.» # esperar:1.2 # musica:ruinas # id:j5_05_pens_10
 -> DONE
 
 = dot_mirar
@@ -307,7 +307,7 @@ CARTEL: 09:20. # fx:negro # id:j5_05_cartel # escena:departamento # pos:puerta
 ~ depto_j5_visto = true
 ~ voss_espera = true
 PENSAMIENTO: Llego con la mano vendada con un pañuelo. Voss está de pie junto a mi mesa. # refrescar # id:j5_06_pens_00
-VOSS: Una hora y veinte minutos, camarada {apellido}. # id:j5_06_voss_01
+VOSS: Una hora y veinte minutos, camarada {apellido}. # musica:voss # id:j5_06_voss_01
 * [«Estaba en el mercado de Watney Street. Cuando cayó el cohete.»] # decision:D-J5-RETRASO
     VOSS: Qué… coincidencia. ¿Y qué hacía usted en Limehouse a las ocho de la mañana? # id:j5_06_voss_02
     ** [«Un atajo. La avenida está en obras.»]
@@ -338,7 +338,7 @@ PENSAMIENTO: Se aleja. # refrescar # id:j5_06_pens_02
 PENSAMIENTO: En la mesa del Registro, varios cilindros. Uno de ellos: # sfx:tubo # id:j5_07_pens_00
 CARTEL: def.civil · impacto · 19.4.84 · 08:12¶distrito: limehouse · mercado watney st · cuadr: J-8¶bajas: 7 (proles) # id:j5_07_parte
 PENSAMIENTO: Siete. «Proles.» Entre paréntesis. # id:j5_07_pens_01
-PENSAMIENTO: Sammy es un paréntesis. # esperar:1.2 # id:j5_07_pens_02
+PENSAMIENTO: Sammy es un paréntesis. # esperar:1.2 # musica:ruinas # id:j5_07_pens_02
 { not (inventario ? zonificacion):
     PENSAMIENTO: «¿Por qué nunca en el centro?» Abro el cajón con rabia. El fieltro está despegado por una esquina. # id:j5_07_cajon
     ~ inventario += zonificacion
@@ -358,7 +358,7 @@ PENSAMIENTO: {ilegible_completado:Once|Diez} chinchetas. # minijuego:impactos,re
 
 // ◆ D-J5-PATRON · Tablero de deducción
 === j5_deduccion ===
-PENSAMIENTO: Ninguno a menos de dos kilómetros de un ministerio. Ninguno en un distrito del Partido. ¿Con qué me quedo? # id:j5_07_pens_04
+PENSAMIENTO: Ninguno a menos de dos kilómetros de un ministerio. Ninguno en un distrito del Partido. ¿Con qué me quedo? # musica:misterio # id:j5_07_pens_04
 * [«Los cohetes solo caen sobre los proles.»] # decision:D-J5-PATRON
     ~ patron_conclusion = "proles"
     ~ sube_duda(10)
@@ -413,7 +413,7 @@ PENSAMIENTO: Me quito el abrigo. Al colgarlo noto un peso extraño en el bolsill
 }
 ~ diario_encontrado = true
 ~ inventario += diario
-PENSAMIENTO: Un cuaderno pequeño de tapas negras. Papel crema, de antes de la Revolución. # objeto:diario # id:j5_08_diario_01
+PENSAMIENTO: Un cuaderno pequeño de tapas negras. Papel crema, de antes de la Revolución. # objeto:diario # musica:misterio # id:j5_08_diario_01
 PENSAMIENTO: Las primeras páginas están arrancadas. En la cara interior de la tapa, un pájaro diminuto dibujado a lápiz. # id:j5_08_diario_02
 { dp_j3_amory == "recordar":
     PENSAMIENTO: Un pájaro. Es de Amory. Era su cuaderno. ¿Quién…? # id:j5_08_recordar_01

@@ -33,6 +33,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "calle"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "ruinas"
   }
  ],
  "tilesets": [],

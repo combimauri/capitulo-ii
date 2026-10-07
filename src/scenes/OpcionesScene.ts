@@ -67,7 +67,8 @@ export class OpcionesScene extends Phaser.Scene {
     const { width, height } = this.scale;
     this.add.rectangle(0, 0, width, height, 0x0b0c0f, 1).setOrigin(0).setInteractive();
     this.add.text(width / 2, 46, 'OPCIONES', { fontFamily: FUENTE.maquina, fontSize: '36px', color: hex(COLOR.papel4) }).setOrigin(0.5);
-    if (this.desde === 'menu') { audio.musica.poner('prole'); audio.ambiente.poner(['calle']); }
+    // desde el menú sigue sonando su música; el ambiente de la calle, para oír su volumen
+    if (this.desde === 'menu') audio.ambiente.poner(['calle']);
 
     this.pestanas = [];
     const PESTANAS: [Pestana, string][] = [['sonido', 'SONIDO'], ['juego', 'JUEGO'], ['partida', 'PARTIDA']];
@@ -91,7 +92,7 @@ export class OpcionesScene extends Phaser.Scene {
   }
 
   private cerrar() {
-    if (this.desde === 'menu') { audio.musica.poner(null); audio.ambiente.poner([]); }
+    if (this.desde === 'menu') audio.ambiente.poner([]);
     const f = this.alCerrar;
     this.scene.stop();
     f?.();

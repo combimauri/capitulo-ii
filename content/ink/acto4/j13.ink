@@ -12,7 +12,7 @@ CARTEL: Amanecer. # fx:negro # id:j13_00_cartel # escena:shadwell # pos:inicio
 -> DONE
 
 === j13_arrepentimiento ===
-PENSAMIENTO: Amanecer. Salgo de la despensa sin hacer ruido. Dot duerme en una silla, junto a la estufa. # fx:aclarar # id:j13_00a_pens_00
+PENSAMIENTO: Amanecer. Salgo de la despensa sin hacer ruido. Dot duerme en una silla, junto a la estufa. # fx:aclarar # musica:refugio # id:j13_00a_pens_00
 PENSAMIENTO: Los dibujos de Amory. El mensaje de Nell. La colección de Sammy. # esperar:1 # id:j13_00a_pens_01
 PENSAMIENTO: Dejo el paquete sobre la mesa. Abro la puerta. Camino hacia la calle Cable. # id:j13_00a_pens_02
 ~ inventario -= dibujos_amory
@@ -290,7 +290,7 @@ PENSAMIENTO: Un té. Un teatro. Una playa. Cosas que no reconozco. # id:j13_02_t
 PENSAMIENTO: Temple. Una escalera de caracol de hierro sube desde un pozo de ventilación. # fx:negro # id:j13_02_t5_00
 PENSAMIENTO: Al subir, oigo algo que nunca he oído: el silencio de un lugar cerrado y antiguo. # id:j13_02_t5_01
 PENSAMIENTO: Y, muy débil, alguien que teclea en una máquina de escribir. # sfx:tecla # id:j13_02_t5_02
-PENSAMIENTO: Naranjas y limones, dicen las campanas de San Clemente. # id:j13_02_t5_03
+PENSAMIENTO: Naranjas y limones, dicen las campanas de San Clemente. # musica:cripta # id:j13_02_t5_03
 VOZ: …me debes tres peniques, dicen las campanas de San Martín. # sfx:tos # id:j13_02_t5_voz_01
 VOZ: Sube. Llevo dos días con el té preparado. Ya estará frío. # id:j13_02_t5_voz_02 # escena:cripta # pos:escalera
 -> DONE
@@ -310,10 +310,10 @@ VOZ: Sube. Llevo dos días con el té preparado. Ya estará frío. # id:j13_02_t
 PENSAMIENTO: Una cripta bajo una iglesia en ruinas. Velas por todas partes. Libros. Libros de verdad. # fx:aclarar # id:j13_03_pens_00
 PENSAMIENTO: Junto a una máquina de escribir, un anciano muy delgado, con una manta sobre los hombros. Pelo blanco y largo. Gafas remendadas con hilo. # id:j13_03_pens_01
 PENSAMIENTO: La cara de los Dos Minutos de Odio. Treinta años más vieja. Más pequeña. # id:j13_03_pens_02
-PENSAMIENTO: Mi cara se ha crispado sola. El puño se ha cerrado solo. # minijuego:cf_auto,expr=odio # id:j13_03_cf_00
+PENSAMIENTO: Mi cara se ha crispado sola. El puño se ha cerrado solo. # minijuego:cf_auto,expr=odio # musica:odio # id:j13_03_cf_00
 PENSAMIENTO: Mi cara le odia sola. Cinco años de entrenamiento. # esperar:1 # id:j13_03_cf_01
 PENSAMIENTO: Es un viejo con una manta. # id:j13_03_cf_02
-GOLDSTEIN: Lo sé. A todos os pasa. # id:j13_03_gold_01
+GOLDSTEIN: Lo sé. A todos os pasa. # musica:cripta # id:j13_03_gold_01
 PENSAMIENTO: Sirve té en dos tazas desportilladas. Sonríe. # id:j13_03_pens_03
 GOLDSTEIN: La primera vez que alguien de la Hermandad me trajo un espejo, a mí también me pasó. # id:j13_03_gold_02
 { crane_sigue and not crane_perdido:
@@ -407,7 +407,7 @@ PENSAMIENTO: Busca entre sus papeles con manos temblorosas. Un trozo de papel cu
 GOLDSTEIN: Me gustó. # id:j13_04_ivy_10
 ~ carta_ivy = true
 ~ inventario += carta
-PENSAMIENTO: Su letra. # documento:carta_ivy # objeto:carta # id:j13_04_ivy_11
+PENSAMIENTO: Su letra. # documento:carta_ivy # objeto:carta # musica:ivy # id:j13_04_ivy_11
 PENSAMIENTO: «Dificil» sin tilde. Siempre se le olvidaba. # esperar:1.6 # id:j13_04_ivy_12
 PENSAMIENTO: Ivy. # id:j13_04_ivy_13
 ~ sube_duda(10)
@@ -428,7 +428,7 @@ PROTAGONISTA: La libertad es la esclavitud. # id:j13_05_prot_01
 GOLDSTEIN: Lo he intentado cien veces. Siempre me sale un tratado. Explico por qué el individuo solo es débil y el Partido es inmortal, por qué rendirse al Partido parece una forma de no morir… y es mentira, porque nunca lo he sentido. # id:j13_05_gold_03
 GOLDSTEIN: Yo nunca creí. Nunca grité en los Dos Minutos de verdad. Nunca lloré delante de un cartel. # esperar:1 # id:j13_05_gold_04
 PENSAMIENTO: Me mira. # id:j13_05_pens_01
-GOLDSTEIN: Tú sí. # esperar:1 # id:j13_05_gold_05
+GOLDSTEIN: Tú sí. # esperar:1 # musica:cripta # id:j13_05_gold_05
 GOLDSTEIN: Solo quien ha creído puede explicar qué se entrega al creer. Y por qué cuesta tanto devolverlo. # id:j13_05_gold_06
 { carta_ivy:
     GOLDSTEIN: Tu hermana empezó. Termínalo tú. # id:j13_05_gold_07
@@ -473,7 +473,7 @@ PENSAMIENTO: «Nunca buscan aquí.» # id:j13_06_pens_01
 // ==================================================================== J13.07 — Crane en la cripta
 === j13_crane ===
 ~ crane_en_cripta = true
-PENSAMIENTO: Pasos en la escalera de caracol. Lentos. # sfx:botas # id:j13_07_pens_00
+PENSAMIENTO: Pasos en la escalera de caracol. Lentos. # sfx:botas # musica:crane_oscuro # id:j13_07_pens_00
 PENSAMIENTO: Crane. Empapado hasta las rodillas, con el sombrero en una mano y una pistola en la otra. Sonríe. # refrescar # id:j13_07_pens_01
 CRANE: Qué sitio tan… acogedor. Cuánto papel. # id:j13_07_crane_01
 CRANE: Y usted debe de ser el viejo. Le hacía más alto. En las pantallas parece más alto. # id:j13_07_crane_02
@@ -499,7 +499,7 @@ GOLDSTEIN: No cambia nada. El libro sigue siendo verdad. # id:j13_07_gold_05
 
 // ==================================================================== J13.08 — La decisión final
 === j13_final ===
-PENSAMIENTO: Goldstein empuja la segunda copia hacia mí. La vela parpadea. # id:j13_08_pens_00
+PENSAMIENTO: Goldstein empuja la segunda copia hacia mí. La vela parpadea. # musica:cripta # id:j13_08_pens_00
 PENSAMIENTO: Arriba, muy lejos, un silbido de cohete que no cae aquí. Nunca cae aquí. # sfx:silbido # id:j13_08_pens_01
 { crane_humillado:
     -> con_crane

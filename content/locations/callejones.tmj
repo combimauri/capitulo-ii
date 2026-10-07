@@ -38,6 +38,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "noche"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "persecucion:crane_decision==negar | crane_oscuro:crane_decision==fingir | sigilo"
   }
  ],
  "tilesets": [],

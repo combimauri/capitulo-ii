@@ -12,7 +12,8 @@ export class MenuScene extends Phaser.Scene {
   constructor() { super('Menu'); }
 
   create() {
-    audio.musica.poner(null);
+    // el misterio: el reloj de Ivy y su tonada en una caja de música (empieza con el primer toque)
+    audio.musica.poner('misterio');
     audio.ambiente.poner([]);
     audio.pararLargos();
     if (!avisoVisto) this.aviso(); else this.menu();

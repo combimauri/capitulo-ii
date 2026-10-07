@@ -287,9 +287,9 @@ PENSAMIENTO: «La Campana». Una taberna prole. Por las ventanas sale luz amaril
     -> casa_mirar
 }
 ~ casa_vista = true
-PENSAMIENTO: Una casa partida por la mitad. Se ve el interior, como una casa de muñecas: una cama colgando, un papel pintado de flores. # id:j4_07_pens_00
+PENSAMIENTO: Una casa partida por la mitad. Se ve el interior, como una casa de muñecas: una cama colgando, un papel pintado de flores. # musica:ruinas # id:j4_07_pens_00
 PENSAMIENTO: Proles apartando escombros. Una mujer de brazos fuertes dirige a los demás a gritos. # id:j4_07_pens_01
-PENSAMIENTO: Y el niño que rebusca entre los cascotes con una lata… Es el de la avenida. El del cigarrillo. Lleva un trozo de metralla colgado al cuello. # id:j4_07_pens_02
+PENSAMIENTO: Y el niño que rebusca entre los cascotes con una lata… Es el de la avenida. El del cigarrillo. Lleva un trozo de metralla colgado al cuello. # musica:prole # id:j4_07_pens_02
 -> DONE
 
 = sammy_mirar
@@ -368,7 +368,7 @@ PENSAMIENTO: Unos cincuenta años, bien afeitado, chaleco de lana y sombrero. Un
     -> DONE
 }
 ~ crane_visto = true
-CRANE: No se mueva, camarada. Usted, con el mono azul delante de la casa rota… Es una imagen. # sfx:obturador # id:j4_07b_crane_01
+CRANE: No se mueva, camarada. Usted, con el mono azul delante de la casa rota… Es una imagen. # sfx:obturador # musica:crane # id:j4_07b_crane_01
 CRANE: Perdone. Deformación profesional. Abel Crane. Tengo el estudio en la calle Cable, junto al mercado. # id:j4_07b_crane_02
 PROTAGONISTA: ¿Para qué fotografía esto? # id:j4_07b_prot_01
 CRANE: Para el recuerdo. Aquí nadie tiene fotos de nada. Si no las hago yo, dentro de un año nadie sabrá que aquí vivían los Hennessy. # id:j4_07b_crane_03
@@ -388,9 +388,9 @@ CRANE: ¿Tiene fotos de ella? Fotos de verdad, digo, no carteles. # id:j4_07b_cr
     CRANE: Qué pena. Si alguna vez encuentra una, venga a verme. # id:j4_07b_crane_09
 }
 { duda < 20:
-    PENSAMIENTO: Un prole amable. Existen. # id:j4_07b_pens_d0
+    PENSAMIENTO: Un prole amable. Existen. # musica:taberna_calle # id:j4_07b_pens_d0
 - else:
-    PENSAMIENTO: Un prole amable. Con una cámara. Es buena persona. Se le ve. # id:j4_07b_pens_d1
+    PENSAMIENTO: Un prole amable. Con una cámara. Es buena persona. Se le ve. # musica:taberna_calle # id:j4_07b_pens_d1
 }
 -> DONE
 

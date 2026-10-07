@@ -43,6 +43,11 @@
    "name": "vigila",
    "type": "string",
    "value": "830,98;940,98;940,150;830,150"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "infiltrado"
   }
  ],
  "tilesets": [],

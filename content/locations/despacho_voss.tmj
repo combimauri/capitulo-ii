@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "tele"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "voss"
   }
  ],
  "tilesets": [],

@@ -65,6 +65,40 @@ describe('bot de recorrido', () => {
     expect(partidas.some((p) => p.lineas.has('j13_00a_pens_01')), 'nadie se arrepiente en la J13').toBe(true);
   });
 
+  it('siempre suena música al explorar: ningún sitio, en ninguna jornada, se queda en silencio', () => {
+    const mudos = new Set<string>();
+    for (const p of partidas) for (const [donde, pistas] of p.musica) if (pistas.has(null)) mudos.add(donde);
+    expect([...mudos].sort()).toEqual([]);
+  });
+
+  it('cada sitio de cada jornada tiene la música de su momento', () => {
+    const oidas = new Map<string, Set<string | null>>();
+    for (const p of partidas) for (const [donde, pistas] of p.musica) for (const x of pistas) {
+      if (!oidas.has(donde)) oidas.set(donde, new Set());
+      oidas.get(donde)!.add(x);
+    }
+    const oye = (donde: string, pista: string) => oidas.get(donde)?.has(pista);
+    // la rutina del creyente, la grieta desde que Amory no está, el miedo al final
+    expect(oye('departamento@J1', 'rutina')).toBe(true);
+    expect(oye('departamento@J3', 'grieta')).toBe(true);
+    expect(oye('avenida@J11', 'minimor')).toBe(true);
+    expect(oye('escalera@J1', 'himno_pared')).toBe(true);
+    expect(oye('piso@J4', 'soledad')).toBe(true);
+    // el mercado antes del cohete, la huida, el refugio, la cripta
+    expect(oye('mercado@J5', 'prole')).toBe(true);
+    expect(oye('mercado_ruinas@J5', 'ruinas')).toBe(true);
+    expect(oye('estudio@J5', 'crane')).toBe(true);
+    expect(oye('estudio@J12', 'crane_oscuro')).toBe(true);
+    expect(oye('tunel1@J13', 'tuneles')).toBe(true);
+    expect(oye('celda@J13', 'celda') || [...oidas.keys()].some((k) => k.startsWith('celda@') && oidas.get(k)!.has('celda'))).toBe(true);
+  });
+
+  it('los momentos clave cambian la música: el prólogo, Sammy, la firma de Voss, Goldstein', () => {
+    const pedidas = new Set(partidas.flatMap((p) => p.cues.map((c) => `${c.escena}:${c.pista}`)));
+    for (const x of ['stepney:terror', 'stepney_ivy:ruinas', 'stepney_ivy:odio', 'stepney_ivy:himno', 'mercado:silencio',
+      'minimor_archivo:rabia', 'cripta:cripta', 'casa_dot:refugio']) expect(pedidas.has(x), x).toBe(true);
+  });
+
   it.runIf(N > 0)('informe de equilibrio', () => informe(partidas), 3_600_000);
 });
 

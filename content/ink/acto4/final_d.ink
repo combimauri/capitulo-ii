@@ -6,9 +6,9 @@
 ~ final_en_curso = "D"
 // FD.01 — Regreso por los túneles
 { crane_humillado:
-    PENSAMIENTO: Crane camina detrás de mí por los túneles, en silencio, con la pistola enfundada. # vineta:loc-tunel_carteles # id:fd_01_escoltado
+    PENSAMIENTO: Crane camina detrás de mí por los túneles, en silencio, con la pistola enfundada. # vineta:loc-tunel_carteles # musica:hermandad # id:fd_01_escoltado
 - else:
-    PENSAMIENTO: Los túneles otra vez, al revés. Con el libro contra el pecho. # vineta:loc-tunel_carteles # id:fd_01_pens_00
+    PENSAMIENTO: Los túneles otra vez, al revés. Con el libro contra el pecho. # vineta:loc-tunel_carteles # musica:hermandad # id:fd_01_pens_00
 }
 PENSAMIENTO: El taller. La pared de los nombres. En el suelo, un trozo de tiza. # vineta:loc-anden_taller # id:fd_01_pens_01
 * [Escribir mi nombre debajo del de Ivy.] # decision:D-FD-TIZA
@@ -160,7 +160,7 @@ PENSAMIENTO: Me pongo de pie delante, dentro del cono de la telepantalla. A plen
 
 === fd_silla ===
 PENSAMIENTO: Me siento frente a la telepantalla. Espero. # id:fd_03_silla_00
-PENSAMIENTO: Pasos en la escalera. Muchos. Botas. # sfx:botas # esperar:1.5 # id:fd_03_silla_01
+PENSAMIENTO: Pasos en la escalera. Muchos. Botas. # sfx:botas # esperar:1.5 # musica:silencio # id:fd_03_silla_01
 PENSAMIENTO: Veinticuatro horas, dijo Nell. Es todo lo que me pidió. # id:fd_03_silla_02
 PENSAMIENTO: Negro. # fx:negro # id:fd_03_negro
 -> final_c.llegada
@@ -213,7 +213,7 @@ O'BRIEN: Su hermana estuvo once minutos debajo. # vineta:fin # id:fd_05_obrien_0
 
 // FD.06 — El café termina como el del Final C; después, el silencio y el epílogo
 === fd_epilogo ===
-PENSAMIENTO: … # fx:negro # esperar:5 # id:fd_06_silencio
+PENSAMIENTO: … # fx:negro # esperar:5 # musica:silencio # id:fd_06_silencio
 // FD.07 — Nota sobre el Capítulo II
 PENSAMIENTO: … # minijuego:epilogo # id:fd_07_nota
 // FD.08 — Última imagen

@@ -42,7 +42,7 @@
   {
    "name": "musica",
    "type": "string",
-   "value": "crane"
+   "value": "crane_oscuro:jornada==12 | crane"
   }
  ],
  "tilesets": [],

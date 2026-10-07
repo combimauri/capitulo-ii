@@ -595,21 +595,46 @@ Todo el audio se **sintetiza en tiempo real** con Web Audio: no hay archivos de 
 
 | Canal | Qué suena | Dónde se define |
 |---|---|---|
-| **Música** (`src/systems/Musica.ts`) | Pistas en bucle escritas como partitura (notas, pulsos y voces) que un planificador programa por delante del reloj de audio. | Propiedad de mapa `musica=id` (con `musica_si=cond`) o `# musica:id` / `# musica:silencio` en ink. |
+| **Música** (`src/systems/Musica.ts`, partituras en `src/systems/partituras.ts`) | Pistas en bucle escritas como partitura (notas, pulsos, voces y fuerza) que un planificador programa por delante del reloj de audio, con paneo por voz y una sala (reverberación) por pista. | Propiedad de mapa `musica`: una lista `id:condición \| id:condición \| id` en la que gana la primera que se cumple (la última, sin condición). Desde ink, `# musica:id` / `# musica:silencio` manda hasta el siguiente cambio de escena. |
 | **Ambiente** (`src/systems/Ambiente.ts`) | Capas en bucle: un fondo continuo (ruido filtrado, zumbidos) y sucesos sueltos al azar para que no suene a bucle. | Propiedad de mapa `ambiente="tele,oficina"` o `# ambiente:capa,capa` / `# ambiente:silencio`. |
 | **Efectos** (`src/systems/AudioDirector.ts`) | Sonidos puntuales. | `# sfx:id` en ink y llamadas desde las escenas. |
 
 - **Volúmenes:** General, Música, Efectos y Ambiente, en *Opciones* del menú principal. Se guardan aparte de la partida (`capitulo2.opciones.volumen`).
 - **Ducking:** cuando habla la telepantalla, la música y el ambiente bajan; el silbido de cohete corta la música en seco; «Naranjas y limones» la agacha.
-- **Pistas:**
-  - `himno`, `himno_altavoz`, `himno_tele`: el himno del Partido (marcha original): afinado (créditos de A y B), desde los altavoces de la calle (saturado y algo desafinado) y en la telepantalla de noche.
-  - `prole`, `prole_piano`: la canción de Dot, leitmotiv de la vida prole (melodía original).
-  - `taberna`, `taberna_calle`, `taberna_lejos`: el piano de La Campana (melodía original).
-  - `crane`: el estudio de Crane; la música se vuelve cálida cuando habla.
-  - `caja_musica`, `naranjas_lento`, `naranjas_orquesta`: *Naranjas y limones* (tradicional, dominio público) en el sueño, en el epílogo del Final D y en sus créditos.
-  - `maquina`: la máquina de escribir convertida en ritmo (los años en la cripta, créditos del Final E).
+- **Cada pista declara su emoción** (`emocion`): misterio, rutina, duda, tensión, miedo, terror, tristeza, rabia, frustración, alegría, calidez, esperanza, fanatismo, vacío o nostalgia. Las que suenan dentro de la escena (un piano, un altavoz) se marcan `diegetica`.
+- **Voces:** piano viejo y piano limpio, tarareo, cuerdas (también con trémolo), pizzicato, clarinete (`lamento`), coro sin palabras, órgano, campana de iglesia, caja de música, metales de banda, timbal, bombo y redoble, máquina de escribir, y para la tensión: latido, pulso sintético, dron, tictac de reloj y roce metálico. Las voces sostenidas ligan con un fundido cruzado lineal (sin huecos entre acordes) y las que se tocan «a mano» tienen una pizca de imprecisión.
+- **Pistas** (todas originales salvo *Naranjas y limones*, tradicional y de dominio público):
+
+  | Pista | Emoción | Dónde |
+  |---|---|---|
+  | `misterio` | misterio | Menú y opciones. El reloj de Ivy que se para y su tonada en una caja de música. |
+  | `ivy` | tristeza | Prólogo: Ivy bajo la viga. *Naranjas y limones* en menor, al clarinete. El *Times* original (J9), su expediente (J11), su carta (J13). |
+  | `ruinas` | tristeza | La mano que cae, la casa partida de Limehouse, el mercado después del cohete, Shadwell. |
+  | `terror` | terror | Los escombros del prólogo, los arrestos, la sala de O'Brien. |
+  | `himno` | fanatismo | La Ficha de Afiliación, los finales A, B y C. |
+  | `himno_tele`, `himno_pared`, `himno_altavoz` | rutina / fanatismo | La telepantalla del piso, la del vecino a través de la pared (la escalera), los altavoces de la calle y del Gran Salón. |
+  | `odio`, `odio_altavoz` | fanatismo | La Canción del Odio: los Dos Minutos de Odio, el Centro de la Comunidad, la Semana del Odio, la ejecución del parque. |
+  | `rutina` | rutina | El Minipax del creyente (J1–J2): un ostinato que no se equivoca y el himno, en menor, al fondo. |
+  | `grieta` | duda | El Minipax desde que Amory no está (J3–J8): el ostinato con huecos y un clarinete en tonos enteros. |
+  | `voss` | tensión | El despacho de Voss, su interrogatorio de la J5, el despacho del Partido Interior del Final E. |
+  | `frenesi` | frustración | La Gran Rectificación (J10): máquinas de escribir y un ostinato que sube y vuelve a empezar. |
+  | `sigilo`, `infiltrado` | tensión | Las misiones: el Minipax de noche (J8), el Archivo B (J11), la inspección de Hilda; el Miniver a plena luz (J9). |
+  | `minimor` | miedo | El Ministerio del Amor (J11), el Minipax después de la Planilla Azul, la escalera de las detenciones, la J12. |
+  | `celda` | miedo | La celda, la confesión de Amory en la telepantalla. |
+  | `rabia` | rabia | «Retiren eso» (Sammy), la firma de Voss en la orden de 1979, el cartel de Ivy arrancado. |
+  | `persecucion` | miedo | La huida por los callejones cuando Crane da la alarma. |
+  | `crane`, `crane_oscuro` | calidez / miedo | El estudio: el mismo tema, con la sonrisa y sin ella (J12, los túneles, el arrepentimiento). |
+  | `prole`, `refugio` | alegría / nostalgia | La canción de Dot: tarareada en el mercado; despacio y en menor cuando Dot le esconde (Sammy ya no está). |
+  | `taberna`, `taberna_calle`, `taberna_lejos` | alegría | El piano de La Campana, desde dentro, desde la calle y a través del suelo. |
+  | `hermandad` | misterio | Nell en el almacén, el juramento del sótano, los fragmentos del libro, la pared de los nombres. |
+  | `soledad` | nostalgia | El piso a solas (J4–J7) y el Final D. |
+  | `tuneles` | tensión | Los túneles del metro (J13): la tonada de Ivy entre las gotas, guiando hacia San Clemente. |
+  | `cripta` | esperanza | San Clemente: *Naranjas y limones* como coral de órgano, y las campanas que la cantan. |
+  | `cafe` | vacío | El Café del Castaño: un vals alegre en la telepantalla que nadie escucha. |
+  | `caja_musica`, `naranjas_lento`, `naranjas_orquesta`, `maquina` | nostalgia / esperanza / tensión | El sueño, el epílogo y los créditos del Final D, los años en la cripta. |
+- **Pruebas del sonido** (`tests/sonido.test.ts`, herramientas en `tools/sonido.ts`): cada pista se renderiza sin conexión con `node-web-audio-api` y se mide. Ninguna satura (picos < −3 dBFS); la banda sonora llega a −32 LUFS (fondo) o −29,5 LUFS (momentos fuertes) con ±1,5 LU; la mezcla no se carga a un lado; no hay huecos muertos. La partitura de cada pista debe sostener su emoción (tonalidad, tempo, registro, aspereza y pulso); el leitmotiv de Ivy debe volver donde toca; el tema oscuro de Crane debe ser el mismo en menor; y ninguna pista pide más de 90 fuentes de sonido a la vez (móvil). El bot comprueba además que en ninguna partida se explora un sitio en silencio. `npx tsx tools/sonido.ts carpeta 40` escribe un WAV por pista con su informe; `--voces id` mide cada voz por separado y `--calibrar` propone los volúmenes.
 - **Ambientes:** `tele`, `oficina`, `cantina`, `calle`, `ruinas`, `mercado`, `noche`, `tunel`, `minimor`, `cripta`, `calderas`, `neon`, `goteo`, `edificio`. El Archivo B del Minimor no lleva ambiente: el zumbido de las telepantallas ocultas es la pista del sigilo.
-- **Leitmotivs:** *Naranjas y limones* (dominio público), el himno del Partido y la canción de Dot (composiciones originales).
+- **Leitmotivs:** *Naranjas y limones* (dominio público), en mayor para la Hermandad y la cripta y en menor para Ivy; el himno del Partido (también en menor, al fondo del Minipax); la canción de Dot (también en menor, en su casa); y el tema de Crane, que se oscurece. Composiciones originales salvo *Naranjas y limones*.
 
 ---
 
@@ -889,6 +914,8 @@ Todo el audio se **sintetiza en tiempo real** con Web Audio: no hay archivos de 
 - **J13 «arrepentimiento»:** el umbral pasa de `duda < 30` a `duda < 92`. Quien aceptó el doblepensar de la J11 llega con 78–99 (casi un tercio se arrepiente); quien lo recordó llega con 100 (nunca).
 - **Líneas que nunca salían, quitadas:** J6 con `duda >= 50` y la variante de «aceptar» con `duda >= 10` en la noche de la J3.
 - La prueba del bot exige ahora los seis finales y el arrepentimiento.
+
+- **Banda sonora completa:** 31 de los 43 mapas y el menú estaban en silencio. Ahora cada mapa tiene música según la jornada y la historia (24 pistas nuevas, todas originales salvo *Naranjas y limones*), y más de 70 etiquetas `# musica:` cambian la emoción en los momentos clave: la mano de Ivy, «Eurasia. Eurasia. Eurasia.», el cohete del mercado, «Retiren eso», la Planilla Azul, la firma de Voss, Crane sin máscara, la casa de Dot, Goldstein. Ver §12.
 
 **Pendiente:** probar en un iPhone y un Android reales (audio, joystick, pantalla completa, rendimiento) y pruebas con jugadores.
 

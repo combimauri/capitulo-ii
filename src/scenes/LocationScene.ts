@@ -5,7 +5,7 @@
  */
 import Phaser from 'phaser';
 import { narrativa, registro, mano, mision, segundos, LOCALIZACIONES, RESOLUCION, EV, tactil, texturaProta } from '../core/juego';
-import { contains, cumple, overlaps, type Dir, type Hotspot, type LocationData, type Npc, type Point, type Rect } from '../core/Location';
+import { contains, cumple, musicaDe, overlaps, type Dir, type Hotspot, type LocationData, type Npc, type Point, type Rect } from '../core/Location';
 import { NavGrid } from '../systems/Pathfinding';
 import { Sigilo } from '../systems/Sigilo';
 import { audio } from '../systems/AudioDirector';
@@ -677,8 +677,7 @@ export class LocationScene extends Phaser.Scene {
     this.colisionesActivas = this.loc.colisiones.filter((c) => cumple(c.condicion, leer));
     const conAccion = (h: Hotspot) => !!(h.mirar || h.usar || h.hablar || h.escondite);
     this.hotspotsVisibles = this.loc.hotspots.filter((h) => conAccion(h) && cumple(h.condicion, leer));
-    const mus = this.loc.musica;
-    audio.musica.poner(this.musicaForzada !== undefined ? this.musicaForzada : mus && cumple(mus.condicion, leer) ? mus.id : null);
+    audio.musica.poner(this.musicaForzada !== undefined ? this.musicaForzada : musicaDe(this.loc, leer));
     audio.ambiente.poner(this.ambienteForzado ?? this.loc.ambiente);
     const med = this.loc.medidor;
     mision.medidor = med && cumple(med.condicion, leer) ? { variable: med.variable, etiqueta: med.etiqueta } : null;

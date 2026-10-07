@@ -38,6 +38,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "tunel"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "crane_oscuro"
   }
  ],
  "tilesets": [],

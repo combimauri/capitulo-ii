@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "tele,edificio"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "soledad:final_en_curso==D | himno_tele:jornada<=3 | grieta:jornada>=8 | soledad"
   }
  ],
  "tilesets": [],

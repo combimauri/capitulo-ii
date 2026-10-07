@@ -143,7 +143,7 @@ CRANE: Lo que duele es callar. # id:fbt_01_crane_02
 
 // J13.00 — Volver con Crane al amanecer (B-arrepentimiento)
 === final_b_arrepentimiento ===
-PENSAMIENTO: La calle Cable. El estudio. Llamo una vez. # fx:negro # id:fba_00_pens_00
+PENSAMIENTO: La calle Cable. El estudio. Llamo una vez. # fx:negro # musica:crane_oscuro # id:fba_00_pens_00
 PENSAMIENTO: Crane abre la puerta sin sorpresa. # fx:aclarar # vineta:loc-estudio_j12 # id:fba_00_pens_01
 CRANE: Sabía que vendría. # esperar:0.8 # id:fba_00_crane_01
 PENSAMIENTO: Se aparta para dejarme pasar. # id:fba_00_pens_02
@@ -154,7 +154,7 @@ PENSAMIENTO: La grabadora gira. # fx:aclarar # id:fba_01_pens_01
 
 // J13.08 — Entregar a Goldstein (B-San Clemente)
 === final_b_san_clemente ===
-PENSAMIENTO: Salgo del metro a la calle. Crane espera en la esquina, apoyado en la farola. # vineta:loc-shadwell # id:fbs_00_pens_00
+PENSAMIENTO: Salgo del metro a la calle. Crane espera en la esquina, apoyado en la farola. # vineta:loc-shadwell # musica:crane_oscuro # id:fbs_00_pens_00
 PROTAGONISTA: Está abajo. Con el libro. # id:fbs_00_prot_01
 PENSAMIENTO: Crane sonríe y hace sonar el silbato. Botas. Diez hombres de negro bajan por la boca de metro. # sfx:alto # id:fbs_00_pens_01
 PENSAMIENTO: Espero en la calle. Pasa una hora. # fx:negro # esperar:2 # id:fbs_00_pens_02

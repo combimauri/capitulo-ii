@@ -5,7 +5,7 @@
 === final_e ===
 ~ final_en_curso = "E"
 // FE.01 — El té frío
-PENSAMIENTO: Dejo la copia sobre la mesa. Me siento frente a él. # id:fe_01_pens_00
+PENSAMIENTO: Dejo la copia sobre la mesa. Me siento frente a él. # musica:cripta # id:fe_01_pens_00
 PROTAGONISTA: ¿Queda té? # id:fe_01_prot_01
 PENSAMIENTO: Me sirve. Está frío. Sonríe. # id:fe_01_pens_01
 GOLDSTEIN: Siempre queda té. Nunca está caliente. # id:fe_01_gold_01
@@ -39,9 +39,9 @@ HILDA: ¡{g("TRAIDOR", "TRAIDORA")}! ¡{g("TRAIDOR", "TRAIDORA")}! ¡YO VIVÍA E
 PENSAMIENTO: Al fondo de la sala, un funcionario joven, uno solo, no grita. Se limpia las gafas. # id:fe_03_pens_03
 // FE.04 — El despacho
 { crane_humillado:
-    PENSAMIENTO: Un despacho del Partido Interior. Una ventana de verdad. Café de verdad. Una telepantalla apagada. # vineta:vineta-despacho_obrien_crane # id:fe_04_pens_00c
+    PENSAMIENTO: Un despacho del Partido Interior. Una ventana de verdad. Café de verdad. Una telepantalla apagada. # vineta:vineta-despacho_obrien_crane # musica:voss # id:fe_04_pens_00c
 - else:
-    PENSAMIENTO: Un despacho del Partido Interior. Una ventana de verdad. Café de verdad. Una telepantalla apagada. # vineta:vineta-despacho_obrien # id:fe_04_pens_00
+    PENSAMIENTO: Un despacho del Partido Interior. Una ventana de verdad. Café de verdad. Una telepantalla apagada. # vineta:vineta-despacho_obrien # musica:voss # id:fe_04_pens_00
 }
 PENSAMIENTO: Sobre la mesa, el mapa del Registro de Impactos. Miles de chinchetas negras. Y junto al Miniver, un círculo blanco perfecto, con una cruz pequeña dentro. # id:fe_04_pens_01
 VOSS: El último fragmento ha llegado a Southwark. Y a Bermondsey. Lo cantan en los patios. # esperar:0.8 # id:fe_04_voss_01
@@ -63,7 +63,7 @@ O'BRIEN: Pero no será este año. Ni el próximo. # id:fe_04_obrien_08
 PENSAMIENTO: Coge una chincheta negra. La sostiene sobre el círculo blanco. Un segundo. Dos. # esperar:2 # id:fe_04_pens_03
 PENSAMIENTO: La deja en la mesa, fuera del círculo. # id:fe_04_pens_04
 // FE.05 — Cierre
-PENSAMIENTO: La cripta. Una vela. Tecleo. # vineta:loc-cripta # sfx:tecla # id:fe_05_pens_00
+PENSAMIENTO: La cripta. Una vela. Tecleo. # vineta:loc-cripta # sfx:tecla # musica:maquina # id:fe_05_pens_00
 PENSAMIENTO: Arriba, muy lejos, un silbido de cohete. Me detengo. Escucho. # sfx:silbido # esperar:2 # id:fe_05_pens_01
 PENSAMIENTO: El silbido se aleja. Nunca cae aquí. # id:fe_05_pens_02
 PENSAMIENTO: Nunca cae aquí. # esperar:1 # id:fe_05_pens_03

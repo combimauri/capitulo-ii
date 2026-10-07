@@ -18,7 +18,7 @@
 
 // FC.01 — El arresto, en el piso
 = en_casa
-PENSAMIENTO: Noche. Tres golpes en la puerta. # sfx:golpes # fx:negro # id:fc_01_casa_00
+PENSAMIENTO: Noche. Tres golpes en la puerta. # sfx:golpes # fx:negro # musica:terror # id:fc_01_casa_00
 PENSAMIENTO: La telepantalla cambia de voz. # fx:aclarar # id:fc_01_casa_01
 TELEPANTALLA: {num} {apellido}. Quédese donde está. No se mueva. # id:fc_01_casa_tp
 { diario_escondite == "cartel" and not cartel_arrancado:
@@ -29,14 +29,14 @@ TELEPANTALLA: {num} {apellido}. Quédese donde está. No se mueva. # id:fc_01_ca
 
 // FC.01 — El arresto, en el ministerio
 = en_el_minipax
-PENSAMIENTO: Voss sale de su despacho con dos guardias. # id:fc_01_minipax_00
+PENSAMIENTO: Voss sale de su despacho con dos guardias. # musica:terror # id:fc_01_minipax_00
 VOSS: Camarada {apellido}. Acompáñeles. # id:fc_01_minipax_voss
 PENSAMIENTO: Pell, Brooke y toda la sala siguen tecleando sin levantar la vista. # id:fc_01_minipax_01
 -> furgoneta
 
 // FC.01 — El arresto, en el barrio prole o en mitad de una misión
 = en_la_calle
-PENSAMIENTO: Un silbato. Linternas. # sfx:alto # id:fc_01_calle_00
+PENSAMIENTO: Un silbato. Linternas. # sfx:alto # musica:terror # id:fc_01_calle_00
 PENSAMIENTO: Un golpe de porra en la nuca. # fx:destello # id:fc_01_calle_01
 -> furgoneta
 
@@ -46,7 +46,7 @@ PENSAMIENTO: Negro. # fx:negro # reloj:parar # id:fc_01_negro
 
 // ==================================================================== FINAL C0 — Vaporización (Sospecha 100 en el Acto I)
 === final_c0 ===
-PENSAMIENTO: Noche. Duermo. # fx:negro # id:fc0_00
+PENSAMIENTO: Noche. Duermo. # fx:negro # musica:silencio # id:fc0_00
 PENSAMIENTO: Tres golpes en la puerta. Antes de que me levante, la puerta se abre. Linternas. Siluetas negras. # sfx:golpes # id:fc0_01
 PENSAMIENTO: … # esperar:2 # id:fc0_02
 PENSAMIENTO: Una mano enguantada pasa un rodillo de tinta negra sobre la ficha: el nombre, el número, la foto, la firma. # documento:ficha_c0 # id:fc0_03

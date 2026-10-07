@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "cripta"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "cripta"
   }
  ],
  "tilesets": [],

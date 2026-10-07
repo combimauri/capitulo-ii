@@ -38,6 +38,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "minimor"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "celda"
   }
  ],
  "tilesets": [],

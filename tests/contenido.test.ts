@@ -57,7 +57,7 @@ describe('ink', () => {
 
 describe('localizaciones', () => {
   it('la música de cada mapa existe, y también la de las etiquetas # musica: de ink', () => {
-    for (const loc of localizaciones) if (loc.musica) expect(PISTAS[loc.musica.id], loc.id).toBeTruthy();
+    for (const loc of localizaciones) for (const m of loc.musica) if (m.id !== 'silencio') expect(PISTAS[m.id], `${loc.id}: ${m.id}`).toBeTruthy();
     const ink = fs.readdirSync('content/ink', { recursive: true }).filter((f) => String(f).endsWith('.ink'))
       .map((f) => fs.readFileSync(path.join('content/ink', String(f)), 'utf8')).join('\n');
     for (const [, id] of ink.matchAll(/# musica:([a-z_]+)/g)) if (id !== 'silencio') expect(PISTAS[id], id).toBeTruthy();

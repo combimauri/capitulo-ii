@@ -168,14 +168,14 @@ PENSAMIENTO: Volver ahora sería volver para nada. # id:j11_03_servicio_nada
 // ==================================================================== J11.04 — El expediente de Ivy
 === j11_expediente ===
 PENSAMIENTO: Un fichero de expedientes por apellido. El cajón de mi propio apellido. # sfx:papel # id:j11_04_pens_00
-PENSAMIENTO: Dentro, entre otras fichas, una carpeta: {apellido}, Ivy. # documento:expediente_ivy # id:j11_04_pens_01
+PENSAMIENTO: Dentro, entre otras fichas, una carpeta: {apellido}, Ivy. # documento:expediente_ivy # musica:ivy # id:j11_04_pens_01
 PENSAMIENTO: «Evitar martirio de signo subversivo.» # esperar:5 # id:j11_04_pens_02
 PENSAMIENTO: La mataron para que la Hermandad no tuviera una mártir. # esperar:1 # id:j11_04_pens_03
 PENSAMIENTO: Y la convirtieron en la suya. # esperar:1.4 # id:j11_04_pens_04
 PENSAMIENTO: «Familiar directo. Sin implicación. Alta capacidad de odio canalizable.» # esperar:1 # id:j11_04_pens_05
 PENSAMIENTO: Eso soy yo. # id:j11_04_pens_06
 PENSAMIENTO: «Recomendación: destino Minipax.» Mi trabajo. Mi mesa. Mis partes. Mi odio. # esperar:1.4 # id:j11_04_pens_07
-PENSAMIENTO: Todo esto lo firmó el mismo hombre. «H. Voss.» # esperar:1.8 # id:j11_04_pens_08
+PENSAMIENTO: Todo esto lo firmó el mismo hombre. «H. Voss.» # esperar:1.8 # musica:rabia # id:j11_04_pens_08
 PENSAMIENTO: El abrigo. Los guantes. «Esta camarada es ahora una mártir del Partido.» # esperar:1 # id:j11_04_pens_09
 PENSAMIENTO: Era él. # esperar:1.4 # id:j11_04_pens_10
 PENSAMIENTO: «No les creas.» No hablaba de Eurasia, Ivy. Hablaba de ellos. # id:j11_04_pens_11
@@ -204,7 +204,7 @@ PENSAMIENTO: Al fondo de la carpeta, la foto. Ivy, con Nell y el tabernero, en u
     PENSAMIENTO: Dentro del mono. Mañana notarán que falta. # objeto:foto_sotano # id:j11_04_foto_coger
 * [Dejarlo todo como estaba.]
     PENSAMIENTO: Cierro la carpeta. Cierro el cajón. # id:j11_04_foto_dejar
-- PENSAMIENTO: Pasos en el pasillo. # sfx:botas # id:j11_04_pasos
+- PENSAMIENTO: Pasos en el pasillo. # sfx:botas # musica:sigilo # id:j11_04_pasos
 PENSAMIENTO: Vuelvo al banco justo a tiempo. # fx:negro # reloj:parar # id:j11_04_volver # escena:minimor # pos:banco
 -> DONE
 
@@ -298,7 +298,7 @@ PENSAMIENTO: Me quedo de pie frente al cartel de Ivy. # id:j11_07_pens_00
     PENSAMIENTO: Traidora. La palabra suena hueca. # esperar:1 # id:j11_07_aceptar_02
     PENSAMIENTO: El Partido me protegió. # id:j11_07_aceptar_03
 - else:
-    PENSAMIENTO: Te pusieron en la pared para que yo te odiara a ti también sin saberlo. Para que gritara contra Goldstein con tu cara. # id:j11_07_recordar_01
+    PENSAMIENTO: Te pusieron en la pared para que yo te odiara a ti también sin saberlo. Para que gritara contra Goldstein con tu cara. # musica:rabia # id:j11_07_recordar_01
     PENSAMIENTO: Y yo grité. Cinco años. # esperar:1 # id:j11_07_recordar_02
     PENSAMIENTO: No eras su mártir. Eras de los nuestros. Eras de los suyos. # esperar:1 # id:j11_07_recordar_03
     PENSAMIENTO: Eras tuya. # id:j11_07_recordar_04
@@ -331,7 +331,7 @@ PENSAMIENTO: Su cara. Su cara de cartel. # id:j11_07_cartel_00
 // J11.08 — Fragmento IV: alguien ha dejado unas hojas entre las páginas del diario
 === j11_fragmento ===
 ~ fragmento_4 = true
-PENSAMIENTO: Entre las páginas del cuaderno, unas hojas mecanografiadas que no estaban ahí. # id:j11_08_pens_00
+PENSAMIENTO: Entre las páginas del cuaderno, unas hojas mecanografiadas que no estaban ahí. # musica:hermandad # id:j11_08_pens_00
 PENSAMIENTO: ¿Quién…? ¿Cuándo…? # esperar:1 # id:j11_08_pens_01
 PENSAMIENTO: Los proles también limpian. # esperar:1 # id:j11_08_pens_02
 PENSAMIENTO: No. Aquí no limpia nadie. Alguien que sabe cuándo no mira. # id:j11_08_pens_03

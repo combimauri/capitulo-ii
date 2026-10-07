@@ -28,6 +28,11 @@
    "name": "ambiente",
    "type": "string",
    "value": "cantina"
+  },
+  {
+   "name": "musica",
+   "type": "string",
+   "value": "odio_altavoz"
   }
  ],
  "tilesets": [],

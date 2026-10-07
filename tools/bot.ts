@@ -5,7 +5,7 @@
  *   const p = jugarPartida(json, localizaciones, azar(1), PERFILES.azar);
  */
 import { NarrativeBridge, type ChoiceOption } from '../src/core/NarrativeBridge';
-import { cumple, type Hotspot, type LocationData } from '../src/core/Location';
+import { cumple, musicaDe, type Hotspot, type LocationData } from '../src/core/Location';
 import type { Tag } from '../src/core/tags';
 import items from '../content/items.json';
 import diario from '../content/diario/entradas.json';
@@ -129,6 +129,10 @@ export interface Partida {
   decisiones: Record<string, string>;
   acciones: number;
   ultimaEscena: string;
+  /** La música que sonaba al explorar cada sitio, por «escena@Jjornada» (null: silencio). */
+  musica: Map<string, Set<string | null>>;
+  /** Las pistas pedidas con # musica: desde ink (y dónde), en orden. */
+  cues: { pista: string; escena: string; jornada: number; knot: string }[];
 }
 
 /** Límites de la partida. */
@@ -281,11 +285,14 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
   const p: Partida = {
     perfil: perfil.nombre, resultado: 'limite', jornadas: {}, maxDuda: 0, maxSospecha: 0, arrestos: 0,
     errores: [], avisos: [], fueraDeRango: [], lineas: new Set(), origen: {}, decisiones: {}, acciones: 0, ultimaEscena: '',
+    musica: new Map(), cues: [],
   };
 
   // estado del motor (LocationScene + mision)
   let loc!: LocationData;
   let pendiente: { escena?: string; spawn?: string } = {};
+  /** # musica: de ink: manda sobre la del mapa hasta cambiar de escena (LocationScene.musicaForzada). */
+  let musicaForzada: string | null | undefined;
   let finalPendiente = false;
   let terminado = false;
   let arrestando = false;
@@ -361,6 +368,9 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
       else avisar(`escena inexistente "${t.value}" (${ultimoKnot})`);
     } else if (t.key === 'pos') {
       if (pendiente.escena) pendiente.spawn = t.value;
+    } else if (t.key === 'musica') {
+      musicaForzada = t.value && t.value !== 'silencio' ? t.value : null;
+      p.cues.push({ pista: t.value, escena: loc.id, jornada: num('jornada'), knot: ultimoKnot });
     } else if (t.key === 'final') {
       finalPendiente = true;
       if (t.value && t.value !== 'demo') p.resultado = t.value;
@@ -516,6 +526,7 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
     pendiente = {};
     loc = locs[escena];
     p.ultimaEscena = escena;
+    musicaForzada = undefined;
     arrestando = false; oculto = false;
     if (existe('escena_actual')) escribir('escena_actual', loc.id);
     if (!cargado && loc.alEntrar && b.hasPath(loc.alEntrar)) dialogo(loc.alEntrar);
@@ -569,7 +580,8 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
       if (reloj.transcurrido >= reloj.limite) {
         reloj.agotado = true;
         // un reloj de misión que se agota lejos de su misión: nadie lo paró al salir
-        if (reloj.escena !== loc.id) avisar(`[motor] el reloj de ${reloj.escena} (${reloj.agotar}) se agota en ${loc.id}`);
+        // (salvo que sea la escena de su propio «agotar»: la misión del Minimor empieza en la recepción y sigue en el archivo)
+        if (reloj.escena !== loc.id && !reloj.agotar.startsWith(`${loc.id}.`)) avisar(`[motor] el reloj de ${reloj.escena} (${reloj.agotar}) se agota en ${loc.id}`);
         if (reloj.agotar && b.hasPath(reloj.agotar)) { dialogo(reloj.agotar); return true; }
       }
     }
@@ -607,6 +619,10 @@ export function jugarPartida(json: string | NarrativeBridge, locs: Record<string
         p.atasco = { escena: loc.id, jornada: num('jornada'), knot: ultimoKnot, motivo: 'no hay nada que hacer' };
         break;
       }
+      // lo que suena mientras se explora (LocationScene.actualizarVisibilidad)
+      const clave = `${loc.id}@J${num('jornada')}`;
+      if (!p.musica.has(clave)) p.musica.set(clave, new Set());
+      p.musica.get(clave)!.add(musicaForzada !== undefined ? musicaForzada : musicaDe(loc, leer));
       const a = lista[ponderado(rng, lista.map((x) => x.peso))];
       hechas.set(a.clave, (hechas.get(a.clave) ?? 0) + 1);
       p.acciones++; sinNovedad++;

@@ -27,12 +27,7 @@
   {
    "name": "musica",
    "type": "string",
-   "value": "prole"
-  },
-  {
-   "name": "musica_si",
-   "type": "string",
-   "value": "!cohete_caido"
+   "value": "prole:!cohete_caido | silencio"
   },
   {
    "name": "ambiente",
