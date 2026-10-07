@@ -1,12 +1,12 @@
 """J2.05 — La pancarta del Centro de la Comunidad: «¡MUERTE A EURASIA!».
 
 El suelo de tablones del Centro, con la tela extendida sobre periódicos viejos y las letras trazadas a
-lápiz (cada «píxel» de la letra es un cuadro de 4x4 del arte = 8x8 del juego, en las mismas posiciones
-que usa la escena para puntuar). Alrededor: botes de pintura roja, un tarro con pinceles, un trapo
+lápiz en dos líneas (cada «píxel» de la letra es un cuadro de 10x10 del arte = 20x20 del juego, en las
+mismas posiciones que usa la escena para puntuar: letras grandes para pintarlas con el dedo). Alrededor: botes de pintura roja, un tarro con pinceles, un trapo
 manchado, la otra pancarta enrollada y la lista de Hilda en una tablilla.
 
   pancarta-fondo   480x270
-  pancarta-mancha  hoja de 3 fotogramas de 11x11 (pinceladas que se estampan al pintar)
+  pancarta-mancha  hoja de 3 fotogramas de 16x16 (pinceladas que se estampan al pintar)
   pancarta-brocha  20x20 (la brocha que sigue al puntero; la punta está abajo a la izquierda)
 """
 import random
@@ -15,23 +15,33 @@ from _base import CLAVE, Canvas, K, a_rgba, guardar, hoja, sprite
 import props as P
 
 W, H = 480, 270
-LEMA = "¡MUERTE A EURASIA!"
+LINEAS = ("¡MUERTE A", "EURASIA!")
 FUENTE = {  # la misma que PancartaScene.ts
     "M": "101111111101101", "U": "101101101101111", "E": "111100110100111", "R": "110101110101101",
     "T": "111010010010010", "A": "010101111101101", "S": "011100010001110", "I": "111010010010111",
     "¡": "010000010010010", "!": "010010010000010", " ": "000000000000000",
 }
-ORIGEN = (96, 100)                    # origen del juego (192, 200) a la mitad
-PX = 4                                # PIXEL = 8 en el juego
-TELA = (78, 86, 402, 136)
+PX = 10                               # PIXEL = 20 en el juego
+ARRIBA, ENTRE = 54, 14                # primera línea y separación (y del juego 108; mitad)
+TELA = (52, 46, 428, 178)
+
+
+def origenes():
+    """Esquina de cada línea, centrada (la misma cuenta que PancartaScene.ts, a la mitad)."""
+    out = []
+    for n, linea in enumerate(LINEAS):
+        ancho = len(linea) * 4 * PX - PX
+        out.append(((W - ancho) // 2, ARRIBA + n * (5 * PX + ENTRE)))
+    return out
 
 
 def celdas():
     out = set()
-    for i, ch in enumerate(LEMA):
-        for k, b in enumerate(FUENTE.get(ch, FUENTE[" "])):
-            if b == "1":
-                out.add((ORIGEN[0] + i * 4 * PX + (k % 3) * PX, ORIGEN[1] + (k // 3) * PX))
+    for linea, (ox, oy) in zip(LINEAS, origenes()):
+        for i, ch in enumerate(linea):
+            for k, b in enumerate(FUENTE.get(ch, FUENTE[" "])):
+                if b == "1":
+                    out.add((ox + i * 4 * PX + (k % 3) * PX, oy + (k // 3) * PX))
     return out
 
 
@@ -78,7 +88,7 @@ def fondo():
     cv.frame(x0 + 2, y0 + 2, x1 - 2, y1 - 2, K("papel", 2)); cv.frame(x0, y0, x1, y1, K("papel", 1))
     for _ in range(14):
         ax, ay = rnd.randint(x0 + 6, x1 - 20), rnd.randint(y0 + 4, y1 - 8)
-        if ORIGEN[1] - 2 <= ay <= ORIGEN[1] + 22:
+        if any(oy - 2 <= ay <= oy + 5 * PX + 2 for _, oy in origenes()):
             continue
         cv.d.line([(ax, ay), (ax + rnd.randint(6, 16), ay + rnd.choice([-2, 2, 3]))], fill=K("papel", 2))
     # las letras, trazadas a lápiz: relleno pálido y contorno solo por fuera
@@ -95,10 +105,11 @@ def fondo():
         if (cx + PX, cy) not in cel:
             cv.vline(cx + PX - 1, cy, cy + PX, K("gris", 6))
     # renglones de guía a lápiz
-    cv.hline(ORIGEN[0] - 6, x1 - 12, ORIGEN[1] - 3, K("papel", 1))
-    cv.hline(ORIGEN[0] - 6, x1 - 12, ORIGEN[1] + 22, K("papel", 1))
+    for ox, oy in origenes():
+        cv.hline(x0 + 8, x1 - 8, oy - 3, K("papel", 1))
+        cv.hline(x0 + 8, x1 - 8, oy + 5 * PX + 2, K("papel", 1))
     # gotas de un intento anterior, fuera de las letras
-    for (gx, gy) in ((90, 126), (92, 128), (380, 92), (300, 130), (301, 131)):
+    for (gx, gy) in ((58, 90), (60, 92), (420, 140), (240, 110), (241, 111)):
         cv.px(gx, gy, K("rojo", 3))
     # botes, tarro de pinceles, trapo
     _bote(cv, 24, 150, abierto=True)
@@ -123,7 +134,7 @@ def fondo():
     cv.hline(24, 146, 42, K("madera", 1))
     for k in range(5):
         cv.rect(40 + k * 22, 31, 46 + k * 22, 40, K("rojo", 3))                    # letras que asoman
-    hx, hy = 400, 22
+    hx, hy = 434, 60
     cv.rect(hx + 2, hy + 2, hx + 44, hy + 48, K("madera", 1))
     cv.rect(hx, hy, hx + 42, hy + 46, K("madera", 5)); cv.frame(hx, hy, hx + 42, hy + 46, K("madera", 2))
     cv.rect(hx + 4, hy + 6, hx + 38, hy + 44, K("papel", 4))
@@ -149,16 +160,17 @@ def fondo():
 
 def _mancha(semilla):
     rnd = random.Random(semilla)
-    cv = sprite(11, 11)
-    cv.ellipse(0, 0, 11, 11, K("rojo", 3))
-    for _ in range(4):                                                          # borde irregular
-        cv.px(rnd.choice([0, 10]), rnd.randint(3, 7), K("rojo", 3))
-        cv.px(rnd.randint(3, 7), rnd.choice([0, 10]), K("rojo", 3))
-    cv.d.arc([1, 1, 10, 10], 20, 110, fill=K("rojo", 2))
-    for _ in range(2):                                                          # cerdas
-        y = rnd.randint(3, 7)
-        cv.hline(rnd.randint(2, 4), rnd.randint(6, 9), y, K("rojo", 2))
-    cv.px(3 + rnd.randint(0, 1), 3, K("rojo", 4)); cv.px(4, 2 + rnd.randint(0, 1), K("rojo", 4))
+    T = 16
+    cv = sprite(T, T)
+    cv.ellipse(0, 0, T, T, K("rojo", 3))
+    for _ in range(6):                                                          # borde irregular
+        cv.px(rnd.choice([0, T - 1]), rnd.randint(4, T - 5), K("rojo", 3))
+        cv.px(rnd.randint(4, T - 5), rnd.choice([0, T - 1]), K("rojo", 3))
+    cv.d.arc([1, 1, T - 1, T - 1], 20, 110, fill=K("rojo", 2))
+    for _ in range(3):                                                          # cerdas
+        y = rnd.randint(4, T - 5)
+        cv.hline(rnd.randint(2, 5), rnd.randint(T - 7, T - 3), y, K("rojo", 2))
+    cv.px(4 + rnd.randint(0, 1), 4, K("rojo", 4)); cv.px(5, 3 + rnd.randint(0, 1), K("rojo", 4))
     return a_rgba(cv)
 
 

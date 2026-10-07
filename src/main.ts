@@ -53,7 +53,8 @@ const juego = new Phaser.Game({
   roundPixels: true,
   // pantalla completa sobre #juego (canvas + campos de texto HTML), no solo sobre el canvas: si no, en Android no sale el teclado
   scale: { mode: Phaser.Scale.FIT, autoCenter: Phaser.Scale.CENTER_BOTH, fullscreenTarget: 'juego' },
-  input: { activePointers: 2 },
+  // tres dedos: si el sistema se traga el «soltar» de uno, los demás siguen funcionando
+  input: { activePointers: 3 },
   dom: { createContainer: true },
   scene: [BootScene, PreloadScene, MenuScene, LocationScene, UIScene, CascotesScene, FichaScene, FacecrimeScene, ParteScene, FrenteScene, PancartaScene, ImpactosScene, SammyScene, DiarioScene, ComparadorScene, EsconderScene,
     DocumentoScene, LibroScene, CopiarScene, PalancaScene, LlavesScene, CombinacionScene, RectificacionScene, ListaScene,

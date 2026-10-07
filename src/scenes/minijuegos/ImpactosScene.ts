@@ -28,6 +28,8 @@ const PANEL = { x: 646, w: 290 };
 /** Los cuatro ministerios (rombos blancos de la lámina), en casillas: los mismos que art/ui/londres.py. */
 const MINISTERIOS = [[4.5, 5.6], [3.5, 4.4], [5.4, 4.0], [5.9, 5.3]];
 const RADIO_GUIA = { km: 2, tolerancia: 0.5, centro: 14 };
+/** En la secuencia guiada, empezar el círculo a menos de esto de un ministerio lo centra en él (con el dedo no se ve el rombo). */
+const IMAN = 40;
 
 /** "J-8" → columna 9, fila 7 (desde 0). */
 export function celda(c: string) {
@@ -52,14 +54,15 @@ export class ImpactosScene extends Minijuego {
   private cerrar!: Phaser.GameObjects.Container;
   private guiado = false;
   private paso: 'chinchetas' | 'lamina' | 'compas' | 'brooke' = 'chinchetas';
-  private ministerios: { x: number; y: number; hecho: boolean }[] = [];
+  private ministerios: { x: number; y: number; hecho: boolean; anillo?: Phaser.GameObjects.Arc }[] = [];
+  private botonLamina: Phaser.GameObjects.Rectangle | null = null;
 
   constructor() { super('Impactos'); }
 
   create() {
     this.reg = registroDe(this.params.registro ?? '')!;
     this.actual = 0; this.fallos = 0; this.laminaVista = false; this.compasUsado = false;
-    this.modo = 'chincheta'; this.circulos = []; this.trazo = null; this.lamina = null; this.botonCompas = null;
+    this.modo = 'chincheta'; this.circulos = []; this.trazo = null; this.lamina = null; this.botonCompas = null; this.botonLamina = null;
     this.guiado = this.params.guiado === 'si';
     this.paso = 'chinchetas';
     this.ministerios = MINISTERIOS.map(([c, f]) => ({ x: MAPA.x + c * ANCHO, y: MAPA.y + f * ALTO, hecho: false }));
@@ -111,7 +114,7 @@ export class ImpactosScene extends Minijuego {
     let bx = PANEL.x;
     if (inventario.includes('zonificacion')) {
       this.lamina = this.add.image(MAPA.x, MAPA.y, 'londres-zonas').setOrigin(0).setScale(MAPA.escala).setVisible(false).setDepth(2);
-      this.boton(bx + 70, height - 34, 'LÁMINA', () => this.alternarLamina());
+      this.botonLamina = this.boton(bx + 70, height - 34, 'LÁMINA', () => this.alternarLamina());
       bx += 148;
     }
     if (inventario.includes('compas')) {
@@ -209,10 +212,18 @@ export class ImpactosScene extends Minijuego {
     if (this.paso === 'chinchetas') {
       this.paso = 'lamina';
       if (this.lamina?.visible) { this.paso = 'compas'; return this.guia(); }
-      this.aviso.setText('¿Por qué nunca en el centro? Superpón la lámina de zonificación.');
+      this.aviso.setText('¿Por qué nunca en el centro? Toca LÁMINA para superponer la lámina de zonificación.');
+      if (this.botonLamina) this.tweens.add({ targets: this.botonLamina, alpha: 0.45, duration: 420, yoyo: true, repeat: -1 });
     } else if (this.paso === 'compas') {
+      if (this.botonLamina) { this.tweens.killTweensOf(this.botonLamina); this.botonLamina.setAlpha(1); }
       if (this.modo !== 'compas') this.alternarCompas();
-      this.aviso.setText('Traza un círculo de 2 km desde cada ministerio (los rombos blancos).');
+      this.aviso.setText('Arrastra desde cada rombo que parpadea hasta que el círculo marque 2 km (una casilla).').setWordWrapWidth(560);
+      // los ministerios que faltan, señalados: con el dedo encima, el rombo no se ve
+      for (const m of this.ministerios) {
+        if (m.hecho || m.anillo) continue;
+        m.anillo = this.add.circle(m.x, m.y, 9).setStrokeStyle(3, COLOR.ocre4).setDepth(5);
+        this.tweens.add({ targets: m.anillo, scale: 1.8, alpha: 0.2, duration: 700, yoyo: true, repeat: -1 });
+      }
     } else if (this.paso === 'brooke') {
       if (this.modo === 'compas') this.alternarCompas();
       this.aviso.setText('BROOKE, al pasar, muy bajo: «Quite eso del mapa antes de las seis. Voss hace la ronda a las seis.»')
@@ -221,17 +232,28 @@ export class ImpactosScene extends Minijuego {
     }
   }
 
-  /** ¿El círculo sale de un ministerio con un radio de unos 2 km? */
+  /** El ministerio pendiente en el que empieza un círculo (ya centrado por el imán). */
+  private ministerioEn(x: number, y: number) {
+    return this.ministerios.find((p) => !p.hecho && Phaser.Math.Distance.Between(p.x, p.y, x, y) <= RADIO_GUIA.centro);
+  }
+
+  private radioBueno(r: number) {
+    return Math.abs((r / ANCHO) * KM_POR_CELDA - RADIO_GUIA.km) <= RADIO_GUIA.tolerancia;
+  }
+
+  /** ¿El círculo sale de un ministerio con un radio de unos 2 km? Si no, se dice por qué. */
   private comprobarMinisterio(x: number, y: number, r: number) {
     if (this.paso !== 'compas') return;
     const km = (r / ANCHO) * KM_POR_CELDA;
-    const m = this.ministerios.find((p) => !p.hecho && Phaser.Math.Distance.Between(p.x, p.y, x, y) <= RADIO_GUIA.centro);
-    if (!m || Math.abs(km - RADIO_GUIA.km) > RADIO_GUIA.tolerancia) return;
+    const m = this.ministerioEn(x, y);
+    if (!m) { this.aviso.setText('El círculo tiene que empezar en un ministerio: uno de los rombos que parpadean.'); return; }
+    if (!this.radioBueno(r)) { this.aviso.setText(`Ese círculo mide ${km.toFixed(1)} km. Tiene que medir 2 km: una casilla del mapa.`); return; }
     m.hecho = true;
+    m.anillo?.destroy(); m.anillo = undefined;
     audio.play('acierto');
     this.add.text(m.x + 7, m.y - 18, '✓', { fontFamily: FUENTE.texto, fontSize: '16px', color: hex(COLOR.rojo3) }).setDepth(8);
     const faltan = this.ministerios.filter((p) => !p.hecho).length;
-    if (faltan) this.aviso.setText(`Ninguna chincheta dentro. Faltan ${faltan} ministerio${faltan > 1 ? 's' : ''}.`);
+    if (faltan) this.aviso.setText(`Ninguna chincheta dentro. ${faltan > 1 ? `Faltan ${faltan} ministerios` : 'Falta un ministerio'}.`);
     else this.time.delayedCall(900, () => { this.paso = 'brooke'; this.guia(); });
   }
 
@@ -242,16 +264,25 @@ export class ImpactosScene extends Minijuego {
   }
 
   private empezarCompas(p: Phaser.Input.Pointer) {
+    let { x, y } = p;
+    if (this.paso === 'compas') {
+      const cerca = this.ministerios.filter((m) => !m.hecho)
+        .map((m) => ({ m, d: Phaser.Math.Distance.Between(m.x, m.y, p.x, p.y) })).sort((a, b) => a.d - b.d)[0];
+      if (cerca && cerca.d <= IMAN) ({ x, y } = cerca.m);
+    }
     const g = this.add.graphics().setDepth(6);
-    const t = this.add.text(p.x, p.y, '', { fontFamily: FUENTE.maquina, fontSize: '18px', color: hex(COLOR.rojo3), backgroundColor: '#eeead9' }).setDepth(7);
-    this.trazo = { x: p.x, y: p.y, g, t };
+    const t = this.add.text(x, y, '', { fontFamily: FUENTE.maquina, fontSize: '18px', color: hex(COLOR.rojo3), backgroundColor: '#eeead9' }).setDepth(7);
+    this.trazo = { x, y, g, t };
   }
 
   private moverCompas(p: Phaser.Input.Pointer) {
     if (!this.trazo || !p.isDown) return;
     const r = Phaser.Math.Distance.Between(this.trazo.x, this.trazo.y, p.x, p.y);
-    this.trazo.g.clear().lineStyle(2, COLOR.rojo3, 0.9).strokeCircle(this.trazo.x, this.trazo.y, r)
-      .fillStyle(COLOR.rojo3).fillCircle(this.trazo.x, this.trazo.y, 2).lineBetween(this.trazo.x, this.trazo.y, p.x, p.y);
+    // en la secuencia guiada, el círculo se pone verde cuando sale de un ministerio y mide 2 km
+    const bien = this.paso === 'compas' && !!this.ministerioEn(this.trazo.x, this.trazo.y) && this.radioBueno(r);
+    const color = bien ? COLOR.tele4 : COLOR.rojo3;
+    this.trazo.g.clear().lineStyle(bien ? 3 : 2, color, 0.9).strokeCircle(this.trazo.x, this.trazo.y, r)
+      .fillStyle(color).fillCircle(this.trazo.x, this.trazo.y, 2).lineBetween(this.trazo.x, this.trazo.y, p.x, p.y);
     this.trazo.t.setPosition(p.x + 8, p.y - 18).setText(`${((r / ANCHO) * KM_POR_CELDA).toFixed(1)} km`);
   }
 

@@ -170,8 +170,15 @@ export class LocationScene extends Phaser.Scene {
     this.input.mouse?.disableContextMenu();
 
     this.input.on('pointerdown', (p: Phaser.Input.Pointer) => {
+      // el gesto que cerró un diálogo se ignora, pero nunca más de un momento (en móvil, un «soltar» perdido lo dejaría bloqueado)
+      if (this.ignorarPulsacion && this.time.now - this.finDialogo > 600) this.ignorarPulsacion = false;
       if (this.ocupado || this.ignorarPulsacion || this.registry.get('uiCapturo') === p.downTime) return;
-      if (tactil.activo) return;   // un segundo dedo mientras el primero lleva el joystick
+      if (tactil.activo) {
+        // un segundo dedo mientras el primero lleva el joystick; si ese dedo ya no está, el joystick se había quedado colgado
+        const dedo = this.input.manager.pointers.find((x) => x.id === this.pulsacion?.id);
+        if (dedo?.isDown && dedo !== p) return;
+        this.soltarJoystick();
+      }
       const punto = { x: p.worldX, y: p.worldY };
       const h = this.hotspotEn(punto);
       if (p.rightButtonDown()) {

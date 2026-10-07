@@ -302,8 +302,13 @@ export class UIScene extends Phaser.Scene {
     this.bloqueoHasta = this.time.now + 180;
     this.foco.setVisible(false);
     if (this.inventario.visible) this.alternarInventario();
+    this.iniciando = true;
     this.avanzar();
+    this.iniciando = false;
   }
+
+  /** Mientras se reparte el aviso de inicio: un knot sin nada que decir termina antes de que todos lo hayan oído. */
+  private iniciando = false;
 
   private avanzar() {
     const paso = narrativa.next();
@@ -318,7 +323,10 @@ export class UIScene extends Phaser.Scene {
     if (this.vinetaActual) { const v = this.vinetaActual; this.vinetaActual = null; this.tweens.add({ targets: v, alpha: 0, duration: 500, onComplete: () => v.destroy() }); }
     this.ocultarTodo();
     if (this.velo.alpha > 0) this.tweens.add({ targets: this.velo, alpha: 0, duration: 700 });
-    this.game.events.emit(EV.dialogoFin);
+    // un diálogo vacío (volver a entrar al pub: «pub_visto» → DONE) acaba dentro del propio aviso de inicio;
+    // el fin se avisa después, o el escenario lo recibiría antes que el inicio y se quedaría ocupado
+    if (this.iniciando) queueMicrotask(() => { if (!this.activo) this.game.events.emit(EV.dialogoFin); });
+    else this.game.events.emit(EV.dialogoFin);
   }
 
   private ocultarTodo() {
