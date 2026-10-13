@@ -47,7 +47,9 @@ En desarrollo, la consola del navegador ofrece `saltar('departamento', 'depto.en
 
 ## Despliegue
 
-El juego está en Vercel (https://capitulo-ii.vercel.app): cada `git push` a `main` se despliega solo. El middleware de enrutado (`middleware.ts`) solo deja abrirlo desde Argentina, Bolivia, Brasil, Chile y España (lista `PAISES`); al resto le responde 403, también en los recursos y el service worker.
+El juego está en Vercel (https://capitulo-ii.combinatoria.club y https://capitulo-ii.vercel.app): cada `git push` a `main` se despliega solo. El middleware de enrutado (`middleware.ts`) corre en todos los dominios del proyecto y solo deja abrir el juego desde los países donde *1984* ya es de dominio público (lista `PAISES`). Esa lista cubre Latinoamérica salvo México, Colombia y Puerto Rico, y Europa. Al resto le responde 403, también en los recursos y el service worker.
+
+España es un caso discutible. Para autores muertos antes del 7 de diciembre de 1987 rige vida + 80 años (disposición transitoria cuarta de la LPI), lo que daría 2031. Pero desde el Brexit Orwell es nacional de un tercer país, y el art. 199.4 de la LPI limita el plazo al del país de origen (Reino Unido, vida + 70, vencido en 2020).
 
 ## Estructura
 

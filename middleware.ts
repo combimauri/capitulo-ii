@@ -5,8 +5,22 @@
  */
 import { geolocation, next } from '@vercel/functions';
 
-/** Códigos ISO 3166-1 alfa-2. */
-export const PAISES = new Set(['AR', 'BO', 'BR', 'CL', 'ES']);
+/**
+ * Códigos ISO 3166-1 alfa-2: países donde *1984* ya es de dominio público. Orwell murió el 21 de enero de 1950,
+ * así que con vida + 70 años o menos lo es desde el 1 de enero de 2021, y con vida + 75 desde el 1 de enero de 2026.
+ * Fuera: México (vida + 100), Colombia (vida + 80) y Puerto Rico (ley de EE. UU.: protegido hasta 2044).
+ */
+export const PAISES = new Set([
+  // Latinoamérica
+  'AR', 'BO', 'BR', 'CL', 'CR', 'DO', 'EC', 'GT', 'HN', 'NI', 'PA', 'PE', 'PY', 'SV', 'UY', 'VE',
+  // Unión Europea (vida + 70; España, ver README)
+  'AT', 'BE', 'BG', 'CY', 'CZ', 'DE', 'DK', 'EE', 'ES', 'FI', 'FR', 'GR', 'HR', 'HU', 'IE', 'IT', 'LT', 'LU', 'LV',
+  'MT', 'NL', 'PL', 'PT', 'RO', 'SE', 'SI', 'SK',
+  // resto de Europa
+  'AD', 'AL', 'BA', 'BY', 'CH', 'GB', 'IS', 'LI', 'MC', 'MD', 'ME', 'MK', 'NO', 'RS', 'RU', 'SM', 'UA', 'VA', 'XK',
+  // territorios europeos con código propio (Åland, Feroe, Gibraltar, Guernsey, Jersey, Man)
+  'AX', 'FO', 'GG', 'GI', 'IM', 'JE',
+]);
 
 export const permitido = (pais: string | undefined) => !!pais && PAISES.has(pais.toUpperCase());
 
