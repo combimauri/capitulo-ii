@@ -2,6 +2,11 @@
 
 Aventura narrativa en pixel art, basada libremente en *1984* de George Orwell. Juego web (escritorio y móvil, instalable como PWA) hecho con **Phaser 4 + TypeScript + ink**.
 
+## Requisitos
+
+- Node 22 o superior (se desarrolla con Node 24) y npm.
+- Python 3 con Pillow, solo para regenerar el arte (`pip install pillow`).
+
 ## Comandos
 
 ```bash
@@ -9,11 +14,23 @@ npm install        # dependencias
 npm run dev        # servidor de desarrollo (http://localhost:5173)
 npm test           # pruebas: compilación de ink, linter de contenido, estado
 BOT_PARTIDAS=300 npx vitest run tests/bot.test.ts   # bot de recorrido: informe de equilibrio de Duda y Sospecha
-npx tsx tools/sonido.ts /tmp/sonido 40           # renderiza cada pista de música a WAV y mide su sonoridad y su emoción
+npx tsx tools/sonido.ts dist-sonido 40           # renderiza cada pista de música a WAV y mide su sonoridad y su emoción
 npm run build      # comprobación de tipos + compilación de producción (dist/)
 npm run art        # regenera el arte (Python + Pillow) y lo exporta a public/assets
 python3 tools/generar_mapas.py   # regenera los mapas de Tiled (content/locations)
 ```
+
+## Generar el distribuible
+
+```bash
+npm install
+npm run build      # → dist/: el juego listo para servir como sitio estático (PWA con service worker)
+npm run preview    # sirve dist/ en http://localhost:4173 para probarlo
+```
+
+`dist/`, `node_modules/` y las pistas en WAV (`dist-sonido/`) no se versionan: se regeneran con los comandos de arriba. El arte de `public/assets` y los mapas de `content/locations` sí se versionan aunque salen de `npm run art` y `tools/generar_mapas.py`, porque el despliegue en Vercel solo corre `npm run build` y no tiene Python.
+
+La música no está en archivos: el juego la sintetiza en el navegador con Web Audio (`src/systems/Musica.ts`). Los proyectos de video de la carpeta hermana `../videos/` importan ese motor (`tools/sonido.ts` y `src/systems/Musica.ts`) para sus bandas sonoras, así que esperan este repo clonado en `../capitulo-ii` y con `npm install` hecho.
 
 ## Controles
 

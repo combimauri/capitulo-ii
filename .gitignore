@@ -1,10 +1,25 @@
+# Dependencias
 node_modules/
+
+# Compilaciones (npm run build) y artefactos de herramientas
 dist/
 dev-dist/
-.DS_Store
-*.log
 .vite/
 coverage/
+*.tsbuildinfo
+
+# Pistas renderizadas a WAV (npx tsx tools/sonido.ts <carpeta>)
+dist-sonido/
+*.wav
+
+# Python (art/, tools/generar_mapas.py)
 __pycache__/
 *.pyc
+.venv/
+
+# Entorno y sistema
 .vercel
+.env*
+!.env.example
+.DS_Store
+*.log
